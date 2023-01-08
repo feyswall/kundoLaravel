@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by feyswal on 1/8/2023.
- * Time 5:01 PM.
- * EastCoders & G3NET.
- * contacts: +255 628 960 877
+  * Created by feyswal on 1/8/2023.
+  * Time 5:02 PM.
+  * EastCoders & G3NET.
+  * contacts: +255 628 960 877
  */
 ?>
 
@@ -27,4 +27,4 @@
 
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script
