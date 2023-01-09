@@ -16,6 +16,11 @@
     {{--</div>--}}
 {{--</x-app-layout>--}}
 
+@hasrole("super")
+    @include('interface.super.dashboard')
+@endhasrole
 
-@include('interface.super.dashboard')
+@hasrole("mbunge")
+    @include('interface.mbunge.dashboard')
+@endhasrole
 
