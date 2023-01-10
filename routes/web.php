@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Super\AreasController;
+use  App\Http\Controllers\Super\Area\DistrictsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,5 +28,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::controller(DistrictsController::class)
+    ->prefix('/super/areas/wilaya')
+    ->as('super.areas.wilaya.')
+    ->group(function () {
+        Route::get('/orodha', 'index')->name('orodha');
+    });
+
+
 
 require __DIR__.'/auth.php';
