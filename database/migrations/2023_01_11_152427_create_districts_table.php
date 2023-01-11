@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('area_descriptions', function (Blueprint $table) {
+        Schema::create('districts', function (Blueprint $table) {
             $table->id();
-            $table->string("description");
+            $table->string('name');
+
+            $table->foreignId('region_id')->constrained();
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('area_descriptions');
+        Schema::dropIfExists('districts');
     }
 };

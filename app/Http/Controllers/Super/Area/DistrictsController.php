@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Super\Area;
 
 use App\Http\Controllers\Controller;
 use App\Models\Area;
-use Illuminate\Auth\Events\Validated;
+use App\Models\AreaDescription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use function Symfony\Component\Console\Helper\removeDecoration;
 
 class DistrictsController extends Controller
 {
@@ -17,7 +18,10 @@ class DistrictsController extends Controller
      */
     public function index()
     {
-        return view("interface.super.maeneo.wilaya.orodhaWilaya");
+        $wilaya = Area::where('name', 'WILAYA')->first();
+        $areas = $wilaya->area_description;
+        return view("interface.super.maeneo.wilaya.orodhaWilaya")
+            ->with('areas');
     }
 
     /**
@@ -39,7 +43,7 @@ class DistrictsController extends Controller
     public function store(Request $request)
     {
         $rules = [
-          'wialaya' => 'required|string|max:50'
+          'wilaya' => 'required|string|max:50'
         ];
 
         $validate = Validator::make($request->all() ,$rules);
@@ -47,8 +51,26 @@ class DistrictsController extends Controller
         if( $validate->fails() ){
             return redirect()->back()->withErrors($validate->errors());
         }
-        dd( "no error" );
-        
+
+        $wilayaArea = Area::where("name", "WILAYA");
+
+        if ( ! ( $wilayaArea->exists() ) ){
+            redirect()->back()->withErrors(['nullModel' => 'Wilaya is Not Registered in The System']);
+        }
+
+        $area = AreaDescription::create([
+            'description' => $request->wilaya,
+            'area_id' => $wilayaArea->first()->id
+        ]);
+
+        if ( $area ){
+            return redirect()->back()
+                ->with(['status' => 'success', 'message' => 'Wilaya Imetengenezwa']);
+        }else{
+            return redirect()->back()
+                ->with(['status' => 'error', 'message' => 'Tumeshindwa Kutengeneza Tafadhali Jaribu Tena.']);
+        }
+
     }
 
     /**

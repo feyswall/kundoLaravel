@@ -9,5 +9,9 @@ class AreaDescription extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['description']; 
+    protected $fillable = ['description', 'area_id'];
+
+    public function area(){
+        return $this->belongsTo( Area::class );
+    }
 }
