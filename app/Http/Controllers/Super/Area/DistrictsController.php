@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Super\Area;
 
 use App\Http\Controllers\Controller;
 use App\Models\Area;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DistrictsController extends Controller
 {
@@ -36,7 +38,17 @@ class DistrictsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+          'wialaya' => 'required|string|max:50'
+        ];
+
+        $validate = Validator::make($request->all() ,$rules);
+
+        if( $validate->fails() ){
+            return redirect()->back()->withErrors($validate->errors());
+        }
+        dd( "no error" );
+        
     }
 
     /**

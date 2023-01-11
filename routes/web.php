@@ -29,13 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::controller(DistrictsController::class)
-    ->prefix('/super/areas/wilaya')
-    ->as('super.areas.wilaya.')
-    ->group(function () {
-        Route::get('/orodha', 'index')->name('orodha');
-    });
-
-
 
 require __DIR__.'/auth.php';
+
+require __DIR__.'/superRoute.php';

@@ -36,21 +36,24 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <a href="ongezaWilaya.php" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Wilaya</a>
-                                <label class="form-label  font-size-24" id="machagulio-mkoa"></label>
-                                <label class="form-label font-size-24" id="machagulio-wilaya"></label>
-                                <table id="datatable-viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <button  data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Wilaya</button>
+
+                                <table id="superOrodhaWilayaTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                     <tr>
                                         <th>Jina la Wilaya</th>
                                         <th>Idadi Ya  Almashauri</th>
                                         <th>Idadi Ya Tarafa</th>
                                         <th></th>
-
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        
+                                    <tr>
+                                        <td>one</td>
+                                        <td>two</td>
+                                        <td>three</td>
+                                        <td>four</td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -58,6 +61,27 @@
                     </div> <!-- end col -->
                 </div> <!-- end row -->
 
+                <!-- model location here -->
+                <x-system.modal id="exampleModal" aria="orodhaWilayaLabel" size="modal-lg" title="Ongeza Wilaya Hapa" >
+                    <x-slot:content>
+                        <x-system.ongeza-wilaya-modal-form />
+                    </x-slot:content>
+                </x-system.modal>
+
             </div> <!-- container-fluid -->
     <!-- end main content-->
     @endsection
+
+    @section("extra_script")
+        <script>
+            $ (document).ready (function () {
+                $ (
+                    '#datatable'
+                ).DataTable (), $ ('#superOrodhaWilayaTable')
+                    .DataTable ({lengthChange: !1, buttons: ['excel', 'pdf'], "order": [[ 1, "desc" ]]})
+                    .buttons ()
+                    .container ().appendTo ('#superOrodhaWilayaTable_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')
+                    .addClass ('form-select form-select-sm');
+            });
+        </script>
+        @endsection

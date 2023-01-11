@@ -15,7 +15,7 @@ class AreasController extends Controller
      */
     public function index()
     {
-        return view("interface.super.maeneo.wilaya.orodhaWilaya");
+
     }
 
     /**
