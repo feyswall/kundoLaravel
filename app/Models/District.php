@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class District extends Model
@@ -36,5 +37,16 @@ class District extends Model
     public function councils()
     {
         return $this->hasMany(Council::class);
+    }
+
+
+    /**
+     * Get all of the states for the District
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function states(): HasMany
+    {
+        return $this->hasMany(State::class);
     }
 }

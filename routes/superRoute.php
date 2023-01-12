@@ -20,6 +20,7 @@ use \App\Http\Controllers\Super\Area\CouncilsController;
 use \App\Http\Controllers\Super\Area\DivisionsController;
 use \App\Http\Controllers\Super\Area\WardsController;
 use \App\Http\Controllers\Super\Area\BranchesController;
+use \App\Http\Controllers\Super\Area\StatesController;
 
 Route::controller(DistrictsController::class)
     ->prefix('/super/areas/district')
@@ -66,4 +67,14 @@ Route::controller(BranchesController::class)
         Route::get('/orodha/{ward}', 'index')->name('orodha');
         Route::post('/ongeza', 'store')->name('ongeza');
         Route::get('/fungua/{branch}', 'show')->name('fungua');
+    });
+
+
+
+Route::controller(StatesController::class)
+    ->prefix('/super/areas/state')
+    ->as('super.areas.jimbo.')
+    ->group(function () {
+        Route::get('/orodha/{district}', 'index')->name('orodha');
+        Route::post('/ongeza', 'store')->name('ongeza');
     });
