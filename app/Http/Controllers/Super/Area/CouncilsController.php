@@ -52,11 +52,11 @@ class CouncilsController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         }
 
-        $region = Region::where("name", "Simiyu");
-
-        if ( ! ( $region->exists() ) ){
-            redirect()->back()->withErrors(['nullModel' =>  'Wilaya is Not Registered in The System']);
-        }
+//        $region = Region::where("name", "Simiyu");
+//
+//        if ( ! ( $region->exists() ) ){
+//            redirect()->back()->withErrors(['nullModal' =>  'Wilaya is Not Registered in The System']);
+//        }
 
         $area = Council::create([
             'name' => $request->halmashauri,

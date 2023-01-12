@@ -38,7 +38,7 @@
                     <div class="card-body">
 
                         <button  data-bs-toggle="modal" data-bs-target="#orodhaHalmashauriModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Tarafa</button>
-                        <a href="{{ route('super.areas.wilaya.orodha') }}" class="btn btn-primary btn-md mb-4">Rudi Katika Halmashauri</a>
+                        <a href="{{ route('super.areas.halmashauri.orodha', $council->id) }}" class="btn btn-primary btn-md mb-4">Rudi Katika Halmashauri</a>
                         <table id="superOrodhaTafaraTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                             <tr>
@@ -86,8 +86,8 @@
                             <div class="col-lg-12">
                                 <div class="mb-3 mb-4">
                                     <label class="form-label" for="billing-name">Jina La Wilaya</label>
-                                    <input type="text" class="form-control" readonly value="{{ $->name }}">
-                                    <input type="hidden" class="form-control" name="wilaya_id" readonly value="{{ $->id }}">
+                                    <input type="text" class="form-control" readonly value="{{ $council->name }}">
+                                    <input type="hidden" class="form-control" name="council_id" readonly value="{{ $council->id }}">
                                 </div>
                             </div>
                             <div class="col-lg-12">

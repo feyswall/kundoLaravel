@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Council;
 use App\Models\Division;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DivisionsController extends Controller
 {
@@ -40,7 +41,37 @@ class DivisionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'tarafa' => 'required|string|max:50|unique:divisions,name'
+        ];
+
+        dd( $request->council_id );
+
+        $validate = Validator::make($request->all() ,$rules, $messages = []);
+
+        if( $validate->fails() ){
+            return redirect()->back()->withErrors($validate->errors());
+        }
+
+//        $region = Region::where("name", "Simiyu");
+//
+//        if ( ! ( $region->exists() ) ){
+//            redirect()->back()->withErrors(['nullModal' =>  'Wilaya is Not Registered in The System']);
+//        }
+
+        $area = Division::create([
+            'name' => $request->tarafa,
+            'council_id' => $request->council_id,
+        ]);
+
+        if ( $area ){
+            return redirect()->back()
+                ->with(['status' => 'success', 'message' => 'Tarafa Imetengenezwa']);
+        }else{
+            return redirect()->back()
+                ->with(['status' => 'error', 'message' => 'Tumeshindwa Kutengeneza Tafadhali Jaribu Tena.']);
+        }
+
     }
 
     /**
@@ -51,7 +82,7 @@ class DivisionsController extends Controller
      */
     public function show(Division $division)
     {
-        //
+
     }
 
     /**
