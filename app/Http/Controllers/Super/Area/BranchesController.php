@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Super\Area;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Models\Ward;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class BranchesController extends Controller
 {
@@ -13,9 +16,12 @@ class BranchesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Ward $ward)
     {
-        //
+        $matawi = $ward->branches;
+        return view("interface.super.maeneo.tawi.orodhaMatawi")
+            ->with('areas', $matawi)
+            ->with('ward', $ward );
     }
 
     /**
@@ -36,7 +42,43 @@ class BranchesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ward_id = $request->ward_id;
+
+        $rules = [
+            'tawi' => ['required', 'string', 'max:50',
+                Rule::unique('branches', 'name')->where(function ($query) use($ward_id ) {
+                    return $query->where('ward_id', $ward_id);
+                }),
+                ]
+        ];
+
+        $validate = Validator::make($request->all() ,$rules, $messages = [
+            'tawi.unique' => 'Tawi Hili Limeshasajiriwa Katika Mfumo.'
+        ]);
+
+        if( $validate->fails() ){
+            return redirect()->back()->withErrors($validate->errors());
+        }
+
+//        $region = Region::where("name", "Simiyu");
+//
+//        if ( ! ( $region->exists() ) ){
+//            redirect()->back()->withErrors(['nullModal' =>  'Wilaya is Not Registered in The System']);
+//        }
+
+        $area = Branch::create([
+            'name' => $request->tawi,
+            'ward_id' => $request->ward_id,
+        ]);
+
+        if ( $area ){
+            return redirect()->back()
+                ->with(['status' => 'success', 'message' => 'Kata Imetengenezwa']);
+        }else{
+            return redirect()->back()
+                ->with(['status' => 'error', 'message' => 'Tumeshindwa Kutengeneza Tafadhali Jaribu Tena.']);
+        }
+
     }
 
     /**

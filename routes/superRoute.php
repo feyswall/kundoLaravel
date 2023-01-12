@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\Super\Area\DistrictsController;
 use \App\Http\Controllers\Super\Area\CouncilsController;
 use \App\Http\Controllers\Super\Area\DivisionsController;
-
-
+use \App\Http\Controllers\Super\Area\WardsController;
+use \App\Http\Controllers\Super\Area\BranchesController;
 
 Route::controller(DistrictsController::class)
     ->prefix('/super/areas/district')
@@ -45,4 +45,25 @@ Route::controller(DivisionsController::class)
     ->group(function () {
         Route::get('/orodha/{council}', 'index')->name('orodha');
         Route::post('/ongeza', 'store')->name('ongeza');
+    });
+
+
+
+
+Route::controller(WardsController::class)
+    ->prefix('/super/areas/ward')
+    ->as('super.areas.kata.')
+    ->group(function () {
+        Route::get('/orodha/{division}', 'index')->name('orodha');
+        Route::post('/ongeza', 'store')->name('ongeza');
+    });
+
+
+Route::controller(BranchesController::class)
+    ->prefix('/super/areas/branch')
+    ->as('super.areas.tawi.')
+    ->group(function () {
+        Route::get('/orodha/{ward}', 'index')->name('orodha');
+        Route::post('/ongeza', 'store')->name('ongeza');
+        Route::get('/fungua/{branch}', 'show')->name('fungua');
     });

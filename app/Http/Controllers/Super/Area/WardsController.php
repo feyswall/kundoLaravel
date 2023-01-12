@@ -3,24 +3,24 @@
 namespace App\Http\Controllers\Super\Area;
 
 use App\Http\Controllers\Controller;
-use App\Models\Council;
 use App\Models\Division;
+use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class DivisionsController extends Controller
+class WardsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Council $council)
+    public function index(Division $division)
     {
-        $tarafa = $council->divisions;
-        return view("interface.super.maeneo.tarafa.orodhaTarafa")
-            ->with('areas', $tarafa)
-            ->with('council', $council );
+        $kata = $division->wards;
+        return view("interface.super.maeneo.kata.orodhaKata")
+            ->with('areas', $kata)
+            ->with('division', $division );
     }
 
     /**
@@ -42,7 +42,7 @@ class DivisionsController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'tarafa' => 'required|string|max:50|unique:divisions,name'
+            'kata' => 'required|string|max:50|unique:wards,name'
         ];
 
         $validate = Validator::make($request->all() ,$rules, $messages = []);
@@ -57,14 +57,14 @@ class DivisionsController extends Controller
 //            redirect()->back()->withErrors(['nullModal' =>  'Wilaya is Not Registered in The System']);
 //        }
 
-        $area = Division::create([
-            'name' => $request->tarafa,
-            'council_id' => $request->council_id,
+        $area = Ward::create([
+            'name' => $request->kata,
+            'division_id' => $request->division_id,
         ]);
 
         if ( $area ){
             return redirect()->back()
-                ->with(['status' => 'success', 'message' => 'Tarafa Imetengenezwa']);
+                ->with(['status' => 'success', 'message' => 'Kata Imetengenezwa']);
         }else{
             return redirect()->back()
                 ->with(['status' => 'error', 'message' => 'Tumeshindwa Kutengeneza Tafadhali Jaribu Tena.']);
@@ -75,21 +75,21 @@ class DivisionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Division  $division
+     * @param  \App\Models\Ward  $ward
      * @return \Illuminate\Http\Response
      */
-    public function show(Division $division)
+    public function show(Ward $ward)
     {
-
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Division  $division
+     * @param  \App\Models\Ward  $ward
      * @return \Illuminate\Http\Response
      */
-    public function edit(Division $division)
+    public function edit(Ward $ward)
     {
         //
     }
@@ -98,10 +98,10 @@ class DivisionsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Division  $division
+     * @param  \App\Models\Ward  $ward
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Division $division)
+    public function update(Request $request, Ward $ward)
     {
         //
     }
@@ -109,10 +109,10 @@ class DivisionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Division  $division
+     * @param  \App\Models\Ward  $ward
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Division $division)
+    public function destroy(Ward $ward)
     {
         //
     }

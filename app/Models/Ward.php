@@ -20,4 +20,17 @@ class Ward extends Model
     {
         return $this->belongsTo(Division::class);
     }
+
+
+    /**
+     * Get the branch that owns the Ward
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function branches()
+    {
+        return $this->hasMany(Branch::class);
+    }
+
+
 }
