@@ -48,12 +48,25 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>one</td>
-                                        <td>two</td>
-                                        <td>three</td>
-                                        <td>four</td>
-                                    </tr>
+                                    @foreach( $areas as $key => $district )
+                                            <tr>
+                                                <td>{{ $district->name }}</td>
+                                                <td>{{ $district->councils()->count() }}</td>
+                                                <td>
+                                                    {{--@php--}}
+                                                        {{--$counter = 0;--}}
+                                                        {{--foreach ( $district->councils() as $council ){--}}
+                                                            {{--$number = $council->divisions()->count();--}}
+                                                        {{--}--}}
+                                                    {{--echo $counter;--}}
+                                                    {{--@endphp--}}
+                                                    {{ $district->divisions()->count() }}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('super.areas.halmashauri.orodha', $district->id) }}" class="btn btn-primary">fungua</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

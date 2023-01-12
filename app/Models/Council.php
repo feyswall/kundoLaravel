@@ -28,7 +28,7 @@ class Council extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function division(): HasMany
+    public function divisions(): HasMany
     {
         return $this->hasMany(Division::class);
     }
