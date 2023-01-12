@@ -57,7 +57,7 @@ class DistrictsController extends Controller
         $region = Region::where("name", "Simiyu");
 
         if ( ! ( $region->exists() ) ){
-            redirect()->back()->withErrors(['nullModel' =>  'Wilaya is Not Registered in The System']);
+            redirect()->back()->withErrors(['nullModal' =>  'Wilaya is Not Registered in The System']);
         }
 
         $area = District::create([
