@@ -8,14 +8,22 @@ use Illuminate\View\Component;
 class Table extends Component
 {
     public array $headers;
+    // public array $headers;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(array $headers)
+    public $areas;
+    public $id;
+    public $district;
+
+    public function __construct(array $headers, $areas, $id, $district)
     {
-        //
+        $this->district = $district;
+        $this->headers = $headers;
+        $this->areas = $areas;
+        $this->id = $id;
     }
 
     /**
