@@ -92,7 +92,7 @@
                     <div class="mt-5">
                         <h2>Orodha Majimbo</h2>
                         <button  data-bs-toggle="modal" data-bs-target="#orodhaJimboModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Majimbo</button>
-                        <table id="superOrodhaJimboTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        {{-- <table id="superOrodhaJimboTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                             <tr>
                                 <th>Jina la Jimbo</th>
@@ -110,7 +110,10 @@
                             @endforeach
 
                             </tbody>
-                        </table>
+                        </table> --}}
+
+                        <x-system.jimbo-table :states="$states" :district="$district">
+                        </x-system.jimbo-table>
                     </div>
                     <!-- model location states here -->
                     <x-system.modal id="orodhaJimboModal" aria="orodhaJimboLabel" size="modal-lg" title="Ongeza Jimbo Hapa" >

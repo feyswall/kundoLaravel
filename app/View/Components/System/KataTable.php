@@ -4,7 +4,7 @@ namespace App\View\Components\system;
 
 use Illuminate\View\Component;
 
-class wilayaTable extends Component
+class KataTable extends Component
 {
     public $areas;
     /**
@@ -24,6 +24,6 @@ class wilayaTable extends Component
      */
     public function render()
     {
-        return view('components.system.wilaya-table');
+        return view('components.system.kata-table');
     }
 }

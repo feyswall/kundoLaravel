@@ -4,17 +4,19 @@ namespace App\View\Components\system;
 
 use Illuminate\View\Component;
 
-class wilayaTable extends Component
+class JimboTable extends Component
 {
-    public $areas;
+    public $states;
+    public $district;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($areas)
+    public function __construct($states, $district)
     {
-        $this->areas = $areas;
+        $this->states = $states;
+        $this->district = $district;
     }
 
     /**
@@ -24,6 +26,6 @@ class wilayaTable extends Component
      */
     public function render()
     {
-        return view('components.system.wilaya-table');
+        return view('components.system.jimbo-table');
     }
 }

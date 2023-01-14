@@ -40,25 +40,10 @@
 
                         <button  data-bs-toggle="modal" data-bs-target="#orodhaJimboModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Jimbo</button>
                         <a href="{{ route('super.areas.tarafa.orodha', $division->council->id) }}" class="btn btn-primary btn-md mb-4">Rudi Wilayani</a>
-                        <table id="superOrodhaJimboTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                            <thead>
-                            <tr>
-                                <th>Jina la Jimbo</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach( $areas as $key => $state )
-                                <tr>
-                                    <td>{{ $state->name }}</td>
-                                    <td>
-                                        <a href="{{ route("super.areas.wilaya.orodha", $district->id) }}" class="btn btn-primary">fungua</a>
-                                    </td>
-                                </tr>
-                            @endforeach
+                        
 
-                            </tbody>
-                        </table>
+                        <x-system.jimbo-table :areas="$areas">
+                        </x-system.jimbo-table>
                     </div>
                 </div>
             </div> <!-- end col -->
