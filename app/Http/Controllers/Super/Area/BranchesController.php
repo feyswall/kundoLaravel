@@ -89,7 +89,9 @@ class BranchesController extends Controller
      */
     public function show(Branch $branch)
     {
-        //
+        if ( !$branch ) return redirect()->back();
+        return view("interface.super.maeneo.tawi.tawiMoja")
+            ->with('branch', $branch);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Ward extends Model
 {
@@ -30,6 +31,18 @@ class Ward extends Model
     public function branches()
     {
         return $this->hasMany(Branch::class);
+    }
+
+
+
+    /**
+     * The leaders that belong to the Ward
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function leaders(): BelongsToMany
+    {
+        return $this->belongsToMany(Leader::class)->withPivot('isActive', 'post_id');
     }
 
 

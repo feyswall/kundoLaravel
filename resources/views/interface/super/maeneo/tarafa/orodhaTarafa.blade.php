@@ -55,7 +55,13 @@
                                     <td>{{ $division->name }}</td>
                                     <td>{{ $division->wards()->count() }}</td>
                                     <td>
-                                        900
+                                        @php
+                                            $counter = 0;
+                                            foreach ( $division->wards as $ward ){
+                                            $counter += $ward->branches()->count();
+                                            }
+                                            echo $counter;
+                                        @endphp
                                     </td>
                                     <td>
                                         <a href="{{ route("super.areas.kata.orodha", $division->id) }}" class="btn btn-primary">fungua</a>

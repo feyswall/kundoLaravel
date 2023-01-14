@@ -19,8 +19,10 @@ class CouncilsController extends Controller
     public function index(District $district)
     {
         $halmashauri = $district->councils;
+        $majimbo = $district->states;
         return view("interface.super.maeneo.Halmashauri.orodhaHalmashauri")
             ->with('areas', $halmashauri)
+            ->with('states', $majimbo )
             ->with('district', $district );
     }
 

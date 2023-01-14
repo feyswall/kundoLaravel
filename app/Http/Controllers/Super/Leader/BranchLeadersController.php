@@ -1,26 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Super\Area;
+namespace App\Http\Controllers\Super\Leader;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ValidateStateRequest;
-use App\Models\District;
-use App\Models\State;
-use App\Rules\UniqueName;
+use App\Http\Requests\ValidateLeaderRequest;
+use App\Models\Leader;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
-class StatesController extends Controller
+class BranchLeadersController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(District $district)
+    public function index()
     {
-        dd($district);
+        //
     }
 
     /**
@@ -30,7 +27,7 @@ class StatesController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -39,31 +36,32 @@ class StatesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ValidateStateRequest $request)
+    public function store(ValidateLeaderRequest $request)
     {
 
-        $area = State::create([
-            'name' => $request->jimbo,
-            'district_id' => $request->district_id,
+        $leader = Leader::create([
+            'firstName' => $request->firstName,
+            'middleName' => $request->middleName,
+            'lastName' => $request->lastName,
+            'phone' => $request->phone
+        ]);
+        $leader->branches()->attach($request->side_id, [
+            'isActive' => true,
+            'post_id' => $request->post_id,
+            'created_at' => now()
         ]);
 
-        if ( $area ){
             return redirect()->back()
-                ->with(['status' => 'success', 'message' => 'Jimbo Imetengenezwa']);
-        }else{
-            return redirect()->back()
-                ->with(['status' => 'error', 'message' => 'Tumeshindwa Kutengeneza Tafadhali Jaribu Tena.']);
-        }
-
+                ->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa Imetengenezwa']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\State  $state
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function show(State $state)
+    public function show(Leader $leader)
     {
         //
     }
@@ -71,10 +69,10 @@ class StatesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\State  $state
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function edit(State $state)
+    public function edit(Leader $leader)
     {
         //
     }
@@ -83,10 +81,10 @@ class StatesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\State  $state
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, State $state)
+    public function update(Request $request, Leader $leader)
     {
         //
     }
@@ -94,10 +92,10 @@ class StatesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\State  $state
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function destroy(State $state)
+    public function destroy(Leader $leader)
     {
         //
     }
