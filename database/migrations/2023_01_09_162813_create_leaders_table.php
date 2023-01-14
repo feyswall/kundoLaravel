@@ -15,7 +15,11 @@ return new class extends Migration
     {
         Schema::create('leaders', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
+            $table->string("firstName", 50);
+            $table->string("middleName", 50)->nullable();
+            $table->string("lastName", 50);
+            $table->string("phone");
+
             $table->timestamps();
         });
     }

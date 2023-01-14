@@ -45,8 +45,6 @@ class DivisionsController extends Controller
             'tarafa' => 'required|string|max:50|unique:divisions,name'
         ];
 
-        dd( $request->council_id );
-
         $validate = Validator::make($request->all() ,$rules, $messages = []);
 
         if( $validate->fails() ){

@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Super\Area;
 
 use App\Http\Controllers\Controller;
-use App\Models\Council;
+use App\Http\Requests\ValidateStateRequest;
 use App\Models\District;
+use App\Models\State;
+use App\Rules\UniqueName;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Region;
 
-class CouncilsController extends Controller
+class StatesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,12 +20,7 @@ class CouncilsController extends Controller
      */
     public function index(District $district)
     {
-        $halmashauri = $district->councils;
-        $majimbo = $district->states;
-        return view("interface.super.maeneo.Halmashauri.orodhaHalmashauri")
-            ->with('areas', $halmashauri)
-            ->with('states', $majimbo )
-            ->with('district', $district );
+        dd($district);
     }
 
     /**
@@ -42,45 +39,31 @@ class CouncilsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ValidateStateRequest $request)
     {
-        $rules = [
-            'halmashauri' => 'required|string|max:50|unique:councils,name'
-        ];
 
-        $validate = Validator::make($request->all() ,$rules);
-
-        if( $validate->fails() ){
-            return redirect()->back()->withErrors($validate->errors());
-        }
-
-//        $region = Region::where("name", "Simiyu");
-//
-//        if ( ! ( $region->exists() ) ){
-//            redirect()->back()->withErrors(['nullModal' =>  'Wilaya is Not Registered in The System']);
-//        }
-
-        $area = Council::create([
-            'name' => $request->halmashauri,
-            'district_id' => $request->wilaya_id
+        $area = State::create([
+            'name' => $request->jimbo,
+            'district_id' => $request->district_id,
         ]);
 
         if ( $area ){
             return redirect()->back()
-                ->with(['status' => 'success', 'message' => 'Wilaya Imetengenezwa']);
+                ->with(['status' => 'success', 'message' => 'Jimbo Imetengenezwa']);
         }else{
             return redirect()->back()
                 ->with(['status' => 'error', 'message' => 'Tumeshindwa Kutengeneza Tafadhali Jaribu Tena.']);
         }
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Council  $council
+     * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function show(Council $council)
+    public function show(State $state)
     {
         //
     }
@@ -88,10 +71,10 @@ class CouncilsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Council  $council
+     * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function edit(Council $council)
+    public function edit(State $state)
     {
         //
     }
@@ -100,10 +83,10 @@ class CouncilsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Council  $council
+     * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Council $council)
+    public function update(Request $request, State $state)
     {
         //
     }
@@ -111,10 +94,10 @@ class CouncilsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Council  $council
+     * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Council $council)
+    public function destroy(State $state)
     {
         //
     }

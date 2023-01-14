@@ -3,25 +3,24 @@
 namespace App\Http\Controllers\Super\Area;
 
 use App\Http\Controllers\Controller;
-use App\Models\Branch;
+use App\Models\Division;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
-class BranchesController extends Controller
+class WardsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Ward $ward)
+    public function index(Division $division)
     {
-        $matawi = $ward->branches;
-        return view("interface.super.maeneo.tawi.orodhaMatawi")
-            ->with('areas', $matawi)
-            ->with('ward', $ward );
+        $kata = $division->wards;
+        return view("interface.super.maeneo.kata.orodhaKata")
+            ->with('areas', $kata)
+            ->with('division', $division );
     }
 
     /**
@@ -42,19 +41,11 @@ class BranchesController extends Controller
      */
     public function store(Request $request)
     {
-        $ward_id = $request->ward_id;
-
         $rules = [
-            'tawi' => ['required', 'string', 'max:50',
-                Rule::unique('branches', 'name')->where(function ($query) use($ward_id ) {
-                    return $query->where('ward_id', $ward_id);
-                }),
-                ]
+            'kata' => 'required|string|max:50|unique:wards,name'
         ];
 
-        $validate = Validator::make($request->all() ,$rules, $messages = [
-            'tawi.unique' => 'Tawi Hili Limeshasajiriwa Katika Mfumo.'
-        ]);
+        $validate = Validator::make($request->all() ,$rules, $messages = []);
 
         if( $validate->fails() ){
             return redirect()->back()->withErrors($validate->errors());
@@ -66,9 +57,9 @@ class BranchesController extends Controller
 //            redirect()->back()->withErrors(['nullModal' =>  'Wilaya is Not Registered in The System']);
 //        }
 
-        $area = Branch::create([
-            'name' => $request->tawi,
-            'ward_id' => $request->ward_id,
+        $area = Ward::create([
+            'name' => $request->kata,
+            'division_id' => $request->division_id,
         ]);
 
         if ( $area ){
@@ -84,23 +75,21 @@ class BranchesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Branch  $branch
+     * @param  \App\Models\Ward  $ward
      * @return \Illuminate\Http\Response
      */
-    public function show(Branch $branch)
+    public function show(Ward $ward)
     {
-        if ( !$branch ) return redirect()->back();
-        return view("interface.super.maeneo.tawi.tawiMoja")
-            ->with('branch', $branch);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Branch  $branch
+     * @param  \App\Models\Ward  $ward
      * @return \Illuminate\Http\Response
      */
-    public function edit(Branch $branch)
+    public function edit(Ward $ward)
     {
         //
     }
@@ -109,10 +98,10 @@ class BranchesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Branch  $branch
+     * @param  \App\Models\Ward  $ward
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Branch $branch)
+    public function update(Request $request, Ward $ward)
     {
         //
     }
@@ -120,10 +109,10 @@ class BranchesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Branch  $branch
+     * @param  \App\Models\Ward  $ward
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Branch $branch)
+    public function destroy(Ward $ward)
     {
         //
     }

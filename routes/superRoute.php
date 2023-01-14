@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\Super\Area\DistrictsController;
 use \App\Http\Controllers\Super\Area\CouncilsController;
 use \App\Http\Controllers\Super\Area\DivisionsController;
-
+use \App\Http\Controllers\Super\Area\WardsController;
+use \App\Http\Controllers\Super\Area\BranchesController;
+use \App\Http\Controllers\Super\Leader\BranchLeadersController;
 
 
 Route::controller(DistrictsController::class)
@@ -46,3 +48,43 @@ Route::controller(DivisionsController::class)
         Route::get('/orodha/{council}', 'index')->name('orodha');
         Route::post('/ongeza', 'store')->name('ongeza');
     });
+
+
+
+
+Route::controller(WardsController::class)
+    ->prefix('/super/areas/ward')
+    ->as('super.areas.kata.')
+    ->group(function () {
+        Route::get('/orodha/{division}', 'index')->name('orodha');
+        Route::post('/ongeza', 'store')->name('ongeza');
+    });
+
+
+Route::controller(BranchesController::class)
+    ->prefix('/super/areas/branch')
+    ->as('super.areas.tawi.')
+    ->group(function () {
+        Route::get('/orodha/{ward}', 'index')->name('orodha');
+        Route::post('/ongeza', 'store')->name('ongeza');
+        Route::get('/fungua/{branch}', 'show')->name('fungua');
+    });
+
+
+
+Route::controller(\App\Http\Controllers\Super\Area\StatesController::class)
+    ->prefix('/super/areas/state')
+    ->as('super.areas.jimbo.')
+    ->group(function () {
+        Route::get('/orodha/{district}', 'index')->name('orodha');
+        Route::post('/ongeza', 'store')->name('ongeza');
+    });
+
+
+Route::controller(BranchLeadersController::class)
+->prefix('/super/leader/branch')
+->as('super.leader.tawi.')
+->group(function () {
+    Route::get('/orodha/{district}', 'index')->name('orodha');
+    Route::post('/ongeza', 'store')->name('ongeza');
+});

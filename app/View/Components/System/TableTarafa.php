@@ -14,7 +14,7 @@ class TableTarafa extends Component
      */
     public function __construct($areas)
     {
-        $this->$areas = $areas;
+        $this->areas = $areas;
     }
 
     /**
