@@ -11,18 +11,8 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'deep', 'area_id'];
+    protected $fillable = ['name', 'deep', 'area'];
 
-
-    /**
-     * Get the area that owns the Post
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function area(): BelongsTo
-    {
-        return $this->belongsTo(Area::class);
-    }
 
     /**
      * The leaders that belong to the Leader

@@ -13,8 +13,30 @@
 @section("content")
     <!-- Start right Content here -->
     <!-- ============================================================== -->
-    <div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <a href="#checkout-orodhaKata-collapse" class="text-dark" data-bs-toggle="collapse">
+                    <div class="p-4">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i> </div>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <h5 class="font-size-16 mb-1">Taarifa Kuhusiana Na Tarafa</h5>
+                            </div>
+                            <div class="flex-shrink-0"> <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>
+                        </div>
+                    </div>
+                </a>
+                <div id="checkout-orodhaKata-collapse" class="collapse hide">
+                    <div class="p-4 border-top">
 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -36,7 +58,6 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-
                         <button  data-bs-toggle="modal" data-bs-target="#orodhaKataModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Kata</button>
                         <a href="{{ route('super.areas.tarafa.orodha', $division->council->id) }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Tarafa</a>
                         <table id="superOrodhaKataTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">

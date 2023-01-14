@@ -16,19 +16,43 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        $wilaya_area_snapshot = Area::where("name", "TAWI");
+        $area = "tawi";
+        $posts = array(
+            /** Uwongozi Tawi */
+            ['area' => $area, 'deep' => 'mwenyekiti_tawi', 'name' => 'mwenyekiti'],
+            ['area' => $area, 'deep' => 'katibu_tawi', 'name' => 'katibu'],
+            ['area' => $area, 'deep' => 'mwenezi_tawi', 'name' => 'mwenezi'],
+            ['area' => $area, 'deep' => 'mjumbe_tawi', 'name' => 'mjumbe wilaya'],
+        );
 
-        if( $wilaya_area_snapshot->exists() ){
-            $area_id = $wilaya_area_snapshot->first()->id;
-            $posts = array(
-                ['area_id' => $area_id, 'name' => 'mwenyekiti wa tawi', 'deep' => 'mwenyekiti'],
-                ['area_id' => $area_id, 'name' => 'katibu wa tawi', 'deep' => 'katibu'],
-                ['area_id' => $area_id, 'name' => 'mwenezi wa tawi', 'deep' => 'mwenezi'],
-                ['area_id' => $area_id, 'name' => 'mjumbe wa tawi', 'deep' => 'mjumbe wilaya']
-            );
-            foreach( $posts as $key => $post ){
-                Post::create( $post );
-            }
+        foreach ($posts as $key => $post) {
+            Post::create($post);
+        }
+
+
+        $area2 = "kata";
+        $secPosts = array(
+            /** Uwongozi Kata */
+            ['area' => $area2, 'deep' => 'mwenyekiti_kata', 'name' => 'mwenyekiti'],
+            ['area' => $area2, 'deep' => 'katibu_kata', 'name' => 'katibu'],
+            ['area' => $area2, 'deep' => 'mwenezi_kata', 'name' => 'mwenezi'],
+            ['area' => $area2, 'deep' => 'diwani', 'name' => 'diwani'],
+            ['area' => $area2, 'deep' => 'diwani_vm', 'name' => 'diwani viti maalum'],
+            ['area' => $area2, 'deep' => 'mj_mkutano_mkuu_M', 'name' => 'mjumbe mkutano mkuu mkoa'],
+            ['area' => $area2, 'deep' => 'mj_mkutano_mkuu_W', 'name' => 'mjumbe mkutano mkuu wilaya'],
+
+            ['area' => $area2, 'deep' => 'm_kiti_wz_K', 'name' => 'mwenyekiti wazazi'],
+            ['area' => $area2, 'deep' => 'katibu_wz_K', 'name' => 'katibu wazazi'],
+
+            ['area' => $area2, 'deep' => 'm_kiti_wk_K', 'name' => 'mwenyekiti wanawake'],
+            ['area' => $area2, 'deep' => 'katibu_wk_K', 'name' => 'katibu wanawake'],
+
+            ['area' => $area2, 'deep' => 'm_kiti_vj_K', 'name' => 'mwenyekiti vijana'],
+            ['area' => $area2, 'deep' => 'katibu_vj_K', 'name' => 'katibu vijana'],
+            ['area' => $area2, 'deep' => 'hamasa_vj_K', 'name' => 'hamasa vijana'],
+        );
+        foreach ($secPosts as $key => $post) {
+            Post::create($post);
         }
     }
 }
