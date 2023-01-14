@@ -7,7 +7,6 @@
  */
 ?>
 
-
 @extends("layouts.super_system")
 
 @section("content")
@@ -65,6 +64,9 @@
 
                             </tbody>
                         </table>
+                        {{-- 
+                        <x-system.table-tarafa :areas="$areas">
+                        </x-system.table-tarafa> --}}
                     </div>
                 </div>
             </div> <!-- end col -->
