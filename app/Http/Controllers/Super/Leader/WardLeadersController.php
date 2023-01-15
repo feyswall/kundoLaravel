@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Super\Leader;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidateWardLeaderRequest;
+use App\Models\Leader;
+use App\Models\Post;
 use App\Models\Ward;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WardLeadersController extends Controller
 {
@@ -31,12 +35,25 @@ class WardLeadersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\ValidateLeaderRequest
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ValidateWardLeaderRequest $request)
     {
-        //
+        $leader = Leader::create([
+            'firstName' => $request->firstName,
+            'middleName' => $request->middleName,
+            'lastName' => $request->lastName,
+            'phone' => $request->phone
+        ]);
+        $leader->wards()->attach($request->side_id, [
+            'isActive' => true,
+            'post_id' => $request->post_id,
+            'created_at' => now()
+        ]);
+
+        return redirect()->back()
+            ->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 
     /**

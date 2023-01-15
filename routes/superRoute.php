@@ -21,7 +21,11 @@ use \App\Http\Controllers\Super\Area\DivisionsController;
 use \App\Http\Controllers\Super\Area\WardsController;
 use \App\Http\Controllers\Super\Area\BranchesController;
 use \App\Http\Controllers\Super\Leader\BranchLeadersController;
-
+use App\Http\Controllers\Super\Leader\DivisionLeadersController;
+use App\Http\Controllers\Super\Leader\WardLeadersController;
+use App\Http\Controllers\Super\Leader\CouncilLeadersController;
+use App\Http\Controllers\Super\Leader\DistrictLeadersController;
+use App\Http\Controllers\Super\Leader\RegionLeadersController;
 
 Route::controller(DistrictsController::class)
     ->prefix('/super/areas/district')
@@ -85,6 +89,50 @@ Route::controller(BranchLeadersController::class)
 ->prefix('/super/leader/branch')
 ->as('super.leader.tawi.')
 ->group(function () {
-    Route::get('/orodha/{district}', 'index')->name('orodha');
+    Route::get('/orodha/{ward}', 'index')->name('orodha');
     Route::post('/ongeza', 'store')->name('ongeza');
 });
+
+
+Route::controller(WardLeadersController::class)
+    ->prefix('/super/leader/ward')
+    ->as('super.leader.kata.')
+    ->group(function () {
+        Route::get('/orodha/{division}', 'index')->name('orodha');
+        Route::post('/ongeza', 'store')->name('ongeza');
+    });
+
+
+Route::controller(DivisionLeadersController::class)
+->prefix('/super/leader/division')
+->as('super.leader.tarafa.')
+->group(function () {
+    Route::get('/orodha/{council}', 'index')->name('orodha');
+    Route::post('/ongeza', 'store')->name('ongeza');
+});
+
+
+Route::controller(CouncilLeadersController::class)
+    ->prefix('/super/leader/council')
+    ->as('super.leader.halmashauri.')
+    ->group(function () {
+        Route::get('/orodha/{district}', 'index')->name('orodha');
+        Route::post('/ongeza', 'store')->name('ongeza');
+    });
+
+
+Route::controller(DistrictLeadersController::class)
+    ->prefix('/super/leader/district')
+    ->as('super.leader.wilaya.')
+    ->group(function () {
+        Route::get('/orodha/{region}', 'index')->name('orodha');
+        Route::post('/ongeza', 'store')->name('ongeza');
+    });
+
+
+Route::controller(RegionLeadersController::class)
+    ->prefix('/super/leader/region')
+    ->as('super.leader.mkoa.')
+    ->group(function () {
+        Route::post('/ongeza', 'store')->name('ongeza');
+    });

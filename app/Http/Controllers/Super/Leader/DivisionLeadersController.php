@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Super\Leader;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ValidateBranchLeaderRequest;
-use App\Http\Requests\ValidateWardLeaderRequest;
+use App\Http\Requests\ValidateDivisionLeaderRequest;
+use App\Models\Division;
 use App\Models\Leader;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class BranchLeadersController extends Controller
+class DivisionLeadersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +27,7 @@ class BranchLeadersController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -37,7 +36,7 @@ class BranchLeadersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ValidateWardLeaderRequest $request)
+    public function store(ValidateDivisionLeaderRequest $request)
     {
         $leader = Leader::create([
             'firstName' => $request->firstName,
@@ -45,23 +44,21 @@ class BranchLeadersController extends Controller
             'lastName' => $request->lastName,
             'phone' => $request->phone
         ]);
-        $leader->branches()->attach($request->side_id, [
+        $leader->divisions()->attach($request->side_id, [
             'isActive' => true,
             'post_id' => $request->post_id,
             'created_at' => now()
         ]);
-
-            return redirect()->back()
-                ->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa Imetengenezwa']);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Leader  $leader
+     * @param  \App\Models\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function show(Leader $leader)
+    public function show(Division $division)
     {
         //
     }
@@ -69,10 +66,10 @@ class BranchLeadersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Leader  $leader
+     * @param  \App\Models\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function edit(Leader $leader)
+    public function edit(Division $division)
     {
         //
     }
@@ -81,10 +78,10 @@ class BranchLeadersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Leader  $leader
+     * @param  \App\Models\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Leader $leader)
+    public function update(Request $request, Division $division)
     {
         //
     }
@@ -92,10 +89,10 @@ class BranchLeadersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Leader  $leader
+     * @param  \App\Models\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Leader $leader)
+    public function destroy(Division $division)
     {
         //
     }

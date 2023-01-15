@@ -7,10 +7,10 @@ use App\Models\Area;
 use App\Models\AreaDescription;
 use App\Models\District;
 use App\Models\Region;
-use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use function Symfony\Component\Console\Helper\removeDecoration;
+
+
 
 class DistrictsController extends Controller
 {
@@ -21,9 +21,11 @@ class DistrictsController extends Controller
      */
     public function index()
     {
-        $wilaya = District::all();
+        $region = Region::where('name', 'simiyu')->first();
+        $wilaya = $region->districts;
         return view("interface.super.maeneo.wilaya.orodhaWilaya")
-            ->with('areas', $wilaya);
+            ->with('areas', $wilaya)
+            ->with('region', $region);
     }
 
     /**
