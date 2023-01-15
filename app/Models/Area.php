@@ -12,14 +12,4 @@ class Area extends Model
 
     protected $fillable = ['name'];
 
-    /**
-     * Get all of the posts for the Area
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function posts(): HasMany
-    {
-        return $this->hasMany(Posts::class);
-    }
-
 }

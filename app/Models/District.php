@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
@@ -48,5 +49,16 @@ class District extends Model
     public function states(): HasMany
     {
         return $this->hasMany(State::class);
+    }
+
+
+    /**
+     * The leaders that belong to the District
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function leaders(): BelongsToMany
+    {
+        return $this->belongsToMany(Leader::class)->withPivot('isActive', 'post_id');
     }
 }

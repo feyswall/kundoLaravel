@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('branch_leader', function (Blueprint $table) {
+        Schema::create('council_leader', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('leader_id');
-            $table->unsignedBigInteger('branch_id');
+            $table->unsignedBigInteger('council_id');
             $table->boolean('isActive')->default(false);
             $table->string('post_id');
 
             $table->foreign('leader_id')->references('id')->on('leaders')->onDelete('cascade');
-            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
+            $table->foreign('council_id')->references('id')->on('councils')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('branch_leader');
+        Schema::dropIfExists('council_leader');
     }
 };

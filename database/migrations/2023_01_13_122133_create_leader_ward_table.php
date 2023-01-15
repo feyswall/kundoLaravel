@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('leader_id');
             $table->unsignedBigInteger('ward_id');
-            $table->boolean('isActive')->default(true);
-            $table->string('status');
+            $table->boolean('isActive')->default(false);
+            $table->string('post_id');
 
             $table->foreign('leader_id')->references('id')->on('leaders')->onDelete('cascade');
             $table->foreign('ward_id')->references('id')->on('wards')->onDelete('cascade');

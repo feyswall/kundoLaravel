@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Division extends Model
@@ -32,5 +33,15 @@ class Division extends Model
     public function wards(): HasMany
     {
         return $this->hasMany(Ward::class );
+    }
+
+    /**
+     * The leaders that belong to the Ward
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function leaders(): BelongsToMany
+    {
+        return $this->belongsToMany(Leader::class)->withPivot('isActive', 'post_id');
     }
 }

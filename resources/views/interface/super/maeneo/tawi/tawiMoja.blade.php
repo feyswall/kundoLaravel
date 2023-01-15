@@ -13,8 +13,31 @@
 @section("content")
     <!-- Start right Content here -->
     <!-- ============================================================== -->
-    <div class="container-fluid">
 
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <a href="#checkout-orodhaKata-collapse" class="text-dark" data-bs-toggle="collapse">
+                    <div class="p-4">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i> </div>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <h5 class="font-size-16 mb-1">Taarifa Kuhusiana Na Kata</h5>
+                            </div>
+                            <div class="flex-shrink-0"> <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>
+                        </div>
+                    </div>
+                </a>
+                <div id="checkout-orodhaKata-collapse" class="collapse hide">
+                    <div class="p-4 border-top">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -59,47 +82,21 @@
                             <h1>Viongozi wa Tawi</h1>
                                 <div>
                                     @php
-                                        $mwenyekiti = \App\Models\Post::where('deep', 'mwenyekiti')->first();
-                                        $katibu = \App\Models\Post::where('deep', 'katibu')->first();
-                                        $mwenezi = \App\Models\Post::where('deep', 'mwenezi')->first();
-                                        $mjumbe = \App\Models\Post::where('deep', 'mjumbe wilaya')->first();
+                                        $mwenyekiti = \App\Models\Post::where('deep', 'mwenyekiti_tawi')->first();
+                                        $katibu = \App\Models\Post::where('deep', 'katibu_tawi')->first();
+                                        $mwenezi = \App\Models\Post::where('deep', 'mwenezi_tawi')->first();
+                                        $mjumbe = \App\Models\Post::where('deep', 'mjumbe_tawi')->first();
                                     @endphp
-                                    <h3>Mwenyekiti</h3>
-                                            @foreach ( $branch->leaders as $leader )
-                                                @if( $leader->pivot->post_id == $mwenyekiti->id )
-                                                    <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a
-                                                                href="#">badiri</a></p>
-                                                @endif
-                                            @endforeach
 
-                                    <hr>
-
-                                    <h3>Katibu</h3>
-                                        @foreach ( $branch->leaders as $leader )
-                                            @if( $leader->pivot->post_id == $katibu->id )
+                                    <div>
+                                        @foreach( $branch->leaders as $leader )
+                                            @if( $leader->pivot->isActive == true )
+                                                <h3>{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</h3>
                                                 <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="#">badiri</a></p>
                                             @endif
                                         @endforeach
                                         <hr>
-
-                                    <h3>Mwenezi</h3>
-                                    @foreach ( $branch->leaders as $leader )
-                                        @if( $leader->pivot->post_id == $mwenezi->id )
-                                            <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="#">badiri</a></p>
-                                        @endif
-                                    @endforeach
-                                    <hr>
-
-
-                                    <h3>Mjumbe</h3>
-                                    @foreach ( $branch->leaders as $leader )
-                                        @if( $leader->pivot->post_id == $mjumbe->id )
-                                            <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="#">badiri</a></p>
-                                        @endif
-                                    @endforeach
-                                    <hr>
-
-
+                                    </div>
 
                                 </div>
 
@@ -145,8 +142,8 @@
                                                     <div class="mb-3 mb-4">
                                                         <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                         <select class="form-control" name="post_id">
-                                                            @foreach( \App\Models\Post::all() as $post )
-                                                                <option value="{{ $post->id }}">{{ $post->deep }}</option>
+                                                            @foreach( \App\Models\Post::where('area', 'tawi')->get() as $post )
+                                                                <option value="{{ $post->id }}">{{ $post->name }}</option>
                                                                 @endforeach
                                                         </select>
                                                     </div>
