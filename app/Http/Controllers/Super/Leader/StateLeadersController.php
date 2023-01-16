@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Super\Leader;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Super\LeadersController;
+use App\Http\Requests\ValidateStateLeaderRequest;
 use App\Models\State;
 use Illuminate\Http\Request;
 
@@ -33,12 +34,11 @@ class StateLeadersController extends Controller
      * Store a newly created resource in storage.
      *
      */
-    public function store(Request $request)
+    public function store(ValidateStateLeaderRequest $request)
     {
-        dd("hit right here");
         $obj = new LeadersController();
         $leader = $obj->store( $request );
-        $obj->attachMany( $leader->regions(), $request );
+        $obj->attachMany( $leader->states(), $request );
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 

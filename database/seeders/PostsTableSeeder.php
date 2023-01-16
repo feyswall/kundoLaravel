@@ -137,11 +137,11 @@ class PostsTableSeeder extends Seeder
 
 
         $area7 = "jimbo";
-        $fifthPosts = array(
+        $sixth = array(
             /** Uwongozi Jimbo */
             ['area' => $area7, 'deep' => 'mbunge', 'name' => 'mbunge'],
         );
-        foreach ($fifthPosts as $key => $post) {
+        foreach ($sixth as $key => $post) {
             Post::create($post);
         }
 

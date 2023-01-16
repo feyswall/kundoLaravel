@@ -55,52 +55,16 @@
                         <h4>{{ $ward->name }}</h4>
 
 
-                        <div>
-                            <h1>Viongozi wa Kata</h1>
                             <div>
-                                @php
-                                    $mwenyekiti = \App\Models\Post::where('deep', 'mwenyekiti')->first();
-                                    $katibu = \App\Models\Post::where('deep', 'katibu')->first();
-                                    $mwenezi = \App\Models\Post::where('deep', 'mwenezi')->first();
-                                    $mjumbe = \App\Models\Post::where('deep', 'mjumbe wilaya')->first();
-                                @endphp
-                                <h3>Mwenyekiti</h3>
-                                @foreach ( $branch->leaders as $leader )
-                                    @if( $leader->pivot->post_id == $mwenyekiti->id )
-                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a
-                                                    href="#">badiri</a></p>
-                                    @endif
-                                @endforeach
-
-                                <hr>
-
-                                <h3>Katibu</h3>
-                                @foreach ( $branch->leaders as $leader )
-                                    @if( $leader->pivot->post_id == $katibu->id )
-                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="#">badiri</a></p>
-                                    @endif
-                                @endforeach
-                                <hr>
-
-                                <h3>Mwenezi</h3>
-                                @foreach ( $branch->leaders as $leader )
-                                    @if( $leader->pivot->post_id == $mwenezi->id )
-                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="#">badiri</a></p>
-                                    @endif
-                                @endforeach
-                                <hr>
-
-
-                                <h3>Mjumbe</h3>
-                                @foreach ( $branch->leaders as $leader )
-                                    @if( $leader->pivot->post_id == $mjumbe->id )
-                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="#">badiri</a></p>
-                                    @endif
-                                @endforeach
-                                <hr>
-
-
-
+                                <h1>Viongozi wa Jimbo</h1>
+                                <div>
+                                    @foreach( $ward->leaders as $leader )
+                                        @if( $leader->pivot->isActive == true )
+                                            <h3>{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</h3>
+                                            <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="#">badiri</a></p>
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
 
                             <a href="{{ route("super.areas.tawi.orodha", $branch->ward->id) }}" class="btn btn-primary btn-md mb-4" >Rudi Kwenye Kata</a>
@@ -145,7 +109,7 @@
                                                 <div class="mb-3 mb-4">
                                                     <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                     <select class="form-control" name="post_id">
-                                                        @foreach( \App\Models\Post::all() as $post )
+                                                         @foreach( \App\Models\Post::where('area', 'kata')->get() as $post )
                                                             <option value="{{ $post->id }}">{{ $post->deep }}</option>
                                                         @endforeach
                                                     </select>

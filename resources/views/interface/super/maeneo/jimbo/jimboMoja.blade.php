@@ -44,8 +44,6 @@
                         <h2>Wilaya</h2>
                         <h4>{{ $state->district->name }}</h4>
 
-
-
                         <div>
                             <h1>Viongozi wa Jimbo</h1>
                             <div>
@@ -57,12 +55,12 @@
                                 @endforeach
                             </div>
 
-                            <a href="{{ route("super.areas.tawi.orodha", $branch->ward->id) }}" class="btn btn-primary btn-md mb-4" >Rudi Kwenye Kata</a>
-                            <button  data-bs-toggle="modal" data-bs-target="#ongezaKiongoziModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri </button>
+                            <a href="{{ route("super.areas.jimbo.orodha", $state->district->id) }}" class="btn btn-primary btn-md mb-4" >Rudi Kwenye Wilaya</a>
+                            <button  data-bs-toggle="modal" data-bs-target="#ongezaKiongoziModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri  Kiongozi</button>
                             <!-- model location here -->
                             <x-system.modal id="ongezaKiongoziModal" aria="orodhaTawiLabel" size="modal-fullscreen" title="Ongeza Tawi Hapa" >
                                 <x-slot:content>
-                                    <form method="post" action="{{ route('super.leader.tawi.ongeza') }}">
+                                    <form method="post" action="{{ route('super.leader.jimbo.ongeza') }}">
                                         @csrf
                                         <div class="row">
                                             <div class="col-sm-12 col-md-4 col-lg-3">
@@ -89,9 +87,9 @@
                                                     <input type="text" class="form-control" name="phone" placeholder="eg: 0678 987 897">
 
                                                     <!-- data to simplify the validation process -->
-                                                    <input type="hidden" value="{{ $branch->id }}" class="form-control" name="side_id" >
-                                                    <input type="hidden" value="branch_leader" class="form-control" name="table" >
-                                                    <input type="hidden" value="branch_id" class="form-control" name="side_column" >
+                                                    <input type="hidden" value="{{ $state->id }}" class="form-control" name="side_id" >
+                                                    <input type="hidden" value="leader_state" class="form-control" name="table" >
+                                                    <input type="hidden" value="state_id" class="form-control" name="side_column" >
 
                                                 </div>
                                             </div>
@@ -99,7 +97,7 @@
                                                 <div class="mb-3 mb-4">
                                                     <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                     <select class="form-control" name="post_id">
-                                                        @foreach( \App\Models\Post::all() as $post )
+                                                       @foreach( \App\Models\Post::where('area', 'jimbo')->get() as $post )
                                                             <option value="{{ $post->id }}">{{ $post->deep }}</option>
                                                         @endforeach
                                                     </select>

@@ -20,7 +20,12 @@ class StatesController extends Controller
      */
     public function index(District $district)
     {
-        return view("");
+        $states = $district->states;
+        $halmashauri = $district->councils;
+        return view("interface.super.maeneo.halmashauri.orodhaHalmashauri")
+            ->with('areas', $halmashauri)
+            ->with('states', $states)
+            ->with('district', $district );
     }
 
     /**
@@ -65,7 +70,9 @@ class StatesController extends Controller
      */
     public function show(State $state)
     {
-        dd( $state );
+        // dd( $state );
+        return view("interface.super.maeneo.jimbo.jimboMoja")
+        ->with("state", $state);
     }
 
     /**
