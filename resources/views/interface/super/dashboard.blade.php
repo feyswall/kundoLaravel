@@ -167,3 +167,8 @@
     </div>
     <!-- container-fluid -->
 @endsection
+
+@section('extra_script')
+    <x-system.table-script id="datatable-viongoziWilayaTable">
+    </x-system.table-script>
+@endsection

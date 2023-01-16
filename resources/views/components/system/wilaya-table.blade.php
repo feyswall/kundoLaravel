@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>Jina la Wilaya</th>
-        <th>Idadi Ya  Almashauri</th>
+        <th>Idadi Ya  Halmashauri</th>
         <th>Idadi Ya Tarafa</th>
         <th></th>
     </tr>

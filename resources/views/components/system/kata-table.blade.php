@@ -6,7 +6,7 @@
         <th></th>
     </tr>
     </thead>
-    <tbody>
+    <tbody> 
 
     @foreach( $areas as $key => $ward )
         <tr>

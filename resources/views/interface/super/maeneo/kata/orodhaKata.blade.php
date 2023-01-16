@@ -218,16 +218,7 @@
 @endsection
 
 @section("extra_script")
-    <script>
-        $ (document).ready (function () {
-            $ (
-                '#datatable'
-            ).DataTable (), $ ('#superOrodhaWilayaTable')
-                .DataTable ({lengthChange: !1, buttons: ['excel', 'pdf'], "order": [[ 1, "desc" ]]})
-                .buttons ()
-                .container ().appendTo ('#superOrodhaKataTable_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')
-                .addClass ('form-select form-select-sm');
-        });
-    </script>
+    <x-system.table-script id="superOrodhaKataTable">
+    </x-system.table-script>
 @endsection
 
