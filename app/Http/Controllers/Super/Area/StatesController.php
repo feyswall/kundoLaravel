@@ -45,7 +45,30 @@ class StatesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ValidateStateRequest $request)
-    {
+    {   
+        $district_id = $request->district_id;
+
+        $rules = [
+            'jimbo' => [
+                'required', 'string', 'max:50',
+                Rule::unique('states', 'name')->where(function ($query) use ($district_id) {
+                    return $query->where('district_id', $district_id);
+                }),
+            ]
+        ];
+
+        $messages = [
+            "jimbo.required" => "Ni lazima kujaza jina la jimbo",
+            "jimbo.string"  => "Jina lazima lihusishe maneno pekee",
+            "jimbo.max" => "Jina Lihusishe herufi zisizozidi hamsini (50)",
+            "jimbo.unique" => "Jina limeshasajiriwa"
+        ];    
+
+        $validate = Validator::make($request->all() ,$rules, $messages);
+
+        if( $validate->fails() ){
+            return redirect()->back()->withErrors($validate->errors());
+        }
 
         $area = State::create([
             'name' => $request->jimbo,

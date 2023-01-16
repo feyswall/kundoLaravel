@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Super\Area;
 use App\Http\Controllers\Controller;
 use App\Models\Council;
 use App\Models\Division;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 
 class DivisionsController extends Controller
 {
@@ -41,11 +43,26 @@ class DivisionsController extends Controller
      */
     public function store(Request $request)
     {
+        $council_id = $request->council_id;
+
         $rules = [
-            'tarafa' => 'required|string|max:50|unique:divisions,name'
+            'tarafa' => [
+                'required', 'string', 'max:50',
+                Rule::unique('divisions', 'name')->where(function ($query) use ($council_id) {
+                    return $query->where('council_id', $council_id);
+                }),
+            ]
         ];
 
-        $validate = Validator::make($request->all() ,$rules, $messages = []);
+
+        $messages = [
+            "tarafa.required" => "Ni lazima kujaza jina la tarafa",
+            "tarafa.string"  => "Jina lazima lihusishe maneno pekee",
+            "tarafa.max" => "Jina Lihusishe herufi zisizozidi hamsini (50)",
+            "tarafa.unique" => "Jina limeshasajiriwa"
+        ];        
+
+        $validate = Validator::make($request->all() ,$rules, $messages);
 
         if( $validate->fails() ){
             return redirect()->back()->withErrors($validate->errors());

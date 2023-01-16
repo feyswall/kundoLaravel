@@ -42,6 +42,7 @@ class BranchesController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $ward_id = $request->ward_id;
 
         $rules = [

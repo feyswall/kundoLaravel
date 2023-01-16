@@ -7,6 +7,7 @@ use App\Models\Area;
 use App\Models\AreaDescription;
 use App\Models\District;
 use App\Models\Region;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -46,6 +47,7 @@ class DistrictsController extends Controller
      */
     public function store(Request $request)
     {
+
         $rules = [
           'wilaya' => 'required|string|max:50|unique:districts,name'
         ];
