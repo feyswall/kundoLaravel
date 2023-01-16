@@ -8,6 +8,7 @@ use App\Models\District;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Region;
+use Illuminate\Contracts\Validation\Rule;
 
 class CouncilsController extends Controller
 {
@@ -44,8 +45,14 @@ class CouncilsController extends Controller
      */
     public function store(Request $request)
     {
+        $district_id = $request->wilaya_id;
         $rules = [
-            'halmashauri' => 'required|string|max:50|unique:councils,name'
+            'tawi' => [
+                'required', 'string', 'max:50',
+                Rule::unique('councils', 'name')->where(function ($query) use ($district_id) {
+                    return $query->where('district_id', $district_id);
+                }),
+            ]
         ];
 
         $validate = Validator::make($request->all() ,$rules);

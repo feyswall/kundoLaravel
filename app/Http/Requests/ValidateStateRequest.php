@@ -34,9 +34,9 @@ class ValidateStateRequest extends FormRequest
     public function messages()
     {
         return [
-            'jimbo.required' => "Tafadhali jaza jina la jimbo",
-            'jimbo.string' => "Ni lazima Lina  la jimbo lihusishe maneno pekee",
-            'jimbo.max' => "Jina la Jombo linahusisha Herufi    Zisizozidi Hamsini",
+            '*.required' => "Tafadhali jaza jina la :attribute",
+            '*.string' => "Ni lazima Lina  la :attribute lihusishe maneno pekee",
+            '*.max' => "Jina la :attribute linahusisha Herufi Zisizozidi Hamsini",
         ];
     }
 
