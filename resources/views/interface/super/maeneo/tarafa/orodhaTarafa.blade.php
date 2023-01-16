@@ -180,10 +180,10 @@
                             @endforeach
 
                             </tbody>
-                        </table> --}}   
+                        </table>  --}}
                         
-                        <x-system.table-tarafa :areas="$areas">
-                        </x-system.table-tarafa>
+                        <x-system.tarafa-table :areas="$areas">
+                        </x-system.tarafa-table>
                     </div>
                 </div>
             </div> <!-- end col -->

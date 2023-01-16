@@ -4,7 +4,7 @@ namespace App\View\Components\system;
 
 use Illuminate\View\Component;
 
-class TableTarafa extends Component
+class TarafaTable extends Component
 {
     public $areas;
     /**
@@ -24,6 +24,6 @@ class TableTarafa extends Component
      */
     public function render()
     {
-        return view('components.system.table-tarafa');
+        return view('components.system.tarafa-table');
     }
 }
