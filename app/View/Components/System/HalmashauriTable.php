@@ -7,7 +7,7 @@ use Illuminate\View\Component;
 
 class HalmashuriTable extends Component
 {
-    public array $headers;
+    public  $headers;
     // public array $headers;
     /**
      * Create a new component instance.
