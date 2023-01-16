@@ -49,7 +49,7 @@ class RegionLeadersController extends Controller
      * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Leader $leader)
     {
         //
     }
