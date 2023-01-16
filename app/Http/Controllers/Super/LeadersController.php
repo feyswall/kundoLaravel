@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class LeadersController extends Controller
 {
+
+    function __construct()
+    {
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,16 +34,34 @@ class LeadersController extends Controller
         //
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Models\Leader;
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($formData)
     {
-        //
+        $leader = Leader::create([
+            'firstName' => $formData->firstName,
+            'middleName' => $formData->middleName,
+            'lastName' => $formData->lastName,
+            'phone' => $formData->phone
+        ]);
+        return $leader;
     }
+
+
+    public function attachMany($ath, $formData){
+        $ath->attach($formData->side_id, [
+            'isActive' => true,
+            'post_id' => $formData->post_id,
+            'created_at' => now()
+        ]);
+
+    }
+
 
     /**
      * Display the specified resource.
