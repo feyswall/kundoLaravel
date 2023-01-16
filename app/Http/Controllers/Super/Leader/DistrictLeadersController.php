@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Super\Leader;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Super\LeadersController;
 use App\Http\Requests\ValidateDistrictLeaderRequest;
 use App\Models\District;
 use App\Models\Leader;
@@ -33,22 +34,12 @@ class DistrictLeadersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(ValidateDistrictLeaderRequest $request)
     {
-        $leader = Leader::create([
-            'firstName' => $request->firstName,
-            'middleName' => $request->middleName,
-            'lastName' => $request->lastName,
-            'phone' => $request->phone
-        ]);
-        $leader->districts()->attach($request->side_id, [
-            'isActive' => true,
-            'post_id' => $request->post_id,
-            'created_at' => now()
-        ]);
+        $obj = new LeadersController();
+        $leader = $obj->store( $request );
+        $obj->attachMany( $leader->districts(), $request );
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 

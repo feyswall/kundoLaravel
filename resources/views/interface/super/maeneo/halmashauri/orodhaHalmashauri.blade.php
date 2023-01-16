@@ -222,8 +222,7 @@
                             </tbody>
                         </table> --}}
 
-                        <x-system.jimbo-table :states="$states" :district="$district">
-                        </x-system.jimbo-table>
+                        <x-system.jimbo-table :states="$states" :district="$district"></x-system.jimbo-table>
                     </div>
                     <!-- model location states here -->
                     <x-system.modal id="orodhaJimboModal" aria="orodhaJimboLabel" size="modal-lg" title="Ongeza Jimbo Hapa" >
@@ -276,10 +275,10 @@
         $ (document).ready (function () {
             $ (
                 '#datatable'
-            ).DataTable (), $ ('#superOrodhaWilayaTable')
+            ).DataTable (), $ ('#superOrodhaJimboTable')
                 .DataTable ({lengthChange: !1, buttons: ['excel', 'pdf'], "order": [[ 1, "desc" ]]})
                 .buttons ()
-                .container ().appendTo ('#superOrodhaHalmashauriTable_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')
+                .container ().appendTo ('#superOrodhaJimboTable_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')
                 .addClass ('form-select form-select-sm');
         });
     </script>

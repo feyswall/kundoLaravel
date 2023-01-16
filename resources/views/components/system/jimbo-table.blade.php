@@ -11,7 +11,7 @@
         <tr>
             <td>{{ $state->name }}</td>
             <td>
-                <a href="{{ route("super.areas.wilaya.orodha", $district->id) }}" class="btn btn-primary">fungua</a>
+                <a href="{{ route("super.areas.jimbo.fungua", $state->id) }}" class="btn btn-primary">fungua</a>
             </td>
         </tr>
     @endforeach

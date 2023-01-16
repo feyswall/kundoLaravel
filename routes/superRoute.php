@@ -26,6 +26,8 @@ use App\Http\Controllers\Super\Leader\WardLeadersController;
 use App\Http\Controllers\Super\Leader\CouncilLeadersController;
 use App\Http\Controllers\Super\Leader\DistrictLeadersController;
 use App\Http\Controllers\Super\Leader\RegionLeadersController;
+use App\Http\Controllers\Super\Leader\StateLeadersController;
+
 
 Route::controller(DistrictsController::class)
     ->prefix('/super/areas/district')
@@ -54,8 +56,6 @@ Route::controller(DivisionsController::class)
     });
 
 
-
-
 Route::controller(WardsController::class)
     ->prefix('/super/areas/ward')
     ->as('super.areas.kata.')
@@ -75,11 +75,11 @@ Route::controller(BranchesController::class)
     });
 
 
-
 Route::controller(\App\Http\Controllers\Super\Area\StatesController::class)
     ->prefix('/super/areas/state')
     ->as('super.areas.jimbo.')
     ->group(function () {
+        Route::get('/fungua/{state}', 'show')->name('fungua');
         Route::get('/orodha/{district}', 'index')->name('orodha');
         Route::post('/ongeza', 'store')->name('ongeza');
     });
@@ -134,5 +134,14 @@ Route::controller(RegionLeadersController::class)
     ->prefix('/super/leader/region')
     ->as('super.leader.mkoa.')
     ->group(function () {
+        Route::post('/ongeza', 'store')->name('ongeza');
+    });
+
+
+Route::controller(StateLeadersController::class)
+    ->prefix('/super/leader/state')
+    ->as('super.leader.jimbo.')
+    ->group(function () {
+        Route::get('/orodha/{district}', 'index')->name('orodha');
         Route::post('/ongeza', 'store')->name('ongeza');
     });

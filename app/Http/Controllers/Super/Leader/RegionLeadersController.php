@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Super\Leader;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Super\LeadersController;
 use App\Http\Requests\ValidateRegionLeaderRequest;
 use App\Models\Leader;
 use App\Models\Region;
@@ -33,21 +34,12 @@ class RegionLeadersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @return \Illuminate\Http\Response
      */
     public function store(ValidateRegionLeaderRequest $request)
     {
-        $leader = Leader::create([
-            'firstName' => $request->firstName,
-            'middleName' => $request->middleName,
-            'lastName' => $request->lastName,
-            'phone' => $request->phone
-        ]);
-        $leader->regions()->attach($request->side_id, [
-            'isActive' => true,
-            'post_id' => $request->post_id,
-            'created_at' => now()
-        ]);
+        $obj = new LeadersController();
+        $leader = $obj->store( $request );
+        $obj->attachMany( $leader->regions(), $request );
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 

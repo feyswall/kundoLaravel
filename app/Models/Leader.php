@@ -90,5 +90,16 @@ class Leader extends Model
     {
         return $this->belongsToMany(Post::class );
     }
+
+
+    /**
+     * The states that belong to the Leader
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function states(): BelongsToMany
+    {
+        return $this->belongsToMany(State::class )->withPivot('isActive', 'post_id');
+    }
     
 }

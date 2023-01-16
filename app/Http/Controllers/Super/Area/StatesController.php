@@ -20,7 +20,7 @@ class StatesController extends Controller
      */
     public function index(District $district)
     {
-        dd($district);
+        return view("");
     }
 
     /**
@@ -65,7 +65,7 @@ class StatesController extends Controller
      */
     public function show(State $state)
     {
-        //
+        dd( $state );
     }
 
     /**
