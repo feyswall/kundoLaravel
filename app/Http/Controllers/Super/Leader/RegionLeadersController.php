@@ -49,20 +49,20 @@ class RegionLeadersController extends Controller
      * @param  \App\Models\Region  $region
      * @return \Illuminate\Http\Response
      */
-    public function show(Region $region)
+    public function show()
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Region  $region
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function edit(Region $region)
+    public function edit(Leader $leader)
     {
-        //
+        dd( $leader );
+        // return view('interface.super.viongozi.mkoa.badili_taarifa')->with('id',$id);
     }
 
     /**

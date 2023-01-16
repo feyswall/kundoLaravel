@@ -135,6 +135,7 @@ Route::controller(RegionLeadersController::class)
     ->as('super.leader.mkoa.')
     ->group(function () {
         Route::post('/ongeza', 'store')->name('ongeza');
+        Route::get('/badili/{leader}', 'edit')->name('badili');
     });
 
 

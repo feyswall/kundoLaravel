@@ -40,8 +40,9 @@
                                             <div>
                                                 @foreach( $region->leaders as $leader )
                                                     @if( $leader->pivot->isActive == true )
+
                                                         <h3>{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</h3>
-                                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="#">badiri</a></p>
+                                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="{{ route("super.leader.mkoa.badili", $leader->id ) }}">badiri</a></p>
                                                     @endif
                                                 @endforeach
                                                 <hr>
@@ -158,18 +159,6 @@
     @endsection
 
     @section("extra_script")
-        {{-- <script>
-            $ (document).ready (function () {
-                $ (
-                    '#datatable'
-                ).DataTable (), $ ('#superOrodhaWilayaTable')
-                    .DataTable ({lengthChange: !1, buttons: ['excel', 'pdf'], "order": [[ 1, "desc" ]]})
-                    .buttons ()
-                    .container ().appendTo ('#superOrodhaWilayaTable_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')
-                    .addClass ('form-select form-select-sm');
-            });
-        </script> --}}
-
         <x-system.table-script id="superOrodhaWilayaTable">
         </x-system.table-script>
         @endsection
