@@ -15,15 +15,13 @@ class HalmashuriTable extends Component
      * @return void
      */
     public $areas;
-    public $id;
     public $district;
 
-    public function __construct(array $headers, $areas, $id, $district)
+    public function __construct(array $headers, $areas, $district)
     {
         $this->district = $district;
         $this->headers = $headers;
         $this->areas = $areas;
-        $this->id = $id;
     }
 
     /**
