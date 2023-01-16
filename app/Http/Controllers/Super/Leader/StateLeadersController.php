@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Super\Leader;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Super\LeadersController;
-use App\Http\Requests\ValidateCouncilLeaderRequest;
-use App\Models\Council;
-use App\Models\Leader;
+use App\Models\State;
 use Illuminate\Http\Request;
 
-class CouncilLeadersController extends Controller
+class StateLeadersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,22 +33,22 @@ class CouncilLeadersController extends Controller
      * Store a newly created resource in storage.
      *
      */
-    public function store(ValidateCouncilLeaderRequest $request)
+    public function store(Request $request)
     {
+        dd("hit right here");
         $obj = new LeadersController();
         $leader = $obj->store( $request );
-        $obj->attachMany( $leader->councils(), $request );
-
+        $obj->attachMany( $leader->regions(), $request );
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Council  $council
+     * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function show(Council $council)
+    public function show(State $state)
     {
         //
     }
@@ -58,10 +56,10 @@ class CouncilLeadersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Council  $council
+     * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function edit(Council $council)
+    public function edit(State $state)
     {
         //
     }
@@ -70,10 +68,10 @@ class CouncilLeadersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Council  $council
+     * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Council $council)
+    public function update(Request $request, State $state)
     {
         //
     }
@@ -81,10 +79,10 @@ class CouncilLeadersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Council  $council
+     * @param  \App\Models\State  $state
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Council $council)
+    public function destroy(State $state)
     {
         //
     }
