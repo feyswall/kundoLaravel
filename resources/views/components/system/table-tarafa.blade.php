@@ -17,7 +17,7 @@
                 900
             </td>
             <td>
-                <a href="" class="btn btn-primary">fungua</a>
+                <a href="{{ route("super.areas.kata.orodha", $division->id) }}" class="btn btn-primary">fungua</a>
             </td>
         </tr>
     @endforeach
