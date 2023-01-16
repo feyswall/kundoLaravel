@@ -55,7 +55,6 @@ class CouncilsController extends Controller
             ]
         ];
 
-
         $messages = [
             "halmashauri.required" => "Ni lazima kujaza jina la Halmashauri",
             "halmashauri.string"  => "Jina lazima lihusishe maneno pekee",
