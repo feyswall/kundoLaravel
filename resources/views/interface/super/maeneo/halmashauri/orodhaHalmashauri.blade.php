@@ -148,7 +148,7 @@
                         <button  data-bs-toggle="modal" data-bs-target="#orodhaHalmashauriModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Almashauri</button>
                         <a href="{{ route('super.areas.wilaya.orodha') }}" class="btn btn-primary btn-md mb-4">Rudi Wilayani</a>
 
-                        <x-system.table id="superOrodhaHalmashauriTable" :district="$district" :areas="$areas" :headers="['Jina la Halmashauri','Idadi Ya Wilaya','Idadi Ya Tarafa']" />
+                        <x-system.halmashauri-table id="superOrodhaHalmashauriTable" :district="$district" :areas="$areas" :headers="['Jina la Halmashauri','Idadi Ya Wilaya','Idadi Ya Tarafa']" />
                             
                         <!-- model location here -->
                         <x-system.modal id="orodhaHalmashauriModal" aria="orodhaHalmashauriLabel" size="modal-lg" title="Ongeza Almashauri Hapa" >
