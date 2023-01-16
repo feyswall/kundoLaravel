@@ -46,7 +46,7 @@ class RegionLeadersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Region  $region
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
     public function show()
@@ -69,10 +69,10 @@ class RegionLeadersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Region  $region
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Region $region)
+    public function update(Request $request, Leader $leader)
     {
         //
     }
@@ -80,10 +80,10 @@ class RegionLeadersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Region  $region
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Region $region)
+    public function destroy(Leader $leader)
     {
         //
     }

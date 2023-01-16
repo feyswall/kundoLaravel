@@ -23,4 +23,14 @@ class Post extends Model
     {
         return $this->belongsToMany(Leader::class );
     }
+
+    /**
+     * The groups that belong to the Post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(Group::class);
+    }
 }
