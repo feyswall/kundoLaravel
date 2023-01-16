@@ -148,7 +148,7 @@
                         <button  data-bs-toggle="modal" data-bs-target="#orodhaHalmashauriModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Almashauri</button>
                         <a href="{{ route('super.areas.wilaya.orodha') }}" class="btn btn-primary btn-md mb-4">Rudi Wilayani</a>
 
-                        <x-system.table id="superOrodhaHalmashauriTable" :district="$district" :areas="$areas" :headers="['Jina la Halmashauri','Idadi Ya Wilaya','Idadi Ya Tarafa']" />
+                        <x-system.halmashauri-table :district="$district" :areas="$areas" :headers="['Jina la Halmashauri','Idadi Ya Wilaya','Idadi Ya Tarafa']" />
                             
                         <!-- model location here -->
                         <x-system.modal id="orodhaHalmashauriModal" aria="orodhaHalmashauriLabel" size="modal-lg" title="Ongeza Almashauri Hapa" >
@@ -202,27 +202,9 @@
                     <div class="mt-5">
                         <h2>Orodha Majimbo</h2>
                         <button  data-bs-toggle="modal" data-bs-target="#orodhaJimboModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Majimbo</button>
-                        {{-- <table id="superOrodhaJimboTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                            <thead>
-                            <tr>
-                                <th>Jina la Jimbo</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach( $states as $key => $state )
-                                <tr>
-                                    <td>{{ $state->name }}</td>
-                                    <td>
-                                        <a href="{{ route("super.areas.wilaya.orodha", $district->id) }}" class="btn btn-primary">fungua</a>
-                                    </td>
-                                </tr>
-                            @endforeach
 
-                            </tbody>
-                        </table> --}}
-
-                        <x-system.jimbo-table :states="$states" :district="$district"></x-system.jimbo-table>
+                        <x-system.jimbo-table :states="$states" :district="$district">
+                        </x-system.jimbo-table>
                     </div>
                     <!-- model location states here -->
                     <x-system.modal id="orodhaJimboModal" aria="orodhaJimboLabel" size="modal-lg" title="Ongeza Jimbo Hapa" >
@@ -271,15 +253,6 @@
 @endsection
 
 @section("extra_script")
-    <script>
-        $ (document).ready (function () {
-            $ (
-                '#datatable'
-            ).DataTable (), $ ('#superOrodhaJimboTable')
-                .DataTable ({lengthChange: !1, buttons: ['excel', 'pdf'], "order": [[ 1, "desc" ]]})
-                .buttons ()
-                .container ().appendTo ('#superOrodhaJimboTable_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')
-                .addClass ('form-select form-select-sm');
-        });
-    </script>
+    <x-system.table-script id="superOrodhaHalmashauriTable" />
+    <x-system.table-script id="superOrodhaJimboTable" />
 @endsection

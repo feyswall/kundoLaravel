@@ -158,7 +158,7 @@
     @endsection
 
     @section("extra_script")
-        <script>
+        {{-- <script>
             $ (document).ready (function () {
                 $ (
                     '#datatable'
@@ -168,5 +168,8 @@
                     .container ().appendTo ('#superOrodhaWilayaTable_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')
                     .addClass ('form-select form-select-sm');
             });
-        </script>
+        </script> --}}
+
+        <x-system.table-script id="superOrodhaWilayaTable">
+        </x-system.table-script>
         @endsection

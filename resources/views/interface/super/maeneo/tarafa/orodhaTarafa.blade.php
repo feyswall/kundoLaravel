@@ -148,42 +148,9 @@
                     <div class="card-body">
 
                         <button  data-bs-toggle="modal" data-bs-target="#orodhaTarafaModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Tarafa</button>
-                        <a href="{{ route('super.areas.halmashauri.orodha', $council->district->id) }}" class="btn btn-primary btn-md mb-4">Rudi Katika Halmashauri</a>
-                        {{-- <table id="superOrodhaTafaraTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                            <thead>
-                            <tr>
-                                <th>Jina la Tarafa</th>
-                                <th>Idadi Ya  Kata</th>
-                                <th>Idadi Ya Matawi</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            @foreach( $areas as $key => $division )
-                                <tr>
-                                    <td>{{ $division->name }}</td>
-                                    <td>{{ $division->wards()->count() }}</td>
-                                    <td>
-                                        @php
-                                            $counter = 0;
-                                            foreach ( $division->wards as $ward ){
-                                            $counter += $ward->branches()->count();
-                                            }
-                                            echo $counter;
-                                        @endphp
-                                    </td>
-                                    <td>
-                                        <a href="{{ route("super.areas.kata.orodha", $division->id) }}" class="btn btn-primary">fungua</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                            </tbody>
-                        </table> --}}   
-                        
-                        <x-system.table-tarafa :areas="$areas">
-                        </x-system.table-tarafa>
+                        <a href="{{ route('super.areas.halmashauri.orodha', $council->district->id) }}" class="btn btn-primary btn-md mb-4">Rudi Katika Halmashauri</a>     
+                        <x-system.tarafa-table :areas="$areas">
+                        </x-system.tarafa-table>
                     </div>
                 </div>
             </div> <!-- end col -->
@@ -239,16 +206,8 @@
 @endsection
 
 @section("extra_script")
-    <script>
-        $ (document).ready (function () {
-            $ (
-                '#datatable'
-            ).DataTable (), $ ('#superOrodhaWilayaTable')
-                .DataTable ({lengthChange: !1, buttons: ['excel', 'pdf'], "order": [[ 1, "desc" ]]})
-                .buttons ()
-                .container ().appendTo ('#superOrodhaTafaraTable_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')
-                .addClass ('form-select form-select-sm');
-        });
-    </script>
+   <x-system.table-script id="superOrodhaTafaraTable">
+    
+   </x-system.table-script>
 @endsection
 

@@ -5,7 +5,7 @@ namespace App\View\Components\System;
 use Illuminate\Support\Arr;
 use Illuminate\View\Component;
 
-class Table extends Component
+class HalmashuriTable extends Component
 {
     public array $headers;
     // public array $headers;
@@ -15,15 +15,13 @@ class Table extends Component
      * @return void
      */
     public $areas;
-    public $id;
     public $district;
 
-    public function __construct(array $headers, $areas, $id, $district)
+    public function __construct(array $headers, $areas, $district)
     {
         $this->district = $district;
         $this->headers = $headers;
         $this->areas = $areas;
-        $this->id = $id;
     }
 
     /**
@@ -33,6 +31,6 @@ class Table extends Component
      */
     public function render()
     {
-        return view('components.system.table');
+        return view('components.system.halmashauri-table');
     }
 }
