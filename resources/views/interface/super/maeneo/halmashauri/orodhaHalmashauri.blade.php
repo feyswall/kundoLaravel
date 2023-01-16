@@ -203,8 +203,7 @@
                         <h2>Orodha Majimbo</h2>
                         <button  data-bs-toggle="modal" data-bs-target="#orodhaJimboModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Majimbo</button>
 
-                        <x-system.jimbo-table :states="$states" :district="$district">
-                        </x-system.jimbo-table>
+                        <x-system.jimbo-table :states="$states" :district="$district"></x-system.jimbo-table>
                     </div>
                     <!-- model location states here -->
                     <x-system.modal id="orodhaJimboModal" aria="orodhaJimboLabel" size="modal-lg" title="Ongeza Jimbo Hapa" >
@@ -254,5 +253,5 @@
 
 @section("extra_script")
     <x-system.table-script id="superOrodhaHalmashauriTable" />
-    <x-system.table-script id="superOrodhaJimboTable" />
+    {{--<x-system.table-script id="superOrodhaJimboTable" />--}}
 @endsection

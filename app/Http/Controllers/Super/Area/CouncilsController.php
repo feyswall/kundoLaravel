@@ -8,7 +8,7 @@ use App\Models\District;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Region;
-use Illuminate\Contracts\Validation\Rule;
+use \Illuminate\Validation\Rule;
 
 class CouncilsController extends Controller
 {
@@ -47,7 +47,7 @@ class CouncilsController extends Controller
     {
         $district_id = $request->wilaya_id;
         $rules = [
-            'tawi' => [
+            'halmashauri' => [
                 'required', 'string', 'max:50',
                 Rule::unique('councils', 'name')->where(function ($query) use ($district_id) {
                     return $query->where('district_id', $district_id);
@@ -55,7 +55,15 @@ class CouncilsController extends Controller
             ]
         ];
 
-        $validate = Validator::make($request->all() ,$rules);
+
+        $messages = [
+            "halmashauri.required" => "Ni lazima kujaza jina la Halmashauri",
+            "halmashauri.string"  => "Jina lazima lihusishe maneno pekee",
+            "halmashauri.max" => "Jina Lihusishe herufi zisizozidi hamsini (50)",
+            "halmashauri.unique" => "Jina limeshasajiriwa"
+        ];
+
+        $validate = Validator::make($request->all() ,$rules, $messages );
 
         if( $validate->fails() ){
             return redirect()->back()->withErrors($validate->errors());
