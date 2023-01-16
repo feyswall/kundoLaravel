@@ -167,7 +167,7 @@
 
                         <button  data-bs-toggle="modal" data-bs-target="#orodhaTawiModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Tawi</button>
                         <a href="{{ route('super.areas.kata.orodha', $ward->division->id) }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Kata</a>
-                        <table id="superOrodhaKataTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        {{-- <table id="superOrodhaKataTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                             <tr>
                                 <th>Jina la Tawi</th>
@@ -186,7 +186,10 @@
                             @endforeach
 
                             </tbody>
-                        </table>
+                        </table> --}}
+
+                        <x-system.tawi-table :areas="$areas">
+                        </x-system.tawi-table>
                     </div>
                 </div>
             </div> <!-- end col -->
