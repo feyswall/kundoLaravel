@@ -62,7 +62,7 @@ class BranchLeadersController extends Controller
      */
     public function edit(Leader $leader)
     {
-        //
+        dd("welcome home");
     }
 
     /**

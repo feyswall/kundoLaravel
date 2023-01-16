@@ -7,6 +7,7 @@ use App\Models\Division;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class WardsController extends Controller
 {
@@ -41,11 +42,26 @@ class WardsController extends Controller
      */
     public function store(Request $request)
     {
+        $division_id = $request->division_id;
+
         $rules = [
-            'kata' => 'required|string|max:50|unique:wards,name'
+            'kata' => [
+                'required', 'string', 'max:50',
+                Rule::unique('divisions', 'name')->where(function ($query) use ($division_id) {
+                    return $query->where('division_id', $division_id);
+                }),
+            ]
         ];
 
-        $validate = Validator::make($request->all() ,$rules, $messages = []);
+        $messages = [
+            "kata.required" => "Ni lazima kujaza jina la kata",
+            "kata.string"  => "Jina lazima lihusishe maneno pekee",
+            "kata.max" => "Jina Lihusishe herufi zisizozidi hamsini (50)",
+            "kata.unique" => "Jina limeshasajiriwa"
+        ];    
+
+
+        $validate = Validator::make($request->all() ,$rules, $messages);
 
         if( $validate->fails() ){
             return redirect()->back()->withErrors($validate->errors());
