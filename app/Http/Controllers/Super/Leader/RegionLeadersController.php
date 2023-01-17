@@ -73,7 +73,16 @@ class RegionLeadersController extends Controller
      */
     public function update(Request $request, Leader $leader)
     {
-        dd($request->all());
+        // dd( $request->all()) 
+
+        $leader->firstName = $request->firstName;
+        $leader->middleName = $request->middleName;
+        $leader->lastName = $request->lastName;
+        $leader->phone = $request->phone;
+       
+        $leader->save();
+
+       return redirect()->back()->with(['status' => "success", "message" => "Mtumiaji amebadirishwa Taarifa"]);
     }
 
     /**

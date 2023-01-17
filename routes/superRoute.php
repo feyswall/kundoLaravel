@@ -136,7 +136,7 @@ Route::controller(RegionLeadersController::class)
     ->group(function () {
         Route::post('/ongeza', 'store')->name('ongeza');
         Route::get('/badili/{leader}', 'edit')->name('badili');
-        Route::put('/sasisha/{id}', 'update')->name('sasisha');
+        Route::put('/sasisha/{leader}', 'update')->name('sasisha');
     });
 
 
