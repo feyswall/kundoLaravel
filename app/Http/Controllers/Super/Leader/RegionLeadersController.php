@@ -8,6 +8,9 @@ use App\Http\Requests\ValidateRegionLeaderRequest;
 use App\Models\Leader;
 use App\Models\Region;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
 
 class RegionLeadersController extends Controller
 {
@@ -73,16 +76,55 @@ class RegionLeadersController extends Controller
      */
     public function update(Request $request, Leader $leader)
     {
-        // dd( $request->all()) 
+
+        $rules = [
+            'firstName' => [
+                'required', 'string', 'max:50',
+            ],
+            'middleName' => [
+                'required', 'string', 'max:50',
+            ],
+            'lastName' => [
+                'required', 'string', 'max:50',
+            ],
+
+            'phone' => [
+                'required', 'string', 'max:15',
+            ],
+        ];
+
+        $messages = [
+            "firstName.required" => "Jina la kwanza lazima lijazwe",
+            "firstName.string"  => "Jina la kwanza lazima liwe na maneno pekee",
+            "firstName.max" => "Jina la kwanza lisizidi herufi hamsini (50)",
+
+            "middleName.required" => "Jina la kati lazima lijazwe!",
+            "middleName.string"  => "Jina la kati lihusishe maneno pekee",
+            "middleName.max" => "Jina la kati lisizidi herufi hamsini (50)",
+
+            "lastName.required" => "Jina la mwisho lazima lijazwe!",
+            "lastName.string"  => "Jina lazima lihusishe maneno pekee",
+            "lastName.max" => "Jina la mwisho lisizidi herufi hamsini (50)",
+
+            "phone.required" => "Ni lazima kujaza namba",
+            "phone.max" => "Namba zisizidi kumi na tano(15)",
+        ];
+
+        $validate = Validator::make($request->all() ,$rules, $messages );
+
+        if( $validate->fails() ){
+            return redirect()->back()->withErrors($validate->errors());
+        }
+
 
         $leader->firstName = $request->firstName;
         $leader->middleName = $request->middleName;
         $leader->lastName = $request->lastName;
         $leader->phone = $request->phone;
-       
+
         $leader->save();
 
-       return redirect()->back()->with(['status' => "success", "message" => "Mtumiaji amebadirishwa Taarifa"]);
+       return redirect()->back()->with(['status' => "success", "message" => "Taarifa zimebadilishwa"]);
     }
 
     /**
