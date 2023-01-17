@@ -61,8 +61,7 @@ class RegionLeadersController extends Controller
      */
     public function edit(Leader $leader)
     {
-        dd( $leader );
-        // return view('interface.super.viongozi.mkoa.badili_taarifa')->with('id',$id);
+        return view('interface.super.viongozi.mkoa.badili_taarifa')->with('leader',$leader);
     }
 
     /**
@@ -74,7 +73,7 @@ class RegionLeadersController extends Controller
      */
     public function update(Request $request, Leader $leader)
     {
-        //
+        dd($request->all());
     }
 
     /**
