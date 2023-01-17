@@ -4,7 +4,7 @@
     <form action=" {{ route('super.leader.mkoa.sasisha', $leader->id) }} " method="POST">
         @method('put')
         @csrf
-        <input type="hidden" name="leader_id" value="{{$leader->id}}">
+        <input type="hidden" name="id" value="{{ $leader->id }}">
         <div class="col-xl-12">
             <div class="custom-accordion">
                 <div class="card">
@@ -21,7 +21,6 @@
                     </a>
                     <div id="checkout-billinginfo-collapse" class="collapse show">
                         <div class="p-4 border-top">
-                            <form>
                                 <div>
                                     <div class="row">
                                         <div class="col-lg-4">
@@ -54,11 +53,9 @@
                                     
                                     </div>
                                  <button class="btn btn-primary" type="submit">Hifadhi</button>
-                            </form>
                         </div>
                     </div>
                 </div>
-    
             <div class="row my-4">
     
                 <!-- end col -->
