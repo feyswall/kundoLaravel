@@ -1,60 +1,76 @@
 @extends('layouts.super_system')
 @section('content')
-    {{dd($id)}}
-
-    <x-system.modal id="badiliTaarifaKiongozi" aria="obadiliTaarifaKiongoziLabel" size="modal-fullscreen" title="Badili Taarifa za Kiongozi Mkoa" >
-        <x-slot:content>
-            {{-- {{ route('super.leader.mkoa.ongeza') }} --}}
-            <form method="post" action="#">
-                @csrf
-                <div class="row">
-                    <div class="col-sm-12 col-md-4 col-lg-3">
-                        <div class="mb-3 mb-4">
-                            <label class="form-label" for="firstName">Jina La Kwanza</label>
-                            <input type="text" class="form-control" name="firstName" placeholder="eg: mgalanga">
+<div class="row justify-content-start">
+    <form action=" {{ route('super.leader.mkoa.sasisha', $leader->id) }} " method="POST">
+        @method('put')
+        @csrf
+        <input type="hidden" name="leader_id" value="{{$leader->id}}">
+        <div class="col-xl-12">
+            <div class="custom-accordion">
+                <div class="card">
+                    <a href="#checkout-billinginfo-collapse" class="text-dark" data-bs-toggle="collapse">
+                        <div class="p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i> </div>
+                                <div class="flex-grow-1 overflow-hidden">
+                                <h5 class="font-size-16 mb-1">Badilisha taarifa za: <span style="color: rgba(201, 186, 52, 0.777)">{{$leader->firstName." ".$leader->lastName}}</span> </h5> 
+                                </div>
+                                <div class="flex-shrink-0"> <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4 col-lg-3">
-                        <div class="mb-3 mb-4">
-                            <label class="form-label" for="middleName">Jina La Kati</label>
-                            <input type="text" class="form-control" name="middleName" placeholder="eg: mosi">
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4 col-lg-3">
-                        <div class="mb-3 mb-4">
-                            <label class="form-label" for="lastName">Jila La Mwisho</label>
-                            <input type="text" class="form-control" name="lastName" placeholder="eg: mgalanga simo">
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4 col-lg-3">
-                        <div class="mb-3 mb-4">
-                            <label class="form-label" for="phone">Namba ya Simu</label>
-                            <input type="text" class="form-control" name="phone" placeholder="eg: 0678 987 897">
-
-                            <!-- data to simplify the validation process -->
-                            <input type="hidden" value="" class="form-control" name="side_id" >
-                            <input type="hidden" value="district_leader" class="form-control" name="table" >
-                            <input type="hidden" value="district_id" class="form-control" name="side_column" >
-
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4 col-lg-3">
-                        <div class="mb-3 mb-4">
-                            <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
-                            <select class="form-control" name="post_id">
-                                {{-- @foreach( \App\Models\Post::where('area', 'mkoa')->get() as $post )
-                                    <option value="{{ $post->id }}">{{ $post->name }}</option>
-                                @endforeach --}}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                    </a>
+                    <div id="checkout-billinginfo-collapse" class="collapse show">
+                        <div class="p-4 border-top">
+                            <form>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div id="jinalawilaya" class="mb-3 mb-4 ">
+                                                <label class="form-label" for="billing-name">Jina La Kwanza</label>
+                                                <input name="fName" value="{{$leader->firstName}}" class="form-control">
+                                            </div>           
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div id="jinalawilaya" class="mb-3 mb-4 ">
+                                                <label class="form-label" for="billing-name">Jina La Kati</label>
+                                                <input name="mName" value="{{$leader->middleName}}" class="form-control">
+                                            </div>           
+                                        </div>
+    
+                                        <div class="col-lg-4">
+                                            <div id="jinalawilaya" class="mb-3 mb-4 ">
+                                                <label class="form-label" for="billing-name">Jina La Mwisho</label>
+                                                <input name="lName" value="{{$leader->lastName}}" class="form-control">
+                                            </div>           
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div id="jinalawilaya" class="mb-3 mb-4 ">
+                                                <label class="form-label" for="billing-name">Namba ya simu</label>
+                                                <input name="phone" value="{{$leader->phone}}" class="form-control">
+                                            </div>           
+                                        </div>
+                                    
+                                    </div>
+                                 <button class="btn btn-primary" type="submit">Hifadhi</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </form>
-        </x-slot:content>
-    </x-system.modal>
+    
+            <div class="row my-4">
+    
+                <!-- end col -->
+                <div class="col">
+                    <div class="text-end mt-2 mt-sm-0">
+                        <a style="display: none;" id="vifaaFormButton" href="orodha_moja_ya_kifaa.php" class="btn btn-success"> <i class="uil uil-shopping-cart-alt me-1"></i> tuma </a>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row-->
+        </div>
+    </form>
+</div>
 @endsection
