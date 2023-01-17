@@ -74,8 +74,6 @@ class RegionLeadersController extends Controller
     public function update(Request $request, Leader $leader)
     {
         dd($request->all());
-        
-        return "your Welcome";
     }
 
     /**

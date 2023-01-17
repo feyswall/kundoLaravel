@@ -26,20 +26,20 @@
                                         <div class="col-lg-4">
                                             <div id="jinalawilaya" class="mb-3 mb-4 ">
                                                 <label class="form-label" for="billing-name">Jina La Kwanza</label>
-                                                <input name="fName" value="{{$leader->firstName}}" class="form-control">
+                                                <input name="firstName" value="{{$leader->firstName}}" class="form-control">
                                             </div>           
                                         </div>
                                         <div class="col-lg-4">
                                             <div id="jinalawilaya" class="mb-3 mb-4 ">
                                                 <label class="form-label" for="billing-name">Jina La Kati</label>
-                                                <input name="mName" value="{{$leader->middleName}}" class="form-control">
+                                                <input name="middleName" value="{{$leader->middleName}}" class="form-control">
                                             </div>           
                                         </div>
     
                                         <div class="col-lg-4">
                                             <div id="jinalawilaya" class="mb-3 mb-4 ">
                                                 <label class="form-label" for="billing-name">Jina La Mwisho</label>
-                                                <input name="lName" value="{{$leader->lastName}}" class="form-control">
+                                                <input name="lastName" value="{{$leader->lastName}}" class="form-control">
                                             </div>           
                                         </div>
                                     </div>
