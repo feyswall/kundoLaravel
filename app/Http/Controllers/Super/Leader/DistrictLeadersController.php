@@ -46,10 +46,10 @@ class DistrictLeadersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\District  $district
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function show(District $district)
+    public function show(Leader $leader)
     {
         //
     }
@@ -57,10 +57,10 @@ class DistrictLeadersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\District  $district
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function edit(District $district)
+    public function edit(Leader $leader)
     {
         //
     }
@@ -69,10 +69,10 @@ class DistrictLeadersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\District  $district
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, District $district)
+    public function update(Request $request, Leader $leader)
     {
         //
     }
@@ -80,10 +80,10 @@ class DistrictLeadersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\District  $district
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function destroy(District $district)
+    public function destroy(Leader $leader)
     {
         //
     }

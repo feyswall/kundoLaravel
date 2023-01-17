@@ -46,10 +46,10 @@ class DivisionLeadersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Division  $division
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function show(Division $division)
+    public function show(Leader $leader)
     {
         //
     }
@@ -57,10 +57,10 @@ class DivisionLeadersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Division  $division
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function edit(Division $division)
+    public function edit(Leader $leader)
     {
         //
     }
@@ -69,10 +69,10 @@ class DivisionLeadersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Division  $division
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Division $division)
+    public function update(Request $request, Leader $leader)
     {
         //
     }
@@ -80,10 +80,10 @@ class DivisionLeadersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Division  $division
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Division $division)
+    public function destroy(Leader $leader)
     {
         //
     }

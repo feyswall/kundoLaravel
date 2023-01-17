@@ -35,7 +35,6 @@ class WardLeadersController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
      */
     public function store(ValidateWardLeaderRequest $request)
     {
@@ -50,10 +49,10 @@ class WardLeadersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Ward  $ward
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function show(Ward $ward)
+    public function show(Leader $leader)
     {
         //
     }
@@ -61,10 +60,10 @@ class WardLeadersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Ward  $ward
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ward $ward)
+    public function edit(Leader $leader)
     {
         //
     }
@@ -73,10 +72,10 @@ class WardLeadersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Ward  $ward
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ward $ward)
+    public function update(Request $request, Leader $leader)
     {
         //
     }
@@ -84,10 +83,10 @@ class WardLeadersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ward  $ward
+     * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ward $ward)
+    public function destroy(Leader $leader)
     {
         //
     }
