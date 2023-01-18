@@ -47,7 +47,7 @@ class ValidateRegionLeaderRequest extends FormRequest
             'lastName.required' => "Tafadhali jaza jina la Mwisho",
             'phone.required' => "Tafadhali jaza Namba ya simu",
             '*.string' => "Ni lazima Lina lihusishe maneno pekee",
-            '*.max' => "Jina linahusisha Herufi    Zisizozidi Hamsini",
+            '*.max' => "Jina linahusisha Herufi Zisizozidi Hamsini",
         ];
     }
 }
