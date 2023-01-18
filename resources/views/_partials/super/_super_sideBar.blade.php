@@ -31,7 +31,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li>
-                            <a href="viongozi/chama/kitongoji.php"><span>Orodha Uwongozi</span> </a>
+                            <a href="{{ route("super.group.orodha") }}"><span>Orodha Uwongozi</span> </a>
                         </li>
                         <li> <a href="{{ route("super.areas.wilaya.orodha") }}" class="has-arrow">Maeneo</a></li>
                     </ul>
