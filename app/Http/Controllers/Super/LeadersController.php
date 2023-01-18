@@ -14,6 +14,7 @@ class LeadersController extends Controller
 
     }
 
+
     /**
      * Display a listing of the resource.
      *
@@ -23,6 +24,7 @@ class LeadersController extends Controller
     {
         //
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -53,13 +55,30 @@ class LeadersController extends Controller
     }
 
 
-    public function attachMany($ath, $formData){
+    /**
+     * @param $ath, $formData, $leader
+     * @return array
+     */
+    public function attachMany($ath, $formData, $leader){
         $ath->attach($formData->side_id, [
             'isActive' => true,
             'post_id' => $formData->post_id,
             'created_at' => now()
         ]);
 
+        if ( !($ath->get()->contains($formData->side_id)) ){
+            dd(  "again not found" );
+            return ['response' => 'failure'];
+        }
+
+        $leader->posts()->attach( $formData->post_id, ['isActive' => true] );
+
+        if ( !($leader->posts->contains($formData->post_id)) ) {
+            dd( "error again" );
+            $ath->detach( $formData->side_id );
+                return ['response' => 'failure'];
+        }
+        return ['response' => 'success'];
     }
 
 

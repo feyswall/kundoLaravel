@@ -42,13 +42,13 @@ class RegionLeadersController extends Controller
     {
         $obj = new LeadersController();
         $leader = $obj->store( $request );
-        $obj->attachMany( $leader->regions(), $request );
+        $obj->attachMany( $leader->regions(), $request, $leader );
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 
     /**
      * Display the specified resource.
-     *
+     *side
      * @param  \App\Models\Leader  $leader
      * @return \Illuminate\Http\Response
      */

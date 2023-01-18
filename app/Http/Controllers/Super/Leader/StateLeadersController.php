@@ -38,7 +38,7 @@ class StateLeadersController extends Controller
     {
         $obj = new LeadersController();
         $leader = $obj->store( $request );
-        $obj->attachMany( $leader->states(), $request );
+        $obj->attachMany( $leader->states(), $request, $leader );
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 

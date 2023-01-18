@@ -30,12 +30,16 @@
                         <span>Usimamizi wa Viongozi</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li>
-                            <a href="{{ route("super.group.orodha") }}"><span>Orodha Uwongozi</span> </a>
+                        <li> <a href="javascript: void(0);" class="has-arrow">Kamati</a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                <li><a href="{{ route("super.group.orodha") }}"><span>Orodha Ya Kamati</span> </a></li>
+                            </ul>
                         </li>
-                        <li> <a href="{{ route("super.areas.wilaya.orodha") }}" class="has-arrow">Maeneo</a></li>
+                        <li> <a href="{{ route("super.areas.wilaya.orodha") }}">Maeneo</a></li>
                     </ul>
                 </li>
+
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         

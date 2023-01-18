@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('leader_post', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("deep");
-            $table->string("basedOn");
+            $table->unsignedBigInteger('leader_id');
+            $table->unsignedBigInteger('post_id');
+
+            $table->boolean('isActive')->default(false);
+
+            $table->foreign('leader_id')->references('id')->on('leaders')->onDelete('cascade');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('leader_post');
     }
 };

@@ -115,6 +115,87 @@
                 </div>
             </div>
 
+
+            <x-system.collapse id="kamatiZaMkoa" title="kamati za mkoa">
+                <x-slot:content>
+                    @foreach( \App\Models\Group::where("basedOn", "mkoa")->get() as $group)
+                            <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+                                <x-slot:content>
+                                  <div class="row">
+                                      <div class="col-sm-12 col-md-6">
+                                          @foreach( $group->posts as $post )
+
+
+                                                  @switch( $post->area )
+
+                                                  @case("tawi")
+                                                  <h1>tawi is found</h1>
+                                                    @php
+                                                        $post_leader = $post->leaders()->where("isActive", true)->first();
+                                                    @endphp
+                                                  @break
+
+                                                  @case( "kata" )
+                                                    <h1>Kata found</h1>
+                                                      @php
+                                                          $post_leader = $post->leaders()->where("isActive", true)->first();
+                                                      @endphp
+                                                  @break
+
+                                                  @case("tarafa")
+                                                  <h1>Tarafa is found</h1>
+                                                      @php
+                                                          $post_leader = $post->leaders()->where("isActive", true)->first();
+                                                      @endphp
+                                                  @break
+
+                                                  @case("halmashauri")
+                                                  <h1>halmashauri is found</h1>
+                                                      @php
+                                                          $post_leader = $post->leaders()->where("isActive", true)->first();
+                                                      @endphp
+                                                  @break
+
+                                                  @case("wilaya")
+                                                  <h1>wialaya is found</h1>
+                                                      @php
+                                                          $post_leader = $post->leaders()->where("isActive", true)->first();
+                                                      @endphp
+                                                  @break
+
+                                                  @case("mkoa")
+                                                  <h1>mkoa is found</h1>
+                                                      @php
+                                                          if ( $isPresent ){
+                                                              $post_leader = $post->leaders()->where("isActive", true)->first();
+                                                      }
+                                                      @endphp
+                                                  @break
+
+                                                  @default
+                                                  Default case...
+                                                  @endswitch
+
+                                              @if( $post_leader )
+                                                  <h3>{{ $post->name }}</h3>
+                                                  <span>
+                                                {{ $post_leader->firstName }} - {{ $post_leader->lastName }} - {{ $post_leader->phone }}
+                                            </span>
+                                              @endif
+                                          @endforeach
+                                      </div>
+                                      <div class="col-sm-12 col-md-6">
+                                          @foreach( $group->posts as $post )
+                                                <ul>{{ $post->name }}</ul>
+                                          @endforeach
+                                      </div>
+                                  </div>
+                                </x-slot:content>
+                            </x-system.collapse>
+                        @endforeach
+                </x-slot:content>
+            </x-system.collapse>
+
             <div class="container-fluid">
                 <!-- start page title -->
                 <div class="row">

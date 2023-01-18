@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Region extends Model
 {
+
     use HasFactory;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     protected  $fillable = ['name'];
 
@@ -33,5 +35,12 @@ class Region extends Model
     {
         return $this->belongsToMany(Leader::class )->withPivot('isActive', 'post_id');;
     }
+
+
+
+    /**
+     * The long relations starts here and now
+     */
+
 
 }
