@@ -20,6 +20,7 @@ use \App\Http\Controllers\Super\Area\CouncilsController;
 use \App\Http\Controllers\Super\Area\DivisionsController;
 use \App\Http\Controllers\Super\Area\WardsController;
 use \App\Http\Controllers\Super\Area\BranchesController;
+use App\Http\Controllers\Super\Group\GroupsController;
 use \App\Http\Controllers\Super\Leader\BranchLeadersController;
 use App\Http\Controllers\Super\Leader\DivisionLeadersController;
 use App\Http\Controllers\Super\Leader\WardLeadersController;
@@ -147,3 +148,12 @@ Route::controller(StateLeadersController::class)
         Route::get('/orodha/{district}', 'index')->name('orodha');
         Route::post('/ongeza', 'store')->name('ongeza');
     });
+
+
+
+Route::controller(GroupsController::class)
+    ->prefix('/super/group')
+    ->as('super.group.')
+    ->group(function () {
+        Route::get('/orodha', 'index')->name('orodha');
+});
