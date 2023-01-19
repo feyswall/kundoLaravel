@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\AreaDescription;
 use App\Models\District;
+use App\Models\Leader;
 use App\Models\Region;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
@@ -96,7 +97,7 @@ class DistrictsController extends Controller
      * @param  \App\Models\Area  $area
      * @return \Illuminate\Http\Response
      */
-    public function edit(Area $area)
+    public function edit(Leader $leader)
     {
         //
     }

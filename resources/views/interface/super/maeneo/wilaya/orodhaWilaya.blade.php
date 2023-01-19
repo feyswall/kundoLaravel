@@ -42,7 +42,7 @@
                                                     @if( $leader->pivot->isActive == true )
 
                                                         <h3>{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</h3>
-                                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="{{ route("super.leader.mkoa.badili", $leader->id ) }}">Badilisha</a></p>
+                                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="{{ route("super.leader.wilaya.badili", $leader->id ) }}">Badilisha</a></p>
                                                     @endif
                                                 @endforeach
                                                 <hr>

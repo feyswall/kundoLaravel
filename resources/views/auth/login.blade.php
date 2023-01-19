@@ -1,11 +1,95 @@
-<x-guest-layout>
+<!doctype html>
+<html lang="en">
+
+<head>
+    @include('_partials.super._super_head');
+
+    @yield('extra_style')
+</head>
+
+<body>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        <!-- Email Address -->
+        <div class="account-pages my-5 pt-sm-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center mt-3">
+        
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <?php
+                                if (isset($_GET['status'])) {
+                                    if ($_GET['status'] == 'error') {
+                                        ?>
+                                        <div class="alert alert-danger">
+                                            <span class="text-black">Incorrect User Name or Password.</span>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                                <div class="text-center mt-2">
+                                </div>
+                                <div class="p-2 mt-4">
+                                    <form action="signin.php" method="GET">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="username">Email</label>
+                                            <input type="text" name="email" class="form-control" id="username" placeholder="Enter username">
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="float-end"> <a href="auth-recoverpw.html" class="text-muted">Forgot password?</a> </div>
+                                            <label class="form-label" for="userpassword">Password</label>
+                                            <input type="password" class="form-control" id="userpassword" placeholder="Enter password">
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="auth-remember-check">
+                                            <label class="form-check-label" for="auth-remember-check">Remember me</label>
+                                        </div>
+                                        <div class="mt-3 text-end">
+                                            <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Log In</button>
+                                        </div>
+        
+                                        <div class="mt-4 text-center">
+                                            <p class="mb-0">Don't have an account ? <a href="" class="fw-medium text-primary"> Signup now </a> </p>
+                                        </div>
+                                    </form>
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+    </form>
+
+@include('_partials.super._super_script');
+
+@yield('extra_script')
+
+<!-- apexcharts -->
+<script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+<script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script>
+</body>
+</html>
+
+{{-- <form> --}}
+      
+    {{-- <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
@@ -42,6 +126,5 @@
             <x-primary-button class="ml-3">
                 {{ __('Log in') }}
             </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+        </div> --}}
+    {{-- </form> --}}

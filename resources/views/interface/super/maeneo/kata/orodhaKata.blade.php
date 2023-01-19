@@ -21,7 +21,7 @@
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i> </div>
                             <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="font-size-16 mb-1">Taarifa Kuhusiana Na Tarafa</h5>
+                                <h5 class="font-size-16 mb-1">Taarifa za Kata</h5>
                             </div>
                             <div class="flex-shrink-0"> <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>
                         </div>
@@ -58,13 +58,13 @@
                                                 @foreach( $division->leaders as $leader )
                                                     @if( $leader->pivot->isActive == true )
                                                         <h3>{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</h3>
-                                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="#">badiri</a></p>
+                                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="{{ route("super.leader.kata.badili", $leader->id ) }}">Badilisha</a></p>
                                                     @endif
                                                 @endforeach
                                                 <hr>
                                             </div>
 
-                                            <button  data-bs-toggle="modal" data-bs-target="#ongezaKiongoziModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri </button>
+                                            <button  data-bs-toggle="modal" data-bs-target="#ongezaKiongoziModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajili Kiongozi </button>
                                             <!-- model location here -->
                                             <x-system.modal id="ongezaKiongoziModal" aria="ongezaKiongoziTarafaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Tarafa Hapa" >
                                                 <x-slot:content>

@@ -36,6 +36,7 @@ Route::controller(DistrictsController::class)
     ->group(function () {
         Route::get('/orodha', 'index')->name('orodha');
         Route::post('/ongeza', 'store')->name('ongeza');
+
     });
 
 
@@ -101,6 +102,7 @@ Route::controller(WardLeadersController::class)
     ->group(function () {
         Route::get('/orodha/{division}', 'index')->name('orodha');
         Route::post('/ongeza', 'store')->name('ongeza');
+        Route::get('/badili/{leader}', 'edit')->name('badili');
     });
 
 
@@ -110,6 +112,8 @@ Route::controller(DivisionLeadersController::class)
 ->group(function () {
     Route::get('/orodha/{council}', 'index')->name('orodha');
     Route::post('/ongeza', 'store')->name('ongeza');
+    Route::get('/badili/{leader}', 'edit')->name('badili');
+
 });
 
 
@@ -128,6 +132,9 @@ Route::controller(DistrictLeadersController::class)
     ->group(function () {
         Route::get('/orodha/{region}', 'index')->name('orodha');
         Route::post('/ongeza', 'store')->name('ongeza');
+        Route::get('/badili/{leader}', 'edit')->name('badili');
+        Route::put('/sasisha/{leader}', 'update')->name('sasisha');
+
     });
 
 
