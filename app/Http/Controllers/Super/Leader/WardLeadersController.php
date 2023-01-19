@@ -40,7 +40,7 @@ class WardLeadersController extends Controller
     {
         $obj = new LeadersController();
         $leader = $obj->store( $request );
-        $obj->attachMany( $leader->wards(), $request );
+        $obj->attachMany( $leader->wards(), $request, $leader );
 
         return redirect()->back()
             ->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);

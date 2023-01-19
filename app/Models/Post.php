@@ -21,7 +21,7 @@ class Post extends Model
      */
     public function leaders(): BelongsToMany
     {
-        return $this->belongsToMany(Leader::class );
+        return $this->belongsToMany(Leader::class )->withPivot('isActive');
     }
 
     /**

@@ -39,7 +39,7 @@ class CouncilLeadersController extends Controller
     {
         $obj = new LeadersController();
         $leader = $obj->store( $request );
-        $obj->attachMany( $leader->councils(), $request );
+        $obj->attachMany( $leader->councils(), $request, $leader );
 
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }

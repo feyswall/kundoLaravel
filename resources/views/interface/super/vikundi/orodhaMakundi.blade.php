@@ -24,10 +24,9 @@
                 // ->where('post_id', $post->id)
                 // ->pluck('leader_id');
            @endphp
-            <h3>{{ $post->name }}</h3>
+            <h5>{{ $post->name }}  -  <a href="#" >badiri</a> </h5>
            @endforeach
            <button class="btn btn-primary btn-md mt-3" type="submit">ongeza kiongozi</button>
-           <button class="btn btn-danger btn-md mt-3" type="submit">toa kiongozi</button>
         </x-slot:content>
     </x-system.collapse>
 @endforeach

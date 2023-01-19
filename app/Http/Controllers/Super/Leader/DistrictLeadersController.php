@@ -39,7 +39,7 @@ class DistrictLeadersController extends Controller
     {
         $obj = new LeadersController();
         $leader = $obj->store( $request );
-        $obj->attachMany( $leader->districts(), $request );
+        $obj->attachMany( $leader->districts(), $request, $leader );
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 
