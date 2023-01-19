@@ -62,7 +62,7 @@ class DivisionLeadersController extends Controller
      */
     public function edit(Leader $leader)
     {
-        //
+         return view('interface.super.viongozi.mkoa.badili_taarifa')->with('leader',$leader);
     }
 
     /**

@@ -21,7 +21,7 @@
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i> </div>
                             <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="font-size-16 mb-1">Taarifa Kuhusiana Na Halmashauri</h5>
+                                <h5 class="font-size-16 mb-1">Taarifa za tarafa</h5>
                             </div>
                             <div class="flex-shrink-0"> <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>
                         </div>
@@ -51,7 +51,7 @@
                                                 @foreach( $council->leaders as $leader )
                                                     @if( $leader->pivot->isActive == true )
                                                         <h3>{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</h3>
-                                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="#">badiri</a></p>
+                                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="{{ route("super.leader.tarafa.badili", $leader->id ) }}">Badilisha</a></p>
                                                     @endif
                                                 @endforeach
                                                 <hr>
