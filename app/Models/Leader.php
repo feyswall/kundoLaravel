@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Leader extends Model
 {
     use HasFactory;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     protected $fillable = ['firstName', 'middleName', 'lastName', 'phone'];
 
@@ -101,5 +102,6 @@ class Leader extends Model
     {
         return $this->belongsToMany(State::class )->withPivot('isActive', 'post_id');
     }
+
     
 }

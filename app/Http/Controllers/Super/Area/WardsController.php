@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Super\Area;
 use App\Http\Controllers\Controller;
 use App\Models\Division;
 use App\Models\Ward;
+use function GuzzleHttp\Promise\all;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -42,12 +43,13 @@ class WardsController extends Controller
      */
     public function store(Request $request)
     {
+
         $division_id = $request->division_id;
 
         $rules = [
             'kata' => [
                 'required', 'string', 'max:50',
-                Rule::unique('divisions', 'name')->where(function ($query) use ($division_id) {
+                Rule::unique('wards', 'name')->where(function ($query) use ($division_id) {
                     return $query->where('division_id', $division_id);
                 }),
             ]

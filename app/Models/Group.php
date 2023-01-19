@@ -22,4 +22,9 @@ class Group extends Model
     {
         return $this->belongsToMany(Post::class);
     }
+
+
+    public function leaders() {
+        return $this->hasManyThrough( Leader::class, Post::class );
+    }
 }

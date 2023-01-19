@@ -125,31 +125,12 @@
 
 
 
-    <x-system.collapse id="kamatiZaMkoa" title="kamati za mkoa">
+    <x-system.collapse id="kamatiZaWilaya" title="kamati za wilaya">
         <x-slot:content>
-            @foreach( \App\Models\Group::where("basedOn", "wilaya")->get() as $group)
+            @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "wilaya")->get() as $group)
                 <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
                     <x-slot:content>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6">
-                                @foreach( $group->posts as $post )
-                                    @php
-                                        $post_leader = $post->leaders()->where("isActive", true)->first();
-                                    @endphp
-                                    @if( $post_leader )
-                                        <h3>{{ $post->name }}</h3>
-                                        <span>
-                                                {{ $post_leader->firstName }} - {{ $post_leader->lastName }} - {{ $post_leader->phone }}
-                                            </span>
-                                    @endif
-                                @endforeach
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                @foreach( $group->posts as $post )
-                                    <ul>{{ $post->name }}</ul>
-                                @endforeach
-                            </div>
-                        </div>
+                       <x-system.groups-info :group="$group"/>     
                     </x-slot:content>
                 </x-system.collapse>
             @endforeach
@@ -183,9 +164,7 @@
                     <div class="card-body">
                         <button  data-bs-toggle="modal" data-bs-target="#orodhaHalmashauriModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Almashauri</button>
                         <a href="{{ route('super.areas.wilaya.orodha') }}" class="btn btn-primary btn-md mb-4">Rudi Wilayani</a>
-
                         <x-system.halmashauri-table :district="$district" :areas="$areas" :headers="['Jina la Halmashauri','Idadi Ya Wilaya','Idadi Ya Tarafa', '']" />
-                            
                         <!-- model location here -->
                         <x-system.modal id="orodhaHalmashauriModal" aria="orodhaHalmashauriLabel" size="modal-lg" title="Ongeza Almashauri Hapa" >
                             <x-slot:content>

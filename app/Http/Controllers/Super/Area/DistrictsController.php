@@ -22,7 +22,8 @@ class DistrictsController extends Controller
      */
     public function index()
     {
-        $region = Region::where('name', 'simiyu')->first();
+        $region = Region::with("districts.leaders")->where('name', 'simiyu')->first();
+//        dd( $region->wards->count() );
         $wilaya = $region->districts;
         return view("interface.super.maeneo.wilaya.orodhaWilaya")
             ->with('areas', $wilaya)
@@ -47,7 +48,6 @@ class DistrictsController extends Controller
      */
     public function store(Request $request)
     {
-
         $rules = [
           'wilaya' => 'required|string|max:50|unique:districts,name'
         ];

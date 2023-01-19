@@ -41,6 +41,8 @@ class Region extends Model
     /**
      * The long relations starts here and now
      */
-
+    public function wards(){
+        return $this->hasManyDeep(Ward::class, [District::class, Council::class, Division::class]);
+    }
 
 }
