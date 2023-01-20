@@ -41,15 +41,21 @@
                                 <div class="text-center mt-2">
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form action="signin.php" method="GET">
+                                    <form action="{{ route("login") }}" method="POST">
+                                        @csrf
                                         <div class="mb-3">
-                                            <label class="form-label" for="username">Email</label>
-                                            <input type="text" name="email" class="form-control" id="username" placeholder="Enter username">
+                                            <label class="form-label" for="email">Email</label>
+                                            <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" value="{{ old("email") }}">
+                                            @error("email")
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <div class="float-end"> <a href="auth-recoverpw.html" class="text-muted">Forgot password?</a> </div>
-                                            <label class="form-label" for="userpassword">Password</label>
-                                            <input type="password" class="form-control" id="userpassword" placeholder="Enter password">
+                                            <label class="form-label" for="password">Password</label>
+                                            <input type="password" name="password" class="form-control" id="password" placeholder="Enter password">
+                                            @error("password")
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="auth-remember-check">

@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SmsServicesControlller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Super\AreasController;
 use  App\Http\Controllers\Super\Area\DistrictsController;
+use App\Models\Leader;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,7 +23,13 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    /** selecting all leaders from our database */
+    $leaders = Leader::where("id", ">",  0)
+        ->with('posts', function($query) {
+        $query->select("name", "deep");
+    })->get();
+    return view('dashboard')
+    ->with("leaders", $leaders);
 })->middleware(['auth', 'verified', 'role:super|mbunge'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -29,6 +38,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::controller(SmsServicesControlller::class)
+    ->prefix('/sms')
+    ->as('sms.')
+    ->group(function () {
+        Route::post('/send', 'send')->name('tuma');
+    });
 
 require __DIR__.'/auth.php';
 

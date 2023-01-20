@@ -130,7 +130,7 @@
             @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "wilaya")->get() as $group)
                 <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
                     <x-slot:content>
-                       <x-system.groups-info :group="$group"/>     
+                       <x-system.groups-info :group="$group" :table="$district"/>     
                     </x-slot:content>
                 </x-system.collapse>
             @endforeach

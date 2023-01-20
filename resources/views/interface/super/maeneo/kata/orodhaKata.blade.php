@@ -131,6 +131,20 @@
         </div>
     </div>
 
+
+        <x-system.collapse id="kamatiZaTarafa" title="kamati Ngazi ya Tarafa">
+        <x-slot:content>
+            @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tarafa")->get() as $group)
+                <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+                    <x-slot:content>
+                       <x-system.groups-info :group="$group" :table="$council"/>     
+                    </x-slot:content>
+                </x-system.collapse>
+            @endforeach
+        </x-slot:content>
+    </x-system.collapse>
+    
+
     <div class="container-fluid">
         <!-- start page title -->
         <div class="row">

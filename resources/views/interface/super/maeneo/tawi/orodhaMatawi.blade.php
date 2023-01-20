@@ -134,7 +134,17 @@
 
 
 
-
+    <x-system.collapse id="kamatiZaKata" title="kamati Ngazi ya Kata">
+        <x-slot:content>
+            @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "Kata")->get() as $group)
+                <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+                    <x-slot:content>
+                       <x-system.groups-info :group="$group" :table="$ward"/>     
+                    </x-slot:content>
+                </x-system.collapse>
+            @endforeach
+        </x-slot:content>
+    </x-system.collapse>
 
 
 

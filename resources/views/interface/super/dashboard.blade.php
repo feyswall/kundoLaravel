@@ -101,11 +101,14 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Orodha ya watumiaji</h4>
-                        <table id="datatable-viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <table id="viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                             <tr>
-                                <th>Jina</th>
-                                <th>Cheo</th>
+                                <th><input type="checkbox" name="select_all" value="1" id="viongoziWilayaTable-select-all"></th>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last Name</th>
+                                <th>Simu</th>
                                 <th>Eneo</th>
                                 <th>miaka</th>
                                 <th>Start date</th>
@@ -113,49 +116,31 @@
                             </tr>
                             </thead>
                             <tbody>
-
-                            <tr>
-                                <td>Ashura Imma</td>
-                                <td>Mbunge</td>
-                                <td>Kigoma Mjini</td>
-                                <td>48</td>
-                                <td>2010/03/11</td>
-                                <td id="4">
-                                    <button class="btn btn-warning" onclick="togglerButton(event)"><i onclick="" class="fas fa-user"></i></button>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>Anna Immam</td>
-                                <td>Mbunge</td>
-                                <td>Singida Vijijini</td>
-                                <td>20</td>
-                                <td>2011/08/14</td>
-                                <td id="1">
-                                    <button class="btn btn-warning" onclick="togglerButton(event)"><i onclick="" class="fas fa-user"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Hisba Nimu</td>
-                                <td>Mkurugenzi</td>
-                                <td>Singida Vijijini</td>
-                                <td>20</td>
-                                <td>2011/08/14</td>
-                                <td id="2">
-                                    <button class="btn btn-warning" onclick="togglerButton(event)"><i onclick="" class="fas fa-user"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Futi ILaym</td>
-                                <td>Mkurugenzi</td>
-                                <td>Singida Vijijini</td>
-                                <td>20</td>
-                                <td>2011/08/14</td>
-                                <td id="3">
-                                    <button class="btn btn-warning" onclick="togglerButton(event)"><i onclick="" class="fas fa-user"></i></button>
-                                </td>
-                            </tr>
-
+                            @foreach( $leaders as $leader )
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="checker" name="leader_id" value="{{ $leader->id }}">
+                                    </td>
+                                    <td>{{ $leader->firstName }}</td>
+                                    <td>{{ $leader->middleName }}</td>
+                                    <td>{{ $leader->lastName }}</td>
+                                    <td>{{ $leader->phone }}</td>
+                                    <td>
+                                        <ul>
+                                            @foreach ($leader->posts as $post)
+                                                @if ( $post->pivot->isActive )
+                                                    <li>{{ $post->name }}</li>                                                    
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td>20</td>
+                                    <td>2011/08/14</td>
+                                    <td id="3">
+                                        <button class="btn btn-warning" onclick="togglerButton(event)"><i onclick="" class="fas fa-user"></i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -164,11 +149,103 @@
             <!-- end col -->
         </div>
         <!-- end row -->
+                    <x-system.modal id="sendTextSms" aria="sendSms" size="modal-lg" title="Tuma Sms Hapa">
+                <x-slot:content>
+                    <form name="sendTextSmsForm" method="post">
+                        <div class="mb-3">
+                            <label for="message">Meseji</label>
+                            <textarea rows="7" type="text" class="form-control" name="message"></textarea>
+                        </div>
+                        <div>
+                            <button id="smsInFormBtn" class="btn btn-primary btn-md" type="submit">tuma</button>
+                        </div>
+                    </form>
+                </x-slot:content>
+            </x-system.modal>
     </div>
     <!-- container-fluid -->
 @endsection
 
 @section('extra_script')
-    <x-system.table-script id="datatable-viongoziWilayaTable">
-    </x-system.table-script>
+<script>
+    let table = "begin";
+        $(document).ready (function () {
+        table = $('#viongoziWilayaTable')
+            .DataTable ({
+                "fnDrawCallback": function (oSettings) {
+                        //   console.log(this.api().page.info())
+                        },
+                lengthChange: !1, 
+                buttons: ['excel', 'pdf', {
+                text: 'send sms',
+                action: function ( e, dt, node, config ) {
+                    $("#sendTextSms").modal('show');
+                }
+            }], 
+        });
+
+            table.buttons ()
+            .container ().appendTo ('#viongoziWilayaTable_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')
+            .addClass ('form-select form-select-sm');
+
+               // Handle click on "Select all" control
+            $('#viongoziWilayaTable-select-all').on('click', function(){
+                // Get all rows with search applied
+                var rows = table.rows({ 'search': 'applied' }).nodes();
+                // Check/uncheck checkboxes for all rows in the table
+                let leftRows = $('input[type="checkbox"]', rows).prop('checked', this.checked);
+            });
+        });
+
+        // Handle click on checkbox to set state of "Select all" control
+        $('#viongoziWilayaTable tbody').on('change', 'input[type="checkbox"]', function(){
+                let remainingRows = table.rows({ 'search': 'applied' }).nodes();
+                let selectedRows = $('input[type="checkbox"]:checked', remainingRows);
+                    let finalTable = $('#viongoziWilayaTable-select-all');
+                if(remainingRows.length != selectedRows.length){
+                    finalTable.prop('checked', false);
+                }else{
+                    finalTable.prop('checked', true);
+                }
+        });
+
+
+        $("form[name='sendTextSmsForm']").on('submit', function(e){
+            e.preventDefault();
+            let messageToSend = $(this).serializeArray()[0];
+            let nowRows = table.rows({ 'search': 'applied' }).nodes();
+            let selectedToSend = [];
+            let vls = $('input[type="checkbox"]:checked', nowRows);
+            for( let g=0; g<vls.length; g++){
+            selectedToSend.push($(vls[g]).val());
+            }
+            sendAjaxSmsRequest(messageToSend, selectedToSend);
+        });
+
+
+   let sendAjaxSmsRequest = function( message, leaders){
+        console.log( leaders, message );
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+        });
+        $.ajax({
+            // beforeSend: function() {
+            // $('#smsInFormBtn').attr("disabled", true);
+            // },
+            dataType: "json",
+            type: "post",
+            url: 'sms/send',
+            data: {
+                message: message,
+                leaders_ids: leaders,
+            },
+            success: function (response) {
+                console.log( response );
+            }
+        });
+   }
+</script>
+
 @endsection
