@@ -1,6 +1,8 @@
  @props(['group', 'table'])
  <div class="row">
-    <div class="col-sm-12 col-md-6">
+    <div class="col-sm-12 col-md-8">
+        <div class="d-flex justify-start gap-4 flex-wrap">
+                           
         @foreach( $group->posts as $post )
             @php
                 $post_leaders = $post->leaders()->get();
@@ -31,20 +33,25 @@
                     @endif
 
                     @if ( $bool_contains )
-                       <div class="d-flex justify-start gap-4 flex-wrap">
-                            <div class="text-center">
+                       
+                        <div class="text-center">
                                     <h4 class="fs-5 text-capitalize mb-1">{{ $post_leader->firstName }} {{ $post_leader->lastName }}</h4>
                                     <span class="d-block mb-2">{{ $post_leader->phone }}</span>
                                     <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $post->name }}</small>
                             </div>
-                        </div>
                     @endif
             @endforeach
         @endforeach
+        </div>
+
     </div>
-    <div class="col-sm-12 col-md-6">
+    <div class="col-sm-12 col-md-4">
+        <ul>
         @foreach( $group->posts as $post )
-            <ul>{{ $post->name }}</ul>
+            <li>
+                {{ $post->name }}
+            </li>
         @endforeach
+        </ul>
     </div>
 </div>
