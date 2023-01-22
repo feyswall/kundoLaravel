@@ -44,7 +44,7 @@
                                                     <div class="text-center">
                                                         <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Badilisha" href="{{ route("super.leader.wilaya.badili", $leader->id ) }}"></a>
                                                         <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                                        <small style="background: #f3eded;" class="rounded text-primary text-capitalize fw-bold px-2 py-2" >{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
+                                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
                                                     </div>
                                                     @endif
                                                 @endforeach
