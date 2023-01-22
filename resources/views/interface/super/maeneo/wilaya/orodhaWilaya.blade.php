@@ -124,36 +124,7 @@
                     @foreach( \App\Models\Group::with("posts")->where("basedOn", "mkoa")->get() as $group)
                             <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
                                 <x-slot:content>
-                                  <div class="row">
-                                      <div class="col-sm-12 col-md-8">
-                                          @foreach( $group->posts as $post )
-                                                @php      
-                                                $post_leader = $post->leaders()->where("isActive", true)->first();
-                                                @endphp
-                                              @if( $post_leader )
-                                                  {{--if leader has a region id of region id--}}
-                                                  @if ( $post_leader->regions->contains( $region->id ) )
-                                                        <h3 class="fs-4 mb-5">Orodha Ya Viongozi</h3>
-                                                  @endif
-
-                                                  <div class="d-flex justify-start gap-4 flex-wrap">
-                                                    <div class="text-center">
-                                                            <h4 class="fs-5 text-capitalize mb-1">{{ $post_leader->firstName }} {{ $post_leader->lastName }}</h4>
-                                                            <span class="d-block mb-2">{{ $post_leader->phone }}</span>
-                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $post->name }}</small>
-                                                    </div>
-                                                  </div>
-                                              @endif
-                                          @endforeach
-                                      </div>
-                                      <div class="col-sm-12 col-md-4">
-                                          @foreach( $group->posts as $post )
-                                                <ul>
-                                                    <li class="text-capitalize">{{ $post->name }}</li>
-                                                </ul>
-                                          @endforeach
-                                      </div>
-                                  </div>
+                                    <x-system.groups-info :group="$group" :table="$region"/>     
                                 </x-slot:content>
                             </x-system.collapse>
                         @endforeach
