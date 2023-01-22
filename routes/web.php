@@ -44,6 +44,7 @@ Route::controller(SmsServicesControlller::class)
     ->as('sms.')
     ->group(function () {
         Route::post('/send', 'send')->name('tuma');
+        Route::get('/delivery', 'deriveryReport')->name('delivery');
     });
 
 require __DIR__.'/auth.php';

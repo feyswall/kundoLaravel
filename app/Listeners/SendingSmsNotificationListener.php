@@ -1,31 +1,36 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Listeners;
 
-use Illuminate\Http\Request;
+use App\Events\SendingSmsNotificationEvent;
 use App\Models\Leader;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 
-class SmsServicesControlller extends Controller
+class SendingSmsNotificationListener
 {
-    private $api_key;
-    private $secret_key;
-
     /**
      * SmsServicesControlller constructor.
      * @param $postData
      */
     public function __construct()
     {
-        $this->api_key = '9e1f6010dcefe438';
-        $this->secret_key = "ZjgyYjk2NGVhNDdiZDFhNTJkOTkzYzBhMWUxZmJiNmJiZGQ1ODhmNWYzNzEwMTZkYjI0NjZhNjEwN2RmYzQzYg==";
+       
     }
 
+
     /**
-     * Sending sms in here
-     * @param $postData
+     * Handle the event.
+     *
+     * @param  \App\Events\SendingSmsNotificationEvent  $event
+     * @return void
      */
-    public function send(Request $request)
+    public function handle(SendingSmsNotificationEvent $event)
     {
+        if ( !($event->request->leaders_ids) ){
+            return;
+            }
+        $request = $event->request;
         $receptionist_array = [];
         $leaders_ids = $request->leaders_ids;
         $phones = Leader::select("id", 'phone')->whereIn('id', $leaders_ids)->get();
@@ -38,14 +43,14 @@ class SmsServicesControlller extends Controller
             'source_addr' => 'INFO',
             'encoding' => 0,
             'schedule_time' => '',
-            'message' => 'EastCoders Inakukaribisha ndugu Amani Mwakipepe Katika KIMS karibu kesho Ofisini DERM PLAZA',
-            'recipients' => [
-                array('recipient_id' => '500', 'dest_addr' => '255626537104')
-                ]
+            'message' => 'EastCoders Inakukaribisha ndugu feyswal',
+            'recipients' => $receptionist_array
         );
+        return $postData;
         $resp = $this->configurations($postData);
-        return $resp;
     }
+
+
 
 
     /**
@@ -54,6 +59,9 @@ class SmsServicesControlller extends Controller
      */
     public function configurations($postData)
     {
+        $api_key = '9e1f6010dcefe438';
+        $secret_key = "ZjgyYjk2NGVhNDdiZDFhNTJkOTkzYzBhMWUxZmJiNmJiZGQ1ODhmNWYzNzEwMTZkYjI0NjZhNjEwN2RmYzQzYg==";
+
         $Url = 'https://apisms.beem.africa/v1/send';
 
         $ch = curl_init($Url);
@@ -65,59 +73,18 @@ class SmsServicesControlller extends Controller
             CURLOPT_POST => TRUE,
             CURLOPT_RETURNTRANSFER => TRUE,
             CURLOPT_HTTPHEADER => array(
-                'Authorization:Basic ' . base64_encode("$this->api_key:$this->secret_key"),
+                'Authorization:Basic ' . base64_encode("$api_key:$secret_key"),
                 'Content-Type: application/json'
             ),
             CURLOPT_POSTFIELDS => json_encode($postData)
         ));
 
         $response = curl_exec($ch);
-
+        dd("reaching far enought");
         if ($response === FALSE) {
             return ['status' => 'fail', 'response' => [$response, curl_error($ch)]];
         }
         return ['status' => 'success', 'response' => $response];
     }
 
-
-    public function deriveryReport($dest_addr, $request_id){
-        $username = $this->api_key;
-        $password = $this->secret_key;
-
-        $URL = 'https://dlrapi.beem.africa/public/v1/delivery-reports';
-
-        $body = array('request_id' => $request_id, 'dest_addr' => $dest_addr);
-
-        // Setup cURL
-        $ch = curl_init();
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
-
-        $URL = $URL . '?' . http_build_query($body);
-
-        curl_setopt($ch, CURLOPT_URL, $URL);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt_array($ch, array(
-            CURLOPT_HTTPGET => true,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTPHEADER => array(
-                'Authorization:Basic ' . base64_encode("$username:$password"),
-                'Content-Type: application/json',
-            ),
-        ));
-
-        // Send the request
-        $response = curl_exec($ch);
-
-        // Check for errors
-        if ($response === false) {
-            echo $response;
-
-            die(curl_error($ch));
-        }
-        var_dump($response);
-    }
 }
-
-?>

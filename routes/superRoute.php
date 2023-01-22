@@ -157,7 +157,6 @@ Route::controller(StateLeadersController::class)
     });
 
 
-
 Route::controller(GroupsController::class)
     ->prefix('/super/group')
     ->as('super.group.')
