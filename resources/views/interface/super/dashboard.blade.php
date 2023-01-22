@@ -223,29 +223,28 @@
         });
 
 
-   let sendAjaxSmsRequest = function( message, leaders){
-        console.log( leaders, message );
-        $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-        });
-        $.ajax({
-            // beforeSend: function() {
-            // $('#smsInFormBtn').attr("disabled", true);
-            // },
-            dataType: "json",
-            type: "post",
-            url: 'sms/send',
-            data: {
-                message: message,
-                leaders_ids: leaders,
-            },
-            success: function (response) {
-                console.log( response );
+            let sendAjaxSmsRequest = function( message, leaders){
+                    $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                    });
+                    $.ajax({
+                        // beforeSend: function() {
+                        // $('#smsInFormBtn').attr("disabled", true);
+                        // },
+                        dataType: "json",
+                        type: "post",
+                        url: 'sms/send',
+                        data: {
+                            message: message,
+                            leaders_ids: leaders,
+                        },
+                        success: function (response) {
+                            console.log( response );
+                        }
+                    });
             }
-        });
-   }
 </script>
 
 @endsection
