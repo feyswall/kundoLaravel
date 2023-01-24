@@ -19,7 +19,7 @@ class Post extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function leaders(): BelongsToMany
+    public function leaders()
     {
         return $this->belongsToMany(Leader::class )->withPivot('isActive');
     }
@@ -29,7 +29,7 @@ class Post extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function groups(): BelongsToMany
+    public function groups()
     {
         return $this->belongsToMany(Group::class);
     }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+// use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 
 class Leader extends Model
 {
@@ -101,7 +102,7 @@ class Leader extends Model
     public function states(): BelongsToMany
     {
         return $this->belongsToMany(State::class )->withPivot('isActive', 'post_id');
-    }
+    } 
 
     
 }

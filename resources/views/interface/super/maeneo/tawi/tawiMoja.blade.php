@@ -14,44 +14,6 @@
     <!-- Start right Content here -->
     <!-- ============================================================== -->
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <a href="#checkout-orodhaKata-collapse" class="text-dark" data-bs-toggle="collapse">
-                    <div class="p-4">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i> </div>
-                            <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="font-size-16 mb-1">Taarifa Kuhusiana Na Kata</h5>
-                            </div>
-                            <div class="flex-shrink-0"> <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>
-                        </div>
-                    </div>
-                </a>
-                <div id="checkout-orodhaKata-collapse" class="collapse hide">
-                    <div class="p-4 border-top">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-        <x-system.collapse id="kamatiZaTawi" title="kamati Ngazi ya Tawi">
-        <x-slot:content>
-            @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tawi")->get() as $group)
-                <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
-                    <x-slot:content>
-                       <x-system.groups-info :group="$group" :table="$branch"/>     
-                    </x-slot:content>
-                </x-system.collapse>
-            @endforeach
-        </x-slot:content>
-    </x-system.collapse>
-
-
     <div class="container-fluid">
         <!-- start page title -->
         <div class="row">

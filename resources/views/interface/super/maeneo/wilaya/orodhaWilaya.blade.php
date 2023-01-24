@@ -29,6 +29,8 @@
                         <div id="checkout-orodhaKata-collapse" class="collapse hide">
                             <div class="p-4 border-top">
                             <div class="row">
+
+
                             <div class="col-12">
                                 <div class="p-2">
                                     <h3 class="fs-5 mb-3">Jina la Mkoa: <span class="fw-bold text-uppercase"> {{ $region->name }}</span></h3>
@@ -48,9 +50,7 @@
                                                     </div>
                                                     @endif
                                                 @endforeach
-                                               
                                             </div>
-                                            
                                         </div>
                                         <!-- model location here -->
                                         <x-system.modal id="ongezaKiongoziModal" aria="ongezaKiongoziMkoaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Mkoa Hapa" >
@@ -108,9 +108,13 @@
                                             </x-slot:content>
                                         </x-system.modal>
                                     </div>
-                                    
                                 </div>
                             </div> <!-- end col -->
+
+                            
+
+
+
                         </div> <!-- end row -->
                             </div>
                         </div>

@@ -29,36 +29,40 @@
                 <div id="checkout-orodhaKata-collapse" class="collapse hide">
                     <div class="p-4 border-top">
                         <div class="row">
+
+
+
+
+
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h2>Taarifa za Wilaya</h2>
-                                        <h4>ya:{{ $district->name }}</h4>
+                                        <h3 class="fs-5 mb-3">Taarifa za Wilaya: <span class="fw-bold text-uppercase"> {{ $district->name }}</span></h3>
 
-                                        <h2>Mkoa</h2>
-                                        <h4>{{ $district->region->name }}</h4>
+                                        <h5>Mkoa</h5>
+                                        <span>{{ $district->region->name }}</span>
 
-                                        <h2>Wilaya</h2>
-                                        <h4>{{ $district->name }}</h4>
-
-                                        <h2>Halmashauri</h2>
-                                        <h4>{{ $district->name }}</h4>
+                                        <h5>Wilaya</h5>
+                                        <span>{{ $district->name }}</span>
 
                                         <div>
                                             <h1>Viongozi wa Wilaya</h1>
-                                            <div>
-                                                @foreach( $district->leaders as $leader )
+                                             <div>
+                                            <div class="d-flex justify-start gap-4 flex-wrap">
+                                            @foreach( $district->leaders as $leader )
                                                     @if( $leader->pivot->isActive == true )
-                                                        <h3>{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</h3>
-                                                        <p>{{ $leader->firstName }} {{ $leader->lastName }} - <a href="{{ route("super.leader.wilaya.badili", $leader->id ) }}">Badilisha</a></p>
+                                                    <div class="text-center">
+                                                        <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Badilisha" href="{{ route("super.leader.wilaya.badili", $leader->id ) }}"></a>
+                                                        <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
+                                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
+                                                    </div>
                                                     @endif
                                                 @endforeach
-                                                <hr>
                                             </div>
-
+                                        </div>
                                             <button  data-bs-toggle="modal" data-bs-target="#ongezaKiongoziModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri kiongozi wilaya </button>
                                             <!-- model location here -->
-                                            <x-system.modal id="ongezaKiongoziModal" aria="ongezaKiongoziWilayaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Tarafa Hapa" >
+                                            <x-system.modal id="ongezaKiongoziModal" aria="ongezaKiongoziWilayaLabel" size="modal-fullscreen" title="Ongeza Kiongozi  Hapa" >
                                                 <x-slot:content>
                                                     <form method="post" action="{{ route('super.leader.wilaya.ongeza') }}">
                                                         @csrf
@@ -97,12 +101,45 @@
                                                                 <div class="mb-3 mb-4">
                                                                     <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                                     <select class="form-control" name="post_id">
-                                                                        @foreach( \App\Models\Post::where('area', 'wilaya')->get() as $post )
+                                                                        @php $posts = \App\Models\Post::where('area', 'wilaya')->get(); @endphp
+                                                                        @foreach( $posts as $post )
                                                                             <option value="{{ $post->id }}">{{ $post->name }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
                                                             </div>
+
+
+                                                              {{-- <div class="col-sm-12 col-md-4 col-lg-3">
+                                                                <div class="mb-3 mb-4">
+                                                                    <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
+                                                                    <select class="form-control" name="post_id">
+                                                                        @php $district2 = \App\Models\District::where('id', $district->id)->first(); @endphp
+                                                                        @foreach ($posts as $post)>
+                                                                                $leadersDistr_id = []; 
+                                                                                @foreach ($district2->leaders as $leader)
+                                                                                    @if ( $leader->posts->contains($post->id) )
+                                                                                        @foreach ($leader->posts as $post)
+                                                                                            @if ( $post->pivot->isActive == false)
+                                                                                                @php $leadersDistr_id[] = $post->id; @endphp
+                                                                                            @endif
+                                                                                        @endforeach
+                                                                                    @endif
+                                                                                @endforeach
+                                                                    
+                                                                        @endforeach
+
+                                                                        @php 
+                                                                            $posts3 = \App\Models\Post::whereIn('id', $leadersDistr_id)->get();
+                                                                        @endphp
+                                                                        @foreach( $posts3 as $post )
+                                                                            <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div> --}}
+
+
                                                             <div class="row">
                                                                 <div class="col-12">
                                                                     <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
@@ -116,6 +153,12 @@
                                     </div>
                                 </div>
                             </div> <!-- end col -->
+
+
+
+
+
+
                         </div> <!-- end row -->
                     </div>
                 </div>

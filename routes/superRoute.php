@@ -162,4 +162,6 @@ Route::controller(GroupsController::class)
     ->as('super.group.')
     ->group(function () {
         Route::get('/orodha', 'index')->name('orodha');
+        Route::post('/toaWadhifa', 'removePost')->name('toaWadhifa');
+        Route::post('/ongezaWadhifa', 'addPost')->name('ongezaWadhifa');
 });

@@ -18,6 +18,7 @@ class groupPostTableSeeder extends Seeder
     public function run()
     {
         DB::table('group_post')->delete();
+        
         /** first group implementation */
         $uwz_chama_M = Group::where("deep", "uwz_chama_M")->first();
         /**  id collection of the required posts */
@@ -27,11 +28,11 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $fr_posts_ids = Post::whereIn('deep', $posts_names )->pluck('id');
         /** attach the values together */
-        $uwz_chama_M->posts()->syncWithoutDetaching($fr_posts_ids);
+        foreach( $fr_posts_ids as $post){
+            $uwz_chama_M->posts()->attach($post);
+        }
 
-
-
-
+        
         /** second group implementation */
         $jm_wke_M = Group::where("deep", "jm_wke_M")->first();
         /**  id collection of the required posts */
@@ -41,7 +42,7 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $sec_posts_ids = Post::whereIn('deep', $sec_posts_names )->pluck('id');
         /** attach the values together */
-        $jm_wke_M->posts()->syncWithoutDetaching($sec_posts_ids);
+        $jm_wke_M->posts()->sync($sec_posts_ids);
 
 
 
@@ -55,7 +56,7 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $thir_posts_ids = Post::whereIn('deep', $thir_posts_names)->pluck('id');
         /** attach the values together */
-        $jm_vjana_M->posts()->syncWithoutDetaching($thir_posts_ids);
+        $jm_vjana_M->posts()->sync($thir_posts_ids);
 
 
 
@@ -69,7 +70,7 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $fourth_posts_ids = Post::whereIn('deep', $fourth_posts_names)->pluck('id');
         /** attach the values together */
-        $jm_waz_M->posts()->syncWithoutDetaching($fourth_posts_ids);
+        $jm_waz_M->posts()->sync($fourth_posts_ids);
 
 
 
@@ -83,7 +84,7 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $fifth_posts_ids = Post::whereIn('deep', $fifth_posts_names)->pluck('id');
         /** attach the values together */
-        $jm_wke_W->posts()->syncWithoutDetaching($fifth_posts_ids);
+        $jm_wke_W->posts()->sync($fifth_posts_ids);
 
 
 
@@ -98,7 +99,7 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $sixth_posts_ids = Post::whereIn('deep', $sixth_posts_names)->pluck('id');
         /** attach the values together */
-        $jm_waz_W->posts()->syncWithoutDetaching($sixth_posts_ids);
+        $jm_waz_W->posts()->sync($sixth_posts_ids);
 
 
 
@@ -113,7 +114,7 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $sevnth_posts_ids = Post::whereIn('deep', $sevnth_posts_names)->pluck('id');
         /** attach the values together */
-        $jm_vj_W->posts()->syncWithoutDetaching($sevnth_posts_ids);
+        $jm_vj_W->posts()->sync($sevnth_posts_ids);
 
 
 
@@ -127,7 +128,7 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $eighth_posts_ids = Post::whereIn('deep', $eighth_posts_names)->pluck('id');
         /** attach the values together */
-        $uwz_chama_W->posts()->syncWithoutDetaching($eighth_posts_ids);
+        $uwz_chama_W->posts()->sync($eighth_posts_ids);
 
 
 
@@ -143,7 +144,7 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $nineth_posts_ids = Post::whereIn('deep', $nineth_posts_names)->pluck('id');
         /** attach the values together */
-        $kmt_siasa_W->posts()->syncWithoutDetaching($nineth_posts_ids);
+        $kmt_siasa_W->posts()->sync($nineth_posts_ids);
 
 
 
@@ -166,7 +167,7 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $tenth_posts_ids = Post::whereIn('deep', $tenth_posts_names)->pluck('id');
         /** attach the values together */
-        $h_kuu_W->posts()->syncWithoutDetaching($tenth_posts_ids);
+        $h_kuu_W->posts()->sync($tenth_posts_ids);
 
 
 
@@ -182,7 +183,7 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $elvnth_posts_ids = Post::whereIn('deep', $elvnth_posts_names)->pluck('id');
         /** attach the values together */
-        $uwz_chama_K->posts()->syncWithoutDetaching($elvnth_posts_ids);
+        $uwz_chama_K->posts()->sync($elvnth_posts_ids);
 
 
 
@@ -198,7 +199,7 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $twelvth_posts_ids = Post::whereIn('deep', $twelvth_posts_names)->pluck('id');
         /** attach the values together */
-        $kmt_siasa_M->posts()->syncWithoutDetaching($twelvth_posts_ids);
+        $kmt_siasa_M->posts()->sync($twelvth_posts_ids);
 
 
 
@@ -217,7 +218,7 @@ class groupPostTableSeeder extends Seeder
         /** finding the ids selected posts */
         $thrth_posts_ids = Post::whereIn('deep', $thrth_posts_names)->pluck('id');
         /** attach the values together */
-        $h_kuu_M->posts()->syncWithoutDetaching($thrth_posts_ids);
+        $h_kuu_M->posts()->sync($thrth_posts_ids);
 
     }
 }

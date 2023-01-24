@@ -44,7 +44,7 @@ class StatesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ValidateStateRequest $request)
+    public function store(Request $request)
     {   
         $district_id = $request->district_id;
 

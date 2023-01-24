@@ -34,6 +34,7 @@ class District extends Model
     {
         return $this->hasManyThrough(Division::class,Council::class);
     }
+    
 
     public function councils()
     {

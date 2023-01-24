@@ -14,18 +14,21 @@
 <meta content="Kundo Information Management System" name="description" />
 <meta content="informations" name="g3net" />
 <!-- App favicon -->
+
 <!-- Bootstrap Css -->
-<link href="{{ asset('assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<link href="{{ asset('public/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+
 
 <!-- Icons Css -->
-<link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('public/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+
+
+<link href="{{ asset('public/assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 
 <!-- App Css-->
-<link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
-
-<!-- Icons Css -->
-<link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('public/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
 
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+

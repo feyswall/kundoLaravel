@@ -35,10 +35,19 @@
                             <div id="total-revenue-chart"></div>
                         </div>
                         <div>
-                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">356</span></h4>
-                            <p class="text-muted mb-0">Jumla ya watumiaji</p>
+                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">
+                                @php $balanceFunct = \App\Http\Controllers\SmsServicesControlller::CheckBalance(); @endphp
+                                @if ( $balanceFunct['status'] == "success")
+                                    @if ( isset($balanceFunct['response']->data) )
+                                        {{ $balanceFunct['response']->data->credit_balance }}
+                                    @endif
+                                @endif
+                            </span></h4>
+                            <p class="text-muted mb-0">Sms Credit Balance</p>
                         </div>
-                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>2.65%</span> ya mwezi uliopita </p>
+                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1">
+                            <i class="mdi mdi-arrow-up-bold me-1"></i>
+                            {{ \App\Http\Controllers\SmsServicesControlller::supportedSms() }}</span>Sms Capacity  </p>
                     </div>
                 </div>
             </div>
@@ -105,14 +114,15 @@
                             <thead>
                             <tr>
                                 <th><input type="checkbox" name="select_all" value="1" id="viongoziWilayaTable-select-all"></th>
-                                <th>First Name</th>
-                                <th>Middle Name</th>
-                                <th>Last Name</th>
+                                <th>Jina/kwnza</th>
+                                <th>Jina/kati</th>
+                                <th>Jina/mwisho</th>
                                 <th>Simu</th>
-                                <th>Eneo</th>
-                                <th>miaka</th>
+                                <th>Kamati</th>
+                                <th>Kamati</th>
+                                {{-- <th>miaka</th>
                                 <th>Start date</th>
-                                <th></th>
+                                <th></th> --}}
                             </tr>
                             </thead>
                             <tbody>
@@ -127,6 +137,17 @@
                                     <td>{{ $leader->phone }}</td>
                                     <td>
                                         <ul>
+                                           @foreach ($leader->posts as $post)
+                                                @if ( $post->pivot->isActive )
+                                                    @foreach ($post->groups as $group)
+                                                        <li><b>{{ $group->name }}</b></li>
+                                                    @endforeach                                                 
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul>
                                             @foreach ($leader->posts as $post)
                                                 @if ( $post->pivot->isActive )
                                                     <li>{{ $post->name }}</li>                                                    
@@ -134,11 +155,7 @@
                                             @endforeach
                                         </ul>
                                     </td>
-                                    <td>20</td>
-                                    <td>2011/08/14</td>
-                                    <td id="3">
-                                        <button class="btn btn-warning" onclick="togglerButton(event)"><i onclick="" class="fas fa-user"></i></button>
-                                    </td>
+                                     
                                 </tr>
                             @endforeach
                             </tbody>
@@ -151,7 +168,7 @@
         <!-- end row -->
                     <x-system.modal id="sendTextSms" aria="sendSms" size="modal-lg" title="Tuma Sms Hapa">
                 <x-slot:content>
-                    <form name="sendTextSmsForm" method="post">
+                    <form id="sendTextSmsFormId" name="sendTextSmsForm" method="post">
                         <div class="mb-3">
                             <label for="message">Meseji</label>
                             <textarea rows="7" type="text" class="form-control" name="message"></textarea>
@@ -159,7 +176,27 @@
                         <div>
                             <button id="smsInFormBtn" class="btn btn-primary btn-md" type="submit">tuma</button>
                         </div>
+                        <div class="mt-3">
+                                @php $resultBalance = \App\Http\Controllers\SmsServicesControlller::checkBalance(); @endphp
+                                @if ( $resultBalance['status'] == 'success' )
+                                    <h4>Balance {{ $resultBalance['response']->data->credit_balance; }}</h4>
+                                    <h4>Utaweza kutuma SMS {{ \App\Http\Controllers\SmsServicesControlller::supportedSms() }}</h4>
+                                @endif
+                        </div>
                     </form>
+                   <div class="row">
+                        <div class="m-auto">
+                            <div id="formLoader" style="display: none;" class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                   </div>
+                   <div id="smsSuccess" style="display: none">
+                        <h1 class="text-success" style="margin-right: 50px;">Sms Zimetumwa!</h1>
+                        <div id="formLoader"  class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                        </div>
+                   </div>
                 </x-slot:content>
             </x-system.modal>
     </div>
@@ -201,7 +238,7 @@
         $('#viongoziWilayaTable tbody').on('change', 'input[type="checkbox"]', function(){
                 let remainingRows = table.rows({ 'search': 'applied' }).nodes();
                 let selectedRows = $('input[type="checkbox"]:checked', remainingRows);
-                    let finalTable = $('#viongoziWilayaTable-select-all');
+                let finalTable = $('#viongoziWilayaTable-select-all');
                 if(remainingRows.length != selectedRows.length){
                     finalTable.prop('checked', false);
                 }else{
@@ -223,16 +260,27 @@
         });
 
 
-            let sendAjaxSmsRequest = function( message, leaders){
+            let sendAjaxSmsRequest = function( message, leaders) {
+                let allowed = {!! $resultBalance['response']->data->credit_balance !!}
+                if( allowed < leaders.length ){
+                    alert(` Salio Lako Halitoshi kutuma SMS ${leaders.length} `)
+                }else {
+                    sendAjaxSmsRequesto( message, leaders );
+                }
+            }
+
+
+            let sendAjaxSmsRequesto = function( message, leaders){
                     $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                     });
                     $.ajax({
-                        // beforeSend: function() {
-                        // $('#smsInFormBtn').attr("disabled", true);
-                        // },
+                        beforeSend: function() {
+                            $('#sendTextSmsFormId').css("display", "none");
+                            $('#formLoader').css("display", 'flex');
+                        },
                         dataType: "json",
                         type: "post",
                         url: 'sms/send',
@@ -241,8 +289,18 @@
                             leaders_ids: leaders,
                         },
                         success: function (response) {
-                            console.log( response );
+                            if( response.status == 'fail' || response.status == 'error' ){
+                                alert( response.message );
+                            }
+                        },
+                        complete: function() {
+                            $('#formLoader').css("display", 'none');
+                            $('#smsSuccess').css("display", "flex");
+
+                            location.reload();
+
                         }
+                        
                     });
             }
 </script>

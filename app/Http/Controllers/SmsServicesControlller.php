@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendingSmsNotificationEvent;
 use Illuminate\Http\Request;
 use App\Models\Leader;
 use App\Models\Sms;
 
 class SmsServicesControlller extends Controller
 {
-    private $api_key;
-    private $secret_key;
+    public static $api_key = '9e1f6010dcefe438';
+    public static $secret_key = 'ZjgyYjk2NGVhNDdiZDFhNTJkOTkzYzBhMWUxZmJiNmJiZGQ1ODhmNWYzNzEwMTZkYjI0NjZhNjEwN2RmYzQzYg==';
 
     /**
      * SmsServicesControlller constructor.
@@ -17,8 +18,7 @@ class SmsServicesControlller extends Controller
      */
     public function __construct()
     {
-        $this->api_key = '9e1f6010dcefe438';
-        $this->secret_key = "ZjgyYjk2NGVhNDdiZDFhNTJkOTkzYzBhMWUxZmJiNmJiZGQ1ODhmNWYzNzEwMTZkYjI0NjZhNjEwN2RmYzQzYg==";
+
     }
 
     /**
@@ -27,41 +27,8 @@ class SmsServicesControlller extends Controller
      */
     public function send(Request $request)
     {
-        $receptionist_array = [];
-        $leaders_ids = $request->leaders_ids;
-        if ( count($leaders_ids) == 0 ){
-            return ['status' => 'error', 'message' => 'no user were selected'];
-        }
-        $phones = Leader::select("id", 'phone')->whereIn('id', $leaders_ids)->get();
-
-        foreach ($phones as $phone) {
-            $smsPhone = preg_replace("/^0/", "255", $phone->phone);
-            $receptionist_array[] = array('recipient_id' => $phone->id, 'dest_addr' => $smsPhone );
-        }
-        $postData = array(
-            'source_addr' => 'INFO',
-            'encoding'=>0, 
-            'schedule_time' => '',
-            'message' => $request->message['value'],
-            'recipients' => [ array('recipient_id' => '1', 'dest_addr' => '2628960877') ]
-        );
-        $resp = $this->configurations( $postData );
-        $response_obj = json_decode($resp['response']);
-        if ($resp['status'] == 'success') {
-            if ( isset($response_obj->successful) ){
-                $smsRequestId = Sms::create([
-                    'request_id' => 6,
-                    'message' => $request->message['value'],
-                    'sms_amount' => count($receptionist_array)
-                ]);
-                return ['status' => 'success' ,'response' => $response_obj, 'object' => $smsRequestId];
-            }
-            return ['status' => 'fail', 'message' => $response_obj->message];
-        } else {
-            if ($resp['status'] == 'fail') {
-            return ['status' => 'fail', 'message' => $response_obj->message];
-            }
-        }
+       event(new SendingSmsNotificationEvent($request) );
+        return ['status' => 'success'];
     }
 
 
@@ -71,6 +38,9 @@ class SmsServicesControlller extends Controller
      */
     public function configurations($postData)
      {
+         $api_key = self::$api_key;
+         $secret_key  = self::$secret_key;
+
         $Url ='https://apisms.beem.africa/v1/send';
 
         $ch = curl_init($Url);
@@ -82,7 +52,7 @@ class SmsServicesControlller extends Controller
         CURLOPT_POST => TRUE,
         CURLOPT_RETURNTRANSFER => TRUE,
         CURLOPT_HTTPHEADER => array(
-        'Authorization:Basic ' . base64_encode("$this->api_key:$this->secret_key"),
+        'Authorization:Basic ' . base64_encode("$api_key:$secret_key"),
         'Content-Type: application/json'
         ),
         CURLOPT_POSTFIELDS => json_encode($postData)
@@ -100,8 +70,8 @@ class SmsServicesControlller extends Controller
 
     public function deriveryReport($dest_addr, $request_id)
     {
-        $username = $this->api_key;
-        $password = $this->secret_key;
+        $username = self::$api_key;
+        $password = self::$secret_key;
 
         $URL = 'https://dlrapi.beem.africa/public/v1/delivery-reports';
 
@@ -134,6 +104,52 @@ class SmsServicesControlller extends Controller
             dd([$response, curl_error($ch)]);
         }
         dd($response);
+    }
+
+
+
+    public static function checkBalance(){
+        $username= self::$api_key;
+        $password = self::$secret_key;
+
+        $Url ='https://apisms.beem.africa/public/v1/vendors/balance';
+
+        $ch = curl_init($Url);
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt_array($ch, array(
+            CURLOPT_HTTPGET => TRUE,
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_HTTPHEADER => array(
+                'Authorization:Basic ' . base64_encode("$username:$password"),
+                'Content-Type: application/json'
+            ),
+        ));
+        // Send the request
+        $response = curl_exec($ch);
+
+        if($response === FALSE){
+                $responseObj = json_decode($response);
+                return ['status' => 'fail', "response" => $responseObj ];
+        }
+        $responseObj = json_decode($response);
+        return ['status' => 'success', "response" => $responseObj ];
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public static function supportedSms(){
+        $checkBalance = self::checkBalance();
+        if ( $checkBalance['status'] == 'success' ){
+            $balance = $checkBalance['response']->data->credit_balance;
+            return $balance;
+        }else{
+            return "Haiukupatikana";
+        }
     }
 
 

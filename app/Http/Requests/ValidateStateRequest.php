@@ -25,9 +25,7 @@ class ValidateStateRequest extends FormRequest
     public function rules()
     {
         return [
-            'jimbo' => ['required', 'string', 'max:50',
-                new UniqueName( $this->input('district_id'), 'states' )
-            ]
+            'jimbo' => ['required', 'string', 'max:50']
         ];
     }
 

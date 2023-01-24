@@ -25,12 +25,12 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     /** selecting all leaders from our database */
     $leaders = Leader::where("id", ">",  0)
-        ->with('posts', function($query) {
-        $query->select("name", "deep");
-    })->get();
+        ->with('posts')->get();
     return view('dashboard')
     ->with("leaders", $leaders);
 })->middleware(['auth', 'verified', 'role:super|mbunge'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -45,6 +45,7 @@ Route::controller(SmsServicesControlller::class)
     ->group(function () {
         Route::post('/send', 'send')->name('tuma');
         Route::get('/delivery', 'deriveryReport')->name('delivery');
+        Route::get('/balance', 'checkBalance')->name('balance');
     });
 
 require __DIR__.'/auth.php';
