@@ -102,7 +102,14 @@ class Leader extends Model
     public function states(): BelongsToMany
     {
         return $this->belongsToMany(State::class )->withPivot('isActive', 'post_id');
-    } 
+    }
 
+    /**
+     * @return BelongsToMany
+     */
+    public function smses(): BelongsToMany
+    {
+        return $this->belongsToMany( Sms::class );
+    }
     
 }

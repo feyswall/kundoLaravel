@@ -36,6 +36,7 @@
                             </ul>
                         </li>
                         <li> <a href="{{ route("super.areas.wilaya.orodha") }}">Maeneo</a></li>
+                        <li> <a href="{{ route("sms.orodha.group") }}">Sms</a></li>
                     </ul>
                 </li>
 
