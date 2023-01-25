@@ -307,7 +307,7 @@
                             }else {
                                 $('#formLoader').css("display", 'none');
                                 $('#smsSuccess').css("display", "flex");
-//                                location.reload();
+                                window.location = "{!! route('orodha.group ) !!}";
                             }
                         },
                         complete: function() {
