@@ -182,8 +182,10 @@
                                 @php $resultBalance = \App\Http\Controllers\SmsServicesControlller::checkBalance(); @endphp
                                 @if ( $resultBalance['status'] )
                                     @if ( $resultBalance['status'] == 'success' )
-                                        <h4>Balance {{ $resultBalance['response']->data->credit_balance; }}</h4>
-                                        <h4>Utaweza kutuma SMS {{ \App\Http\Controllers\SmsServicesControlller::supportedSms() }}</h4>
+                                        @if( isset($resultBalance['response']->data) )
+                                                <h4>Balance {{ $resultBalance['response']->data->credit_balance; }}</h4>
+                                                <h4>Utaweza kutuma SMS {{ \App\Http\Controllers\SmsServicesControlller::supportedSms() }}</h4>
+                                            @endif
                                     @endif
                                 @endif
                         </div>
@@ -211,6 +213,7 @@
 <script>
     let table = "begin";
         $(document).ready (function () {
+
         table = $('#viongoziWilayaTable')
             .DataTable ({
                 "fnDrawCallback": function (oSettings) {
@@ -264,7 +267,7 @@
         });
 
 
-            let sendAjaxSmsRequest = function( message, leaders) {
+            let sendAjaxSmsRequest = function( message, leaders ) {
                 let allowed = {!! $resultBalance['response'] ? $resultBalance['response']->data->credit_balance : 0 !!}
                     console.log( leaders )
                 if( confirm(`Idadi ya sms Unazojaribu kutuma ni ${leaders.length} Idadi Hii Itapungua kama kuna namba zenye kujirudia.`)){
@@ -277,7 +280,7 @@
                         sendAjaxSmsRequesto( message, leaders );
                     }
                 }
-            }
+            };
 
 
             let sendAjaxSmsRequesto = function( message, leaders){
@@ -299,7 +302,6 @@
                             leaders_ids: leaders,
                         },
                         success: function (response) {
-                            console.log( response );
                             if( response.status == 'fail' || response.status == 'error' ){
                                 alert( response.message );
                                 $('#formLoader').css("display", 'none');
@@ -307,12 +309,12 @@
                             }else {
                                 $('#formLoader').css("display", 'none');
                                 $('#smsSuccess').css("display", "flex");
-                                window.location = "{!! route('orodha.group ) !!}";
+                                window.location = `/orodha/sms/${response.obj.id}`;
                             }
                         },
                         complete: function() {
                         }
-                        
+
                     });
             }
 </script>

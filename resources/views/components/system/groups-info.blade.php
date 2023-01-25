@@ -6,6 +6,7 @@
         @foreach( $group->posts as $post )
             @php
                 $post_leaders = $post->leaders()->get();
+                $bool_contains = false;
             @endphp
             @foreach ($post_leaders as $post_leader)
                     @if ( $post->area == 'wilaya')
