@@ -21,7 +21,7 @@ class CouncilsController extends Controller
     {
         $halmashauri = $district->councils;
         $majimbo = $district->states;
-        return view("interface.super.maeneo.Halmashauri.orodhaHalmashauri")
+        return view("interface.super.maeneo.halmashauri.orodhaHalmashauri")
             ->with('areas', $halmashauri)
             ->with('states', $majimbo )
             ->with('district', $district );

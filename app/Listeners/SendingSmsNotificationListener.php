@@ -57,10 +57,11 @@ class SendingSmsNotificationListener
             'message' => $request->message['value'],
             'recipients' => $receptionist_array
         );
-        $resp = $this->configurations( $postData );
+//        $resp = $this->configurations( $postData );
+          $resp = ['status' => 'fail', 'response' => ['message' => 'jalalambe']];
         $response_obj = json_decode($resp['response']);
         if ($resp['status'] == 'success') {
-            if ( isset($response_obj->successful) ){
+            if ( isset($response_obj->successful) ) {
                 $smsRequestId = Sms::create([
                     'request_id' => 6,
                     'message' => $request->message['value'],

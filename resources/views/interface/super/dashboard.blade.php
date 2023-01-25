@@ -268,14 +268,12 @@
                 let allowed = {!! $resultBalance['response'] ? $resultBalance['response']->data->credit_balance : 0 !!}
                     console.log( leaders )
                 if( confirm(`Idadi ya sms Unazojaribu kutuma ni ${leaders.length} Idadi Hii Itapungua kama kuna namba zenye kujirudia.`)){
-
+                    if( false ){
+                        alert(` Salio Lako Halitoshi kutuma SMS ${leaders.length} `)
+                    }else {
+                        sendAjaxSmsRequesto( message, leaders );
+                    }
                 }
-
-//                if( allowed < leaders.length ){
-//                    alert(` Salio Lako Halitoshi kutuma SMS ${leaders.length} `)
-//                }else {
-//                    sendAjaxSmsRequesto( message, leaders );
-//                }
             }
 
 

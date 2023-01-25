@@ -42,8 +42,6 @@ class SmsServicesControlller extends Controller
         /**  remove redundancy in phone array */
         $trueArr = array_unique($parr);
 
-
-        return ['status' => 'success'];
     }
 
 
