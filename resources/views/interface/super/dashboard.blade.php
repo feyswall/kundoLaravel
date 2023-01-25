@@ -37,9 +37,11 @@
                         <div>
                             <h4 class="mb-1 mt-1"><span data-plugin="counterup">
                                 @php $balanceFunct = \App\Http\Controllers\SmsServicesControlller::CheckBalance(); @endphp
-                                @if ( $balanceFunct['status'] == "success")
-                                    @if ( isset($balanceFunct['response']->data) )
-                                        {{ $balanceFunct['response']->data->credit_balance }}
+                                @if ( $balanceFunct['status'] )
+                                    @if ( $balanceFunct['status'] == "success")
+                                        @if ( isset($balanceFunct['response']->data) )
+                                            {{ $balanceFunct['response']->data->credit_balance }}
+                                        @endif
                                     @endif
                                 @endif
                             </span></h4>
@@ -178,9 +180,11 @@
                         </div>
                         <div class="mt-3">
                                 @php $resultBalance = \App\Http\Controllers\SmsServicesControlller::checkBalance(); @endphp
-                                @if ( $resultBalance['status'] == 'success' )
-                                    <h4>Balance {{ $resultBalance['response']->data->credit_balance; }}</h4>
-                                    <h4>Utaweza kutuma SMS {{ \App\Http\Controllers\SmsServicesControlller::supportedSms() }}</h4>
+                                @if ( $resultBalance['status'] )
+                                    @if ( $resultBalance['status'] == 'success' )
+                                        <h4>Balance {{ $resultBalance['response']->data->credit_balance; }}</h4>
+                                        <h4>Utaweza kutuma SMS {{ \App\Http\Controllers\SmsServicesControlller::supportedSms() }}</h4>
+                                    @endif
                                 @endif
                         </div>
                     </form>
@@ -261,12 +265,17 @@
 
 
             let sendAjaxSmsRequest = function( message, leaders) {
-                let allowed = {!! $resultBalance['response']->data->credit_balance !!}
-                if( allowed < leaders.length ){
-                    alert(` Salio Lako Halitoshi kutuma SMS ${leaders.length} `)
-                }else {
-                    sendAjaxSmsRequesto( message, leaders );
+                let allowed = {!! $resultBalance['response'] ? $resultBalance['response']->data->credit_balance : 0 !!}
+                    console.log( leaders )
+                if( confirm(`Idadi ya sms Unazojaribu kutuma ni ${leaders.length} Idadi Hii Itapungua kama kuna namba zenye kujirudia.`)){
+
                 }
+
+//                if( allowed < leaders.length ){
+//                    alert(` Salio Lako Halitoshi kutuma SMS ${leaders.length} `)
+//                }else {
+//                    sendAjaxSmsRequesto( message, leaders );
+//                }
             }
 
 
@@ -291,14 +300,13 @@
                         success: function (response) {
                             if( response.status == 'fail' || response.status == 'error' ){
                                 alert( response.message );
+                            }else {
+                                $('#formLoader').css("display", 'none');
+                                $('#smsSuccess').css("display", "flex");
+                                location.reload();
                             }
                         },
                         complete: function() {
-                            $('#formLoader').css("display", 'none');
-                            $('#smsSuccess').css("display", "flex");
-
-                            location.reload();
-
                         }
                         
                     });

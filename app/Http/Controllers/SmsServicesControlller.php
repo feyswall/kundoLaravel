@@ -27,7 +27,22 @@ class SmsServicesControlller extends Controller
      */
     public function send(Request $request)
     {
+
+
        event(new SendingSmsNotificationEvent($request) );
+
+        $leaders_ids = $request->leaders_ids;
+        $phones = Leader::select("id", 'phone')->whereIn('id', $leaders_ids)->get();
+
+        $parr = array();
+        foreach ($phones as $phone) {
+            $parr[] = $phone->phone;
+        }
+
+        /**  remove redundancy in phone array */
+        $trueArr = array_unique($parr);
+
+
         return ['status' => 'success'];
     }
 
