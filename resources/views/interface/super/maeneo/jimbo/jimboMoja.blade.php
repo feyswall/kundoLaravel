@@ -34,15 +34,15 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="card">
+            <div class="card px-md-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-md-start justify-content-center flex-wrap my-2">
                         <h3 class="fs-5 me-3">Jimbo la: <span class="fw-bold text-uppercase"> {{ $state->name }}</span></h3>
-                        <h3 class="fs-5 me-3">Mkoa wa: <span class="fw-bold text-uppercase"> {{ $state->district->region->name }}</span></h3>
                         <h3 class="fs-5 me-3">Wilaya ya: <span class="fw-bold text-uppercase"> {{ $state->district->name }}</span></h3>
+                        <h3 class="fs-5 me-3">Mkoa wa: <span class="fw-bold text-uppercase"> {{ $state->district->region->name }}</span></h3>
                     </div>
                     <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
-                        <div class="d-flex justify-content-md-between justify-content-center items-center flex-wrap mb-3">
+                        <div class="d-flex justify-content-md-between justify-content-center items-center flex-wrap-reverse mb-3">
                             <h3 class="fs-4 me-3">Viongozi wa Jimbo</h3>
                             <div class="d-flex items-center justify-content-center gap-2">
                                 <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri Kiongozi</button>
