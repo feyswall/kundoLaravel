@@ -69,11 +69,15 @@
             <div class="col-sm-3">
               <p class="mb-0">Nywila</p>
             </div>
-            <div class="col-sm-9 d-flex justify-content-between align-items-center">
-              <p class="text-muted mb-0">xxxxxxxxxxxx</p>
-              <a data-bs-toggle="modal" data-bs-target="#badilishaNywilaModal" href="#">
-                <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="left" title="Badilisha Nywila"></i>
-              </a>
+            <div class="col-sm-9 " data-bs-toggle="modal" data-bs-target="#badilishaNywilaModal">
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="text-muted mb-0">xxxxxxxxxxxx</p>
+                <a href="#">
+                  <i class="fas fa-edit"></i>
+                  <span>Badilisha Nywila</span>
+                </a>
+              </div>
+
             </div>
           </div>
         </div>
