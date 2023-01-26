@@ -21,7 +21,7 @@ class BranchesController extends Controller
         $matawi = $ward->branches;
         return view("interface.super.maeneo.tawi.orodhaMatawi")
             ->with('areas', $matawi)
-            ->with('ward', $ward );
+            ->with('ward', $ward);
     }
 
     /**
@@ -46,40 +46,40 @@ class BranchesController extends Controller
         $ward_id = $request->ward_id;
 
         $rules = [
-            'tawi' => ['required', 'string', 'max:50',
-                Rule::unique('branches', 'name')->where(function ($query) use($ward_id ) {
+            'tawi' => [
+                'required', 'string', 'max:50',
+                Rule::unique('branches', 'name')->where(function ($query) use ($ward_id) {
                     return $query->where('ward_id', $ward_id);
                 }),
-                ]
+            ]
         ];
 
-        $validate = Validator::make($request->all() ,$rules, $messages = [
+        $validate = Validator::make($request->all(), $rules, $messages = [
             'tawi.unique' => 'Tawi Hili Limeshasajiriwa Katika Mfumo.'
         ]);
 
-        if( $validate->fails() ){
+        if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         }
 
-//        $region = Region::where("name", "Simiyu");
-//
-//        if ( ! ( $region->exists() ) ){
-//            redirect()->back()->withErrors(['nullModal' =>  'Wilaya is Not Registered in The System']);
-//        }
+        //        $region = Region::where("name", "Simiyu");
+        //
+        //        if ( ! ( $region->exists() ) ){
+        //            redirect()->back()->withErrors(['nullModal' =>  'Wilaya is Not Registered in The System']);
+        //        }
 
         $area = Branch::create([
             'name' => $request->tawi,
             'ward_id' => $request->ward_id,
         ]);
 
-        if ( $area ){
+        if ($area) {
             return redirect()->back()
-                ->with(['status' => 'success', 'message' => 'Kata Imetengenezwa']);
-        }else{
+                ->with(['status' => 'success', 'message' => 'Tawi Limetengenezwa']);
+        } else {
             return redirect()->back()
                 ->with(['status' => 'error', 'message' => 'Tumeshindwa Kutengeneza Tafadhali Jaribu Tena.']);
         }
-
     }
 
     /**
@@ -90,7 +90,7 @@ class BranchesController extends Controller
      */
     public function show(Branch $branch)
     {
-        if ( !$branch ) return redirect()->back();
+        if (!$branch) return redirect()->back();
         return view("interface.super.maeneo.tawi.tawiMoja")
             ->with('branch', $branch);
     }
