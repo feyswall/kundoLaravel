@@ -34,7 +34,7 @@
               <p class="mb-0">Jina Kamili</p>
             </div>
             <div class="col-sm-9">
-              <p class="text-muted mb-0">Ed Edd Eddy</p>
+              <p class="text-muted mb-0">{{$user->name}}</p>
             </div>
           </div>
           <hr>
@@ -43,7 +43,7 @@
               <p class="mb-0">Barua Pepe</p>
             </div>
             <div class="col-sm-9">
-              <p class="text-muted mb-0">mtumiaji@dedeplayo.com</p>
+              <p class="text-muted mb-0">{{$user->email}}</p>
             </div>
           </div>
           <hr>
@@ -125,7 +125,7 @@
         <div class="col-sm-12 col-md-4">
           <div class="mb-3 mb-4">
             <label class="form-label" for="firstName">Jina La Kwanza</label>
-            <input type="text" class="form-control" name="firstName" value="">
+            <input type="text" class="form-control" name="firstName" value="{{$user->fir}}">
           </div>
         </div>
         <div class="col-sm-12 col-md-4">

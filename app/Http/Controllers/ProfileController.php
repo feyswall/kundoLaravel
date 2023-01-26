@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,8 @@ class ProfileController extends Controller
      */
 
     public function show(){
-        return view('profile.user-profile');
+        $user_data = Auth::user();
+        return view('profile.user-profile')->with('user',$user_data);
     }
 
     public function edit(Request $request): View
