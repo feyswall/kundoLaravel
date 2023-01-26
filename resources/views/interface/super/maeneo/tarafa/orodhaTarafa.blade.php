@@ -175,7 +175,7 @@
         @endforeach
     </x-slot:content>
 </x-system.collapse>
-</div>
+
 
 
 
