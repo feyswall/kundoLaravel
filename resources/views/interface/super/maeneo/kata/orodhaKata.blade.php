@@ -61,76 +61,34 @@
                                                 @endforeach
                                             </div>
                                         </div>
-
-                                            <button  data-bs-toggle="modal" data-bs-target="#ongezaKiongoziModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajili Kiongozi </button>
-                                            <!-- model location here -->
-                                            <x-system.modal id="ongezaKiongoziModal" aria="ongezaKiongoziTarafaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Tarafa Hapa" >
-                                                <x-slot:content>
-                                                    <form method="post" action="{{ route('super.leader.tarafa.ongeza') }}">
-                                                        @csrf
-                                                        <div class="row">
-                                                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                                                <div class="mb-3 mb-4">
-                                                                    <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                                    <input type="text" class="form-control" name="firstName" value="{{ old('firstName') }}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                                                <div class="mb-3 mb-4">
-                                                                    <label class="form-label" for="middleName">Jina La Kati</label>
-                                                                    <input type="text" class="form-control" name="middleName" value="{{ old('middleName') }}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                                                <div class="mb-3 mb-4">
-                                                                    <label class="form-label" for="lastName">Jila La Mwisho</label>
-                                                                    <input type="text" class="form-control" name="lastName" value="{{ old('lastName') }}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                                                <div class="mb-3 mb-4">
-                                                                    <label class="form-label" for="phone">Namba ya Simu</label>
-                                                                    <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
-
-                                                                    <!-- data to simplify the validation process -->
-                                                                    <input type="hidden" value="{{ $division->id }}" class="form-control" name="side_id" >
-                                                                    <input type="hidden" value="division_leader" class="form-control" name="table" >
-                                                                    <input type="hidden" value="division_id" class="form-control" name="side_column" >
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                                                <div class="mb-3 mb-4">
-                                                                    <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
-                                                                    <select class="form-control" name="post_id">
-                                                                        @foreach( \App\Models\Post::where('area', 'tarafa')->get() as $post )
-                                                                            <option {{ ( old('post_id') == $post->id) ? 'selected' : '' }} value="{{ $post->id }}">{{ $post->name }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-12">
-                                                                    <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
-                                                                </div>
+                                        <!-- model location here -->
+                                        <x-system.modal id="ongezaKiongoziModal" aria="ongezaKiongoziTarafaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Tarafa Hapa">
+                                            <x-slot:content>
+                                                <form method="post" action="{{ route('super.leader.tarafa.ongeza') }}">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                                            <div class="mb-3 mb-4">
+                                                                <label class="form-label" for="firstName">Jina La Kwanza</label>
+                                                                <input type="text" class="form-control" name="firstName" value="{{ old('firstName') }}">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="middleName">Jina La Kati</label>
-                                                                <input type="text" class="form-control" name="middleName" placeholder="eg: mosi">
+                                                                <input type="text" class="form-control" name="middleName" value="{{ old('middleName') }}">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="lastName">Jila La Mwisho</label>
-                                                                <input type="text" class="form-control" name="lastName" placeholder="eg: mgalanga simo">
+                                                                <input type="text" class="form-control" name="lastName" value="{{ old('lastName') }}">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="phone">Namba ya Simu</label>
-                                                                <input type="text" class="form-control" name="phone" placeholder="eg: 0678 987 897">
+                                                                <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
 
                                                                 <!-- data to simplify the validation process -->
                                                                 <input type="hidden" value="{{ $division->id }}" class="form-control" name="side_id">
@@ -144,7 +102,7 @@
                                                                 <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                                 <select class="form-control" name="post_id">
                                                                     @foreach( \App\Models\Post::where('area', 'tarafa')->get() as $post )
-                                                                    <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                    <option {{ ( old('post_id') == $post->id) ? 'selected' : '' }} value="{{ $post->id }}">{{ $post->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -155,34 +113,69 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <label class="form-label" for="middleName">Jina La Kati</label>
+                                                            <input type="text" class="form-control" name="middleName" placeholder="eg: mosi">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <label class="form-label" for="lastName">Jila La Mwisho</label>
+                                                            <input type="text" class="form-control" name="lastName" placeholder="eg: mgalanga simo">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <label class="form-label" for="phone">Namba ya Simu</label>
+                                                            <input type="text" class="form-control" name="phone" placeholder="eg: 0678 987 897">
+
+                                                            <!-- data to simplify the validation process -->
+                                                            <input type="hidden" value="{{ $division->id }}" class="form-control" name="side_id">
+                                                            <input type="hidden" value="division_leader" class="form-control" name="table">
+                                                            <input type="hidden" value="division_id" class="form-control" name="side_column">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
+                                                            <select class="form-control" name="post_id">
+                                                                @foreach( \App\Models\Post::where('area', 'tarafa')->get() as $post )
+                                                                <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                                                        </div>
+                                                    </div>
                                                 </form>
                                             </x-slot:content>
                                         </x-system.modal>
                                     </div>
                                 </div>
                             </div>
-                        </div> <!-- end col -->
-                    </div> <!-- end row -->
-                </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->
             </div>
         </div>
     </div>
 </div>
-
-
-        <x-system.collapse id="kamatiZaTarafa" title="kamati Ngazi ya Tarafa">
-        <x-slot:content>
-            @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tarafa")->get() as $group)
-                <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
-                    <x-slot:content>
-                       <x-system.groups-info :group="$group" :table="$division"/>
-                    </x-slot:content>
-                </x-system.collapse>
-            @endforeach
-        </x-slot:content>
-    </x-system.collapse>
-    
-
+<x-system.collapse id="kamatiZaTarafa" title="kamati Ngazi ya Tarafa">
+    <x-slot:content>
+        @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tarafa")->get() as $group)
+        <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+            <x-slot:content>
+                <x-system.groups-info :group="$group" :table="$division" />
+            </x-slot:content>
+        </x-system.collapse>
+        @endforeach
+    </x-slot:content>
+</x-system.collapse>
 
 <div class="container-fluid">
     <!-- start page title -->

@@ -34,7 +34,6 @@
                         <div class="col-12">
                             <div>
                                 <div class="px-md-3">
-
                                     <div class="d-flex justify-content-md-start justify-content-center flex-wrap my-2">
                                         <h3 class="fs-5 me-3">Halmashauri ya: <span class="fw-bold text-uppercase"> {{ $council->name }}</span></h3>
                                         <h3 class="fs-5 me-3">Wilaya ya: <span class="fw-bold text-uppercase"> {{ $council->district->name }}</span></h3>
@@ -61,76 +60,34 @@
                                                 @endforeach
                                             </div>
                                         </div>
-
-                                            <button  data-bs-toggle="modal" data-bs-target="#ongezaKiongoziModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri </button>
-                                            <!-- model location here -->
-                                            <x-system.modal id="ongezaKiongoziModal" aria="ongezaKiongoziTarafaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Tarafa Hapa" >
-                                                <x-slot:content>
-                                                    <form method="post" action="{{ route('super.leader.halmashauri.ongeza') }}">
-                                                        @csrf
-                                                        <div class="row">
-                                                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                                                <div class="mb-3 mb-4">
-                                                                    <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                                    <input type="text" class="form-control" name="firstName" value="{{ old('firstName') }}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                                                <div class="mb-3 mb-4">
-                                                                    <label class="form-label" for="middleName">Jina La Kati</label>
-                                                                    <input type="text" class="form-control" name="middleName" value="{{ old('middleName') }}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                                                <div class="mb-3 mb-4">
-                                                                    <label class="form-label" for="lastName">Jila La Mwisho</label>
-                                                                    <input type="text" class="form-control" name="lastName" value="{{ old('lastName') }}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                                                <div class="mb-3 mb-4">
-                                                                    <label class="form-label" for="phone">Namba ya Simu</label>
-                                                                    <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
-
-                                                                    <!-- data to simplify the validation process -->
-                                                                    <input type="hidden" value="{{ $council->id }}" class="form-control" name="side_id" >
-                                                                    <input type="hidden" value="council_leader" class="form-control" name="table" >
-                                                                    <input type="hidden" value="council_id" class="form-control" name="side_column" >
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-4 col-lg-3">
-                                                                <div class="mb-3 mb-4">
-                                                                    <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
-                                                                    <select class="form-control" name="post_id">
-                                                                        @foreach( \App\Models\Post::where('area', 'halmashauri')->get() as $post )
-                                                                            <option {{ (old('post_id') == $post->id) ? 'selected' : '' }} value="{{ $post->id }}">{{ $post->name }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-12">
-                                                                    <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
-                                                                </div>
+                                        <!-- model location here -->
+                                        <x-system.modal id="ongezaKiongoziModal" aria="ongezaKiongoziTarafaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Tarafa Hapa">
+                                            <x-slot:content>
+                                                <form method="post" action="{{ route('super.leader.halmashauri.ongeza') }}">
+                                                    @csrf
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                                            <div class="mb-3 mb-4">
+                                                                <label class="form-label" for="firstName">Jina La Kwanza</label>
+                                                                <input type="text" class="form-control" name="firstName" value="{{ old('firstName') }}">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="middleName">Jina La Kati</label>
-                                                                <input type="text" class="form-control" name="middleName" placeholder="eg: mosi">
+                                                                <input type="text" class="form-control" name="middleName" value="{{ old('middleName') }}">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="lastName">Jila La Mwisho</label>
-                                                                <input type="text" class="form-control" name="lastName" placeholder="eg: mgalanga simo">
+                                                                <input type="text" class="form-control" name="lastName" value="{{ old('lastName') }}">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="phone">Namba ya Simu</label>
-                                                                <input type="text" class="form-control" name="phone" placeholder="eg: 0678 987 897">
+                                                                <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
 
                                                                 <!-- data to simplify the validation process -->
                                                                 <input type="hidden" value="{{ $council->id }}" class="form-control" name="side_id">
@@ -144,7 +101,7 @@
                                                                 <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                                 <select class="form-control" name="post_id">
                                                                     @foreach( \App\Models\Post::where('area', 'halmashauri')->get() as $post )
-                                                                    <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                    <option {{ (old('post_id') == $post->id) ? 'selected' : '' }} value="{{ $post->id }}">{{ $post->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -155,21 +112,58 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </form>
-                                            </x-slot:content>
-                                        </x-system.modal>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <label class="form-label" for="middleName">Jina La Kati</label>
+                                                            <input type="text" class="form-control" name="middleName" placeholder="eg: mosi">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <label class="form-label" for="lastName">Jila La Mwisho</label>
+                                                            <input type="text" class="form-control" name="lastName" placeholder="eg: mgalanga simo">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <label class="form-label" for="phone">Namba ya Simu</label>
+                                                            <input type="text" class="form-control" name="phone" placeholder="eg: 0678 987 897">
+
+                                                            <!-- data to simplify the validation process -->
+                                                            <input type="hidden" value="{{ $council->id }}" class="form-control" name="side_id">
+                                                            <input type="hidden" value="council_leader" class="form-control" name="table">
+                                                            <input type="hidden" value="council_id" class="form-control" name="side_column">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
+                                                            <select class="form-control" name="post_id">
+                                                                @foreach( \App\Models\Post::where('area', 'halmashauri')->get() as $post )
+                                                                <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                                                        </div>
+                                                    </div>
                                     </div>
+                                    </form>
+                                    </x-slot:content>
+                                    </x-system.modal>
                                 </div>
                             </div>
-                        </div> <!-- end col -->
-                    </div> <!-- end row -->
-                </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->
             </div>
         </div>
     </div>
 </div>
-
-
 <x-system.collapse id="kamatiZaHalmashauri" title="kamati Ngazi ya Halmashauri">
     <x-slot:content>
         @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "halmashauri")->get() as $group)
@@ -181,6 +175,9 @@
         @endforeach
     </x-slot:content>
 </x-system.collapse>
+
+
+
 
 
 <div class="container-fluid">
