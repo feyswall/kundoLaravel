@@ -32,8 +32,8 @@
 
 @section('content')
     <div class="row justify-content-start">
-    <form action="#" method="POST">
-    {{-- <form action=" {{ route('super.leader.mkoa.sasisha', $leader->id) }} " method="POST"> --}}
+    {{-- <form action="#" method="POST"> --}}
+    <form action=" {{ route('profile.update') }} " method="POST">
         @method('put')
         @csrf
         <input type="hidden" name="id" value="">
@@ -57,7 +57,7 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div id="jinalawilaya" class="mb-3 mb-4 ">
-                                                <label class="form-label" for="billing-name">Jina La Kwanza</label>
+                                                <label class="form-label" for="billing-name">Full name</label>
                                                 <input name="firstName" value="" class="form-control">
                                             </div>           
                                         </div>
@@ -78,11 +78,17 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div id="jinalawilaya" class="mb-3 mb-4 ">
-                                                <label class="form-label" for="billing-name">Namba ya simu</label>
+                                                <label class="form-label" for="billing-name">Barua pepe</label>
                                                 <input name="phone" value="" class="form-control">
                                             </div>           
                                         </div>
                                     
+                                         <div class="col-lg-4">
+                                            <div id="jinalawilaya" class="mb-3 mb-4 ">
+                                                <label class="form-label" for="billing-name">Namba ya simu</label>
+                                                <input name="phone" value="" class="form-control">
+                                            </div>           
+                                        </div>
                                     </div>
                                  <button class="btn btn-primary" type="submit">Hifadhi</button>
                         </div>
