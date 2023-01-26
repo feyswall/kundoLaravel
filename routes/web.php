@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Super\AreasController;
 use  App\Http\Controllers\Super\Area\DistrictsController;
 use App\Models\Leader;
+use App\Http\Controllers\Super\PostsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,14 @@ Route::controller(SmsServicesControlller::class)
         Route::get('/balance', 'checkBalance')->name('balance');
         Route::get('/orodha/sms', 'orodhaGroups')->name('orodha.group');
         Route::get('/orodha/show/{sms}', 'orodhaGroupMoja')->name('orodha.group.moja');
+});
+
+
+Route::controller(PostsController::class)
+    ->prefix('/wadhifa')
+    ->as('posts.')
+    ->group(function () {
+        Route::get('/orodha', 'index')->name('orodha');
 });
 
 require __DIR__.'/auth.php';

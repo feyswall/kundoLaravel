@@ -15,7 +15,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::select('*')->get();
+        dd( $posts );
     }
 
     /**
