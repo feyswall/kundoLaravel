@@ -71,8 +71,8 @@
             </div>
             <div class="col-sm-9 d-flex justify-content-between align-items-center">
               <p class="text-muted mb-0">xxxxxxxxxxxx</p>
-              <a data-bs-toggle="modal" data-bs-target="#badilishaNywilaModal" title="Badilisha Nywila" href="#">
-                <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="left"></i>
+              <a data-bs-toggle="modal" data-bs-target="#badilishaNywilaModal" href="#">
+                <i class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="left" title="Badilisha Nywila"></i>
               </a>
             </div>
           </div>
