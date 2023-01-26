@@ -52,12 +52,6 @@ Route::controller(SmsServicesControlller::class)
 });
 
 
-Route::controller(PostsController::class)
-    ->prefix('/wadhifa')
-    ->as('posts.')
-    ->group(function () {
-        Route::get('/orodha', 'index')->name('orodha');
-});
 
 require __DIR__.'/auth.php';
 

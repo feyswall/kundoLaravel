@@ -93,7 +93,7 @@
                                                                 <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                                 <select class="form-control" name="post_id">
                                                                     @foreach( \App\Models\Post::where('area', 'mkoa')->get() as $post )
-                                                                        <option {{ ( old('post_id') == $post->id ) ? 'selected' : '' }} value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                        <option {{ ( old('post_id') == $post->id ) ? 'selected' : ''}} value="{{ $post->id }}">{{ $post->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>

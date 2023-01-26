@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Super;
+namespace App\Http\Controllers\Super\Posts;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class PostsController extends Controller
 {
@@ -15,7 +17,9 @@ class PostsController extends Controller
      */
     public function index()
     {
-
+        $posts = Post::orderBy('id', 'desc')->paginate(10);
+        return view('interface.super.nyadhifa.orodhaNyadhifa')
+            ->with('posts', $posts);
     }
 
     /**
@@ -36,7 +40,24 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'post' => ['required', Rule::unique('posts', 'name')],
+            'area' => 'required',
+        ];
+        $messages = [];
+        $request->validate( $rules, $messages );
+        $post = Post::create([
+                'area' => $request->area,
+                'name' => $request->post,
+                'deep' => $request->post."_ps"
+        ]);
+        if ( $post ){
+            return redirect()->back()
+                ->with(['status' => 'success', 'message' => 'Wadhifa Umetengenezwa']);
+        }else{
+            return redirect()->back()
+                ->with(['status' => 'error', 'message' => 'Tumeshindwa Kutengeneza Tafadhali Jaribu Tena.']);
+        }
     }
 
     /**
@@ -70,7 +91,15 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $rules = [
+            'post' => ['required', Rule::unique('posts', 'name')->ignore($post->id)],
+        ];
+        $messages = [];
+        $request->validate( $rules, $messages );
+        $post->update([
+            'name' => $request->post,
+        ]);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Kamati Imebadirishwa.']);
     }
 
     /**

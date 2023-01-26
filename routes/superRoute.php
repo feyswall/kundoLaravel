@@ -28,6 +28,7 @@ use App\Http\Controllers\Super\Leader\CouncilLeadersController;
 use App\Http\Controllers\Super\Leader\DistrictLeadersController;
 use App\Http\Controllers\Super\Leader\RegionLeadersController;
 use App\Http\Controllers\Super\Leader\StateLeadersController;
+use App\Http\Controllers\Super\Posts\PostsController;
 
 
 Route::controller(DistrictsController::class)
@@ -167,3 +168,13 @@ Route::controller(GroupsController::class)
         Route::put('/rekebishaWadhifa/{group}', 'editGroup')->name('editWadhifa');
         Route::post('/sajiriWadhifa', 'storeWadhifa')->name('storeWadhifa');
 });
+
+
+Route::controller(PostsController::class)
+    ->prefix('/super/wadhifa')
+    ->as('super.posts.')
+    ->group(function () {
+        Route::get('/orodha', 'index')->name('orodha');
+        Route::post('/ongezaWadhifa', 'store')->name('ongeza');
+        Route::put('/badiriWadhifa/{post}', 'update')->name('updateWadhifa');
+    });
