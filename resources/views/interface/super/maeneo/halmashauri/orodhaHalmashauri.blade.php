@@ -231,7 +231,7 @@
                                             <div class="col-lg-12">
                                                 <div class="mb-3 mb-4">
                                                     <label class="form-label" for="billing-name">Jina La Halmashauri</label>
-                                                    <input type="text" name="halmashauri" class="form-control" placeholder="eg: mgeule juu">
+                                                    <input type="text" name="halmashauri" class="form-control" value="{{ old('halmashauri') }}">
                                                 </div>
                                                 @error("halmashauri")
                                                 <span class="text-danger">{{ $message }}</span>
@@ -287,7 +287,7 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3 mb-4">
                                                 <label class="form-label" for="billing-name">Jina La Jimbo</label>
-                                                <input type="text" name="jimbo" class="form-control" placeholder="eg: mgeule juu">
+                                                <input type="text" name="jimbo" class="form-control" value="{{ old('jimbo') }}">
                                             </div>
                                             @error("jimbo")
                                             <span class="text-danger">{{ $message }}</span>

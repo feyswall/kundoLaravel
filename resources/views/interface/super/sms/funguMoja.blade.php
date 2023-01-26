@@ -40,10 +40,13 @@
                 <div class="card">
                     <div class="card-body">
                         <a href="{{ route("sms.orodha.group") }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Orodha</a>
-                        <x-system.sms-group-table :sms="$sms" id="allSmsTable" />
+                        <x-system.sms-group-table :sms="$sms" :leaders="$leaders" id="allSmsTable" />
                     </div>
                 </div>
             </div> <!-- end col -->
+            <div class="m-auto">
+                {{ $leaders->links() }}
+            </div>
         </div> <!-- end row -->
 
     </div> <!-- container-fluid -->
@@ -52,5 +55,5 @@
 @endsection
 
 @section("extra_script")
-    <x-system.table-script id="allSmsTable" />
+    {{--<x-system.table-script id="allSmsTable" />--}}
 @endsection

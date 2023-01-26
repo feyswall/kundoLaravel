@@ -1,4 +1,4 @@
-@props(['id', 'sms'])
+@props(['id', 'sms', 'leaders'])
 
 <table id="{{ $id }}" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
     <thead>
@@ -13,7 +13,7 @@
     </thead>
     <tbody>
 
-    @foreach( $sms->leaders as $key => $leader )
+    @foreach( $leaders as $key => $leader )
         <tr>
             <td>
                 @php $resp = \App\Http\Controllers\SmsServicesControlller::deriveryReport($leader->phone, $sms->request_id) @endphp
@@ -21,7 +21,7 @@
                     <span><b class="text-primary">Loading...</b></span>
                     @else
                     @if( isset($resp['response']->error) )
-                        <span><b class="text-primary">error</b></span>
+                        <span><b class="text-primary">Loading ...</b></span>
                         @else
                         <span><b class="text-{{ $resp['response']->status == "DELIVERED" ? 'success' : 'primary' }}">{{ $resp['response']->status }}</b></span>
                     @endif
@@ -32,7 +32,7 @@
             <td>{{ $leader->lastName }}</td>
             <td>{{ $leader->phone }}</td>
             <td>
-                <a href="" class="btn btn-danger">delete</a>
+                <a href="" class="btn btn-danger btn-sm">delete</a>
             </td>
         </tr>
     @endforeach

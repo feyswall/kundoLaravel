@@ -33,10 +33,6 @@
         </div>
         <!-- end page title -->
 
-
-        
-
-
             <div class="row">
         <div class="col-12">
             <div class="card">
@@ -90,7 +86,7 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3 mb-4">
                                                 <label class="form-label" for="billing-name">Jina La Jimbo</label>
-                                                <input type="text" name="jimbo" class="form-control" placeholder="eg: mgeule juu">
+                                                <input type="text" name="jimbo" class="form-control" value="{{ old('jimbo') }}">
                                             </div>
                                             @error("jimbo")
                                             <span class="text-danger">{{ $message }}</span>

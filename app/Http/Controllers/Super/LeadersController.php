@@ -46,11 +46,13 @@ class LeadersController extends Controller
      */
     public function store($formData)
     {
+        $phone = preg_replace("/^0/", "255", $formData->phone);
+        $phone = preg_replace("/\s/", "", $phone );
         $leader = Leader::create([
             'firstName' => $formData->firstName,
             'middleName' => $formData->middleName,
             'lastName' => $formData->lastName,
-            'phone' => $formData->phone
+            'phone' => $phone
         ]);
         return $leader;
     }

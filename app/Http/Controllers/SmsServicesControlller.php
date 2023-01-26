@@ -6,6 +6,7 @@ use App\Events\SendingSmsNotificationEvent;
 use Illuminate\Http\Request;
 use App\Models\Leader;
 use App\Models\Sms;
+use Illuminate\View\View;
 
 class SmsServicesControlller extends Controller
 {
@@ -21,6 +22,23 @@ class SmsServicesControlller extends Controller
 
     }
 
+
+
+    public function sendj(Request $request)
+    {
+        $smsRequestId = Sms::create([
+            'request_id' => 3,
+            'message' => 'sdafsd',
+            'sms_amount' => 34
+        ]);
+        // fill the variables in relation
+//        dd( $smsRequestId->leaders );
+        if ( is_object($smsRequestId) ){
+            $smsRequestId->leaders()->attach(2);
+        }
+
+    }
+
     /**
      * Sending sms in here
      * @param Request $requesr
@@ -32,22 +50,24 @@ class SmsServicesControlller extends Controller
         // return 'completed';
         $receptionist_array = [];
         if (!( isset($request->leaders_ids)) ){
-            return ['status' => 'error', 'message' => 'Tafadhali Cahgua Wa Kumtumia.'];
+            return ['status' => 'error', 'message' => 'Tafadhali Chagua Wa Kumtumia.'];
         }
 
         $leaders_ids = $request->leaders_ids;
-        $phones = Leader::select("id", 'phone')->whereIn('id', $leaders_ids)->get();
+        $list_leaders = Leader::select("id", 'phone')->whereIn('id', $leaders_ids)->get();
 
         $parr = array();
-        foreach ($phones as $phone) {
-            $parr[] = $phone->phone;
+        $savedLeaders = array();
+        foreach ($list_leaders as $leader) {
+            $parr[] = $leader->phone;
+            $savedLeaders[] = $leader->id;
         }
 
         /**  remove redundancy in phone array */
         $trueArr = array_unique($parr);
         /** create receptionist array for sms sending */
         foreach ($trueArr as $key => $phone) {
-            $smsPhone = preg_replace("/^0/", "255", $phone);
+            $smsPhone = $phone;
             $receptionist_array[] = array('recipient_id' => $phone, 'dest_addr' => $smsPhone );
         }
 
@@ -58,28 +78,27 @@ class SmsServicesControlller extends Controller
             'message' => $request->message['value'],
             'recipients' => $receptionist_array
         );
-        $resp = $this->configurations( $postData );
-        $response_obj = json_decode($resp['response']);
-        if ($resp['status'] == 'success') {
-            if ( isset($response_obj->successful) ){
+        $response_obj = $this->configurations( $postData );
+        if ($response_obj['status'] == 'success') {
+            if ( isset($response_obj['response']->successful) ){
                 // create sms object for later retrival
                 $smsRequestId = Sms::create([
-                    'request_id' => $response_obj->request_id,
+                    'request_id' => $response_obj['response']->request_id,
                     'message' => $request->message['value'],
                     'sms_amount' => count($receptionist_array)
                 ]);
                 // fill the variables in relation
                 if ( $smsRequestId ){
-                    foreach ( $parr as $leader ){
-                        $smsRequestId->leaders->attach($leader);
+                    foreach ( $savedLeaders as $leader ){
+                        $smsRequestId->leaders()->attach($leader);
                     }
                 }
-                return ['status' => 'success' ,'response' => $response_obj, 'object' => $smsRequestId];
+                return (['status' => 'success' ,'response' => $response_obj['response'], 'obj' => $smsRequestId]);
             }
-            return ['status' => 'fail', 'message' => $response_obj->message];
+            return ['status' => 'fail', 'message' => $response_obj['response']->message];
         } else {
-            if ($resp['status'] == 'fail') {
-                return ['status' => 'fail', 'message' => $response_obj->message];
+            if ($response_obj['status'] == 'fail') {
+                return ['status' => 'fail', 'message' => $response_obj['response']->message];
             }else{
                 return ['status' => 'fail', 'message' => 'Unknown Error please Try again later!'];
             }
@@ -113,12 +132,12 @@ class SmsServicesControlller extends Controller
         CURLOPT_POSTFIELDS => json_encode($postData)
         ));
 
-        $response = curl_exec($ch);
-
+         $response = curl_exec($ch);
+         $response_obj = json_decode($response);
         if($response === FALSE){
-        return ['status' => 'fail', 'response' => [$response, curl_error($ch)]];
+        return ['status' => 'fail', 'response' => [$response_obj, curl_error($ch)]];
         }
-        return ['status' => 'success', 'response' => $response];
+        return ['status' => 'success', 'response' => $response_obj];
     }
 
 
@@ -221,9 +240,13 @@ class SmsServicesControlller extends Controller
         return view("interface.super.sms.orodhaSms")->with("smses", $smses);
     }
 
+
+
     public function orodhaGroupMoja(Sms $sms){
+        $leaders = $sms->leaders()->select('*')->paginate(100);
         return view("interface.super.sms.funguMoja")
-            ->with('sms', $sms);
+            ->with('sms', $sms)
+            ->with('leaders', $leaders);
     }
 
 }

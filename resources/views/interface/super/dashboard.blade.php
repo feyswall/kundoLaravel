@@ -302,6 +302,7 @@
                             leaders_ids: leaders,
                         },
                         success: function (response) {
+                            console.log( response )
                             if( response.status == 'fail' || response.status == 'error' ){
                                 alert( response.message );
                                 $('#formLoader').css("display", 'none');
@@ -309,11 +310,30 @@
                             }else {
                                 $('#formLoader').css("display", 'none');
                                 $('#smsSuccess').css("display", "flex");
-                                window.location = `/orodha/sms/${response.obj.id}`;
+                                if ( response.obj ){
+                                    window.location = `/sms/orodha/show/${response.obj.id}`;
+                                }else{
+                                    location.reload();
+                                }
                             }
                         },
-                        complete: function() {
-                        }
+                        error:function(x,e) {
+                            if (x.status==0) {
+                                alert('You are offline!!\n Please Check Your Network.');
+                            } else if(x.status==404) {
+                                alert('Requested URL not found.');
+                            } else if(x.status==500) {
+                                alert('Internel Server Error.');
+                            } else if(e=='parsererror') {
+                                alert('Error.\nParsing JSON Request failed.');
+                            } else if(e=='timeout'){
+                                alert('Request Time out.');
+                            } else {
+                                alert('Unknow Error.\n'+x.responseText);
+                            }
+                            $('#sendTextSmsFormId').css("display", "");
+                            $('#formLoader').css("display", 'none');
+                        },
 
                     });
             }

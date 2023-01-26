@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\ModelExistsRule;
+use App\Rules\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ValidateDivisionLeaderRequest extends FormRequest
@@ -28,7 +29,7 @@ class ValidateDivisionLeaderRequest extends FormRequest
             'firstName' => ['required', 'string', 'max:50'],
             'middleName' => ['required', 'string', 'max:50'],
             'lastName' => ['required', 'string', 'max:50'],
-            'phone' => ['required', 'max:15'],
+            'phone' => ['required', 'max:15', new PhoneNumber()],
             'post_id' =>  [ new ModelExistsRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column'))]
         ];
     }

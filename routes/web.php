@@ -47,7 +47,7 @@ Route::controller(SmsServicesControlller::class)
         Route::get('/delivery', 'deriveryReport')->name('delivery');
         Route::get('/balance', 'checkBalance')->name('balance');
         Route::get('/orodha/sms', 'orodhaGroups')->name('orodha.group');
-        Route::get('/orodha/sms/{sms}', 'orodhaGroupMoja')->name('orodha.group.moja');
+        Route::get('/orodha/show/{sms}', 'orodhaGroupMoja')->name('orodha.group.moja');
 });
 
 require __DIR__.'/auth.php';

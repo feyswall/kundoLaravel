@@ -17,6 +17,11 @@
 
 @section("content")
     <!-- Start right Content here -->
+    <div class="card">
+        <div class="card-body">
+            <button  data-bs-toggle="modal" data-bs-target="#ongezaKamatiModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i>Ongeza Kamati</button>
+        </div>
+    </div>
     <!-- ============================================================== -->
 @foreach ($groups as $group)
     <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)" >
@@ -54,14 +59,18 @@
 
            @endforeach
                <button  data-bs-toggle="modal" data-bs-target="#ongezaWadhifaModal{{$group->id}}" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i>Ongeza wadhifa</button>
-
-
-
         </x-slot:content>
+        <x-slot:text>
+        <div class="row justify-content-end">
+            <div class="col-md-3 col-sm-6">
+                <button  data-bs-toggle="modal" data-bs-target="#editWadhifaModal{{$group->id}}" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i>Badiri Jina</button>
+            </div>
+        </div>
+        </x-slot:text>
     </x-system.collapse>
 
 
-      <x-system.modal id="ongezaWadhifaModal{{ $group->id }}" aria="ongezaWadhifaLabel" size="modal-lg" title="Ongeza Wadhifa Katika Kamati" >
+    <x-system.modal id="ongezaWadhifaModal{{ $group->id }}" aria="ongezaWadhifaLabel" size="modal-lg" title="Ongeza Wadhifa Katika Kamati" >
             <x-slot:content>
               <form method="POST" action="{{ route('super.group.ongezaWadhifa') }}">
                 @csrf
@@ -85,6 +94,52 @@
               </form>
             </x-slot:content>
       </x-system.modal>
+
+    <x-system.modal id="editWadhifaModal{{ $group->id }}" aria="ongezaWadhifaLabel" size="modal-lg" title="" >
+        <x-slot:content>
+            <form method="POST" action="{{ route('super.group.editWadhifa', $group->id) }}" class="p-3">
+                @csrf
+                @method('put')
+                <div class="row">
+                    <label>Jina La Zamani</label>
+                    <input type="text" readonly value="{{ $group->name }}" name="group" class="form-control">
+                </div>
+                <div class="row mt-2 mb-2">
+                    <label>Jina Jipya</label>
+                    <input type="text" value="{{ old('group') }}" name="group" class="form-control">
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-md btn-primary">Ongeza</button>
+                </div>
+            </form>
+        </x-slot:content>
+    </x-system.modal>
+
+    <x-system.modal id="ongezaKamatiModal" aria="ongezaKamatiLabel" size="modal-lg" title="" >
+        <x-slot:content>
+            <form method="POST" action="{{ route('super.group.storeWadhifa') }}" class="p-3">
+                @csrf
+                <div class="row mt-2 mb-2">
+                    <label>Jina La Kamati</label>
+                    <input type="text" value="{{ old('group_name') }}" name="group_name" class="form-control">
+                </div>
+                <div class="row mt-2 mb-2">
+                    <label>Ngazi ya:</label>
+                    <select name="basedOn" class="form-control">
+                        <option value="mkoa">Mkoa</option>
+                        <option value="wilaya">Wilaya</option>
+                        <option value="halmashauri">Halmashauri</option>
+                        <option value="tarafa">Tarafa</option>
+                        <option value="kata">Kata</option>
+                        <option value="tawi">Tawi</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-md btn-primary">Ongeza</button>
+                </div>
+            </form>
+        </x-slot:content>
+    </x-system.modal>
 @endforeach
 
 

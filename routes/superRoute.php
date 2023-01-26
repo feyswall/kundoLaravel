@@ -164,4 +164,6 @@ Route::controller(GroupsController::class)
         Route::get('/orodha', 'index')->name('orodha');
         Route::post('/toaWadhifa', 'removePost')->name('toaWadhifa');
         Route::post('/ongezaWadhifa', 'addPost')->name('ongezaWadhifa');
+        Route::put('/rekebishaWadhifa/{group}', 'editGroup')->name('editWadhifa');
+        Route::post('/sajiriWadhifa', 'storeWadhifa')->name('storeWadhifa');
 });

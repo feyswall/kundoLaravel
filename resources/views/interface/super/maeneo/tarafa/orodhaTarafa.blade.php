@@ -67,25 +67,25 @@
                                                             <div class="col-sm-12 col-md-4 col-lg-3">
                                                                 <div class="mb-3 mb-4">
                                                                     <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                                    <input type="text" class="form-control" name="firstName" placeholder="eg: mgalanga">
+                                                                    <input type="text" class="form-control" name="firstName" value="{{ old('firstName') }}">
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-12 col-md-4 col-lg-3">
                                                                 <div class="mb-3 mb-4">
                                                                     <label class="form-label" for="middleName">Jina La Kati</label>
-                                                                    <input type="text" class="form-control" name="middleName" placeholder="eg: mosi">
+                                                                    <input type="text" class="form-control" name="middleName" value="{{ old('middleName') }}">
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-12 col-md-4 col-lg-3">
                                                                 <div class="mb-3 mb-4">
                                                                     <label class="form-label" for="lastName">Jila La Mwisho</label>
-                                                                    <input type="text" class="form-control" name="lastName" placeholder="eg: mgalanga simo">
+                                                                    <input type="text" class="form-control" name="lastName" value="{{ old('lastName') }}">
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-12 col-md-4 col-lg-3">
                                                                 <div class="mb-3 mb-4">
                                                                     <label class="form-label" for="phone">Namba ya Simu</label>
-                                                                    <input type="text" class="form-control" name="phone" placeholder="eg: 0678 987 897">
+                                                                    <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
 
                                                                     <!-- data to simplify the validation process -->
                                                                     <input type="hidden" value="{{ $council->id }}" class="form-control" name="side_id" >
@@ -99,7 +99,7 @@
                                                                     <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                                     <select class="form-control" name="post_id">
                                                                         @foreach( \App\Models\Post::where('area', 'halmashauri')->get() as $post )
-                                                                            <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                            <option {{ (old('post_id') == $post->id) ? 'selected' : '' }} value="{{ $post->id }}">{{ $post->name }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>

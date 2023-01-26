@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\LeadersCountRule;
 use App\Rules\ModelExistsRule;
+use App\Rules\PhoneNumber;
 use App\Rules\WardLeadersRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -31,7 +32,7 @@ class ValidateWardLeaderRequest extends FormRequest
             'firstName' => ['required', 'string', 'max:50'],
             'middleName' => ['required', 'string', 'max:50'],
             'lastName' => ['required', 'string', 'max:50'],
-            'phone' => ['required', 'max:15'],
+            'phone' => ['required', 'max:15', new PhoneNumber()],
             'post_id' =>  [
                 new WardLeadersRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column')),
                 new LeadersCountRule($idadi_wajumbe_wilaya, 'leader_ward', 'mj_mkutano_mkuu_W')
