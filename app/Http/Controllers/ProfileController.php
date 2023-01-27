@@ -100,20 +100,17 @@ class ProfileController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         }
 
-        if($request->old_password != $request->new_password){
-            return "not match";
-            // return Redirect::route('profile.show')->with('message', 'Wadhifa umebadilishwa');
-        }
+      
 
         if(Hash::check($request->old_password, Auth::user()->password) ){
-            if($request->password == $request->confirm_password){
-               $change =  User::where('id', Auth::user()->id)->update(['password' => Hash::make($request->password)]);
+            if($request->new_password == $request->confirm_password){
+               $change =  User::where('id', Auth::user()->id)->update(['password' => Hash::make($request->new_password)]);
                 if($change){
-                    return "changed";
+                    return redirect()->back();
                     // return response()->json(['success' => "Password changed"]);
                 }
             } else{
-                return "Error: not changed";
+                return "Error: not match";
                 // return response()->json(['error' => "Password do not Match"]);
             }
         }
