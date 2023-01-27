@@ -34,7 +34,12 @@ class LeadersCountRule implements Rule
      * @param  mixed  $value
      * @return bool
      */
-    public function passes($attribute, $value)
+    public function passes($attribute, $value){
+        return true;
+    }
+
+
+    public function passesMe($attribute, $value)
     {
         $wajumbe = Post::where('deep', "$this->post")->first();
         if ( $value == $wajumbe->id ) {
