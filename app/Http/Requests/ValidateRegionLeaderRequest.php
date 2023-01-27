@@ -33,8 +33,8 @@ class ValidateRegionLeaderRequest extends FormRequest
             'phone' => ['required', 'max:15', new PhoneNumber()],
             'post_id' =>  [
                 new DistrictLeaderRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column')),
-                new LeadersCountRule(3, 'leader_region', 'wj_kamat_siasa_M'),
-                new LeadersCountRule(13, 'leader_region', 'wj_h_kuu_M')
+                new LeadersCountRule(3, 'leader_region', 'wj_kamat_siasa_M', 'region_id', $this->input('side_id')),
+                new LeadersCountRule(13, 'leader_region', 'wj_h_kuu_M', 'region_id', $this->input('side_id'))
             ]
         ];
     }

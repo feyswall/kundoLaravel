@@ -35,7 +35,7 @@ class ValidateWardLeaderRequest extends FormRequest
             'phone' => ['required', 'max:15', new PhoneNumber()],
             'post_id' =>  [
                 new WardLeadersRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column')),
-                new LeadersCountRule($idadi_wajumbe_wilaya, 'leader_ward', 'mj_mkutano_mkuu_W')
+                new LeadersCountRule($idadi_wajumbe_wilaya, 'leader_ward', 'mj_mkutano_mkuu_W','ward_id', $this->input('side_id'))
             ]
         ];
     }

@@ -14,17 +14,23 @@ class LeadersCountRule implements Rule
      * @return void
      */
 
-    protected  $count;
+    public  $count;
 
-    protected  $table;
+    public  $table;
 
-    protected  $post;
+    public  $post;
 
-    public function __construct($count, $table, $post)
+    public  $sideValue;
+
+    public $sideName;
+
+    public function __construct($count, $table, $post, $sideName, $sideValue)
     {
         $this->count = $count;
         $this->table = $table;
         $this->post = $post;
+        $this->sideValue = $sideValue;
+        $this->sideName = $sideName;
     }
 
     /**
@@ -34,22 +40,23 @@ class LeadersCountRule implements Rule
      * @param  mixed  $value
      * @return bool
      */
-    public function passes($attribute, $value){
-        return true;
-    }
+//    public function passes($attribute, $value){
+//        return true;
+//    }
 
 
-    public function passesMe($attribute, $value)
+    public function passes($attribute, $value)
     {
         $wajumbe = Post::where('deep', "$this->post")->first();
         if ( $value == $wajumbe->id ) {
             $counter = DB::table("$this->table")
                 ->where('isActive', true)
+                ->where("$this->sideName", $this->sideValue)
                 ->where('post_id', $wajumbe->id)
                 ->count();
             if ($counter >= $this->count) {
                 return false;
-            } else {
+            }else{
                 return true;
             }
         }else{
@@ -64,6 +71,6 @@ class LeadersCountRule implements Rule
      */
     public function message()
     {
-        return 'Idaddi  ya Wajume Imekamilika.';
+        return 'Idaddi  ya Wajumbeui Imekamilika.';
     }
 }

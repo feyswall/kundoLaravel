@@ -33,9 +33,9 @@ class ValidateDistrictLeaderRequest extends FormRequest
             'phone' => ['required', 'max:15', new PhoneNumber()],
             'post_id' =>  [
                 new DistrictLeaderRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column')),
-                new LeadersCountRule(3, 'district_leader', 'wj_mkt_kuu_taifa'),
-                new LeadersCountRule(3, 'district_leader', 'wj_kamat_siasa'),
-                new LeadersCountRule(13, 'district_leader', 'wj_h_kuu_wilaya')
+                new LeadersCountRule(3, 'district_leader', 'wj_mkt_kuu_taifa', "district_id", $this->input('side_id')),
+                new LeadersCountRule(3, 'district_leader', 'wj_kamat_siasa', "district_id", $this->input('side_id')),
+                new LeadersCountRule(13, 'district_leader', 'wj_h_kuu_wilaya', "district_id", $this->input('side_id'))
             ]
         ];
     }
