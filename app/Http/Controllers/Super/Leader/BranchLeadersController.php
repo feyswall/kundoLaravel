@@ -40,7 +40,7 @@ class BranchLeadersController extends Controller
         $obj->attachMany( $leader->branches(), $request, $leader );
 
         return redirect()->back()
-            ->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa Imetengenezwa']);
+            ->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 
     /**
