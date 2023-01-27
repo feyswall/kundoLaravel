@@ -31,12 +31,11 @@ Route::get('/dashboard', function () {
     ->with("leaders", $leaders);
 })->middleware(['auth', 'verified', 'role:super|mbunge'])->name('dashboard');
 
-
-
 Route::middleware('auth')->group(function () {
     Route::get('/show', [ProfileController::class, 'show'])->name('profile.show');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/update-profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/update-password', [ProfileController::class, 'password'])->name('profile.password');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

@@ -15,13 +15,13 @@
   </div>
 
   <div class="row">
-    <div class="col-lg-4">
+     <div class="col-lg-4">
       <div class="card mb-4">
         <div class="card-body text-center">
           <img src="" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-          <h5 class="my-3">Ed Eddy</h5>
-          <p class="text-muted mb-1">Cheo</p>
-          <p class="text-muted mb-4">Anuani</p>
+          <h5 class="my-3">{{$user->name}}</h5>
+          <p class="text-muted mb-1">Admin</p>
+          <p class="text-muted mb-4">{{$user->email}}</p>
           <button type="button" class="btn btn-outline-primary ms-1" data-bs-toggle="modal" data-bs-target="#badilishaTaarifaModal">Badilisha</button>
         </div>
       </div>
@@ -34,7 +34,7 @@
               <p class="mb-0">Jina Kamili</p>
             </div>
             <div class="col-sm-9">
-              <p class="text-muted mb-0">Ed Edd Eddy</p>
+              <p class="text-muted mb-0">{{$user->name}}</p>
             </div>
           </div>
           <hr>
@@ -43,25 +43,7 @@
               <p class="mb-0">Barua Pepe</p>
             </div>
             <div class="col-sm-9">
-              <p class="text-muted mb-0">mtumiaji@dedeplayo.com</p>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <p class="mb-0">Namba Ya Simu</p>
-            </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0">07xxxxxx</p>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <p class="mb-0">Anuani</p>
-            </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0">Kichuguu, Dar es Salaam, TZ</p>
+              <p class="text-muted mb-0">{{$user->email}}</p>
             </div>
           </div>
           <hr>
@@ -77,7 +59,6 @@
                   <span>Badilisha Nywila</span>
                 </a>
               </div>
-
             </div>
           </div>
         </div>
@@ -87,25 +68,27 @@
 </div>
 <x-system.modal id="badilishaNywilaModal" aria="badilishaNywilaModalLabel" size="modal-lg" title="Badilisha Nywila">
   <x-slot:content>
-    <form method="post" action="">
+    <form method="post" action="{{route('profile.password')}}">
+      @method('patch')
+      @csrf
       <div class="row">
         <div class="col-12">
           <div class="mb-3 mb-4">
-            <label class="form-label" for="firstName">Nywila ya Zamani</label>
-            <input type="password" class="form-control" name="firstName" value="">
+            <label class="form-label" for="old_password">Nywila ya Zamani</label>
+            <input type="password" class="form-control" name="old_password" >
           </div>
         </div>
         <di class="row">
           <div class="col-sm-12 col-md-6">
             <div class="mb-3 mb-4">
-              <label class="form-label" for="middleName">Nywila Mpya</label>
-              <input type="password" class="form-control" name="middleName" value="">
+              <label class="form-label" for="new_password">Nywila Mpya</label>
+              <input type="password" class="form-control" name="new_password">
             </div>
           </div>
           <div class="col-sm-12 col-md-6">
             <div class="mb-3 mb-4">
-              <label class="form-label" for="lastName">Rudia Nyila Mpya</label>
-              <input type="password" class="form-control" name="lastName" value="">
+              <label class="form-label" for="confirm_password">Rudia Nyila Mpya</label>
+              <input type="password" class="form-control" name="confirm_password">
             </div>
           </div>
         </di>
@@ -120,44 +103,20 @@
 </x-system.modal>
 <x-system.modal id="badilishaTaarifaModal" aria="badilishaTaarifaModalLabel" size="modal-lg" title="Badilisha Taarifa Za Mtumiaji hapa">
   <x-slot:content>
-    <form method="post" action="">
+    <form method="POST" action="{{route('profile.update')}}">
+      @method('patch')
+      @csrf
       <div class="row">
-        <div class="col-sm-12 col-md-4">
-          <div class="mb-3 mb-4">
-            <label class="form-label" for="firstName">Jina La Kwanza</label>
-            <input type="text" class="form-control" name="firstName" value="">
+        <div class="col-sm-12 col-md-6">
+          <div class="mb-3 mb-6">
+            <label class="form-label" for="name">Jina kamili</label>
+            <input type="text" class="form-control" name="name" value="{{$user->name}}">
           </div>
         </div>
-        <div class="col-sm-12 col-md-4">
-          <div class="mb-3 mb-4">
-            <label class="form-label" for="middleName">Jina La Kati</label>
-            <input type="text" class="form-control" name="middleName" value="">
-          </div>
-        </div>
-        <div class="col-sm-12 col-md-4">
-          <div class="mb-3 mb-4">
-            <label class="form-label" for="lastName">Jila La Mwisho</label>
-            <input type="text" class="form-control" name="lastName" value="">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 col-md-4">
-          <div class="mb-3 mb-4">
-            <label class="form-label" for="firstName">Barua Pepe</label>
-            <input type="text" class="form-control" name="email" value="">
-          </div>
-        </div>
-        <div class="col-sm-12 col-md-4">
-          <div class="mb-3 mb-4">
-            <label class="form-label" for="middleName">Namba ya Simu</label>
-            <input type="text" class="form-control" name="phone" value="">
-          </div>
-        </div>
-        <div class="col-sm-12 col-md-4">
-          <div class="mb-3 mb-4">
-            <label class="form-label" for="lastName">Anuani</label>
-            <input type="text" class="form-control" name="address" value="">
+        <div class="col-sm-12 col-md-6">
+          <div class="mb-3 mb-6">
+            <label class="form-label" for="email">Barua pepe</label>
+            <input type="text" class="form-control" name="email" value="{{$user->email}}">
           </div>
         </div>
       </div>
