@@ -15,7 +15,7 @@
   </div>
 
   <div class="row">
-    <div class="col-lg-4">
+     <div class="col-lg-4">
       <div class="card mb-4">
         <div class="card-body text-center">
           <img src="" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
@@ -59,7 +59,6 @@
                   <span>Badilisha Nywila</span>
                 </a>
               </div>
-
             </div>
           </div>
         </div>
@@ -69,25 +68,27 @@
 </div>
 <x-system.modal id="badilishaNywilaModal" aria="badilishaNywilaModalLabel" size="modal-lg" title="Badilisha Nywila">
   <x-slot:content>
-    <form method="post" action="">
+    <form method="post" action="{{route('profile.password')}}">
+      @method('patch')
+      @csrf
       <div class="row">
         <div class="col-12">
           <div class="mb-3 mb-4">
-            <label class="form-label" for="firstName">Nywila ya Zamani</label>
-            <input type="password" class="form-control" name="firstName" value="">
+            <label class="form-label" for="old_password">Nywila ya Zamani</label>
+            <input type="password" class="form-control" name="old_password" >
           </div>
         </div>
         <di class="row">
           <div class="col-sm-12 col-md-6">
             <div class="mb-3 mb-4">
-              <label class="form-label" for="middleName">Nywila Mpya</label>
-              <input type="password" class="form-control" name="middleName" value="">
+              <label class="form-label" for="new_password">Nywila Mpya</label>
+              <input type="password" class="form-control" name="new_password">
             </div>
           </div>
           <div class="col-sm-12 col-md-6">
             <div class="mb-3 mb-4">
-              <label class="form-label" for="lastName">Rudia Nyila Mpya</label>
-              <input type="password" class="form-control" name="lastName" value="">
+              <label class="form-label" for="confirm_password">Rudia Nyila Mpya</label>
+              <input type="password" class="form-control" name="confirm_password">
             </div>
           </div>
         </di>
@@ -102,7 +103,9 @@
 </x-system.modal>
 <x-system.modal id="badilishaTaarifaModal" aria="badilishaTaarifaModalLabel" size="modal-lg" title="Badilisha Taarifa Za Mtumiaji hapa">
   <x-slot:content>
-    <form method="post" action="">
+    <form method="POST" action="{{route('profile.update')}}">
+      @method('patch')
+      @csrf
       <div class="row">
         <div class="col-sm-12 col-md-6">
           <div class="mb-3 mb-6">

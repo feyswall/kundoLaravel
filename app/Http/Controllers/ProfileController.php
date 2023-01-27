@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -41,7 +42,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.show')->with('status', 'profile-updated');
     }
 
     /**
@@ -63,5 +64,49 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function password(Request $request){
+        $rules = [
+            'old_password' => [
+                'required', 'string', 'max:50',
+            ],
+            'new_password' => [
+                'required', 'string', 'max:50',
+            ],
+            'confirm_password' => [
+                'required', 'string', 'max:50',
+            ],
+        ];
+
+        $messages = [
+            "old_password.required" => "Nywila ya zamani lazima ijazwe",
+            "old_password.string"  => "Nywila ya zamani lazima iwe na maneno pekee",
+            "old_password.max" => "Nywila ya zamani isizidi herufi hamsini (50)",
+
+            "new_password.required" => "Nywila mpya lazima ijazwe",
+            "new_password.string"  => "Nywila mpya lazima iwe na maneno pekee",
+            "new_password.max" => "Nywila mpya isizidi herufi hamsini (50)",
+
+            "confirm_password.required" => "Nywila ya marudio lazima ijazwe",
+            "confirm_password.string"  => "Nywila ya marudio lazima iwe na maneno pekee",
+            "confirm_password.max" => "Nywila ya marudio isizidi herufi hamsini (50)",
+        ];
+
+        $validate = Validator::make($request->all() ,$rules, $messages );
+
+        if( $validate->fails() ){
+            return redirect()->back()->withErrors($validate->errors());
+        }
+
+        if($request->old_password != $request->new_password){
+            return "not match";
+            // return Redirect::route('profile.show')->with('message', 'Wadhifa umebadilishwa');
+        }
+
+
+
+
+
     }
 }
