@@ -4,6 +4,9 @@
         <th>Jina la Wilaya</th>
         <th>Idadi Ya  Halmashauri</th>
         <th>Idadi Ya Tarafa</th>
+        <th>Idadi ya Kata</th>
+        <th>Idadi ya Matawi</th>
+        <th>Idadi ya Majimbo</th>
         <th></th>
     </tr>
     </thead>
@@ -22,6 +25,9 @@
                     {{--@endphp--}}
                     {{ $district->divisions()->count() }}
                 </td>
+                <td>{{ $district->wards->count() }}</td>
+                <td>{{ $district->branches->count() }}</td>
+                <td>{{ $district->states->count() }}</td>
                 <td>
                     <a href="{{ route('super.areas.halmashauri.orodha', $district->id) }}" class="btn btn-primary">fungua</a>
                 </td>

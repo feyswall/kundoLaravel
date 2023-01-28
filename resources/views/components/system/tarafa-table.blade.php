@@ -13,9 +13,7 @@
         <tr>
             <td>{{ $division->name }}</td>
             <td>{{ $division->wards()->count() }}</td>
-            <td>
-                900
-            </td>
+            <td>{{ $division->branches->count() }}</td>
             <td>
                 <a href="{{ route("super.areas.kata.orodha", $division->id) }}" class="btn btn-primary">fungua</a>
             </td>

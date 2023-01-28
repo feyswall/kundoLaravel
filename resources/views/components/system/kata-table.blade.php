@@ -2,7 +2,7 @@
     <thead>
     <tr>
         <th>Jina la Kata</th>
-        <th>Idadi Ya  Watawi</th>
+        <th>Idadi Ya Matawi</th>
         <th></th>
     </tr>
     </thead>

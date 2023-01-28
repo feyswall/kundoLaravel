@@ -30,10 +30,16 @@
                         <span>Usimamizi wa Viongozi</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li> <a href="javascript: void(0);" class="has-arrow">Kamati & Nyadhifa</a>
+                        <li> <a href="javascript: void(0);" class="has-arrow">Viongozi Chama</a>
                             <ul class="sub-menu" aria-expanded="true">
                                 <li><a href="{{ route("super.group.orodha") }}"><span>Orodha  Kamati</span> </a></li>
                                 <li><a href="{{ route("super.posts.orodha") }}"><span>Orodha Nyadhifa </span> </a></li>
+                            </ul>
+                        </li>
+                        <li> <a href="javascript: void(0);" class="has-arrow">Viongozi Serikali</a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                <li><a href=""><span>Orodha  Kamati</span> </a></li>
+                                <li><a href=""><span>Orodha Nyadhifa </span> </a></li>
                             </ul>
                         </li>
                         <li> <a href="{{ route("super.areas.wilaya.orodha") }}">Maeneo</a></li>
@@ -42,79 +48,72 @@
                 </li>
 
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        
-                        <span>Usimamizi wa Kibiashara</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li>
-                            <a href="Ajira/Walioajiriwa/kitongoji.php"><span>Walioajiriwa</span> </a>
-                        </li>
-                        <li>
-                            <a href="Ajira/Wasioajiriwa/kitongoji.php"><span>Walioomba</span> </a>
-                        </li>
-                    </ul>
-                </li>
+                {{--<li>--}}
+                    {{--<a href="javascript: void(0);" class="has-arrow waves-effect">--}}
+                        {{----}}
+                        {{--<span>Usimamizi wa Kibiashara</span>--}}
+                    {{--</a>--}}
+                    {{--<ul class="sub-menu" aria-expanded="true">--}}
+                        {{--<li>--}}
+                            {{--<a href="Ajira/Walioajiriwa/kitongoji.php"><span>Walioajiriwa</span> </a>--}}
+                        {{--</li>--}}
+                        {{--<li>--}}
+                            {{--<a href="Ajira/Wasioajiriwa/kitongoji.php"><span>Walioomba</span> </a>--}}
+                        {{--</li>--}}
+                    {{--</ul>--}}
+                {{--</li>--}}
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        
-                        <span>Usimamizi wa majengo</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li>
-                            <a href="nyumba/nyumbaOrodha.php"><span>Orodha ya Majengo</span> </a>
-                        </li>
-                        <li>
-                            <a href="nyumba/madalali.php"><span>Ona madalali</span> </a>
-                        </li>
-                    </ul>
-                </li>
+                {{--<li>--}}
+                    {{--<a href="javascript: void(0);" class="has-arrow waves-effect">--}}
+                        {{----}}
+                        {{--<span>Usimamizi wa majengo</span>--}}
+                    {{--</a>--}}
+                    {{--<ul class="sub-menu" aria-expanded="true">--}}
+                        {{--<li>--}}
+                            {{--<a href="nyumba/nyumbaOrodha.php"><span>Orodha ya Majengo</span> </a>--}}
+                        {{--</li>--}}
+                        {{--<li>--}}
+                            {{--<a href="nyumba/madalali.php"><span>Ona madalali</span> </a>--}}
+                        {{--</li>--}}
+                    {{--</ul>--}}
+                {{--</li>--}}
 
-                <li>
-                    <a href="Ufadhili/kitongoji.php">
-                        
-                        <span class="">Usimamizi wa Elimu</span> </a>
-                </li>
-              
-                <li>
-                    <!-- <a href="Miradi/miradi.php"> <span class="">Miradi</span> </a> -->
-                </li>
-                <li class="menu-title">More</li>
-                <li>
-                    <a href="watumiaji/index.php">
-                        
-                        <span>Watumiaji</span>
-                    </a>
-                </li>
-                <!-- <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        
-                        <span>Vifaa Vya Ujenzi</span> </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="vifaa_vya_usafiri/orodha_ya_vifaa.php">Orodha</a></li>
-                        <li><a href="vifaa_vya_usafiri/sajiri.php">Sajiri Vifaa</a></li>
-                    </ul>
-                </li> -->
+                {{--<li>--}}
+                    {{--<a href="Ufadhili/kitongoji.php">--}}
+                        {{----}}
+                        {{--<span class="">Usimamizi wa Elimu</span> </a>--}}
+                {{--</li>--}}
+              {{----}}
+                {{--<li>--}}
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        
-                        <span>Vyombo Vya usafirishaji</span> </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="vifaa_vya_usafiri/orodha_ya_vifaa.php">Orodha ya Vyombo</a></li>
-                        <li><a href="vifaa_vya_usafiri/orodha_madereva.php">Orodha ya Madereva</a></li>
-                        <li><a href="vifaa_vya_usafiri/orodhaYaService.php">service za gari</a></li>
-                    </ul>
-                </li>
+                {{--</li>--}}
+
+                {{--<li class="menu-title">More</li>--}}
+                {{----}}
+                {{--<li>--}}
+                    {{--<a href="watumiaji/index.php">--}}
+                        {{----}}
+                        {{--<span>Watumiaji</span>--}}
+                    {{--</a>--}}
+                {{--</li>--}}
+
+                {{--<li>--}}
+                    {{--<a href="javascript: void(0);" class="has-arrow waves-effect">--}}
+                        {{----}}
+                        {{--<span>Vyombo Vya usafirishaji</span> </a>--}}
+                    {{--<ul class="sub-menu" aria-expanded="true">--}}
+                        {{--<li><a href="vifaa_vya_usafiri/orodha_ya_vifaa.php">Orodha ya Vyombo</a></li>--}}
+                        {{--<li><a href="vifaa_vya_usafiri/orodha_madereva.php">Orodha ya Madereva</a></li>--}}
+                        {{--<li><a href="vifaa_vya_usafiri/orodhaYaService.php">service za gari</a></li>--}}
+                    {{--</ul>--}}
+                {{--</li>--}}
 
 
-                <li>
-                    <a href="Ahadi/ahadi_za_wabunge.php">
-                        
-                        <span>Usimamizi Wa Wabunge</span> </a>
-                </li>
+                {{--<li>--}}
+                    {{--<a href="Ahadi/ahadi_za_wabunge.php">--}}
+                        {{----}}
+                        {{--<span>Usimamizi Wa Wabunge</span> </a>--}}
+                {{--</li>--}}
                 <hr>
 
             </ul>

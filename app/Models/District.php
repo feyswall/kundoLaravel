@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 
 class District extends Model
 {
     use HasFactory;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     protected  $fillable = ['name', 'region_id'];
 
@@ -50,6 +52,25 @@ class District extends Model
     public function states(): HasMany
     {
         return $this->hasMany(State::class);
+    }
+
+
+    /**
+     * @return HasManyDeep
+     */
+    public function wards(): HasManyDeep
+    {
+        return $this->hasManyDeep(Ward::class, [Council::class, Division::class]);
+    }
+
+
+
+    /**
+     * @return HasManyDeep
+     */
+    public function branches(): HasManyDeep
+    {
+        return $this->hasManyDeep(Branch::class, [Council::class, Division::class, Ward::class]);
     }
 
 

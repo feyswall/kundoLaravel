@@ -200,11 +200,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <button data-bs-toggle="modal" data-bs-target="#orodhaHalmashauriModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Almashauri</button>
+                    <button data-bs-toggle="modal" data-bs-target="#orodhaHalmashauriModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Halmashauri</button>
                     <a href="{{ route('super.areas.wilaya.orodha') }}" class="btn btn-primary btn-md mb-4">Rudi Wilayani</a>
-                    <x-system.halmashauri-table :district="$district" :areas="$areas" :headers="['Jina la Halmashauri','Idadi Ya Wilaya','Idadi Ya Tarafa', '']" />
+                    <x-system.halmashauri-table :district="$district" :areas="$areas" :headers="['Jina la Halmashauri','Idadi ya Tarafa','Idadi Ya Kata', 'Idadi ya Matawi', '']" />
                     <!-- model location here -->
-                    <x-system.modal id="orodhaHalmashauriModal" aria="orodhaHalmashauriLabel" size="modal-lg" title="Ongeza Almashauri Hapa">
+                    <x-system.modal id="orodhaHalmashauriModal" aria="orodhaHalmashauriLabel" size="modal-lg" title="Ongeza Halmashauri Hapa">
                         <x-slot:content>
                             <form method="post" action="{{ route('super.areas.halmashauri.ongeza') }}">
                                 @csrf
