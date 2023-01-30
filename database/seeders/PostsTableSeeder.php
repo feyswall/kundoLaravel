@@ -18,6 +18,7 @@ class PostsTableSeeder extends Seeder
     public function run()
     {
         DB::table("posts")->delete();
+        
         $area = "tawi";
         $posts = array(
             /** Uwongozi Tawi */

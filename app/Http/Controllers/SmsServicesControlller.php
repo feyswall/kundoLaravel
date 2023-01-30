@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Events\SendingSmsNotificationEvent;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Models\Leader;
+use App\Models\Post;
 use App\Models\Sms;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use PHPUnit\TextUI\XmlConfiguration\Groups;
 
 class SmsServicesControlller extends Controller
 {
@@ -38,6 +42,33 @@ class SmsServicesControlller extends Controller
         }
 
     }
+
+
+
+
+    public function sendToGroup(Request $request){
+        $posts = [];
+        $groups = Group::whereIn('id', $request->groups_ids)->get();
+        foreach ($groups as $key => $group) {
+            $results = $group->posts->pluck('id');      
+            foreach( $results as $result ) {
+                $posts[] = $result;
+            }
+        }
+        // $posts = Post::whereIn('id', $posts)
+        // ->where('leaders', function($query){
+        //     $query->where('isActive', true);
+        // })
+        // ->get();
+        $leaders_id = DB::table('leader_post')
+        ->where('isActive', true)
+        ->whereIn('post_id', $posts)->pluck('leader_id');
+
+        $leaders = Leader::whereIn('id', $leaders_id)->pluck('id', 'phone');
+        return $leaders;
+    }
+
+
 
     /**
      * Sending sms in here
@@ -247,6 +278,13 @@ class SmsServicesControlller extends Controller
         return view("interface.super.sms.funguMoja")
             ->with('sms', $sms)
             ->with('leaders', $leaders);
+    }
+
+
+    public function selectReceivers(){
+        $groups = Group::orderBy('id', 'desc')->get();
+        return view("interface.super.sms.chaguaKundi")
+            ->with("groups", $groups);
     }
 
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Super\LeadersController;
 use App\Http\Requests\ValidateWardLeaderRequest;
 use App\Models\Leader;
+use Illuminate\Http\Request;
 
 class BranchLeadersController extends Controller
 {
@@ -74,7 +75,10 @@ class BranchLeadersController extends Controller
      */
     public function update(Request $request, Leader $leader)
     {
-        //
+        $leaderObject = new LeadersController;
+        $leaderObject->update($request, $leader);
+
+        return redirect()->back()->with(['status' => "success", "message" => "Taarifa Zimebadirishwa."]);
     }
 
     /**

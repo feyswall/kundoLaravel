@@ -56,7 +56,7 @@ class WardLeadersController extends Controller
      */
     public function show(Leader $leader)
     {
-        //
+      
     }
 
     /**
@@ -79,7 +79,10 @@ class WardLeadersController extends Controller
      */
     public function update(Request $request, Leader $leader)
     {
-        //
+        $leaderObject = new LeadersController;
+        $leaderObject->update($request, $leader);
+
+        return redirect()->back()->with(['status' => "success", "message" => "Taarifa Zimebadirishwa."]);
     }
 
     /**

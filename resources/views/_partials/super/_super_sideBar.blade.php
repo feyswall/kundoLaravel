@@ -38,14 +38,27 @@
                         </li>
                         <li> <a href="javascript: void(0);" class="has-arrow">Viongozi Serikali</a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li><a href=""><span>Orodha  Kamati</span> </a></li>
-                                <li><a href=""><span>Orodha Nyadhifa </span> </a></li>
+                                <li><a href="/lo"><span>Orodha  Kamati</span> </a></li>
+                                <li><a href="/ki"><span>Orodha Nyadhifa </span> </a></li>
                             </ul>
                         </li>
                         <li> <a href="{{ route("super.areas.wilaya.orodha") }}">Maeneo</a></li>
-                        <li> <a href="{{ route("sms.orodha.group") }}">Sms</a></li>
+
                     </ul>
                 </li>
+
+
+
+                 <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        
+                        <span>Usimamizi wa Viongozi</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                                <li><a href="{{ route("sms.group.select") }}"><span>Tuma Sms</span> </a></li>
+                                <li> <a href="{{ route("sms.orodha.group") }}">Orodha Sms</a></li>
+                    </ul>
+                 </li>
 
 
                 {{--<li>--}}

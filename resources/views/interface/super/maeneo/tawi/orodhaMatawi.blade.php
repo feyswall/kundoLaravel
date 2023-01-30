@@ -49,20 +49,28 @@
                                             <h3 class="fs-4 me-3">Viongozi wa Kata</h3>
                                             <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajili Kiongozi </button>
                                         </div>
+
                                         <div>
                                             <div class="d-flex justify-start gap-4 flex-wrap">
                                                 @foreach( $ward->leaders as $leader )
-                                                @if( $leader->pivot->isActive == true )
-                                                <div class="text-center">
-                                                    <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Badilisha" href="#"></a>
-                                                    <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                                    <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
-                                                </div>
-                                                @endif
+                                                    @if( $leader->pivot->isActive == true )
+                                                        <div class="text-center">
+                                                            <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                                            <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
+                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
+                                                        </div>
+                                                    @endif
                                                 @endforeach
                                                 <hr>
                                             </div>
                                         </div>
+                                                @foreach ($ward->leaders as $leader)
+                                                     <x-system.modal id="badiriTaarifaKiongoziModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
+                                                        <x-slot:content>
+                                                             <x-system.edit-leader :leader="$leader" :route="route('super.leader.kata.sasisha', $leader->id)" />
+                                                        </x-slot:content>
+                                                     </x-system.modal>
+                                                @endforeach
                                         <!-- model location here -->
                                         <x-system.modal id="ongezaKiongoziModal" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
                                             <x-slot:content>
