@@ -29,7 +29,7 @@
 {{--                    <h1>{{ ($ranks[$post->area] < $ranks[$group->basedOn]) ? "kamanda" : "hapana" }}</h1>--}}
                     @if ( $post->area == 'mkoa')
                         @php
-                            if ( $table->regions() ){
+                            if ( method_exists($table, "regions") ){
                                 $bool_contains = $table->regions()->with('leaders')->get();
                                  foreach( $bool_contains as $obj ){
                                         $leaders_id = $obj->leaders->pluck('id');
@@ -45,7 +45,7 @@
 
                     @if ( $post->area == 'wilaya')
                         @php
-                            if ( $table->districts() ){
+                            if ( method_exists($table, "districts") ){
                                    $bool_contains = $table->districts()->get();
                                    foreach( $bool_contains as $obj ){
                                             $leaders_id = $obj->leaders->pluck('id');
@@ -62,7 +62,7 @@
 
                     @if ( $post->area == 'halmashauri')
                         @php
-                            if ( $table->councils() ){
+                            if ( method_exists($table, "councils") ){
                                       $bool_contains = $table->councils()->with('leaders')->get();
                                        foreach( $bool_contains as $obj ){
                                             $leaders_id = $obj->leaders->pluck('id');
@@ -78,7 +78,7 @@
 
                     @if ( $post->area == 'tarafa')
                         @php
-                            if ( $table->divisions() ){
+                            if ( method_exists($table, "divisions") ){
                                           $bool_contains = $table->divisions()->with('leaders')->get();
                                           foreach( $bool_contains as $obj ){
                                             $leaders_id = $obj->leaders->pluck('id');
@@ -95,14 +95,14 @@
 
                     @if ( $post->area == 'kata')
                         @php
-                            if ( $table->wards() ){
+                            if ( method_exists($table, "wards") ){
                                    $bool_contains = $table->wards()->with('leaders')->get();
                                            foreach( $bool_contains as $obj ){
                                                 $leaders_id = $obj->leaders->pluck('id');
                                                 $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
                                             }
                                      }else{
-                                         $bool_contains = $table->ward()->with('leaders')->get();
+                                         $bool_contains = $table->ward;
                                              $leaders_id = $bool_contains->leaders->pluck('id');
                                             $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
                                            }
@@ -111,7 +111,7 @@
 
                     @if ( $post->area == 'matawi')
                         @php
-                            if ( $table->branches() ){
+                            if ( method_exists($table, "branches") ){
                                           $bool_contains = $table->branches()->with('leaders')->get();
                                            foreach( $bool_contains as $obj ){
                                                 $leaders_id = $obj->leaders->pluck('id');

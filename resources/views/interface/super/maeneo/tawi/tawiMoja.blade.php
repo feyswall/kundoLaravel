@@ -34,6 +34,21 @@
     <!-- end page title -->
 
     <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <x-system.collapse id="kamatiZaTarafa" title="kamati Ngazi ya Tawi">
+                    <x-slot:content>
+                        @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tawi")->get() as $group)
+                            <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+                                <x-slot:content>
+                                    <x-system.groups-info :group="$group" :table="$branch" />
+                                </x-slot:content>
+                            </x-system.collapse>
+                        @endforeach
+                    </x-slot:content>
+                </x-system.collapse>
+            </div>
+        </div>
         <div class="col-12">
             <div class="card px-md-3">
                 <div class="card-body">
