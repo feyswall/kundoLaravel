@@ -94,6 +94,7 @@ Route::controller(BranchLeadersController::class)
 ->group(function () {
     Route::get('/orodha/{ward}', 'index')->name('orodha');
     Route::post('/ongeza', 'store')->name('ongeza');
+    Route::put('/badili/{leader}', 'update')->name('sasisha');
 });
 
 
@@ -104,6 +105,7 @@ Route::controller(WardLeadersController::class)
         Route::get('/orodha/{division}', 'index')->name('orodha');
         Route::post('/ongeza', 'store')->name('ongeza');
         Route::get('/badili/{leader}', 'edit')->name('badili');
+        Route::put('/badili/{leader}', 'update')->name('sasisha');
     });
 
 

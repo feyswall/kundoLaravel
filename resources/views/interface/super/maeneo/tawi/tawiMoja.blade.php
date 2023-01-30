@@ -65,19 +65,27 @@
 
                             <div class="d-flex justify-start gap-4 flex-wrap">
                                 @foreach( $branch->leaders as $leader )
-                                @if( $leader->pivot->isActive == true )
+                                    @if( $leader->pivot->isActive == true )
 
-                                <div class="text-center">
-                                    <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Badilisha" href=""></a>
-                                    <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                    <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
-                                </div>
-                                @endif
+                                    <div class="text-center">
+                                        <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                        <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
+                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small><br>
+                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
+                                    </div>
+                                    @endif
                                 @endforeach
-
                             </div>
-
                         </div>
+
+
+                         @foreach ($branch->leaders as $leader)
+                                <x-system.modal id="badiriTaarifaKiongoziModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
+                                <x-slot:content>
+                                        <x-system.edit-leader :leader="$leader" :route="route('super.leader.tawi.sasisha', $leader->id)" />
+                                </x-slot:content>
+                                </x-system.modal>
+                        @endforeach
 
 
                         <!-- model location here -->

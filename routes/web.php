@@ -45,9 +45,11 @@ Route::controller(SmsServicesControlller::class)
     ->as('sms.')
     ->group(function () {
         Route::post('/send', 'send')->name('tuma');
+        Route::post('/group/send', 'sendToGroup')->name('tuma.group');
         Route::get('/delivery', 'deriveryReport')->name('delivery');
         Route::get('/balance', 'checkBalance')->name('balance');
         Route::get('/orodha/sms', 'orodhaGroups')->name('orodha.group');
+        Route::get('/orodha/group', 'selectReceivers')->name('group.select');
         Route::get('/orodha/show/{sms}', 'orodhaGroupMoja')->name('orodha.group.moja');
 });
 

@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Events\SendingSmsNotificationEvent;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use App\Models\Leader;
+use App\Models\Post;
 use App\Models\Sms;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use PHPUnit\TextUI\XmlConfiguration\Groups;
 
 class SmsServicesControlller extends Controller
 {
@@ -38,6 +42,62 @@ class SmsServicesControlller extends Controller
         }
 
     }
+
+
+
+
+    public function sendToGroup(Request $request){
+        $receptionist_array = [];
+        $posts = [];
+        $groups = Group::whereIn('id', $request->groups_ids)->get();
+        foreach ($groups as $key => $group) {
+            $results = $group->posts->pluck('id');      
+            foreach( $results as $result ) {
+                $posts[] = $result;
+            }
+        }
+        // $posts = Post::whereIn('id', $posts)
+        // ->where('leaders', function($query){
+        //     $query->where('isActive', true);
+        // })
+        // ->get();
+        $leaders_id = DB::table('leader_post')
+        ->where('isActive', true)
+        ->whereIn('post_id', $posts)->pluck('leader_id');
+
+        $leaders = Leader::whereIn('id', $leaders_id)->get();
+
+        $phone_array = array();
+        $savedLeaders = array();
+        foreach ($leaders as $leader) {
+            $phone_array[] = $leader->phone;
+            $savedLeaders[] = $leader->id;
+        }
+
+        /**  remove redundancy in phone array */
+        $trueArr = array_unique($phone_array);
+
+        $supportedText = self::supportedSms();
+        if ( $supportedText < 0 ){
+            return ['status' => 'error', 'message' => 'Makadirio ya SMS yameshindikana Tafadhali jaribu Tena.'];
+        }else{
+            if ( intval($supportedText) < count($trueArr) ){
+                return ['status' => 'error', 'message' => "Salio la SMS halitoshi, Tafadhali Ongeza salio na ujaribu Tena, Salio Liwe Angalua La Sms_: ".count($trueArr)];
+            }
+        }
+        /** create receptionist array for sms sending */
+        foreach ($trueArr as $key => $phone) {
+            $smsPhone = $phone;
+            $rec_key = $phone."_".$key;
+            $receptionist_array[] = array('recipient_id' => "$key", 'dest_addr' => $smsPhone );
+        }
+//        return $savedLeaders[0];
+//        return [$request->message['value']];
+        $response = $this->sendingProtocol( $request->message['value'], $receptionist_array, $savedLeaders );
+        return $response;
+    }
+
+
 
     /**
      * Sending sms in here
@@ -95,10 +155,47 @@ class SmsServicesControlller extends Controller
                 }
                 return (['status' => 'success' ,'response' => $response_obj['response'], 'obj' => $smsRequestId]);
             }
-            return ['status' => 'fail', 'message' => $response_obj['response']->message];
+            return ['status' => 'fail', 'message' => $response_obj['response']->data->message];
         } else {
             if ($response_obj['status'] == 'fail') {
-                return ['status' => 'fail', 'message' => $response_obj['response']->message];
+                return ['status' => 'fail', 'message' => $response_obj['response']->data->message];
+            }else{
+                return ['status' => 'fail', 'message' => 'Unknown Error please Try again later!'];
+            }
+        }
+    }
+
+
+
+    public function sendingProtocol($message, $receptionist, $leaders){
+        $postData = array(
+            'source_addr' => 'INFO',
+            'encoding'=>0,
+            'schedule_time' => '',
+            'message' => $message,
+            'recipients' => $receptionist
+        );
+        $response_obj = $this->configurations( $postData );
+        if ($response_obj['status'] == 'success') {
+            if ( isset($response_obj['response']->successful) ){
+                // create sms object for later retrival
+                $smsRequestId = Sms::create([
+                    'request_id' => $response_obj['response']->request_id,
+                    'message' => $message,
+                    'sms_amount' => count($receptionist)
+                ]);
+                // fill the variables in relation
+                if ( $smsRequestId ){
+                    foreach ( $leaders as $leader ){
+                        $smsRequestId->leaders()->attach($leader);
+                    }
+                }
+                return (['status' => 'success' ,'response' => $response_obj['response'], 'obj' => $smsRequestId]);
+            }
+            return ['status' => 'fail', 'message' => $response_obj['response']->data->message];
+        } else {
+            if ($response_obj['status'] == 'fail') {
+                return ['status' => 'fail', 'message' => $response_obj['response']->data->message];
             }else{
                 return ['status' => 'fail', 'message' => 'Unknown Error please Try again later!'];
             }
@@ -135,7 +232,7 @@ class SmsServicesControlller extends Controller
          $response = curl_exec($ch);
          $response_obj = json_decode($response);
         if($response === FALSE){
-        return ['status' => 'fail', 'response' => [$response_obj, curl_error($ch)]];
+        return ['status' => 'fail', 'response' => $response_obj];
         }
         return ['status' => 'success', 'response' => $response_obj];
     }
@@ -180,6 +277,8 @@ class SmsServicesControlller extends Controller
         $response = json_decode( $response );
         return ['status' => 'success', 'response' => $response];
     }
+
+
 
 
 
@@ -229,7 +328,7 @@ class SmsServicesControlller extends Controller
             $balance = $checkBalance['response']->data->credit_balance;
             return $balance;
         }else{
-            return "Haiukupatikana";
+            return -1;
         }
     }
 
@@ -247,6 +346,13 @@ class SmsServicesControlller extends Controller
         return view("interface.super.sms.funguMoja")
             ->with('sms', $sms)
             ->with('leaders', $leaders);
+    }
+
+
+    public function selectReceivers(){
+        $groups = Group::orderBy('id', 'desc')->get();
+        return view("interface.super.sms.chaguaKundi")
+            ->with("groups", $groups);
     }
 
 }

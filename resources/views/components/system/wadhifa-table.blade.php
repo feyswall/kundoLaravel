@@ -5,8 +5,8 @@
         <thead>
         <tr>
             <th>Jina la Tawi</th>
-            <th>Ngozi ya:</th>
-            <th>Kamati Zao</th>
+            <th>Ngazi ya:</th>
+            {{--<th>Kamati Zao</th>--}}
             <th>Idadi</th>
             <th></th>
         </tr>
@@ -17,13 +17,13 @@
             <tr>
                 <td>{{ $post->name }}</td>
                 <td>{{ $post->area }}</td>
-                <th>
-                    <ul>
-                        @foreach( $post->groups as $group)
-                            <li>{{ $group->name }}</li>
-                        @endforeach
-                    </ul>
-                </th>
+                {{--<th>--}}
+                    {{--<ul>--}}
+                        {{--@foreach( $post->groups as $group)--}}
+                            {{--<li>{{ $group->name }}</li>--}}
+                        {{--@endforeach--}}
+                    {{--</ul>--}}
+                {{--</th>--}}
                 <td>{{ $post->leaders()->count() }}</td>
                 <td>
                     <button  data-bs-toggle="modal" data-bs-target="#editWadhifaModal_{{$post->id}}" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i>Badiri wadhifa</button>
