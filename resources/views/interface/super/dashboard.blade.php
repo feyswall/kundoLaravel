@@ -269,15 +269,21 @@
 
             let sendAjaxSmsRequest = function( message, leaders ) {
                 let allowed = {!! $resultBalance['response'] ? $resultBalance['response']->data->credit_balance : 0 !!}
-                    console.log( leaders )
+                    console.log( leaders );
                 if( confirm(`Idadi ya sms Unazojaribu kutuma ni ${leaders.length} Idadi Hii Itapungua kama kuna namba zenye kujirudia.`)){
-                    if( allowed < leaders.length ){
-                        alert(` Salio Lako Halitoshi kutuma SMS ${leaders.length} `)
-                    }else if( leaders.length < 1 ){
-                        alert(` Tafadhali Chagua Watu Wa Kutumiwa SMS `)
-                    }
-                    else {
-                        sendAjaxSmsRequesto( message, leaders );
+                    if( allowed < 0 ){
+                        if ( confirm("Hatukuweza Kufanya Makadirio Ya Salio. Endelea") ){
+                                sendAjaxSmsRequesto( message, leaders );
+                        }
+                    }else{
+                        if( allowed < leaders.length ){
+                            alert(` Salio Lako Halitoshi kutuma SMS ${leaders.length} `)
+                        }else if( leaders.length < 1 ){
+                            alert(` Tafadhali Chagua Watu Wa Kutumiwa SMS `)
+                        }
+                        else {
+                            sendAjaxSmsRequesto( message, leaders );
+                        }
                     }
                 }
             };
@@ -302,7 +308,6 @@
                             leaders_ids: leaders,
                         },
                         success: function (response) {
-                            console.log( response )
                             if( response.status == 'fail' || response.status == 'error' ){
                                 alert( response.message );
                                 $('#formLoader').css("display", 'none');

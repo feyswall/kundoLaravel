@@ -19,8 +19,9 @@
     <!-- Start right Content here -->
 
     <!-- ============================================================== -->
+    @php $resultBalance = \App\Http\Controllers\SmsServicesControlller::checkBalance(); @endphp
 <div class="mb-3">
-    <button data-bs-toggle="modal" data-bs-target="#tumaSmsModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajili Kiongozi</button>
+    <button data-bs-toggle="modal" data-bs-target="#tumaSmsModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i>Anza Kutuma</button>
        <x-system.modal id="tumaSmsModal" aria="smsKwaViongozi" size="modal-lg" title="Tuma Sms Kwa Viongozi">
             <x-slot:content>
                 <form method="get" action="#" name="sendTextSmsForm" id="sendTextSmsForm">
@@ -38,7 +39,13 @@
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>
-                   </div>
+                 </div>
+                <div id="smsSuccess" style="display: none">
+                    <h1 class="text-success" style="margin-right: 50px;">Sms Zimetumwa!</h1>
+                    <div id="formLoader"  class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
             </x-slot:content>
        </x-system.modal>
 </div>
@@ -100,8 +107,12 @@
             if( messageToSend == null || selectedToSend.length < 1 ){
                 alert("Hakikisha Unajaza Taarifa zote.")
             }else {
-                if (confirm(`Tuma Sms ${selectedToSend.length}`)) {
-                    sendAjaxSmsRequesto( messageToSend, selectedToSend );
+                if (confirm(`Bonyeza Ok kutuma...`)) {
+                    if( false ) {
+                        alert(` Salio Lako Halitoshi kutuma SMS ${leaders.length} `)
+                    }else{
+                        sendAjaxSmsRequesto( messageToSend, selectedToSend );
+                    }
                 }
             }
         });
@@ -127,9 +138,20 @@
                             groups_ids: leaders,
                         },
                         success: function (response) {
-                           console.log( response );
-                            $('#sendTextSmsForm').css("display", "");
-                            $('#formLoader').css("display", 'none');
+                            if( response.status == 'fail' || response.status == 'error' ){
+                                alert( response.message );
+                                $('#formLoader').css("display", 'none');
+                                $('#sendTextSmsForm').css("display", "block");
+                            }else {
+                                $('#sendTextSmsForm').css("display", "none");
+                                $('#formLoader').css("display", 'none');
+                                $('#smsSuccess').css("display", "flex");
+                                if ( response.obj ){
+                                    window.location = `/sms/orodha/show/${response.obj.id}`;
+                                }else{
+                                    location.reload();
+                                }
+                            }
                         },
                         error:function(x,e) {
                             if (x.status==0) {

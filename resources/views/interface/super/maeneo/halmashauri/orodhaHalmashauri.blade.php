@@ -6,6 +6,8 @@
  * EastCoders & G3NET.
  * contacts: +255 628 960 877
  */
+
+use \Illuminate\Support\Facades\DB;
 ?>
 
 @extends("layouts.super_system")

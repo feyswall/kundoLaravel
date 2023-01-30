@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Super;
 use App\Http\Controllers\Controller;
 use App\Models\Leader;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class LeadersController extends Controller
@@ -165,6 +166,21 @@ class LeadersController extends Controller
 
        return $leader;
    
+    }
+
+
+    public static function filterLeaders($leaders_id, $post){
+        $all_leaders = [];
+        $qualified = DB::table('leader_post')
+            ->whereIn('leader_id', $leaders_id)
+            ->where('post_id', $post->id)
+            ->where('isActive', true)
+            ->pluck('leader_id');
+        $qualified = \App\Models\Leader::whereIn('id', $qualified)->get();
+        foreach ( $qualified as $leader ){
+            $all_leaders[] = $leader;
+        }
+        return $all_leaders;
     }
 
     /**
