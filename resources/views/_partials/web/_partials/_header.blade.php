@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by feyswal on 1/8/2023.
  * Time :8 PM.
@@ -7,9 +8,9 @@
  */
 ?>
 
-<div class="container d-flex align-items-center">
+<div class="container d-flex align-items-center justify-content-between">
 
-    <h1 class="logo me-auto"><a href="index.html">KIMS</a></h1>
+    <a href="index.html"><img src={{asset("logo-white.svg")}} alt=""></a>
     <!-- Uncomment below if you prefer to use an image logo -->
     <!-- <a href="index.html" class="logo me-auto"><img src="assets/assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
