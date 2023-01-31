@@ -140,7 +140,7 @@
                               @foreach($leaders as  $bey => $leader)
                                   @if( $tracker == $post->name )
                                       @php $counter++ ; @endphp
-                                            <div class="col-3 col-sm-3 p-3">
+                                            <div class="col-md-3 col-sm-12 col-12 p-3">
                                                 <div class="text-center">
                                                     <h4 class="fs-5 text-capitalize mb-1">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
                                                     <span class="d-block mb-2">{{ $leader->phone }}</span>
@@ -175,7 +175,7 @@
                                               $tracker = $post->name;
                                                 $counter = 1;
                                           @endphp
-                                            <div class="col-3 col-sm-3 p-3">
+                                            <div class="col-md-3 col-sm-12 col-12 p-3">
                                                 <div class="text-center">
                                                     <h4 class="fs-5 text-capitalize mb-1">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
                                                     <span class="d-block mb-2">{{ $leader->phone }}</span>
