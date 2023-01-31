@@ -20,7 +20,7 @@
             <li><a class="nav-link scrollto" href="#about">Kuhusu Mfumo</a></li>
             <li><a class="nav-link scrollto" href="#services">Huduma Zetu</a></li>
             <li><a class="nav-link scrollto" href="#contact">Hoja</a></li>
-            <li><a class="getstarted scrollto" href="{{ route("register") }}">Jiunge</a></li>
+            {{--<li><a class="getstarted scrollto" href="{{ route("register") }}">Jiunge</a></li>--}}
             <li><a class="getstarted scrollto" href="{{ route("login") }}">Ingia</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
