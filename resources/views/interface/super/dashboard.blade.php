@@ -121,7 +121,6 @@
                                 <th>Jina/mwisho</th>
                                 <th>Simu</th>
                                 <th>Kamati</th>
-                                <th>Kamati</th>
                                 {{-- <th>miaka</th>
                                 <th>Start date</th>
                                 <th></th> --}}
@@ -137,17 +136,6 @@
                                     <td>{{ $leader->middleName }}</td>
                                     <td>{{ $leader->lastName }}</td>
                                     <td>{{ $leader->phone }}</td>
-                                    <td>
-                                        <ul>
-                                           @foreach ($leader->posts as $post)
-                                                @if ( $post->pivot->isActive )
-                                                    @foreach ($post->groups as $group)
-                                                        <li><b>{{ $group->name }}</b></li>
-                                                    @endforeach                                                 
-                                                @endif
-                                            @endforeach
-                                        </ul>
-                                    </td>
                                     <td>
                                         <ul>
                                             @foreach ($leader->posts as $post)
