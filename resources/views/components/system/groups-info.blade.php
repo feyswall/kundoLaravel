@@ -120,7 +120,7 @@
                                        }else{
                                            $bool_contains = $table->branch()->with('leaders')->get();
                                            $leaders_id = $bool_contains->leaders->pluck('id');
-                                           $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
+                                           $all_leaders = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
                                      }
                         @endphp
 
@@ -129,17 +129,85 @@
                 @endif
 
                 @if ( $bool_contains )
-                  @foreach( $all_leaders as $leaders )
-                      @foreach($leaders as $leader)
-                            <div class="text-center">
-                                <h4 class="fs-5 text-capitalize mb-1">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                <span class="d-block mb-2">{{ $leader->phone }}</span>
-                                <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $post->name }}</small>
-                            </div>
-                          @endforeach
+                    @php
+                        $tracker = '';
+                        $counter = 0;
+                    @endphp
+                    <div class="container">
+                        <div class="row">
+                  @foreach( $all_leaders as $leadersCollection )
+                      @foreach($leadersCollection as $key => $leaders)
+                              @foreach($leaders as  $bey => $leader)
+                                  @if( $tracker == $post->name )
+                                      @php $counter++ ; @endphp
+                                            <div class="col-3 col-sm-3 p-3">
+                                                <div class="text-center">
+                                                    <h4 class="fs-5 text-capitalize mb-1">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
+                                                    <span class="d-block mb-2">{{ $leader->phone }}</span>
+                                                    <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $post->name }}</small>
+                                                    <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $counter }}</small>
+                                                    <span class="d-block mb-2">
+                                                        @php
+                                                        $area = $post->area;
+                                                        if ( $area == 'tawi'){
+                                                            echo $leader->branches()->where('isActive', true)->first()->name;
+                                                        }elseif ( $area == 'kata'){
+                                                            echo $leader->wards()->where('isActive', true)->first()->name;
+                                                        }elseif ( $area == 'tarafa'){
+                                                            echo $leader->divisions()->where('isActive', true)->first()->name;
+                                                        }elseif ( $area == 'halmashauri'){
+                                                            echo $leader->councils()->where('isActive', true)->first()->name;
+                                                        }elseif ( $area == 'wilaya'){
+                                                            echo $leader->districts()->where('isActive', true)->first()->name;
+                                                        }elseif ( $area == 'mkoa'){
+                                                            echo $leader->regions()->where('isActive', true)->first()->name;
+                                                        }
+                                                        @endphp
+                                                    </span>
+                                                </div>
+                                            </div>
+                                    @else
+                                        <!-- Force next columns to break to new line -->
+                                            <div class="w-100"></div>
+                                            <hr>
+                                        <h3><b>{{ $post->name }}</b></h3>
+                                          @php
+                                              $tracker = $post->name;
+                                                $counter = 1;
+                                          @endphp
+                                            <div class="col-3 col-sm-3 p-3">
+                                                <div class="text-center">
+                                                    <h4 class="fs-5 text-capitalize mb-1">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
+                                                    <span class="d-block mb-2">{{ $leader->phone }}</span>
+                                                    <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $post->name }}</small>
+                                                    <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $counter }}</small>
+                                                    <span class="d-block mb-2">
+                                                        @php
+                                                            $area = $post->area;
+                                                            if ( $area == 'tawi'){
+                                                                echo $leader->branches()->where('isActive', true)->first()->name;
+                                                            }elseif ( $area == 'kata'){
+                                                                echo $leader->wards()->where('isActive', true)->first()->name;
+                                                            }elseif ( $area == 'tarafa'){
+                                                                echo $leader->divisions()->where('isActive', true)->first()->name;
+                                                            }elseif ( $area == 'halmashauri'){
+                                                                echo $leader->councils()->where('isActive', true)->first()->name;
+                                                            }elseif ( $area == 'wilaya'){
+                                                                echo $leader->districts()->where('isActive', true)->first()->name;
+                                                            }elseif ( $area == 'mkoa'){
+                                                                echo $leader->regions()->where('isActive', true)->first()->name;
+                                                            }
+                                                        @endphp
+                                                    </span>
+                                                </div>
+                                            </div>
+                                    @endif
+                            @endforeach
+                      @endforeach
                   @endforeach
+                        </div>
+                    </div>
                 @endif
-
                 @endforeach
         </div>
 

@@ -170,17 +170,24 @@ class LeadersController extends Controller
 
 
     public static function filterLeaders($leaders_id, $post){
-        $all_leaders = [];
+        $onQueue = [];
         $qualified = DB::table('leader_post')
             ->whereIn('leader_id', $leaders_id)
             ->where('post_id', $post->id)
             ->where('isActive', true)
             ->pluck('leader_id');
-        $qualified = \App\Models\Leader::whereIn('id', $qualified)->get();
-        foreach ( $qualified as $leader ){
-            $all_leaders[] = $leader;
-        }
-        return $all_leaders;
+            $collectedDatas = collect($qualified)->groupBy('post_id');
+            foreach ( $collectedDatas as $collected ){
+                $data = \App\Models\Leader::whereIn('id', $collected)->get();
+                $onQueue[] = $data;
+            }
+//            foreach (  $onQueue as $key => $qualified){
+//                foreach ( $qualified as $leader ){
+//                    $data = [$leader];
+//                    $all_leaders[] = $data;
+//                }
+//            }
+        return $onQueue;
     }
 
     /**

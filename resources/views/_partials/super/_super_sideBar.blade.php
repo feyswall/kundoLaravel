@@ -52,7 +52,7 @@
                  <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         
-                        <span>Usimamizi wa Viongozi</span>
+                        <span>Huduma Za Sms</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                                 <li><a href="{{ route("sms.group.select") }}"><span>Tuma Sms</span> </a></li>
