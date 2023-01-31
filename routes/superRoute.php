@@ -169,6 +169,7 @@ Route::controller(GroupsController::class)
         Route::post('/ongezaWadhifa', 'addPost')->name('ongezaWadhifa');
         Route::put('/rekebishaWadhifa/{group}', 'editGroup')->name('editWadhifa');
         Route::post('/sajiriWadhifa', 'storeWadhifa')->name('storeWadhifa');
+        Route::put('/onaGroup/{group}', 'showSingleGroup')->name('showGroup');
 });
 
 

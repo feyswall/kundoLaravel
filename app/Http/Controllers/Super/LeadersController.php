@@ -176,11 +176,13 @@ class LeadersController extends Controller
             ->where('post_id', $post->id)
             ->where('isActive', true)
             ->pluck('leader_id');
-            $collectedDatas = collect($qualified)->groupBy('post_id');
+        $collectedDatas = collect($qualified)->groupBy('post_id');
+
             foreach ( $collectedDatas as $collected ){
                 $data = \App\Models\Leader::whereIn('id', $collected)->get();
                 $onQueue[] = $data;
             }
+
 //            foreach (  $onQueue as $key => $qualified){
 //                foreach ( $qualified as $leader ){
 //                    $data = [$leader];

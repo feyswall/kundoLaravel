@@ -177,9 +177,6 @@ use \Illuminate\Support\Facades\DB;
     </x-slot:content>
 </x-system.collapse>
 
-
-
-
 <div class="container-fluid">
     <!-- start page title -->
     <div class="row">
