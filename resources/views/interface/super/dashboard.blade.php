@@ -111,7 +111,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Orodha ya watumiaji</h4>
+                        <h4 class="card-title">Orodha ya Viongozi Wote</h4>
                         <table id="viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                             <tr>
@@ -120,7 +120,8 @@
                                 <th>Jina/kati</th>
                                 <th>Jina/mwisho</th>
                                 <th>Simu</th>
-                                <th>Kamati</th>
+                                <th>Wadhifa</th>
+                                <td></td>
                                 {{-- <th>miaka</th>
                                 <th>Start date</th>
                                 <th></th> --}}
@@ -133,7 +134,7 @@
                                         <input type="checkbox" class="checker" name="leader_id" value="{{ $leader->id }}">
                                     </td>
                                     <td>{{ $leader->firstName }}</td>
-                                    <td>{{ $leader->middleName }}</td>
+                                    <td>{{ $leader->middleName == 'null' ? "" : $leader->middleName }}</td>
                                     <td>{{ $leader->lastName }}</td>
                                     <td>{{ $leader->phone }}</td>
                                     <td>
@@ -145,7 +146,9 @@
                                             @endforeach
                                         </ul>
                                     </td>
-                                     
+                                     <td>
+                                         <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -155,7 +158,15 @@
             </div>
             <!-- end col -->
         </div>
-        <!-- end row -->
+
+                    @foreach ($leaders as $leader)
+                        <x-system.modal id="badiriTaarifaKiongoziModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
+                            <x-slot:content>
+                                <x-system.edit-leader :leader="$leader" :route="route('super.leader.kata.sasisha', $leader->id)" />
+                            </x-slot:content>
+                        </x-system.modal>
+                @endforeach
+                    <!-- end row -->
                     <x-system.modal id="sendTextSms" aria="sendSms" size="modal-lg" title="Tuma Sms Hapa">
                 <x-slot:content>
                     <form id="sendTextSmsFormId" name="sendTextSmsForm" method="post">

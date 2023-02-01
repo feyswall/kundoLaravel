@@ -147,16 +147,18 @@ class LeadersController extends Controller
             "lastName.max" => "Jina la mwisho lisizidi herufi hamsini (50)",
 
             "phone.required" => "Ni lazima kujaza namba",
-            "phone.max" => "Namba zisizidi kumi na tano(15)",
+            "phone.max" => "Namba Uliyoingiza siyo sahihi",
         ];
 
         $validate = Validator::make($request->all() ,$rules, $messages );
 
         if( $validate->fails() ){
-            return redirect()->back()->withErrors($validate->errors());
+            return ['status' => 'error','name' => 'validation', 'error' => $validate->errors()];
         }
 
-
+        if( !( preg_match("/^255[0-9]{9}$/", $request->phone ) ) ){
+            return ['status' => 'error','name' => 'validation', 'error' => ['phone' => 'Namba ya simu si sahihi yabididi kuandikwa "255628960877"'] ];
+        }
         $leader->firstName = $request->firstName;
         $leader->middleName = $request->middleName;
         $leader->lastName = $request->lastName;
@@ -164,7 +166,7 @@ class LeadersController extends Controller
 
         $leader->save();
 
-       return $leader;
+       return ['status' => 'success', 'leader' => $leader];
    
     }
 

@@ -80,9 +80,14 @@ class WardLeadersController extends Controller
     public function update(Request $request, Leader $leader)
     {
         $leaderObject = new LeadersController;
-        $leaderObject->update($request, $leader);
-
-        return redirect()->back()->with(['status' => "success", "message" => "Taarifa Zimebadirishwa."]);
+        $temp = $leaderObject->update($request, $leader);
+        if ( $temp['status'] == 'error'){
+            if ( $temp['name'] == 'validation' ){
+                return redirect()->back()->withErrors($temp['error']);
+            }
+        }else{
+            return redirect()->back()->with(['status' => "success", "message" => "Taarifa Zimebadirishwa."]);
+        }
     }
 
     /**
