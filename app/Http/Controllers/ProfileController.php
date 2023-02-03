@@ -60,11 +60,13 @@ class ProfileController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         }
 
+        //Breeze Code start here
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
+        //Breeze code ends here
 
         $udpate =  $request->user()->save();
         if($udpate){
