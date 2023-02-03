@@ -35,15 +35,44 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+              $rules = [
+            'name' => [
+                'required', 'string', 'max:50',
+            ],
+            'email' => [
+                'required', 'string', 'max:50',
+            ],
+        ];
+
+        $messages = [
+            "name.required" => "Jina lazima lijazwe",
+            "name.string"  => "Jina lazima liwe na maneno pekee",
+            "name.max" => "Jina lisizidi herufi hamsini (50)",
+
+            "email.required" => "Barua pepe lazima ijazwe",
+            "email.string"  => "Barua pepe lazima iwe na maneno pekee",
+            "email.max" => "Barua pepe isizidi herufi hamsini (50)",
+        ];
+
+        $validate = Validator::make($request->all() ,$rules, $messages );
+
+        if( $validate->fails() ){
+            return redirect()->back()->withErrors($validate->errors());
+        }
+
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
-        $request->user()->save();
-
-        return Redirect::route('profile.show')->with('status', 'profile-updated');
+        $udpate =  $request->user()->save();
+        if($udpate){
+            return redirect()->back()
+            ->with(['status' => 'success', 'message' => 'Taarifa zimebadilishwa!']);
+        }else
+        return redirect()->back()
+            ->with(['status' => 'error', 'message' => 'Taarifa hazijabadilishwa, kuna tatizo!']);
     }
 
     /**
