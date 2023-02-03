@@ -15,6 +15,9 @@
 <meta content="informations" name="g3net" />
 <!-- App favicon -->
 
+<!-- default laravel mix javascript -->
+<script src="@vite('resources/js/app.js')"></script>
+
 <!-- Bootstrap Css -->
 <link href="{{ asset('assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
 
@@ -32,5 +35,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script> --}}
+
+
 

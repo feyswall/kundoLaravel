@@ -342,10 +342,28 @@ class SmsServicesControlller extends Controller
 
 
     public function orodhaGroupMoja(Sms $sms){
-        $leaders = $sms->leaders()->select('*')->paginate(100);
+        $leaders = $sms->leaders()->select('*')->get();
         return view("interface.super.sms.funguMoja")
             ->with('sms', $sms)
             ->with('leaders', $leaders);
+    }
+
+
+
+    public function orodhaGroupMojaApi($id)
+    {
+        $outputArray = [];
+        $sms = Sms::find($id);
+        $leaders = $sms->leaders()->select('*')->get();
+        foreach ($leaders as $leader) {
+            $response = self::deriveryReport($leader->phone, $sms->request_id);
+              if ($response['status'] == 'success') {
+                    $outputArray[] = [ 'status' => $response['response']->status, 'leader' => $leader ];
+                } else {
+                    $outputArray[] = [ 'status' => "loading...", 'leader' => $leader ];
+                }
+        }
+        return json_encode( $outputArray );
     }
 
 
@@ -353,6 +371,11 @@ class SmsServicesControlller extends Controller
         $groups = Group::orderBy('id', 'desc')->get();
         return view("interface.super.sms.chaguaKundi")
             ->with("groups", $groups);
+    }
+
+    public function smsStatusApi($phone, $status) {
+        $response = self::deriveryReport($phone, $status);
+        return $response;
     }
 
 }

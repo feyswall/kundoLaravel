@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SmsServicesControlller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Super\Area\DistrictsController;
@@ -64,6 +65,16 @@ Route::controller(\App\Http\Controllers\Super\Area\WardsController::class)
 //        Route::get('/wilaya/orodha/{id}', 'getDistrictsApi')->name('wilaya.orodha');
         Route::get('/tawi/orodha/{id}', 'getbranchsApi')->name('tawi.orodha');
     });
+
+
+
+Route::controller(SmsServicesControlller::class)
+->prefix('/super/sms/')
+->as('super.sms.')
+->group(function () {
+    Route::get('group/orodha/{id}', 'orodhaGroupMojaApi')->name('group.orodha');
+    Route::get('status/{phone}/{request_id}', 'smsStatusApi')->name('group.orodha');
+});
 
 
 

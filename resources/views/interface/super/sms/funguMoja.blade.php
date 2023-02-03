@@ -39,7 +39,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="{{ route("sms.orodha.group") }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Orodha</a>
+                        <a href="{{ route('sms.orodha.group') }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Orodha</a>
+
+                        <single-sms-table  :sms="{!! $sms->id !!}" :request_id="{!! $sms->request_id !!}"></single-sms-table>
 
                         <table id="allSmsTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
@@ -57,7 +59,7 @@
                             @foreach( $leaders as $key => $leader )
                                 <tr>
                                     <td>
-                                        @php $resp = \App\Http\Controllers\SmsServicesControlller::deriveryReport($leader->phone, $sms->request_id) @endphp
+                                        @php $resp = \App\Http\Controllers\SmsServicesControlller::deriveryReport($leader->phone, $sms->request_id); @endphp
                                         @if( $resp['status'] == 'fail')
                                             <span><b class="text-primary">Loading...</b></span>
                                             @else
@@ -84,7 +86,7 @@
                 </div>
             </div> <!-- end col -->
             <div class="m-auto">
-                {{ $leaders->links() }}
+         
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -104,7 +106,7 @@
 
 @section("extra_script")
     {{--<x-system.table-script id="allSmsTable" />--}}
-    <script>
+    {{-- <script>
         const app = new  Vue({
             el: "#app",
 
@@ -122,5 +124,5 @@
                 console.log( this.leaders );
             },
         });
-    </script>
+    </script> --}}
 @endsection
