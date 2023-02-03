@@ -100,23 +100,21 @@ class ProfileController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         }
 
-      
-
         if(Hash::check($request->old_password, Auth::user()->password) ){
             if($request->new_password == $request->confirm_password){
                $change =  User::where('id', Auth::user()->id)->update(['password' => Hash::make($request->new_password)]);
                 if($change){
-                    return redirect()->back();
-                    // return response()->json(['success' => "Password changed"]);
+                 return redirect()->back()
+                 ->with(['status' => 'success', 'message' => 'Nywila imebadilishwa!']);
                 }
             } else{
-                return "Error: not match";
-                // return response()->json(['error' => "Password do not Match"]);
+                return redirect()->back()
+                ->with(['status' => 'success', 'message' => 'Nywila haijabadilishwa, kuna kitu hakiko sawa....!']);
             }
         }
         else{
-            return "Wrong old password";
-            // return response()->json(['error' => "Oooops..!Wrong Old Password"]);
+            return redirect()->back()
+                ->with(['status' => 'success', 'message' => 'Nywila ya zamani sio sahihi!']);
         }
     }
 }
