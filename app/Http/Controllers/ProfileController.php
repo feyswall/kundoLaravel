@@ -109,12 +109,12 @@ class ProfileController extends Controller
                 }
             } else{
                 return redirect()->back()
-                ->with(['status' => 'success', 'message' => 'Nywila haijabadilishwa, kuna kitu hakiko sawa....!']);
+                ->with(['status' => 'error', 'message' => 'Nywila haijabadilishwa, kuna kitu hakiko sawa....!']);
             }
         }
         else{
             return redirect()->back()
-                ->with(['status' => 'success', 'message' => 'Nywila ya zamani sio sahihi!']);
+                ->with(['status' => 'error', 'message' => 'Nywila ya zamani sio sahihi!']);
         }
     }
 }
