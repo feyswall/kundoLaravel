@@ -134,4 +134,15 @@ class WardsController extends Controller
     {
         //
     }
+
+
+    public  function getbranchsApi($id) {
+        $region = Ward::find( $id );
+        if ( $region ){
+            $branches = $region->branches;
+            return ['status' => 'success', 'response' => $branches ];
+        }else{
+            return ['status' => 'error', 'message' => 'Kata Haukupatikana.'];
+        }
+    }
 }

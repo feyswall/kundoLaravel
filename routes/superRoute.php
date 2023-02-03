@@ -31,13 +31,22 @@ use App\Http\Controllers\Super\Leader\StateLeadersController;
 use App\Http\Controllers\Super\Posts\PostsController;
 
 
+
+Route::controller(\App\Http\Controllers\Super\Area\GeneralAreasController::class)
+    ->prefix('/super/areas/general')
+    ->as('super.areas.general')
+    ->group(function () {
+        Route::get('/anzaKutafuta', 'searchIndex')->name('.anza');
+    });
+
+
+
 Route::controller(DistrictsController::class)
     ->prefix('/super/areas/district')
     ->as('super.areas.wilaya.')
     ->group(function () {
         Route::get('/orodha', 'index')->name('orodha');
         Route::post('/ongeza', 'store')->name('ongeza');
-
     });
 
 

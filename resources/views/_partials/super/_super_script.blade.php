@@ -15,10 +15,10 @@
 <script src="{{ asset('assets/libs/jquery.counterup/jquery.counterup.min.js') }}"></script>
 
 <!-- plugins -->
-{{-- <script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script> --}}
+<script src="{{ asset('assets/libs/select2/js/select2.min.js') }}"></script>
 
 <!-- init js -->
-{{-- <script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script> --}}
+<script src="{{ asset('assets/js/pages/form-advanced.init.js') }}"></script>
 
 
 <!-- fontawesome icons init -->

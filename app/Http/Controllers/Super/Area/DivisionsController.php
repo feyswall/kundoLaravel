@@ -133,4 +133,19 @@ class DivisionsController extends Controller
     {
         //
     }
+
+
+    public function getWardsApi($id){
+        $region = Division::find( $id );
+        if ( $region ){
+            $wards = $region->wards;
+            return ['status' => 'success', 'response' => $wards ];
+        }else{
+            return ['status' => 'error', 'message' => 'Tarafa Haukupatikana.'];
+        }
+//        return ['status' => 'success'];
+    }
+
+
+
 }

@@ -36,14 +36,13 @@
                                 <li><a href="{{ route("super.posts.orodha") }}"><span>Orodha Nyadhifa </span> </a></li>
                             </ul>
                         </li>
-                        <li> <a href="javascript: void(0);" class="has-arrow">Viongozi Serikali</a>
+                        <li> <a href="javascript: void(0);" class="has-arrow">Maeneo</a>
                             <ul class="sub-menu" aria-expanded="true">
-                             {{--    <li><a href="/lo"><span>Orodha  Kamati</span> </a></li>
-                                <li><a href="/ki"><span>Orodha Nyadhifa </span> </a></li> --}}
+                                <li> <a href="{{ route("super.areas.wilaya.orodha") }}">Orodha</a></li>
+                                {{--    <li><a href="/lo"><span>Orodha  Kamati</span> </a></li>--}}
+                                <li><a href="{{ route("super.areas.general.anza") }}"><span>Tafuta</span> </a></li>
                             </ul>
                         </li>
-                        <li> <a href="{{ route("super.areas.wilaya.orodha") }}">Maeneo</a></li>
-
                     </ul>
                 </li>
 

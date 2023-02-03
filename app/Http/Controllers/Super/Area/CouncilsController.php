@@ -132,4 +132,21 @@ class CouncilsController extends Controller
     {
         //
     }
+
+
+    
+        /**
+     * return
+     */
+    public function getDivisionsApi($id){
+        $region = Council::find( $id );
+        if ( $region ){
+            $divisons = $region->divisions;
+            return ['status' => 'success', 'response' => $divisons ];
+        }else{
+            return ['status' => 'error', 'message' => 'Halmashauri Haukupatikana.'];
+        }
+//        return ['status' => 'success'];
+    }
+
 }

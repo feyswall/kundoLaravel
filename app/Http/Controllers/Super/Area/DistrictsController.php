@@ -124,4 +124,20 @@ class DistrictsController extends Controller
     {
         //
     }
+
+
+    public function getCouncilsApi($id){
+        $region = District::find( $id );
+        if ( $region ){
+            $councils = $region->councils;
+            return ['status' => 'success', 'response' => $councils ];
+        }else{
+            return ['status' => 'error', 'message' => 'wilaya Haukupatikana.'];
+        }
+//        return ['status' => 'success'];
+    }
+
+
+
+
 }
