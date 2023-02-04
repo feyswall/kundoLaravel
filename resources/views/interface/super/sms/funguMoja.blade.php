@@ -43,7 +43,7 @@
 
 
                             <div>
-                                <table id="allSmsTable" class="table table-striped table-bordered dt-responsive nowrap"
+                                <table v-if="!loader" id="allSmsTable" class="table table-striped table-bordered dt-responsive nowrap"
                                     style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                         <tr>
@@ -70,6 +70,13 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div class="row justify-content-center" v-if="loader">
+                                    <div class="col-sm-4 col-md-3">
+                                         <div id="formLoader"  class="spinner-border" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         {{-- <single-sms-table  :sms="{!! $sms->id !!}" :request_id="{!! $sms->request_id !!}"></single-sms-table> --}}
 
@@ -115,18 +122,7 @@
                     </div>
                 </div>
             </div> <!-- end col -->
-            <div class="m-auto">
-         
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
-            </div>
+
         </div> <!-- end row -->
 
     </div> <!-- container-fluid -->
@@ -160,6 +156,7 @@
         el: "#app",
         data() {
             return {
+                loader: true,
                 smsWithLeaders: [],
                 status: {},
                 sms: {!! $sms->id !!},
@@ -178,27 +175,14 @@
                         if (response.data) {
                             responseData = response.data;
                             this.smsWithLeaders = responseData;
+                            this.loader = false;
                         }
                     })
                     .catch(function (error) {
                         alert(error);
+                        this.loader = false;
                     });
             },
-            loadSmsStatus(leader, request_id) {
-                axios.get(`/api/super/sms/status/${leader.phone}/${request_id}`)
-                    .then((response) => {
-                        let responseData = Array;
-                        if (response.data) {
-                            responseData = response.data;
-                            if (responseData.status == 'success') {
-                                console.log(responseData);
-                        }
-                        }
-                    })
-                    .catch(function (error) {
-                        alert(error);
-                    });
-                }
         }
     });
     </script>
