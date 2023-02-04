@@ -14,7 +14,9 @@
             </thead>
             <tbody>
                 <tr v-for="smsLeader in smsWithLeaders">
-                    <td>{{ smsLeader.status }}</td>
+                    <td v-if="smsLeader.status == 'DELIVERED'" class="text-success"><b>{{ smsLeader.status }}</b></td>
+                    <td v-if="smsLeader.status == 'PENDING'" class="text-primary"><b>{{ smsLeader.status }}</b></td>
+                    <td v-if="smsLeader.status == 'FAILED'" class="text-danger"><b>{{ smsLeader.status }}</b></td>
                     <td>{{ sms }}</td>
                     <td>{{ smsLeader.leader.firstName }}</td>
                     <td>{{ smsLeader.leader.lastName }}</td>
