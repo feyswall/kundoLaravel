@@ -140,7 +140,7 @@ class ProfileController extends Controller
                 }
             } else{
                 return redirect()->back()
-                ->with(['status' => 'error', 'message' => 'Nywila ya zamani na mpya hazifanani!']);
+                ->with(['status' => 'error', 'message' => 'Nywila ya mpya na nywila ya marudio hazifanani!']);
             }
         }
         else{
