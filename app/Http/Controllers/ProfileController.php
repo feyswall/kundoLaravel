@@ -35,15 +35,46 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+              $rules = [
+            'name' => [
+                'required', 'string', 'max:50',
+            ],
+            'email' => [
+                'required', 'string', 'max:50',
+            ],
+        ];
+
+        $messages = [
+            "name.required" => "Jina lazima lijazwe",
+            "name.string"  => "Jina lazima liwe na maneno pekee",
+            "name.max" => "Jina lisizidi herufi hamsini (50)",
+
+            "email.required" => "Barua pepe lazima ijazwe",
+            "email.string"  => "Barua pepe lazima iwe na maneno pekee",
+            "email.max" => "Barua pepe isizidi herufi hamsini (50)",
+        ];
+
+        $validate = Validator::make($request->all() ,$rules, $messages );
+
+        if( $validate->fails() ){
+            return redirect()->back()->withErrors($validate->errors());
+        }
+
+        //Breeze Code start here
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
+        //Breeze code ends here
 
-        $request->user()->save();
-
-        return Redirect::route('profile.show')->with('status', 'profile-updated');
+        $udpate =  $request->user()->save();
+        if($udpate){
+            return redirect()->back()
+            ->with(['status' => 'success', 'message' => 'Taarifa zimebadilishwa!']);
+        }else
+        return redirect()->back()
+            ->with(['status' => 'error', 'message' => 'Taarifa hazijabadilishwa, kuna tatizo!']);
     }
 
     /**
@@ -100,23 +131,21 @@ class ProfileController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         }
 
-      
-
         if(Hash::check($request->old_password, Auth::user()->password) ){
             if($request->new_password == $request->confirm_password){
                $change =  User::where('id', Auth::user()->id)->update(['password' => Hash::make($request->new_password)]);
                 if($change){
-                    return redirect()->back();
-                    // return response()->json(['success' => "Password changed"]);
+                 return redirect()->back()
+                 ->with(['status' => 'success', 'message' => 'Nywila imebadilishwa!']);
                 }
             } else{
-                return "Error: not match";
-                // return response()->json(['error' => "Password do not Match"]);
+                return redirect()->back()
+                ->with(['status' => 'error', 'message' => 'Nywila haijabadilishwa, kuna kitu hakiko sawa....!']);
             }
         }
         else{
-            return "Wrong old password";
-            // return response()->json(['error' => "Oooops..!Wrong Old Password"]);
+            return redirect()->back()
+                ->with(['status' => 'error', 'message' => 'Nywila ya zamani sio sahihi!']);
         }
     }
 }
