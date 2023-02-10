@@ -7,6 +7,7 @@ use App\Http\Controllers\Super\AreasController;
 use  App\Http\Controllers\Super\Area\DistrictsController;
 use App\Models\Leader;
 use App\Http\Controllers\Super\PostsController;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,8 +54,10 @@ Route::controller(SmsServicesControlller::class)
         Route::get('/orodha/show/{sms}', 'orodhaGroupMoja')->name('orodha.group.moja');
 });
 
-
+Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
 
 require __DIR__.'/auth.php';
 
 require __DIR__.'/superRoute.php';
+
+require __DIR__.'/mbungeRoute.php';

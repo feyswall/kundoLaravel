@@ -32,8 +32,8 @@
                         <span>Changamoto</span>
                     </a>
                     <ul class="sub-menu mm-collapse mm-show" aria-expanded="true" style="">
-                        <li><a href="/kundo/mbunge/Maombi/chama.php">Maombi ya Chama</a></li>
-                        <li><a href="/kundo/mbunge/Maombi/wananchi.php">Maombi ya Wananchi</a></li>
+                        <li><a href="{{ route('mbunge.challenges.orodha', 'chama') }}">Maombi ya Chama</a></li>
+                        <li><a href="{{ route('mbunge.challenges.orodha', 'wananchi') }}">Maombi ya Wananchi</a></li>
 
                     </ul>
                 </li>

@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
 // use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 
 class Leader extends Model
@@ -110,6 +112,25 @@ class Leader extends Model
     public function smses(): BelongsToMany
     {
         return $this->belongsToMany( Sms::class );
+    }
+
+
+    /**
+     * @param null
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function challenges()
+    {
+        return $this->hasMany(Challenge::class );
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function user():HasOne
+    {
+        return $this->hasOne( User::class );
     }
     
 }

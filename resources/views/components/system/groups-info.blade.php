@@ -1,25 +1,13 @@
  @props(['group', 'table'])
  <div class="row">
-     @php
-        $ranks = array(
-            'mkoa' => 10,
-            'wilaya' => 9,
-            'halmashauri' => 8,
-            'tarafa' => 7,
-            'kata' => 6,
-            'tawi' => 5
-         );
-     @endphp
     <div class="col-sm-12 col-md-8">
         <div class="d-flex justify-start gap-4 flex-wrap">
             @php $mjumbe = 0; @endphp
             @foreach( $group->posts as $post)
-
                 @php
                     $bool_contains = false;
                     $all_leaders = [];
                 @endphp
-
                 @if ( $post->area === $group->basedOn )
                     @php
                         $bool_contains = $table;
@@ -101,7 +89,6 @@
                                            $leaders_id = $bool_contains->leaders->pluck('id');
                                            $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
                                     }
-
                         @endphp
                     @endif
 

@@ -13,16 +13,35 @@ class State extends Model
 
     protected $fillable = ['name', 'district_id'];
 
+    /**
+     * Get the region that owns the State
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function region()
+    {
+        return $this->belongsTo(Region::class );
+    }
+
 
     /**
      * Get the district that owns the State
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function district(): BelongsTo
+    public function district()
     {
         return $this->belongsTo(District::class );
     }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function challenges() {
+        return $this->hasMany(Challenge::class);
+    }
+
 
 
     /**
@@ -30,7 +49,7 @@ class State extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function leaders(): BelongsToMany
+    public function leaders()
     {
         return $this->belongsToMany(Leader::class )->withPivot('isActive', 'post_id');
     }

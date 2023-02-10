@@ -1,11 +1,13 @@
 <?php
 /**
-  * Created by feyswal on 1/8/2023.
-  * Time 5:00 PM.
+  * Created by feyswal on 2/10/2023.
+  * Time 5:07 PM.
   * EastCoders & G3NET.
   * contacts: +255 628 960 877
  */
 ?>
+
+
 
 
 @extends("layouts.mbunge_system")
@@ -29,35 +31,29 @@
                         <th></th>
                         </thead>
                         <tbody>
-                        @php
-                            $challenges = \Illuminate\Support\Facades\Auth::user()->leader;
-                            if (!$challenges ){
-                                echo  "Hakuna Taarifa Za Kiongozi";
-                            }
-                            $challenges = \App\Models\Challenge::where('from', 'chama')->get();
-                        @endphp
-                        @foreach( $challenges as $challenge )
-                            <tr>
-                                <td>Hamna Ngasa</td>
-                                <td>Dar es salaam</td>
-                                <td>Ubungo</td>
-                                <td>Changamoto</td>
-                                <td>2022/march/12</td>
-                                <td><span class="text-danger">Mpya ...</span></td>
-                                <td>
-                                    <a href="{{ route('mbunge.challenges.moja', $challenge->id) }}" class="btn btn-success btn-sm">Fungua</a href="">
-                                    <a href="" class="btn btn-danger btn-sm">futa</a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach( $challenges as $challenge )
+                                <tr>
+                                    <td>Hamna Ngasa</td>
+                                    <td>Dar es salaam</td>
+                                    <td>Ubungo</td>
+                                    <td>Changamoto</td>
+                                    <td>2022/march/12</td>
+                                    <td><span class="text-danger">Mpya ...</span></td>
+                                    <td>
+                                        <a href="{{ route('mbunge.challenges.moja', $challenge->id) }}" class="btn btn-success btn-sm">Fungua</a href="">
+                                        <a href="" class="btn btn-danger btn-sm">futa</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-    @endsection
+@endsection
 
 @section("extra_script")
     <x-system.table-script id="datatable-viongoziWilayaTable" />
-    @endsection
+@endsection
+

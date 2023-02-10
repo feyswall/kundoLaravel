@@ -158,13 +158,12 @@
             </div>
             <!-- end col -->
         </div>
-
-                    @foreach ($leaders as $leader)
-                        <x-system.modal id="badiriTaarifaKiongoziModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
-                            <x-slot:content>
-                                <x-system.edit-leader :leader="$leader" :route="route('super.leader.kata.sasisha', $leader->id)" />
-                            </x-slot:content>
-                        </x-system.modal>
+                @foreach ($leaders as $leader)
+                    <x-system.modal id="badiriTaarifaKiongoziModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
+                        <x-slot:content>
+                            <x-system.edit-leader :leader="$leader" :route="route('super.leader.kata.sasisha', $leader->id)" />
+                        </x-slot:content>
+                    </x-system.modal>
                 @endforeach
                     <!-- end row -->
                     <x-system.modal id="sendTextSms" aria="sendSms" size="modal-lg" title="Tuma Sms Hapa">
