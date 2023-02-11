@@ -39,7 +39,10 @@ class DistrictLeadersController extends Controller
     {
         $obj = new LeadersController();
         $leader = $obj->store( $request );
-        $obj->attachMany( $leader->districts(), $request, $leader );
+        $responce = $obj->attachMany( $leader->districts(), $request, $leader );
+        if ( $responce['response'] == 'failure'){
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Jaribio limeshindikana Tafadhali Jaribu Tena']);
+        }
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 

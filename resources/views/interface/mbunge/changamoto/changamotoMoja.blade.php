@@ -47,56 +47,6 @@
                             <div class="p-4 border-top">
                                 <form>
                                     <div>
-                                        <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-sm-12" id="halmashauriInputDiv">
-                                                <div class="mb-4 mb-lg-0">
-                                                    <label class="form-label">Halmashauri</label>
-                                                    <select class="form-control form-select" v-model="halmashauri" title="Country" onchange="halmashauriInputChange(event)">
-                                                        <option value="">Chagua Halmashauri</option>
-                                                        <option value="AF">Halmashari 1</option>
-                                                        <option value="AL">Halmashauri 2</option>
-                                                        <option value="DZ">Halmashauri 3</option>
-                                                        <option value="AS">Halmashauri 4</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-12" id="kitongojiInputDiv">
-                                                <div class="mb-4 mb-lg-0">
-                                                    <label class="form-label">Jimbo</label>
-                                                    <select class="form-control form-select" v-model="jimbo" title="Country" onChange="kitongojiInputChange(event)">
-                                                        <option value="">Chagua Jimbo</option>
-                                                        <option value="AF">Jimbo 1</option>
-                                                        <option value="AL">Jimbo 2</option>
-                                                        <option value="DZ">Jimbo 3</option>
-                                                        <option value="AS">Jimbo 4</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-12" id="kataInputDiv">
-                                                <div class="mb-4 mb-lg-0">
-                                                    <label class="form-label">kata</label>
-                                                    <select class="form-control form-select" v-model="kata" title="Country" onChange="kataInputChange(event)">
-                                                        <option value="">Chagua Kata</option>
-                                                        <option value="AF">Kata 1</option>
-                                                        <option value="AL">Kata 2</option>
-                                                        <option value="DZ">Kata 3</option>
-                                                        <option value="AS">Kata 4</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-12" id="mtaaInputDiv">
-                                                <div class="mb-4 mb-lg-0">
-                                                    <label class="form-label">Mtaa</label>
-                                                    <select class="form-control form-select" title="Country" v-model="tawi" onchange="tawiInputChange(event)">
-                                                        <option value="">Chagua Mtaa</option>
-                                                        <option value="AF">Mtaa 1</option>
-                                                        <option value="AL">Mtaa 2</option>
-                                                        <option value="DZ">Mtaa 3</option>
-                                                        <option value="AS">Mtaa 4</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
                                         @php
                                             $mbunge = \Illuminate\Support\Facades\Auth::user();
                                         @endphp
@@ -108,50 +58,15 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <label for="" class="form-label">Namba ya simu ya mbunge</label>
-                                                <input type="number" class="form-control" placeholder="eg: 0628 678 878" v-model="nambaYaSimuMbunge">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mt-md-5">
-                                            <span class="lead">Taarifa za Mkuu Wa Wilaya</span>
-                                            <div class="col-md-6 col-sm-12">
-                                                <label for="" class="form-label">Jina la Mkuu wa wilaya</label>
-                                                <input type="text" class="form-control" v-model="jinaLaMKuuWilaya">
-                                            </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <label for="" class="form-label">Namba ya simu ya Mkuu wa Wilaya</label>
-                                                <input type="number" class="form-control" placeholder="eg: 0628 678 878" v-model="nambaYaSimuMkuuWilaya">
-                                            </div>
-                                        </div>
-                                        <div class="row mt-md-5">
-                                            <span class="lead">Taarifa za Mkurugenzi</span>
-                                            <div class="col-md-6 col-sm-12">
-                                                <label for="" class="form-label">Jina la Mkurugenzi</label>
-                                                <input type="text" class="form-control" v-model="jinaLaMkurugenzi">
-                                            </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <label for="" class="form-label">Namba ya simu ya Mkurugenzi</label>
-                                                <input type="number" class="form-control" placeholder="eg: 0628 678 878" v-model="nambaYaSimuMkurugenzi">
-                                            </div>
-                                        </div>
-                                        <div class="row mt-md-5">
-                                            <span class="lead">Taarifa za diwani</span>
-                                            <div class="col-md-6 col-sm-12">
-                                                <label for="" class="form-label">Jina la Diwani</label>
-                                                <input type="text" class="form-control" v-model="jinaLaDiwani">
-                                            </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <label for="" class="form-label">Namba ya simu ya Diwani</label>
-                                                <input type="number" class="form-control" placeholder="eg: 0628 678 878" v-model="nambaYaSimuDiwani">
+                                                <input type="number" class="form-control" placeholder="+{{ $mbunge->leader->phone }}" v-model="nambaYaSimuMbunge" readonly>
                                             </div>
                                         </div>
                                         <div class="row mt-4">
                                             <div class="mb-4">
-                                                <label class="form-label" for="billing-address">Jaza Changamoto zilizopo katika eneo Hilo</label>
-                                                <textarea @keyup="changamotoChange()" class="form-control" id="billing-address" rows="3" placeholder="Andika Hapa.." v-model="changamoto"></textarea>
+                                                <label class="form-label" for="billing-address">Wasilisha Changamoto</label>
+                                                <textarea @keyup="changamotoChange()" class="form-control" rows="3" placeholder="Andika Hapa.." v-model="changamoto"></textarea>
                                             </div>
                                         </div>
-
                                     </div>
                                 </form>
                             </div>
@@ -177,7 +92,7 @@
                                             <div class="col-12">
                                                 <div class="row justify-content-center">
                                                     <div class="col-md-2">
-                                                        <img src="/assets/images/bunge.png" alt="" class="w-50 mx-auto">
+                                                        {{--<img src="/assets/images/bunge.png" alt="" class="w-50 mx-auto">--}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -224,7 +139,7 @@
                                             <div class="col-12">
                                                 <div class="row justify-content-center">
                                                     <div class="col-sm-8 col-md-4 text-center">
-                                                        <i>___________________</i>
+                                                        <i>_______</i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -248,12 +163,22 @@
 
                                     </div>
                                 </div>
-                                <a v-on:click.stop.prevent="printInvoice('printable-proforma')" v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': fichaPrint }"><i class="la la-print"></i> Print Fomu</a>
+                                <form action="{{  route('generatePDF') }}" method="POST" target="_blank">
+                                    @csrf
+                                    <input type="hidden" v-bind:value="changamoto" name="changamoto">
+                                    <input readonly="" type="hidden" name="firstName" value="{{ $mbunge->leader->firstName }}">
+                                    <input readonly type="hidden" name="lastName" value="{{ $mbunge->leader->lastName }}">
+                                    <button type="submit"  v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': fichaPrint }">
+                                        <i class="la la-print"></i>
+                                        Print Fomu
+                                    </button>
+                                </form>
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <A HREF="formKwenyeQueue.php" class="btn btn-primary btn-block">endelea >>></A>
+                <a href="" class="btn btn-primary btn-block">endelea >>></a>
             </div>
         </div>
 
@@ -267,66 +192,29 @@
         var app = new Vue({
             el: '#app',
             data: {
-                    name: '',
-                    mkoa: '',
-                    wilaya: '',
-                    halmashauri: '',
-                    jimbo: '',
-                    kata: '',
-                    tawi: '',
-                    jinaLaMbunge: "{!! $mbunge->name !!}",
-                    nambaYaSimuMbunge: '',
-                    jinaLaMkuuWilaya: '',
-                    nambaYaSimuMkuuWilaya: '',
-                    jinaLaMkurugenzi: '',
-                    nambaYaSimuMkurugenzi: '',
-                    jinaLaDiwani: '',
-                    nambaYaSimuDiwani: '',
                     changamoto: '',
+                    route: '',
+                    jinaLaMbunge: "{!! $mbunge->name !!}" ,
+                    nambaYaSimuMbunge: '',
                     fichaPrint: true,
                     niButton: true,
                     formPrintedHide: true,
             },
             methods: {
-                nameChanges: function(){
+                nameChanges(){
                     console.log("The right ways are there...");
                 },
-                formChanged: function () {
+                formChanged(){
                     console.log("the form is changebd a bit");
                 },
-                changamotoChange: function () {
+                changamotoChange(){
                     this.fichaPrint = this.changamoto.trim().length < 1;
                 },
-                printInvoice: function (id) {
-                    var element = document.getElementById(id);
-                    var opt = {
-                        margin: [0.3, 0.3, 0.3, 0.8],
-                        filename: 'myfile.pdf',
-                        image: {
-                            type: 'jpeg',
-                            quality: 2,
-                        },
-                        html2canvas: {
-                            scale: 1
-                        },
-                        jsPDF: {
-                            unit: 'cm',
-                            format: 'letter',
-                            orientation: 'portrait'
-                        }
-                    };
-                    html2pdf().set(opt).from(element).save();
-                    // Sho print button
-                    this.formPrintedHide = false;
+                printLetter() {
+                    console.log( this.changamoto );
                 },
             },
             computed: {
-                formText(){
-                    return "just is my name";
-                },
-                muunganoWaData(){
-                    return "there";
-                },
                 modelBtn: function () {
                     return {
                         btn:  true,

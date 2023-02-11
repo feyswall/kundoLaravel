@@ -22,7 +22,7 @@
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i> </div>
                         <div class="flex-grow-1 overflow-hidden">
-                            <h5 class="font-size-16 mb-1">Taarifa Kuhusiana Na Kata</h5>
+                            <h5 class="font-size-16 mb-1">Taarifa Kuhusiana Na Kata ya <b>{{ $ward->name }}</b></h5>
                         </div>
                         <div class="flex-shrink-0"> <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>
                     </div>

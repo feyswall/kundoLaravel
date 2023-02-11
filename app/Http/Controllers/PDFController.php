@@ -13,17 +13,24 @@ class PDFController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function generatePDF()
+    public function generatePDF(Request $request)
     {
-        $users = User::get();
+        $changamoto = $request->input('changamoto');
+        $firstName = $request->input('firstName');
+        $lastName = $request->input('lastName');
 
-        $data = [
-            'title' => 'Welcome to ItSolutionStuff.com',
-            'date' => date('m/d/Y'),
-            'users' => $users
-        ];
+        $changamoto = explode('-', $changamoto );
+//        $data = [
+//            'title' => 'Welcome to ItSolutionStuff.com',
+//            'date' => date('m/d/Y'),
+//            'users' => $users
+//        ];
+//
+        $data = ['changamotos' => $changamoto, 'firstName' => $firstName, 'lastName' => $lastName ];
 
-        $pdf = PDF::loadView('myPDF', $data);
+        $pdf = PDF::loadView('interface.mbunge.changamoto.changamotoPDF', $data);
         return $pdf->stream("challenge_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf");
     }
 }
+
+

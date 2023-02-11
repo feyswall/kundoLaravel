@@ -54,7 +54,7 @@ Route::controller(SmsServicesControlller::class)
         Route::get('/orodha/show/{sms}', 'orodhaGroupMoja')->name('orodha.group.moja');
 });
 
-Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
+Route::post('generate-pdf', [PDFController::class, 'generatePDF'])->name("generatePDF");
 
 require __DIR__.'/auth.php';
 

@@ -1,16 +1,16 @@
 <?php
 /**
-  * Created by feyswal on 2/10/2023.
-  * Time 11:11 AM.
-  * EastCoders & G3NET.
-  * contacts: +255 628 960 877
+ * Created by feyswal on 2/10/2023.
+ * Time 11:11 AM.
+ * EastCoders & G3NET.
+ * contacts: +255 628 960 877
  */
 
 PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
 
 ?>
 
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html>
 <head>
     <title>Laravel 9 Generate PDF Example - ItSolutionStuff.com</title>
@@ -27,9 +27,9 @@ PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
 <div style="text-align: center; margin: 0 auto;">
     <h5><b>JAMHURI YA MUUNGANO WA TANZANIA</b></h5>
     <hr style="width: 70%; margin: auto; ">
-   <div style="width: 70%; text-align: center; margin: 10px auto;">
-       <h6><?php echo strtoupper("Ofisi Ya Mbunge wa Jimbo la Bariadi") ;?></h6>
-   </div>
+    <div style="width: 70%; text-align: center; margin: 10px auto;">
+        <h6><?php echo strtoupper("Ofisi Ya Mbunge wa Jimbo la Bariadi") ;?></h6>
+    </div>
 </div>
 <div>
     <img src="{{ public_path('assets/images/bunge.png') }}"  style="margin-left: 250px; width: 150px;">
@@ -50,14 +50,10 @@ PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
     <h5 style="margin: 0px; padding: 0px;"> <span style="font-family: sans-serif;">YAH :</span> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, soluta</h5>.
 </div>
 
-<div style="margin-top: 0px;">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, consectetur distinctio est expedita illo molestiae nemo officiis quidem vel voluptatem?
-</div>
-
 @foreach( $changamotos as $changamoto )
-  <div style="margin-top: 10px;">
-     {{ $changamoto }}
-  </div>
+    <div style="margin-top: 10px;">
+        {{ $changamoto }}
+    </div>
 @endforeach
 
 <div style="margin-top: 30px;">
@@ -65,23 +61,12 @@ PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
 </div>
 
 <div style="text-align: center; margin-top: 10px;">
-    <img src="{{ public_path('assets/images/sign.jpeg') }}"  style="width: 120px;">
-   <div>
-       <span style="font-family: "Lucida Console", monospace, sans-serif"><i>Eng: Nkundo Mathew</i></span>
-   </div>
-</div>
-
-<div>
-    <div style="display: flex;">
-       <b>Nakala : </b>
-        <div style="margin-left: 70px; margin-top: 10px;">
-           <span style="display: block;">Wajumbe wa Mkutano Mkuu Tarafa</span>
-            <span style="display: block;">Diwani</span>
-            <span style="display: block;">Wenyeviti Umoja wa Wazazi Kata</span>
-
-        </div>
+    __________
+    <div>
+        <span style="font-family: "Lucida Console", monospace, sans-serif">Mhe. <i>{{ $firstName }} {{ $lastName }}</i></span>
     </div>
 </div>
+
 </body>
 
 </html>

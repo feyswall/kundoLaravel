@@ -268,7 +268,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <a @click.stop.prevent="printInvoice('printable-proforma')" v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': fichaPrint }"><i class="la la-print"></i> Print Fomu</a>

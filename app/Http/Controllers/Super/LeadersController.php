@@ -71,14 +71,14 @@ class LeadersController extends Controller
         ]);
 
         if ( !($ath->get()->contains($formData->side_id)) ){
-            dd(  "again not found" );
+//            dd(  "again not found" );
             return ['response' => 'failure'];
         }
 
         $leader->posts()->attach( $formData->post_id, ['isActive' => true] );
 
         if ( !($leader->posts->contains($formData->post_id)) ) {
-            dd( "error again" );
+//            dd( "error again" );
             $ath->detach( $formData->side_id );
                 return ['response' => 'failure'];
         }
