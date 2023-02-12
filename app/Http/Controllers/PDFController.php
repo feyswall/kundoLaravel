@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 
 class PDFController extends Controller
@@ -30,6 +31,14 @@ class PDFController extends Controller
 
         $pdf = PDF::loadView('interface.mbunge.changamoto.changamotoPDF', $data);
         return $pdf->stream("challenge_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf");
+    }
+
+
+
+    public function downloadPdf(Request $request)
+    {
+        /**this will force download your file**/
+        return Storage::download($request->pdf);
     }
 }
 

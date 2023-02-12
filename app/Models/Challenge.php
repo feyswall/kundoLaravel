@@ -14,7 +14,7 @@ class Challenge extends Model
     /**
      * @var array
      */
-    protected $fillable = ['status', 'challenge', 'from'];
+    protected $fillable = ['status', 'from', 'challenge', 'state_id', 'leader_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

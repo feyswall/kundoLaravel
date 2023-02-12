@@ -56,6 +56,8 @@ Route::controller(SmsServicesControlller::class)
 
 Route::post('generate-pdf', [PDFController::class, 'generatePDF'])->name("generatePDF");
 
+  Route::post('/download/pdf', [PDFController::class,'downloadPdf'])->name('downloadPDF');
+
 require __DIR__.'/auth.php';
 
 require __DIR__.'/superRoute.php';

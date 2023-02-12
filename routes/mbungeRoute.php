@@ -9,7 +9,10 @@ Route::controller(\App\Http\Controllers\Mbunge\ChallengesController::class)
     ->as('mbunge.challenges')
     ->group(function () {
         Route::get('/orodha/{kazi}', 'index')->name('.orodha');
-        Route::get('/moja/{challenge}', 'show')->name('.moja');
+        Route::get('/hifadhi', 'submitChallenge')->name('.wasirisha');
+        Route::get('/show/{challenge}', 'show')->name('.fungua');
+    
+        Route::post('/jaza', 'store')->name('.jaza');
     });
 
 

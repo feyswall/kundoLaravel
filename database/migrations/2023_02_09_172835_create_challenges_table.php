@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->longText("challenge");
             $table->foreignId('state_id')->constrained();
+            $table->string("from");
 
             $table->foreignId('leader_id')->constrained();
 
             $table->string("status");
-            $table->string("from");
             $table->timestamps();
         });
     }

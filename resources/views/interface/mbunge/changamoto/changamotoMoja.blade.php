@@ -11,178 +11,151 @@
 @extends("layouts.mbunge_system")
 
 @section("content")
-    <div class="container-fluid" id="app">
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0">Ukurasa wa Mbunge</h4>
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Changamoto</a></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
-        <div class="row justify-content-between">
-            <div class="col-xl-6 col-md-6 col-sm-12">
-                <div class="custom-accordion">
-                    <div class="card">
-
-                        <a href="#checkout-billinginfo-collapse" class="text-dark" data-bs-toggle="collapse">
-                            <div class="p-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i> </div>
-                                    <div class="flex-grow-1 overflow-hidden">
-                                        <h5 class="font-size-16 mb-1">Changamoto za Chama</h5>
-                                        <!--                                                <p class="text-muted text-truncate mb-0">Sed ut perspiciatis unde omnis iste</p>-->
-                                    </div>
-                                    <div class="flex-shrink-0"> <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>
-                                </div>
-                            </div>
-                        </a>
-                        <div id="checkout-billinginfo-collapse" class="collapse show">
-                            <div class="p-4 border-top">
-                                <form>
-                                    <div>
-                                        @php
-                                            $mbunge = \Illuminate\Support\Facades\Auth::user();
-                                        @endphp
-                                        <div class="row mt-md-5">
-                                            <span class="lead">Taarifa za mbunge</span>
-                                            <div class="col-md-6 col-sm-12">
-                                                <label for="" class="form-label">{{ $mbunge->name }}</label>
-                                                <input type="text" class="form-control" v-model="jinaLaMbunge" readonly>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <label for="" class="form-label">Namba ya simu ya mbunge</label>
-                                                <input type="number" class="form-control" placeholder="+{{ $mbunge->leader->phone }}" v-model="nambaYaSimuMbunge" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-4">
-                                            <div class="mb-4">
-                                                <label class="form-label" for="billing-address">Wasilisha Changamoto</label>
-                                                <textarea @keyup="changamotoChange()" class="form-control" rows="3" placeholder="Andika Hapa.." v-model="changamoto"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+ <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-flex align-items-center justify-content-between">
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Changamoto</a></li>
+                                </ol>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-                <div class="row my-4">
+                <!-- end page title -->
 
-                </div>
-                <!-- end row-->
-            </div>
-
-            <div class="col-md-6 col-sm-12">
-                <div class="row justify-content-center">
-                    <div class="col-xl-12">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
                         <div class="card">
+                            <div class="card-header">
+                                <span><a type="button" id="view-pdf-btn" onclick="previewFile()"  class="btn btn-dark float-end mt-lg-3 mt-sm-2"><i class="la la-print"></i>Fungua PDF</a></span>
+                            </div>
                             <div class="card-body">
-                                <div class="card shadow-none">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
+                                <div class="invoice-title">
+                                    <div class="mb-4">
+                                    </div>
+                                    <div class="text-muted"> 
+                                            <div class="row justify-content-center">
+                                                <div class="col-md-4 col-sm-12">
+                                                    <h3 class="lead">Mkoa: <span class="font-italic">Dar-Es-Salaam</span></h3>
+                                                    <h3 class="lead">Wilaya: <span class="font-italic">Temeke</span></h3>
+                                                    <h3 class="lead">Jimbo: <span class="font-italic">Temeke Juu</span></h3>
+                                                    <h3 class="lead">Jina la Mbunge: <span>Ramadhani</span></h3>
+                                                    <h3 class="lead">Simu ya Mbunge: <span class="font-italic">0677777888</span></h3>
+
+                                                </div>
+                                              {{--   <div class="col-md-4 col-sm-12">
+                                                    <h3 class="lead">Jina la Mkurugenzi: <span class="font-italic">Jumanne</span></h3>
+                                                    <h3 class="lead">Simu ya Mkurugenzi: <span class="font-italic">0677777888</span></h3>
+                                                    <h3 class="lead">Jina la mkuu wa Wilaya: <span class="font-italic">Kijembe</span></h3>
+                                                    <h3 class="lead">Simu ya Mkuu wa wilaya: <span class="font-italic">0677777888</span></h3>
+                                                    <h3 class="lead">Jina la Diwani: <span>Ramadhani</span></h3>
+                                                    <h3 class="lead">Simu ya Diwani: <span class="font-italic">0677777888</span></h3>
+                    
+                                                </div> --}}
+                                            </div>                            
+                                        <div class="row justify-content-center">
+                                            <div class="col-10">
+                                                <div class="row justify-content-center" >
+                                                    <div class="col-md-10 col-sm-12">
+                                                        <div class="card shadow-none">
+                                                            <div class="card-body">
+                                                                <div class="row justify-content-center">
+                                                                    <div class="col col-md-3">
+                                                                        <img src="/assets/images/bunge.png" alt="" class="w-100 mx-auto">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-12">
+                                                                    <div class="row mt-3">
+                                                                        <div class="col-md-5 mt-4">
+                                                                            <address class="mini-text">
+                                                                                Eng. Kundo Andrea Mathew ,<br>
+                                                                                Naibu Waziri,<br>
+                                                                                Wizara Habari, Mawasiliano na Teknolojia ya Habari ,<br>
+                                                                                Dodoma- Magufuli City<br>
+                                                                            </address>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-12 mt-3">
+                                                                    <div class="row justify-content-center">
+                                                                        <div class="col-sm-12 col-md-8 text-center">
+                                                                            <h5><b>Changamoto Za Chama</b></h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="col-12">
+                                                                    <div class="row justify-content-start">
+                                                                        <div class="col-sm-12 col-md-12">
+                                                                            <p>
+                                                                               
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row justify-content-center mt-n3">
+                                                                    <div class="col-sm-8 col-md-8 text-center">
+                                                                        *Wako mtiifu katika ujenzi wa mawasiliano Bora katika Taifa
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row justify-content-center mt-n3">
+                                                                    <div class="col-sm-6 col-md-4 text-center">
+                                                                        <i>Leonard Singoma</i>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3 mb-3">
                                                 <div class="row justify-content-center">
-                                                    <div class="col-md-2">
-                                                        {{--<img src="/assets/images/bunge.png" alt="" class="w-50 mx-auto">--}}
+
+                                                    @foreach( $challenge->leader->user->assets as $pdf )
+
+                                                            @if( \Illuminate\Support\Facades\Storage::exists("pdfs/$pdf->url"))
+                                                            {{--<a>{{ \Illuminate\Support\Facades\Storage::download("pdfs/$pdf->url") }} pakua</a>--}}
+                                                            @endif
+
+                                                    <div class="col-md-3 col-sm-4">
+                                                        <img src="{{ asset('assets/images/pdf.png') }}" class="card-img-top mx-auto w-50" alt="">
+                                                        <form action="{{ route('downloadPDF') }}" method="post" target="_blank">
+                                                            @csrf
+                                                            <input type="hidden" value="{{ 'pdfs/'.$pdf->url }}" name="pdf">
+                                                            <button class="btn btn-primary" type="submit">download</button>
+                                                        </form>
+                                                        {{--<a href="{{ \Illuminate\Support\Facades\Storage::url("pdfs/$pdf->url") }}" download>--}}
                                                     </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
 
-                                            <div class="col-12">
-                                                <div class="row mt-3">
-                                                    <div class="col-md-5 mt-4">
-                                                        <address class="mini-text">
-                                                            Eng. Kundo Andrea Mathew ,<br>
-                                                            Naibu Waziri,<br>
-                                                            Wizara Habari, Mawasiliano na Teknolojia ya Habari ,<br>
-                                                            Dodoma- Magufuli City<br>
-                                                        </address>
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                            <div class="col-12">
-                                                <div class="row justify-content-center">
-                                                    <div class="col-sm-12 col-md-8 text-center">
-                                                        <h5><b>Changamoto Za Chama</b></h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <div class="row justify-content-start">
-                                                    <div class="col-sm-12 col-md-12">
-                                                        <p style="line-height: 2;">
-                                                            @{{ changamoto }}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <div class="row justify-content-center">
-                                                    <div class="col-sm-8 col-md-8 text-center">
-                                                        Wako mtiifu katika ujenzi wa mawasiliano Bora katika Taifa
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <div class="row justify-content-center">
-                                                    <div class="col-sm-8 col-md-4 text-center">
-                                                        <i>_______</i>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <div class="row justify-content-center">
-                                                    <div class="col-sm-6 col-md-4 text-center">
-                                                        <i>Leonard Singoma</i>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 d-none" >
-                                                <div class="row justify-content-center" style="margin-top: 400px;">
-                                                    <div class="col-sm-6 col-md-4 text-center">
-                                                        <i>Leonard Singoma</i>
-                                                    </div>
-                                                </div>
+                                            <div class="col-10">
+                                                <span  class="text-danger mt-3">Imewasirishwa ...</span>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
-                                <form action="{{  route('generatePDF') }}" method="POST" target="_blank">
-                                    @csrf
-                                    <input type="hidden" v-bind:value="changamoto" name="changamoto">
-                                    <input readonly="" type="hidden" name="firstName" value="{{ $mbunge->leader->firstName }}">
-                                    <input readonly type="hidden" name="lastName" value="{{ $mbunge->leader->lastName }}">
-                                    <button type="submit"  v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': fichaPrint }">
-                                        <i class="la la-print"></i>
-                                        Print Fomu
-                                    </button>
-                                </form>
 
                             </div>
                         </div>
                     </div>
                 </div>
-                <a href="" class="btn btn-primary btn-block">endelea >>></a>
+                <!-- end row -->
             </div>
-        </div>
+            <!-- container-fluid -->
 
-    </div>
     <!-- container-fluid -->
     @endsection
 
@@ -192,39 +165,50 @@
         var app = new Vue({
             el: '#app',
             data: {
-                    changamoto: '',
-                    route: '',
-                    jinaLaMbunge: "{!! $mbunge->name !!}" ,
-                    nambaYaSimuMbunge: '',
-                    fichaPrint: true,
-                    niButton: true,
-                    formPrintedHide: true,
+                assets: {!! $challenge->leader->user->assets !!},
+                pdfFiles: []
             },
             methods: {
-                nameChanges(){
-                    console.log("The right ways are there...");
-                },
-                formChanged(){
-                    console.log("the form is changebd a bit");
-                },
-                changamotoChange(){
-                    this.fichaPrint = this.changamoto.trim().length < 1;
-                },
-                printLetter() {
-                    console.log( this.changamoto );
-                },
+                /* Function to render the file using PDF Embed API. */
+                previewFile()
+                    {
+                        /* Initialize the AdobeDC View object */
+                        var adobeDCView = new AdobeDC.View({
+                            /* Pass your registered client id */
+                            clientId: "336044bbef5c437097be95b7386b0fba"
+                        });
+
+                        /* Invoke the file preview API on Adobe DC View object */
+                        adobeDCView.previewFile({
+                            /* Pass information on how to access the file */
+                            content: {
+                                /* Location of file where it is hosted */
+                                location: {
+                                    url: "https://spottech.theforbins.com/storage/pdfs/myfile.pdf",
+                                    /*
+                                     If the file URL requires some additional headers, then it can be passed as follows:-
+                                     header: [
+                                     {
+                                     key: "<HEADER_KEY>",
+                                     value: "<HEADER_VALUE>",
+                                     }
+                                     ]
+                                     */
+                                },
+                            },
+                            /* Pass meta data of file */
+                            metaData: {
+                                /* file name */
+                                fileName: "Changamoto.pdf"
+                            }
+                        }, viewerConfig);
+                    }
             },
             computed: {
-                modelBtn: function () {
-                    return {
-                        btn:  true,
-                        'btn-primary':  true,
-                        'd-none': this.formPrintedHide,
-                    }
-                }
+
             },
             mounted(){
-                console.log("just get into it")
+
             }
         });
     </script>

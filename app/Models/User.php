@@ -53,4 +53,15 @@ class User extends Authenticatable
     {
         return $this->belongsTo( Leader::class );
     }
+
+
+        /**
+     * @param null
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function assets()
+    {
+        return $this->hasMany(Asset::class );
+    }
+    
 }

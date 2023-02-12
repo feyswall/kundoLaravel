@@ -10,7 +10,7 @@ class Asset extends Model
 {
     use HasFactory;
 
-    protected  $fillable = ['url', 'type'];
+    protected  $fillable = ['url', 'type', 'user_id', 'challenge_id'];
 
     /**
      * @return BelongsTo
@@ -18,5 +18,14 @@ class Asset extends Model
     public function challenge():BelongsTo
     {
         return $this->belongsTo( Challenge::class );
+    }
+
+
+    /**
+     * @return BelongsTo
+     */
+    public function user():BelongsTo
+    {
+        return $this->belongsTo( User::class );
     }
 }
