@@ -20,7 +20,7 @@ class ChallengesController extends Controller
     public function index($from)
     {
         if ( !(\Illuminate\Support\Facades\Auth::user()) ){
-            return redirect()->route('dashboard');
+            return redirect()->route('login');
         }
         $challenges = \Illuminate\Support\Facades\Auth::user()->leader;
         if (!$challenges ){
@@ -49,9 +49,19 @@ class ChallengesController extends Controller
      */
     public function store(Request $request)
     {
+        $isImagePresent = false;
+        
+        $path = null;
+
         $user = Auth::user();
+
         $mbunge = $user->leader;
+
         $data = $mbunge->posts->where('deep', 'mbunge')->first();
+
+        if ( !$data ){
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Hakikisha Umeingia Kama Mbunge']);
+        }
 
         $file = $request->file('pdfFile');
 
@@ -63,17 +73,14 @@ class ChallengesController extends Controller
 
         $file = $request->file('pdfFile');
 
-        if ( $file ){ $path = Storage::putFile('pdfs', $file); }
-
-        $fileNamesParticles = explode('/', $path );
-
-        $fileName = end( $fileNamesParticles );
-
-        if ( !(isset($path)) || !$path ){ return redirect()->back()->with(['status' => 'error', 'message' => 'hatukuweza kuweka pdf']); }
-
-        if ( !$data ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'Hakikisha Umeingia Kama Mbunge']);
+        if ( $file ){ 
+            $path = Storage::putFile('pdfs', $file); 
+            $fileNamesParticles = explode('/', $path );
+            $isImagePresent = true;
+            $fileName = end( $fileNamesParticles );
         }
+
+
         $state = $mbunge->states()->where('isActive', true)->first();
         if ( !$state ){
             return redirect()->back()->with(['status' => 'error', 'message' => 'Hakikisha Umeingia Kama Mbunge']);
@@ -85,8 +92,10 @@ class ChallengesController extends Controller
             'from' => $request->from,
             'challenge' => $changamoto,
             'state_id' => $state->id,
-            'leader_id' => $mbunge->id
+            'leader_id' => $mbunge->id,
+            'feedback' => '',
         ]);
+
         if ( !$challenge )
         {
             if(Storage::exists("$path")){
@@ -98,11 +107,16 @@ class ChallengesController extends Controller
             }
             return redirect()->back()->with(['status' => 'error', 'message' => 'hatukuweza kuhifadhi Taalifa. Jaribu Tena']);
         }
-        $challenge->assets()->create([
-            'type' => 'pdf',
-            'url' => $fileName,
-            'user_id' => $user->id
-        ]);
+
+        if ( isset($path) || $path ){ 
+            if ($isImagePresent) {
+                $challenge->assets()->create([
+                    'type' => 'pdf',
+                    'url' => $fileName,
+                    'user_id' => $user->id
+                ]);      
+            }
+         }
         return redirect()->route('mbunge.challenges.fungua', $challenge);
     }
 

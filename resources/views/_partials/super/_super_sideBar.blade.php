@@ -59,6 +59,7 @@
                     </ul>
                  </li>
 
+                <li><a href="{{ route("super.challenge.orodha") }}"><span>Changamoto za Wabunge</span> </a></li>
 
                 {{--<li>--}}
                     {{--<a href="javascript: void(0);" class="has-arrow waves-effect">--}}

@@ -7,8 +7,8 @@
                 lengthChange: !1, 
                 buttons: ['excel', 'pdf'], 
 
-                "order": [[ 1, "desc" ]],
-                   columnDefs: [ {
+                  "order": [[ 0, "asc" ]],
+                   columnDefs: [{
                     orderable: false,
                     className: 'select-checkbox',
                     targets:   0
@@ -17,7 +17,7 @@
                 style:    'os',
                 selector: 'td:first-child'
                     },
-                order: [[ 1, 'asc' ]]
+                order: [[ 0, 'asc' ]]
             })
             .buttons ()
             .container ().appendTo ('#{!! $id !!}_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')

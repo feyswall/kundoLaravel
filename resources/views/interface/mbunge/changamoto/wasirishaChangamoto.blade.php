@@ -166,7 +166,10 @@
                                 <form method="POST" action="{{ route('mbunge.challenges.jaza') }}" id="withPdfForm" enctype="multipart/form-data">
                                     @csrf
                                     <div class="col-md-12 col-sm-12 my-2">
-                                        <label for="" class="form-label">Ambatanisha Na Barua (pdf)</label>
+                                        <label for="" class="form-label">
+                                            Ambatanisha (pdf)
+                                            (Pdf yenye maelezo ya kuunga mkono barua yako**)
+                                        </label>
                                         <input type="file" class="form-control" name="pdfFile">
                                         @error('pdfFile')
                                             <span class="text-danger">{{ $message }}</span>
@@ -183,7 +186,7 @@
                                     <input readonly type="hidden" name="lastName" value="{{ $mbunge->leader->lastName }}">
                                     <button v-on:click="showContinueBtn()" type="submit"  v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': fichaPrint }">
                                         <i class="la la-print"></i>
-                                        Print Fomu
+                                        Print Barua
                                     </button>
                                 </form>
                                 <button type="submit" form="withPdfForm" v-bind:class="{ 'd-none': continueBtn,'my-3': niButton, 'btn': niButton, 'btn-primary': niButton, 'btn-block': niButton }">endelea >>></button>

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('challenges', function (Blueprint $table) {
             $table->id();
             $table->longText("challenge");
+            $table->longText('feedback')->nullable();
             $table->foreignId('state_id')->constrained();
             $table->string("from");
 

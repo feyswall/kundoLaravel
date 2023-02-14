@@ -190,3 +190,13 @@ Route::controller(PostsController::class)
         Route::post('/ongezaWadhifa', 'store')->name('ongeza');
         Route::put('/badiriWadhifa/{post}', 'update')->name('updateWadhifa');
     });
+
+
+Route::controller(\App\Http\Controllers\Super\ChallengesController::class)
+    ->prefix('/super/changamoto')
+    ->as('super.challenge.')
+    ->group(function () {
+        Route::get('/fungua/{challenge}', 'show')->name('fungua');
+        Route::put('/changamoto/{challenge}', 'updateChallenge')->name('updateChallenge');
+        Route::get('/changamoto', 'index')->name('orodha');
+    });

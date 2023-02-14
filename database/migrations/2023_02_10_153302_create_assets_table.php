@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('type');
 
             $table->foreignId('challenge_id')->constrained();
-            $table->foreignId('leader_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
