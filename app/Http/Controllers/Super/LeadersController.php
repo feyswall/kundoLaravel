@@ -53,7 +53,8 @@ class LeadersController extends Controller
             'firstName' => $formData->firstName,
             'middleName' => $formData->middleName,
             'lastName' => $formData->lastName,
-            'phone' => $phone
+            'phone' => $phone,
+            'side' => $formData->side,
         ]);
         return $leader;
     }

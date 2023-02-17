@@ -10,7 +10,7 @@ class Group extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'deep', 'basedOn'];
+    protected $fillable = ['name', 'deep', 'basedOn', 'side'];
 
 
     /**

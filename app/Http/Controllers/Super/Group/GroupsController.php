@@ -19,10 +19,11 @@ class GroupsController extends Controller
      * found in our system
      * @return 
      */
-    public function index() {
-        $groups = Group::orderBy('id', 'desc')->get();
+    public function index($side) {
+        $groups = Group::where('side', $side)->get();
         return view("interface.super.vikundi.orodhaMakundi")
-        ->with("groups", $groups);
+        ->with("groups", $groups)
+            ->with('side', $side);
     }
 
 
@@ -75,6 +76,7 @@ class GroupsController extends Controller
             'name' => $request->group_name,
             'basedOn' => $request->basedOn,
             'deep' => $deep.'_gp',
+            'side' => $request->side,
         ]);
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kamati Umetengenezwa.']);
     }

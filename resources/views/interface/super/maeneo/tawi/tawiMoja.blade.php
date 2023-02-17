@@ -33,22 +33,30 @@
     </div>
     <!-- end page title -->
 
-    <div class="row">
-        <div class="card">
-            <div class="card-body">
-                <x-system.collapse id="kamatiZaTarafa" title="kamati Ngazi ya Tawi">
+    <x-system.collapse id="kamatiZaChamaTarafa" title="kamati Za Chama Ngazi ya Tawi">
+        <x-slot:content>
+            @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tawi")->where('side', 'chama')->get() as $group)
+                <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
                     <x-slot:content>
-                        @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tawi")->get() as $group)
-                            <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
-                                <x-slot:content>
-                                    <x-system.groups-info :group="$group" :table="$branch" />
-                                </x-slot:content>
-                            </x-system.collapse>
-                        @endforeach
+                        <x-system.groups-info :group="$group" :table="$branch" />
                     </x-slot:content>
                 </x-system.collapse>
-            </div>
-        </div>
+            @endforeach
+        </x-slot:content>
+    </x-system.collapse>
+
+    <x-system.collapse id="kamatiZaSerikaliTarafa" title="kamati Za Serikali Ngazi ya Tawi">
+        <x-slot:content>
+            @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tawi")->where('side', 'serikali')->get() as $group)
+                <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+                    <x-slot:content>
+                        <x-system.groups-info :group="$group" :table="$branch" />
+                    </x-slot:content>
+                </x-system.collapse>
+            @endforeach
+        </x-slot:content>
+    </x-system.collapse>
+
         <div class="col-12">
             <div class="card px-md-3">
                 <div class="card-body">
@@ -62,9 +70,9 @@
                     </div>
                     <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                         <div class="d-flex justify-content-md-between justify-content-center items-center flex-wrap-reverse mb-3">
-                            <h3 class="fs-4 me-3">Viongozi wa Tawi</h3>
+                            <h3 class="fs-4 me-3">Viongozi Wa Chama Ngazi Ya Tawi</h3>
                             <div class="d-flex items-center justify-content-center gap-2">
-                                <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri </button>
+                                <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziChamaModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri </button>
                                 <a href="{{ route("super.areas.tawi.orodha", $branch->ward->id) }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Kata</a>
                             </div>
                         </div>
@@ -77,13 +85,11 @@
                             @endphp
 
 
-
                             <div class="d-flex justify-start gap-4 flex-wrap">
-                                @foreach( $branch->leaders as $leader )
+                                @foreach( $branch->leaders->where('side', 'chama') as $leader )
                                     @if( $leader->pivot->isActive == true )
-
                                     <div class="text-center">
-                                        <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                        <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
                                         <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
                                         <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small><br>
                                         <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
@@ -95,7 +101,7 @@
 
 
                          @foreach ($branch->leaders as $leader)
-                                <x-system.modal id="badiriTaarifaKiongoziModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
+                                <x-system.modal id="badiriTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama Ngazi Ya Kata Hapa">
                                 <x-slot:content>
                                         <x-system.edit-leader :leader="$leader" :route="route('super.leader.tawi.sasisha', $leader->id)" />
                                 </x-slot:content>
@@ -104,10 +110,11 @@
 
 
                         <!-- model location here -->
-                        <x-system.modal id="ongezaKiongoziModal" aria="orodhaTawiLabel" size="modal-fullscreen" title="Ongeza Tawi Hapa">
+                        <x-system.modal id="ongezaKiongoziChamaModal" aria="orodhaTawiLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama Ngazi Ya Tawi Hapa">
                             <x-slot:content>
                                 <form method="post" action="{{ route('super.leader.tawi.ongeza') }}">
                                     @csrf
+                                    <input type="hidden" value="chama" name="side">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                             <div class="mb-3 mb-4">
@@ -143,7 +150,7 @@
                                             <div class="mb-3 mb-4">
                                                 <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                 <select class="form-control" name="post_id">
-                                                    @foreach( \App\Models\Post::where('area', 'tawi')->get() as $post )
+                                                    @foreach( \App\Models\Post::where('area', 'tawi')->where('side', 'chama')->get() as $post )
                                                     <option value="{{ $post->id }}">{{ $post->name }}</option>
                                                     @endforeach
                                                 </select>
@@ -158,8 +165,99 @@
                                 </form>
                             </x-slot:content>
                         </x-system.modal>
+                    </div>
 
 
+                    <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
+                        <div class="d-flex justify-content-md-between justify-content-center items-center flex-wrap-reverse">
+                            <h3 class="fs-4 me-3">Viongozi Wa Serikali Ngazi Ya Tawi</h3>
+                            <div class="d-flex items-center justify-content-center gap-2">
+                                <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziSerikaliModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri </button>
+                                <a href="{{ route("super.areas.tawi.orodha", $branch->ward->id) }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Kata</a>
+                            </div>
+                        </div>
+                        <div>
+
+                            <div class="d-flex justify-start gap-4 flex-wrap">
+                                @foreach( $branch->leaders->where('side', 'serikali') as $leader )
+                                    @if( $leader->pivot->isActive == true )
+                                        <div class="text-center">
+                                            <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                            <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
+                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small><br>
+                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+
+
+                        @foreach ($branch->leaders->where('side', 'serikali') as $leader)
+                            <x-system.modal id="badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Serikali Kata Hapa">
+                                <x-slot:content>
+                                    <x-system.edit-leader :leader="$leader" :route="route('super.leader.tawi.sasisha', $leader->id)" />
+                                </x-slot:content>
+                            </x-system.modal>
+                        @endforeach
+
+
+                    <!-- model location here -->
+                        <x-system.modal id="ongezaKiongoziSerikaliModal" aria="orodhaTawiLabel" size="modal-fullscreen" title="Ongeza Tawi Hapa">
+                            <x-slot:content>
+                                <form method="post" action="{{ route('super.leader.tawi.ongeza') }}">
+                                    @csrf
+                                    <input type="hidden" value="serikali" name="side">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="firstName">Jina La Kwanza</label>
+                                                <input type="text" class="form-control" name="firstName" placeholder="">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="middleName">Jina La Kati</label>
+                                                <input type="text" class="form-control" name="middleName" placeholder="">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="lastName">Jina La Mwisho</label>
+                                                <input type="text" class="form-control" name="lastName" placeholder="">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="phone">Namba ya Simu</label>
+                                                <input type="text" class="form-control" name="phone" placeholder="">
+
+                                                <!-- data to simplify the validation process -->
+                                                <input type="hidden" value="{{ $branch->id }}" class="form-control" name="side_id">
+                                                <input type="hidden" value="branch_leader" class="form-control" name="table">
+                                                <input type="hidden" value="branch_id" class="form-control" name="side_column">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
+                                                <select class="form-control" name="post_id">
+                                                    @foreach( \App\Models\Post::where('area', 'tawi')->where('side', 'serikali')->get() as $post )
+                                                        <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </x-slot:content>
+                        </x-system.modal>
                     </div>
                 </div>
             </div>

@@ -49,7 +49,6 @@
                                 </td>
                                 <td style="display: flex;">
                                     <a href="{{ route('super.challenge.fungua', $challenge->id) }}" class="btn btn-success btn-sm">Fungua</a>
-                                    <a href="" class="btn btn-danger btn-sm">futa</a>
                                 </td>
                              
                             </tr>

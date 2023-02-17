@@ -54,20 +54,24 @@
                 </div>
             </div>
             <!-- end col-->
-            {{-- <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="float-end mt-2">
-                            <div id="orders-chart"> </div>
+                <div class="col-md-6 col-xl-3">
+                    <a href="{{ route('super.challenge.orodha') }}">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-end mt-2">
+                                <div id="orders-chart"> </div>
+                            </div>
+                            <div>
+                                @php $challengeCount = \App\Models\Challenge::where('status', 'new')->count(); @endphp
+                                <h4 class="mb-1 mt-1 @if( $challengeCount > 0)  text-danger @endif"> {{ $challengeCount  }}</h4>
+
+                                <p class="text-muted mb-0">Changamoto</p>
+                            </div>
+                            <p class="text-muted mt-3 mb-0"><span class="text-danger me-1">{{ \App\Models\Challenge::count()  }}</span> Idadi ya Zilizohifadhiwa</p>
                         </div>
-                        <div>
-                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">55</span></h4>
-                            <p class="text-muted mb-0">Changamoto</p>
-                        </div>
-                        <p class="text-muted mt-3 mb-0"><span class="text-danger me-1"><i class="mdi mdi-arrow-down-bold me-1"></i>0.82%</span> ya mwezi uliopita </p>
                     </div>
+                    </a>
                 </div>
-            </div> --}}
             <!-- end col-->
             {{-- <div class="col-md-6 col-xl-3">
                 <div class="card">

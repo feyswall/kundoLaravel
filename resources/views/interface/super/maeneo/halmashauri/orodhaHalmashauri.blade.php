@@ -41,27 +41,28 @@ use \Illuminate\Support\Facades\DB;
                                     </div>
                                     <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                                         <div class="d-flex justify-content-md-between justify-content-center items-center mb-3 flex-wrap-reverse">
-                                            <h3 class="fs-4 me-3">Viongozi wa Wilaya</h3>
-                                            <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziModal" class="btn btn-info btn-md mb-4 text-capitalize"><i class="fas fa-plus"> </i> Sajiri kiongozi wilaya </button>
+                                            <h3 class="fs-4 me-3">Viongozi Wa Chama Wilaya</h3>
+                                            <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziChamaModal" class="btn btn-info btn-md mb-4 text-capitalize"><i class="fas fa-plus"> </i> Sajiri kiongozi Wa Chama wilaya </button>
                                         </div>
                                         <div>
                                             <div class="d-flex justify-start gap-4 flex-wrap">
-                                                @foreach( $district->leaders as $leader )
-                                                @if( $leader->pivot->isActive == true )
-                                                <div class="text-center">
-                                                    <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Badilisha" href="{{ route("super.leader.wilaya.badili", $leader->id ) }}"></a>
-                                                    <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                                    <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
-                                                </div>
-                                                @endif
+                                                @foreach( $district->leaders->where('side', 'chama') as $leader )
+                                                    @if( $leader->pivot->isActive == true )
+                                                    <div class="text-center">
+                                                        <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Badilisha" href="{{ route("super.leader.wilaya.badili", $leader->id ) }}"></a>
+                                                        <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
+                                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
+                                                    </div>
+                                                    @endif
                                                 @endforeach
                                             </div>
                                         </div>
                                         <!-- model location here -->
-                                        <x-system.modal id="ongezaKiongoziModal" aria="ongezaKiongoziWilayaLabel" size="modal-fullscreen" title="Ongeza Kiongozi  Hapa">
+                                        <x-system.modal id="ongezaKiongoziChamaModal" aria="ongezaKiongoziWilayaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama  Hapa">
                                             <x-slot:content>
                                                 <form method="post" action="{{ route('super.leader.wilaya.ongeza') }}">
                                                     @csrf
+                                                    <input type="hidden" name="side" value="chama">
                                                     <div class="row">
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
@@ -97,45 +98,13 @@ use \Illuminate\Support\Facades\DB;
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                                 <select class="form-control" name="post_id">
-                                                                    @php $posts = \App\Models\Post::where('area', 'wilaya')->get(); @endphp
+                                                                    @php $posts = \App\Models\Post::where('area', 'wilaya')->where('side', 'chama')->get(); @endphp
                                                                     @foreach( $posts as $post )
                                                                     <option value="{{ $post->id }}">{{ $post->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
-
-
-                                                        {{-- <div class="col-sm-12 col-md-4 col-lg-3">
-                                                                <div class="mb-3 mb-4">
-                                                                    <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
-                                                                    <select class="form-control" name="post_id">
-                                                                        @php $district2 = \App\Models\District::where('id', $district->id)->first(); @endphp
-                                                                        @foreach ($posts as $post)>
-                                                                                $leadersDistr_id = []; 
-                                                                                @foreach ($district2->leaders as $leader)
-                                                                                    @if ( $leader->posts->contains($post->id) )
-                                                                                        @foreach ($leader->posts as $post)
-                                                                                            @if ( $post->pivot->isActive == false)
-                                                                                                @php $leadersDistr_id[] = $post->id; @endphp
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                    @endif
-                                                                                @endforeach
-                                                                    
-                                                                        @endforeach
-
-                                                                        @php 
-                                                                            $posts3 = \App\Models\Post::whereIn('id', $leadersDistr_id)->get();
-                                                                        @endphp
-                                                                        @foreach( $posts3 as $post )
-                                                                            <option value="{{ $post->id }}">{{ $post->name }}</option>
-                                                        @endforeach
-                                                        </select>
-                                                    </div>
-                                    </div> --}}
-
-
                                     <div class="row">
                                         <div class="col-12">
                                             <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
@@ -157,22 +126,119 @@ use \Illuminate\Support\Facades\DB;
 
 
             </div> <!-- end row -->
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div>
+                                <div class="px-md-3">
+                                    <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
+                                        <div class="d-flex justify-content-md-between justify-content-center items-center mb-3 flex-wrap-reverse">
+                                            <h3 class="fs-4 me-3">Viongozi Wa Serikali Wilaya</h3>
+                                            <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziSerikaliModal" class="btn btn-info btn-md mb-4 text-capitalize"><i class="fas fa-plus"> </i> Sajiri kiongozi Wa Serikali wilaya </button>
+                                        </div>
+                                        <div>
+                                            <div class="d-flex justify-start gap-4 flex-wrap">
+                                                @foreach( $district->leaders->where('side', 'serikali') as $leader )
+                                                    @if( $leader->pivot->isActive == true )
+                                                        <div class="text-center">
+                                                            <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Badilisha" href="{{ route("super.leader.wilaya.badili", $leader->id ) }}"></a>
+                                                            <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
+                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        <!-- model location here -->
+                                        <x-system.modal id="ongezaKiongoziSerikaliModal" aria="ongezaKiongoziWilayaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Serikali Hapa">
+                                            <x-slot:content>
+                                                <form method="post" action="{{ route('super.leader.wilaya.ongeza') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="side" value="serikali">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                                            <div class="mb-3 mb-4">
+                                                                <label class="form-label" for="firstName">Jina La Kwanza</label>
+                                                                <input type="text" class="form-control" name="firstName" placeholder="eg: mgalanga">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                                            <div class="mb-3 mb-4">
+                                                                <label class="form-label" for="middleName">Jina La Kati</label>
+                                                                <input type="text" class="form-control" name="middleName" placeholder="eg: mosi">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                                            <div class="mb-3 mb-4">
+                                                                <label class="form-label" for="lastName">Jila La Mwisho</label>
+                                                                <input type="text" class="form-control" name="lastName" placeholder="eg: mgalanga simo">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                                            <div class="mb-3 mb-4">
+                                                                <label class="form-label" for="phone">Namba ya Simu</label>
+                                                                <input type="text" class="form-control" name="phone" placeholder="eg: 0678 987 897">
+
+                                                                <!-- data to simplify the validation process -->
+                                                                <input type="hidden" value="{{ $district->id }}" class="form-control" name="side_id">
+                                                                <input type="hidden" value="district_leader" class="form-control" name="table">
+                                                                <input type="hidden" value="district_id" class="form-control" name="side_column">
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                                            <div class="mb-3 mb-4">
+                                                                <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
+                                                                <select class="form-control" name="post_id">
+                                                                    @php $posts = \App\Models\Post::where('area', 'wilaya')->where('side', 'serikali')->get(); @endphp
+                                                                    @foreach( $posts as $post )
+                                                                        <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </x-slot:content>
+                                        </x-system.modal>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- end col -->
+
+                    </div> <!-- end row -->
+                </div>
+            </div>
         </div>
     </div>
 </div>
-</div>
-</div>
 
-
-
-<x-system.collapse id="kamatiZaWilaya" title="kamati za wilaya">
+<x-system.collapse id="kamatiZaChamaWilaya" title="kamati Za Chama wilaya">
     <x-slot:content>
-        @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "wilaya")->get() as $group)
+        @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "wilaya")->where('side', 'chama')->get() as $group)
         <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
             <x-slot:content>
                 <x-system.groups-info :group="$group" :table="$district" />
             </x-slot:content>
         </x-system.collapse>
+        @endforeach
+    </x-slot:content>
+</x-system.collapse>
+
+<x-system.collapse id="kamatiZaWilaya" title="kamati Za Serikali wilaya">
+    <x-slot:content>
+        @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "wilaya")->where('side', 'serikali')->get() as $group)
+            <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+                <x-slot:content>
+                    <x-system.groups-info :group="$group" :table="$district" />
+                </x-slot:content>
+            </x-system.collapse>
         @endforeach
     </x-slot:content>
 </x-system.collapse>

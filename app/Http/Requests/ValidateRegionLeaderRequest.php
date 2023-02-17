@@ -26,6 +26,8 @@ class ValidateRegionLeaderRequest extends FormRequest
      */
     public function rules()
     {
+        $post = Post::find($this->input('post_id'));
+        $idadi_wajumbe_wilaya = $post->numberCount;
         return [
             'firstName' => ['required', 'string', 'max:50'],
             'middleName' => ['required', 'string', 'max:50'],

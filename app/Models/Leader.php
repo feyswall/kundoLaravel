@@ -14,7 +14,7 @@ class Leader extends Model
     use HasFactory;
     use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
-    protected $fillable = ['firstName', 'middleName', 'lastName', 'phone'];
+    protected $fillable = ['firstName', 'middleName', 'lastName', 'phone', 'side'];
 
     
     /**

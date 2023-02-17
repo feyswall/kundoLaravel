@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Post;
 use App\Rules\LeadersCountRule;
 use App\Rules\ModelExistsRule;
 use App\Rules\PhoneNumber;
@@ -27,7 +28,8 @@ class ValidateWardLeaderRequest extends FormRequest
      */
     public function rules()
     {
-        $idadi_wajumbe_wilaya = 5;
+        $post = Post::find($this->input('post_id'));
+        $idadi = $post->numberCount;
         return [
             'firstName' => ['required', 'string', 'max:50'],
             'middleName' => ['required', 'string', 'max:50'],
@@ -35,7 +37,8 @@ class ValidateWardLeaderRequest extends FormRequest
             'phone' => ['required', 'max:15', new PhoneNumber()],
             'post_id' =>  [
                 new WardLeadersRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column')),
-                new LeadersCountRule($idadi_wajumbe_wilaya, 'leader_ward', 'mj_mkutano_mkuu_W','ward_id', $this->input('side_id'))
+                new LeadersCountRule($idadi, 'leader_ward', 'mj_mkutano_mkuu_W','ward_id', $this->input('side_id')),
+                new LeadersCountRule($idadi, 'leader_ward', $post->deep,'ward_id', $this->input('side_id'))
             ]
         ];
     }

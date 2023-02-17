@@ -76,7 +76,7 @@
                 @csrf
                 <div class="row">
                     <select name="post" id="post" class="form-control mb-3">
-                      @foreach ( App\Models\Post::all() as $post )
+                      @foreach ( App\Models\Post::where('side', $side)->get() as $post )
                         @if ( $group->posts->contains($post->id) )
                           <option value="{{ $post->id }}" class="text-danger" disabled><b>{{ $post->name }}</b></option>
                         @else
@@ -114,6 +114,7 @@
             </form>
         </x-slot:content>
     </x-system.modal>
+@endforeach
 
     <x-system.modal id="ongezaKamatiModal" aria="ongezaKamatiLabel" size="modal-lg" title="" >
         <x-slot:content>
@@ -122,6 +123,7 @@
                 <div class="row mt-2 mb-2">
                     <label>Jina La Kamati</label>
                     <input type="text" value="{{ old('group_name') }}" name="group_name" class="form-control">
+                    <input type="hidden" name="side" value="{{ $side }}">
                 </div>
                 <div class="row mt-2 mb-2">
                     <label>Ngazi ya:</label>
@@ -140,8 +142,6 @@
             </form>
         </x-slot:content>
     </x-system.modal>
-@endforeach
-
 
 @endsection
 

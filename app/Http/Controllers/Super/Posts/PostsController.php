@@ -15,11 +15,12 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($side)
     {
-        $posts = Post::orderBy('id', 'desc')->paginate(10);
+        $posts = Post::where('side', $side)->orderBy('id', 'desc')->paginate(10);
         return view('interface.super.nyadhifa.orodhaNyadhifa')
-            ->with('posts', $posts);
+            ->with('posts', $posts)
+            ->with('side', $side);
     }
 
     /**
@@ -43,13 +44,16 @@ class PostsController extends Controller
         $rules = [
             'post' => ['required', Rule::unique('posts', 'name')],
             'area' => 'required',
+            'count' => 'required',
         ];
         $messages = [];
         $request->validate( $rules, $messages );
         $post = Post::create([
                 'area' => $request->area,
                 'name' => $request->post,
-                'deep' => $request->post."_ps"
+                'deep' => $request->post."_ps",
+                'side' => $request->side,
+                'numberCount' => $request->count,
         ]);
         if ( $post ){
             return redirect()->back()

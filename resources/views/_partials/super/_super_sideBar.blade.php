@@ -32,8 +32,14 @@
                     <ul class="sub-menu" aria-expanded="true">
                         <li> <a href="javascript: void(0);" class="has-arrow">Viongozi Chama</a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="{{ route("super.group.orodha") }}"><span>Orodha  Kamati</span> </a></li>
-                                <li><a href="{{ route("super.posts.orodha") }}"><span>Orodha Nyadhifa </span> </a></li>
+                                <li><a href="{{ route("super.group.orodha", 'chama') }}"><span>Orodha  Kamati</span> </a></li>
+                                <li><a href="{{ route("super.posts.orodha", 'chama') }}"><span>Orodha Nyadhifa </span> </a></li>
+                            </ul>
+                        </li>
+                        <li> <a href="javascript: void(0);" class="has-arrow">Viongozi Serikali</a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                <li><a href="{{ route("super.group.orodha", 'serikali') }}"><span>Orodha  Kamati</span> </a></li>
+                                <li><a href="{{ route("super.posts.orodha", 'serikali') }}"><span>Orodha Nyadhifa </span> </a></li>
                             </ul>
                         </li>
                         <li> <a href="javascript: void(0);" class="has-arrow">Maeneo</a>
@@ -44,6 +50,8 @@
                             </ul>
                         </li>
                     </ul>
+
+
                 </li>
 
 

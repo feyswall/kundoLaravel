@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("deep");
+            $table->integer('numberCount')->default(1);
 
             $table->string('area');
             $table->timestamps();

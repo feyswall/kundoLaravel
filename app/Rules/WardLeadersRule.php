@@ -5,6 +5,7 @@ namespace App\Rules;
 use App\Models\Post;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use function Webmozart\Assert\Tests\StaticAnalysis\true;
 
 class WardLeadersRule implements Rule
 {
@@ -39,12 +40,13 @@ class WardLeadersRule implements Rule
     public function passes($attribute, $value)
     {
         $wajumbe = Post::where('deep', 'mj_mkutano_mkuu_W')->first();
-        return !DB::table($this->table)
-            ->where('isActive', true )
-            ->where('post_id', $this->post_id )
-            ->where('post_id', '!=', $wajumbe->id )
-            ->where( $this->side_column, $this->side_id)
-            ->exists();
+//        return !DB::table($this->table)
+//            ->where('isActive', true )
+//            ->where('post_id', $this->post_id )
+//            ->where('post_id', '!=', $wajumbe->id )
+//            ->where( $this->side_column, $this->side_id)
+//            ->exists();
+        return true;
     }
 
     /**

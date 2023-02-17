@@ -4,6 +4,7 @@
     <table id="{{ $id }}" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
         <thead>
         <tr>
+            <th>#</th>
             <th>Jina la Tawi</th>
             <th>Ngazi ya:</th>
             {{--<th>Kamati Zao</th>--}}
@@ -15,6 +16,9 @@
 
         @foreach( $posts as $key => $post )
             <tr>
+                <th>
+                    {{ $key + 1 }}
+                </th>
                 <td>{{ $post->name }}</td>
                 <td>{{ $post->area }}</td>
                 {{--<th>--}}

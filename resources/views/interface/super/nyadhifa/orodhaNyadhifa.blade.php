@@ -40,7 +40,7 @@
                 <div class="card">
                     <div class="card-body">
                         <button  data-bs-toggle="modal" data-bs-target="#ongezaWadhifaModal_" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i>Ongeza wadhifa</button>
-                        <x-system.wadhifa-table id="wadhifaTable" :posts="$posts    " />
+                        <x-system.wadhifa-table id="wadhifaTable" :posts="$posts" />
                     </div>
                 </div>
             </div> <!-- end col -->
@@ -52,6 +52,7 @@
         <x-slot:content>
             <form method="POST" action="{{ route('super.posts.ongeza') }}" class="p-3">
                 @csrf
+                <input type="hidden" name="side" value="{{ $side }}">
                 <div class="row">
                     <label for="area">Ngazi Ya:</label>
                     <select name="area" id="area" class="form-control mb-3">
@@ -67,6 +68,13 @@
                     <label for="post">Jina</label>
                     <input type="text" value="{{ old('post') }}" class="form-control" name="post">
                 </div>
+                <div class="row">
+                    <label for="count">Idadi Ruhusiwa</label>
+                    <input type="number" value="{{ old('count') }}" class="form-control" name="count">
+                    @error('count')
+                     <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="mt-3">
                     <button type="submit" class="btn btn-md btn-primary">Ongeza</button>
                 </div>
@@ -80,6 +88,6 @@
 @endsection
 
 @section("extra_script")
-    {{--<x-system.table-script id="wadhifaTable" />--}}
+    <x-system.table-script id="wadhifaTable" />
 @endsection
 

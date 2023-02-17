@@ -192,10 +192,10 @@ class SmsServicesControlller extends Controller
                 }
                 return (['status' => 'success' ,'response' => $response_obj['response'], 'obj' => $smsRequestId]);
             }
-            return ['status' => 'fail', 'message' => $response_obj['response']->data->message];
+            return ['status' => 'fail', 'message' => $response_obj['response']->message];
         } else {
             if ($response_obj['status'] == 'fail') {
-                return ['status' => 'fail', 'message' => $response_obj['response']->data->message];
+                return ['status' => 'fail', 'message' => $response_obj['response']->message];
             }else{
                 return ['status' => 'fail', 'message' => 'Unknown Error please Try again later!'];
             }

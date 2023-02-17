@@ -188,7 +188,7 @@ Route::controller(GroupsController::class)
     ->prefix('/super/group')
     ->as('super.group.')
     ->group(function () {
-        Route::get('/orodha', 'index')->name('orodha');
+        Route::get('/orodha/{side}', 'index')->name('orodha');
         Route::post('/toaWadhifa', 'removePost')->name('toaWadhifa');
         Route::post('/ongezaWadhifa', 'addPost')->name('ongezaWadhifa');
         Route::put('/rekebishaWadhifa/{group}', 'editGroup')->name('editWadhifa');
@@ -202,7 +202,7 @@ Route::controller(PostsController::class)
     ->prefix('/super/wadhifa')
     ->as('super.posts.')
     ->group(function () {
-        Route::get('/orodha', 'index')->name('orodha');
+        Route::get('/orodha/{side}', 'index')->name('orodha');
         Route::post('/ongezaWadhifa', 'store')->name('ongeza');
         Route::put('/badiriWadhifa/{post}', 'update')->name('updateWadhifa');
     });

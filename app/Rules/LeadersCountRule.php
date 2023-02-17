@@ -24,6 +24,10 @@ class LeadersCountRule implements Rule
 
     public $sideName;
 
+    private $postObject;
+
+
+
     public function __construct($count, $table, $post, $sideName, $sideValue)
     {
         $this->count = $count;
@@ -31,7 +35,10 @@ class LeadersCountRule implements Rule
         $this->post = $post;
         $this->sideValue = $sideValue;
         $this->sideName = $sideName;
+        $this->setPostObject();
     }
+
+
 
     /**
      * Determine if the validation rule passes.
@@ -47,12 +54,11 @@ class LeadersCountRule implements Rule
 
     public function passes($attribute, $value)
     {
-        $wajumbe = Post::where('deep', "$this->post")->first();
-        if ( $value == $wajumbe->id ) {
+        if ( $value == $this->postObject->id ) {
             $counter = DB::table("$this->table")
                 ->where('isActive', true)
                 ->where("$this->sideName", $this->sideValue)
-                ->where('post_id', $wajumbe->id)
+                ->where('post_id', $this->postObject->id)
                 ->count();
             if ($counter >= $this->count) {
                 return false;
@@ -71,6 +77,16 @@ class LeadersCountRule implements Rule
      */
     public function message()
     {
-        return 'Idaddi  ya Wajumbeui Imekamilika.';
+        return ("Viongozi wenye wadhifa ". $this->postObject->name. " Hawatakiwi Kuzidi ". $this->count );
+    }
+
+
+    /**
+     * @param mixed $postObject
+     */
+    public function setPostObject()
+    {
+        $wajumbe = Post::where('deep', "$this->post")->first();
+        $this->postObject = $wajumbe;
     }
 }
