@@ -23,21 +23,44 @@
                     <label class="form-label font-size-24" id="machagulio-wilaya"></label>
                     <table id="datatable-viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
+                            <td>#</td>
                         <th>Changamoto</th>
                         <th>Tarehe</th>
                         <th>Status</th>
                         <th></th>
                         </thead>
                         <tbody>
-                            @foreach( $challenges as $challenge )
+                            @foreach( $challenges as $key => $challenge )
                                 <tr>
+                                    <td>
+                                        {{ $challenges->count() - $key }}
+                                    </td>
                                     <td>{{ substr( $challenge->challenge, 0, 30); }} @if ( strlen($challenge->challenge) > 30 )  ... @endif</td>
                                     <td>{{ $challenge->created_at }}</td>
-                                    <td><span class="text-danger">Mpya ...</span></td>
-                                    <td style="display: flex;">
-                                        <a href="{{ route('mbunge.challenges.fungua', $challenge->id) }}" class="btn btn-success btn-sm">Fungua</a href="">
-                                        <a href="" class="btn btn-danger btn-sm">futa</a>
+                                    <td>
+                                        <span class="text-danger">
+                                            @if ( $challenge->status == 'new')
+                                                <span class="text-danger">Imewasirishwa</span>
+                                            @elseif ( $challenge->status == 'onProgress')
+                                                <span class="text-warning">kwenye Mchakato</span>
+                                            @elseif ( $challenge->status == 'complete')
+                                                <span class="text-success">kamilika</span>
+                                            @elseif ( $challenge->status == 'preExist')
+                                                <span class="text-dark"><b>Haijatumwa</b></span>
+                                            @endif    
+                                        </span>
                                     </td>
+                                    @if ( $challenge->status != 'preExist')
+                                        <td style="display: flex;">
+                                            <a href="{{ route('mbunge.challenges.fungua', $challenge->id) }}" class="btn btn-success btn-sm">Fungua</a href="">
+                                            <a href="" class="btn btn-danger btn-sm">futa</a>
+                                        </td>
+                                    @else
+                                        <td style="display: flex;">
+                                            <a href="{{ route('mbunge.challenges.show.exist', $challenge->id) }}" class="btn btn-success btn-sm">Fungua</a>
+                                            <a href="" class="btn btn-danger btn-sm">futa</a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

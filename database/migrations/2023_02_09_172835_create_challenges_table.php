@@ -19,6 +19,7 @@ return new class extends Migration
             $table->longText('feedback')->nullable();
             $table->foreignId('state_id')->constrained();
             $table->string("from");
+            $table->string('form_url')->nullable();
 
             $table->foreignId('leader_id')->constrained();
 

@@ -7,6 +7,10 @@
  */
 ?>
 
+@php
+    $state = $challenge->leader->states()->where('isActive', true)->first();
+@endphp
+
 
 @extends("layouts.super_system")
 
@@ -14,7 +18,13 @@
 <div class="col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header">
-            <a type="button" id="view-pdf-btn" onclick="previewFile()"  class="btn btn-dark float-end mt-lg-3 mt-sm-2"><i class="la la-print"></i>Fungua PDF</a>
+             <div>
+                <form action="{{ route('downloadPDF') }}" method="post" target="_blank">
+                    @csrf
+                    <input type="hidden" value="{{ 'pdfs/'.$challenge->form_url }}" name="pdf">
+                    <button  class="btn btn-dark float-end mt-lg-3 mt-sm-2" type="submit">pakua pdf ya form</button>
+                </form>
+            </div>
         </div>
         <div class="card-body">
             <div class="invoice-title">
@@ -22,13 +32,15 @@
                 </div>
                 <div class="text-muted">
                     <div class="row justify-content-center">
-                        <div class="col-md-4 col-sm-12">
-                            <h3 class="lead">Mkoa: <span class="font-italic"></span></h3>
-                            <h3 class="lead">Wilaya: <span class="font-italic">Temeke</span></h3>
-                            <h3 class="lead">Jimbo: <span class="font-italic">Temeke Juu</span></h3>
-                            <h3 class="lead">Jina la Mbunge: <span>Ramadhani</span></h3>
-                            <h3 class="lead">Simu ya Mbunge: <span class="font-italic">0677777888</span></h3>
-
+                        <div class="col-md-8 col-sm-12">
+                            <h3 class="lead">Mkoa: <span class="font-italic">{{ $state->district->region->name }}</span></h3>
+                            <h3 class="lead">Wilaya: <span class="font-italic">{{ $state->district->name }}</span></h3>
+                            <h3 class="lead">Jimbo: <span class="font-italic">{{ $state->name }}</span>
+                            </h3>
+                            <h3 class="lead">Jina la Mbunge: <span>
+                                <b>{{ $challenge->leader->firstName }}  {{ $challenge->leader->lastName}}</b>
+                            </span></h3>
+                            <h3 class="lead">Simu ya Mbunge: <span class="font-italic">+{{ $challenge->leader->phone }}</span></h3>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -59,7 +71,7 @@
                                             <div class="col-12 mt-3">
                                                 <div class="row justify-content-center">
                                                     <div class="col-sm-12 col-md-8 text-center">
-                                                        <h5><b>Yah: </b>Lorem ipsum dolor sit amet, consectetur adipisicing.</h5>
+                                                        <h5><b>Yah: </b>{{ $challenge->yahusu }}</h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -130,7 +142,7 @@
                                         </div>
                                         <div class="mt-2">
                                             <label for="">Ambatanisha PDF</label>
-                                            <input type="file" class="form-control" name="pdfFile">
+                                            <input type="file" class="form-control" accept="application/pdf" name="pdfFile">
                                     </div>
                                         <div>
                                             <button type="submit" class="btn btn-primary btn-md mt-3">Hifadhi</button>
@@ -150,8 +162,9 @@
                                         {{ $challenge->feedback }}
                                     </span>
                                     <div class="my-3">
-                                         <form action="" method="post">
+                                         <form action="{{ route('super.challenge.acomplished', $challenge->id) }}" method="post">
                                         @csrf
+                                        @method('put')
                                         <button onclick="markCompleteFunct(event)" class="btn btn-success btn-sm" type="button">
                                             imetatuliwa
                                         </button>
@@ -169,7 +182,7 @@
                                         $createdAt = Carbon\Carbon::parse($challenge->created_at);
                                     @endphp
                                     <h4 class="text-success"><b>{{ $createdAt->format('M d Y') }}</b></h4><hr>
-                                    <span class="text-warning">
+                                    <span class="text-success">
                                         {{ $challenge->feedback }}
                                     </span>
                                 </div>
@@ -224,3 +237,26 @@
         }
 </script>
 @endsection
+
+
+ 
+
+
+
+
+{{-- testosterone
+
+
+Wanyama pia walionyesha wasiwasi mdogo baada ya kusikiliza.
+
+
+ Imagine wa John Lennon ulitungwa katika 528 Hz.
+
+
+inaweza kusaidia uponyaji na siha ili kukusaidia kujisikia vizuri (hata hivyo, unapaswa kushauriana na daktari wako kila wakati)
+
+
+watu wanaotumia masafa ya Solfeggio pia wanaamini kuwa sauti hii itakusaidia kukuleta katika usawa bora na ulimwengu
+
+
+Kukusaidia kujisikia kushikamana zaidi na kila kitu kinachokuzunguka na kuongeza nishati yako chanya --}}

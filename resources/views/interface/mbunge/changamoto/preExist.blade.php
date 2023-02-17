@@ -7,10 +7,6 @@
  */
 ?>
 
-@php
-    $state = $challenge->leader->states()->where('isActive', true)->first();
-@endphp
-
 
 @extends("layouts.mbunge_system")
 
@@ -33,37 +29,17 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="card">
-                            <div class="card-header">
-                                <div>
-                                    <form action="{{ route('downloadPDF') }}" method="post" target="_blank">
-                                        @csrf
-                                        <input type="hidden" value="{{ 'pdfs/'.$challenge->form_url }}" name="pdf">
-                                        <button  class="btn btn-dark float-end mt-lg-3 mt-sm-2" type="submit">pakua pdf ya form</button>
-                                    </form>
-                                </div>
-                            </div>
+                           
                             <div class="card-body">
                                 <div class="invoice-title">
                                     <div class="mb-4">
                                         
                                     </div>
-                                    <div class="text-muted"> 
-                                            <div class="row justify-content-center">
-                                                <div class="col-md-8 col-sm-12">
-                                                    <h3 class="lead">Mkoa: <span class="font-italic">{{ $state->district->region->name }}</span></h3>
-                                                    <h3 class="lead">Wilaya: <span class="font-italic">{{ $state->district->name }}</span></h3>
-                                                    <h3 class="lead">Jimbo: <span class="font-italic">{{ $state->name }}</span>
-                                                    </h3>
-                                                    <h3 class="lead">Jina la Mbunge: <span>
-                                                        <b>{{ $challenge->leader->firstName }}  {{ $challenge->leader->lastName}}</b>
-                                                    </span></h3>
-                                                    <h3 class="lead">Simu ya Mbunge: <span class="font-italic">+{{ $challenge->leader->phone }}</span></h3>
-                                                </div>
-                                            </div>                            
+                                    <div class="text-muted">                             
                                         <div class="row justify-content-center">
                                             <div class="col-10">
                                                 <div class="row justify-content-center" >
-                                                    <div class="col-md-10 col-sm-12">
+                                                    <div class="col-md-8 col-sm-12">
                                                         <div class="card shadow-none">
                                                             <div class="card-body">
                                                                 <div class="row justify-content-center">
@@ -88,7 +64,7 @@
                                                                 <div class="col-12 mt-3">
                                                                     <div class="row justify-content-center">
                                                                         <div class="col-sm-12 col-md-8 text-center">
-                                                                            <h5><b>YAH:</b> {{ $challenge->yahusu }}</h5>
+                                                                            <h5><b>YAH: </b>{{ $challenge->yahusu }}</h5>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -133,7 +109,7 @@
                                                             @if( \Illuminate\Support\Facades\Storage::exists("pdfs/$pdf->url"))
                                                             {{--<a>{{ \Illuminate\Support\Facades\Storage::download("pdfs/$pdf->url") }} pakua</a>--}}
                                                             @endif
-                                                    <div class="col-md-10 col-sm-4">
+                                                    <div class="col-md-8 col-sm-4">
                                                         <div class="row justify-content-start">
                                                              <div>
                                                                 <span style="font-size: 2em;">Attachments</span>
@@ -148,76 +124,32 @@
                                                                 <button class="btn btn-primary my-3 btn-block" type="submit">download</button>
                                                             </form>
                                                             {{--<a href="{{ \Illuminate\Support\Facades\Storage::url("pdfs/$pdf->url") }}" download>--}}
+                                                      <hr>
                                                     </div>
                                                     @endforeach
                                                 </div>
+                                                
                                             </div>
-                                            <hr>
-
-                                            <div class="col-10">
-                                                @if( $challenge->status == "new")
-                                                   @php
-                                                        $createdAt = Carbon\Carbon::parse($challenge->created_at);
-                                                    @endphp
-                                                    <h4 class="text-danger"><b>{{ $createdAt->format('M d Y') }}</b></h4><hr>
-                                                    <h5 
-                                                     class="text-danger mt-3">Imewasirishwa ...</h5>
-                                                    
-                                                @elseif( $challenge->status == 'onProgress')
-                                                  <div class="row justify-content-center">
-                                                        <div class="col-sm-12 col-md-8">
-                                                            @php
-                                                                $createdAt = Carbon\Carbon::parse($challenge->created_at);
-                                                            @endphp
-                                                            <h4 class="text-warning"><b>{{ $createdAt->format('M d Y') }}</b></h4><hr>
-                                                            <hr class="text-warning" style="border: 2px solid">
-                                                            <span class="text-warning">
-                                                                {{ $challenge->feedback }}
-                                                            </span>
+                                          
+                                            <div class="row justify-content-center">
+                                                <div class="col-sm-12 col-md-6">
+                                                    <div>
+                                                        <form action="{{ route('mbunge.challenges.toExist', $challenge) }}" method="POST" enctype="multipart/form-data">
+                                                            @csrf
+                                                            @method('put')
+                                                            <h4>Tuma Barua</h4>
+                                                            <div class="mt-2">
+                                                                <label for="">Ambatanisha pdf ya barua iliyo sainiwa</label>
+                                                                <input type="file" class="form-control" accept="application/pdf" name="pdfFile" required>
                                                         </div>
-                                                    </div>
-
-                                                @elseif( $challenge->status == 'complete')
-                                                <div class="row justify-content-center">
-                                                        <div class="col-sm-12 col-md-8">
-                                                            @php
-                                                                $createdAt = Carbon\Carbon::parse($challenge->created_at);
-                                                            @endphp
-                                                            <h4 class="text-success"><b>{{ $createdAt->format('M d Y') }}</b></h4><hr>
-                                                            <hr class="text-success" style="border: 2px solid">
-                                                            <span class="text-success">
-                                                                {{ $challenge->feedback }}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-
-                                                @endif
-
-                                                @if ( $challenge->status != 'new')
-                                                    @foreach( $challenge->assets->where('user_id', '!=', \Illuminate\Support\Facades\Auth::user()->id ) as $pdf )
-                                                        @if( \Illuminate\Support\Facades\Storage::exists("pdfs/$pdf->url"))
-                                                            <div class="row justify-content-center">
-                                                                <div class="col-sm-12 col-md-8 mt-2">
-                                                                    <div>
-                                                                        <span style="font-size: 2em;">Attachments</span>
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <div class="col-md-3">
-                                                                            <img src="{{ asset('assets/images/pdf.png') }}" class="card-img-top mx-auto w-25" alt="">
-                                                                        </div>
-                                                                    </div>
-                                                                    <form action="{{ route('downloadPDF') }}" method="post" target="_blank">
-                                                                        @csrf
-                                                                        <input type="hidden" value="{{ 'pdfs/'.$pdf->url }}" name="pdf">
-                                                                        <button class="btn btn-primary my-3 btn-block" type="submit">download</button>
-                                                                    </form>
-                                                                </div>
+                                                            <div>
+                                                                <button type="submit" class="btn btn-primary btn-md mt-3">tuma</button>
                                                             </div>
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
+
                                         </div>
 
                                     </div>

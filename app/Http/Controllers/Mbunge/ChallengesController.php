@@ -22,11 +22,12 @@ class ChallengesController extends Controller
         if ( !(\Illuminate\Support\Facades\Auth::user()) ){
             return redirect()->route('login');
         }
-        $challenges = \Illuminate\Support\Facades\Auth::user()->leader;
-        if (!$challenges ){
+        $leader = \Illuminate\Support\Facades\Auth::user()->leader;
+        if (!$leader ){
             return redirect()->back()->with(['status' => 'error', 'message' => 'Kujua Changamoto Yakupasa uwe kiongozi.']);
         }
-        $challenges = Challenge::where('from', $from)->get();
+        $challenges = Challenge::where('from', $from)
+                        ->where('leader_id', $leader->id)->get();
         return view('interface.mbunge.changamoto.changamotoOrodha')
             ->with('challenges', $challenges);
     }
@@ -41,6 +42,45 @@ class ChallengesController extends Controller
         //
     }
 
+    public function showExist(Challenge $challenge){
+        return view('interface.mbunge.changamoto.preExist')
+        ->with('challenge', $challenge);
+    }
+
+
+    public function preExistToExist(Challenge $challenge, Request $request)
+    {
+
+        $file = $request->file('pdfFile');
+
+        $rules = ['pdfFile' => 'sometimes|mimes:pdf|max:10000'];
+
+        $messages = ['mimes' => 'Tafadhali Weka Pdf Pekee'];
+
+        $request->validate($rules, $messages);
+
+        if ($file) {
+            $path = Storage::putFile('pdfs', $file);
+            $fileNamesParticles = explode('/', $path);
+            $fileName = end($fileNamesParticles);
+        }else{
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Kumetokea Tatizo Tfadhali Jaribu Tena.']);
+        }
+
+        $updata = [
+            'status' => 'new',
+            'form_url' => $fileName,
+            ];
+
+        $challenge->update( $updata );
+
+        if ( !($challenge->form_url) ){
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Hatukuweza Kuhifadhi form tafadhali jaribu tena.']);
+        }
+
+        return redirect()->route('mbunge.challenges.fungua', $challenge);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -49,6 +89,7 @@ class ChallengesController extends Controller
      */
     public function store(Request $request)
     {
+
         $isImagePresent = false;
         
         $path = null;
@@ -65,13 +106,17 @@ class ChallengesController extends Controller
 
         $file = $request->file('pdfFile');
 
-        $rules = [ 'pdfFile' => 'sometimes|mimes:pdf|max:10000' ];
+        $rules = [
+             'pdfFile' => 'sometimes|mimes:pdf|max:10000',
+             'yahusu' => 'required|min:4'
+             ];
 
-        $messages = ['mimes' => 'Tafadhali Weka Pdf Pekee'];
+        $messages = [
+            'mimes' => 'Tafadhali Weka Pdf Pekee',
+            'yahusu' => 'Tafadhali Jaza Yahusu'
+        ];
 
         $request->validate($rules, $messages);
-
-        $file = $request->file('pdfFile');
 
         if ( $file ){ 
             $path = Storage::putFile('pdfs', $file); 
@@ -88,7 +133,8 @@ class ChallengesController extends Controller
         $changamoto = $request->input('changamoto');
 
         $challenge = Challenge::create([
-            'status' => 'new',
+            'status' => 'preExist',
+            'yahusu' => $request->input('yahusu'),
             'from' => $request->from,
             'challenge' => $changamoto,
             'state_id' => $state->id,
@@ -117,7 +163,7 @@ class ChallengesController extends Controller
                 ]);      
             }
          }
-        return redirect()->route('mbunge.challenges.fungua', $challenge);
+        return redirect()->route('mbunge.challenges.show.exist', $challenge);
     }
 
     /**

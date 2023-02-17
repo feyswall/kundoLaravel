@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Super\LeadersController;
 use App\Http\Requests\ValidateStateLeaderRequest;
 use App\Models\State;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class StateLeadersController extends Controller
 {
@@ -36,9 +38,22 @@ class StateLeadersController extends Controller
      */
     public function store(ValidateStateLeaderRequest $request)
     {
+  
         $obj = new LeadersController();
         $leader = $obj->store( $request );
         $obj->attachMany( $leader->states(), $request, $leader );
+
+        $password = strtolower($request->firstName)." ".strtolower($request->firstName); 
+
+        $user = User::create([
+            'name' => $request->firstName." ".$request->lastName,
+            'email' => "default@kmis.com",
+            'leader_id' => $leader->id,
+            'password' => Hash::make($password),
+        ]);
+
+        $user->assignRole("mbunge");
+
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 

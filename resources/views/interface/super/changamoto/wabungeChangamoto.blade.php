@@ -21,6 +21,7 @@
                     <table id="datatable-viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <td>#</td>
+                        <td>Mbunge</td>
                         <th>Changamoto</th>
                         <th>Tarehe</th>
                         <th>Status</th>
@@ -30,18 +31,22 @@
                         @foreach( $challenges as $key => $challenge )
                             <tr>
                                 <td>{{ $challenge->count() - $key }}</td>
+                                <td>
+                                    {{ $challenge->leader->firstName }} {{ $challenge->leader->lastName }}
+                                </td>
                                 <td>{{ substr( $challenge->challenge, 0, 30); }} @if ( strlen($challenge->challenge) > 30 )  ... @endif</td>
                                 <td>{{ $challenge->created_at }}</td>
                                 <td>
-                                <span class="text-danger">
-                                    @if ( $challenge->status == 'new')
-                                        <span class="text-danger">Imewasirishwa</span>
-                                    @elseif ( $challenge->status == 'onProgress')
-                                        <span class="text-warning">kwenye Mchakato</span>
-                                    @elseif ( $challenge->status == 'complete')
-                                        <span class="text-success">kamilika</span>
-                                    @endif    
-                                </span></td>
+                                    <span class="text-danger">
+                                        @if ( $challenge->status == 'new')
+                                            <span class="text-danger">Imewasirishwa</span>
+                                        @elseif ( $challenge->status == 'onProgress')
+                                            <span class="text-warning">kwenye Mchakato</span>
+                                        @elseif ( $challenge->status == 'complete')
+                                            <span class="text-success">kamilika</span>
+                                        @endif    
+                                    </span>
+                                </td>
                                 <td style="display: flex;">
                                     <a href="{{ route('super.challenge.fungua', $challenge->id) }}" class="btn btn-success btn-sm">Fungua</a>
                                     <a href="" class="btn btn-danger btn-sm">futa</a>

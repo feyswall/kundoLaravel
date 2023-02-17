@@ -33,6 +33,7 @@ use App\Http\Controllers\Super\Posts\PostsController;
 
 
 Route::controller(\App\Http\Controllers\Super\Area\GeneralAreasController::class)
+    ->middleware(['auth', 'role:super'])
     ->prefix('/super/areas/general')
     ->as('super.areas.general')
     ->group(function () {
@@ -42,6 +43,7 @@ Route::controller(\App\Http\Controllers\Super\Area\GeneralAreasController::class
 
 
 Route::controller(DistrictsController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/areas/district')
     ->as('super.areas.wilaya.')
     ->group(function () {
@@ -51,6 +53,7 @@ Route::controller(DistrictsController::class)
 
 
 Route::controller(CouncilsController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/areas/council')
     ->as('super.areas.halmashauri.')
     ->group(function () {
@@ -60,6 +63,7 @@ Route::controller(CouncilsController::class)
 
 
 Route::controller(DivisionsController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/areas/division')
     ->as('super.areas.tarafa.')
     ->group(function () {
@@ -69,6 +73,7 @@ Route::controller(DivisionsController::class)
 
 
 Route::controller(WardsController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/areas/ward')
     ->as('super.areas.kata.')
     ->group(function () {
@@ -78,6 +83,7 @@ Route::controller(WardsController::class)
 
 
 Route::controller(BranchesController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/areas/branch')
     ->as('super.areas.tawi.')
     ->group(function () {
@@ -88,6 +94,7 @@ Route::controller(BranchesController::class)
 
 
 Route::controller(\App\Http\Controllers\Super\Area\StatesController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/areas/state')
     ->as('super.areas.jimbo.')
     ->group(function () {
@@ -98,6 +105,7 @@ Route::controller(\App\Http\Controllers\Super\Area\StatesController::class)
 
 
 Route::controller(BranchLeadersController::class)
+->middleware(['auth', 'role:super'])
 ->prefix('/super/leader/branch')
 ->as('super.leader.tawi.')
 ->group(function () {
@@ -108,6 +116,7 @@ Route::controller(BranchLeadersController::class)
 
 
 Route::controller(WardLeadersController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/leader/ward')
     ->as('super.leader.kata.')
     ->group(function () {
@@ -119,6 +128,7 @@ Route::controller(WardLeadersController::class)
 
 
 Route::controller(DivisionLeadersController::class)
+->middleware(['auth', 'role:super'])
 ->prefix('/super/leader/division')
 ->as('super.leader.tarafa.')
 ->group(function () {
@@ -130,6 +140,7 @@ Route::controller(DivisionLeadersController::class)
 
 
 Route::controller(CouncilLeadersController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/leader/council')
     ->as('super.leader.halmashauri.')
     ->group(function () {
@@ -139,6 +150,7 @@ Route::controller(CouncilLeadersController::class)
 
 
 Route::controller(DistrictLeadersController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/leader/district')
     ->as('super.leader.wilaya.')
     ->group(function () {
@@ -151,6 +163,7 @@ Route::controller(DistrictLeadersController::class)
 
 
 Route::controller(RegionLeadersController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/leader/region')
     ->as('super.leader.mkoa.')
     ->group(function () {
@@ -161,6 +174,7 @@ Route::controller(RegionLeadersController::class)
 
 
 Route::controller(StateLeadersController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/leader/state')
     ->as('super.leader.jimbo.')
     ->group(function () {
@@ -170,6 +184,7 @@ Route::controller(StateLeadersController::class)
 
 
 Route::controller(GroupsController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/group')
     ->as('super.group.')
     ->group(function () {
@@ -183,6 +198,7 @@ Route::controller(GroupsController::class)
 
 
 Route::controller(PostsController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/wadhifa')
     ->as('super.posts.')
     ->group(function () {
@@ -193,10 +209,12 @@ Route::controller(PostsController::class)
 
 
 Route::controller(\App\Http\Controllers\Super\ChallengesController::class)
+->middleware(['auth', 'role:super'])
     ->prefix('/super/changamoto')
     ->as('super.challenge.')
     ->group(function () {
         Route::get('/fungua/{challenge}', 'show')->name('fungua');
         Route::put('/changamoto/{challenge}', 'updateChallenge')->name('updateChallenge');
         Route::get('/changamoto', 'index')->name('orodha');
+        Route::put('/changamoto/weka/imakamilika/{challenge}', 'acomplished')->name('acomplished');
     });

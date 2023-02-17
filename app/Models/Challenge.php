@@ -14,28 +14,29 @@ class Challenge extends Model
     /**
      * @var array
      */
-    protected $fillable = ['status', 'from', 'feedback', 'challenge', 'state_id', 'leader_id'];
+    protected $fillable = ['yahusu', 'status', 'from', 'feedback', 'challenge', 'state_id', 'leader_id', 'form_url'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public  function state():BelongsTo {
-        return $this->belongsTo(State::class );
+    public  function state(): BelongsTo
+    {
+        return $this->belongsTo(State::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function  leader():BelongsTo
+    public function  leader(): BelongsTo
     {
-        return $this->belongsTo(Leader::class );
+        return $this->belongsTo(Leader::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function assets():HasMany
+    public function assets(): HasMany
     {
-        return $this->hasMany(Asset::class );
+        return $this->hasMany(Asset::class);
     }
 }
