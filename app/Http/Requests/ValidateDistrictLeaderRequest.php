@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Post;
 use App\Rules\DistrictLeaderRule;
 use App\Rules\LeadersCountRule;
 use App\Rules\PhoneNumber;
@@ -26,16 +27,16 @@ class ValidateDistrictLeaderRequest extends FormRequest
      */
     public function rules()
     {
+        $post = Post::find($this->input('post_id'));
+        $idadi = $post->numberCount;
         return [
             'firstName' => ['required', 'string', 'max:50'],
             'middleName' => ['required', 'string', 'max:50'],
             'lastName' => ['required', 'string', 'max:50'],
             'phone' => ['required', 'max:15', new PhoneNumber()],
             'post_id' =>  [
-                new DistrictLeaderRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column')),
-                new LeadersCountRule(3, 'district_leader', 'wj_mkt_kuu_taifa', "district_id", $this->input('side_id')),
-                new LeadersCountRule(3, 'district_leader', 'wj_kamat_siasa', "district_id", $this->input('side_id')),
-                new LeadersCountRule(13, 'district_leader', 'wj_h_kuu_wilaya', "district_id", $this->input('side_id'))
+//                new DistrictLeaderRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column')),
+                new LeadersCountRule($idadi, 'district_leader', $post->deep, "district_id", $this->input('side_id')),
             ]
         ];
     }

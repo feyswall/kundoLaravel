@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Post;
+use App\Rules\LeadersCountRule;
 use App\Rules\ModelExistsRule;
 use App\Rules\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
@@ -25,12 +27,17 @@ class ValidateDivisionLeaderRequest extends FormRequest
      */
     public function rules()
     {
+        $post = Post::find($this->input('post_id'));
+        $idadi = $post->numberCount;
         return [
             'firstName' => ['required', 'string', 'max:50'],
             'middleName' => ['required', 'string', 'max:50'],
             'lastName' => ['required', 'string', 'max:50'],
             'phone' => ['required', 'max:15', new PhoneNumber()],
-            'post_id' =>  [ new ModelExistsRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column'))]
+            'post_id' =>  [
+//                new ModelExistsRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column')),
+                new LeadersCountRule($idadi, 'division_leader', $post->deep, 'division_id', $this->input('side_id'))
+            ]
         ];
     }
 

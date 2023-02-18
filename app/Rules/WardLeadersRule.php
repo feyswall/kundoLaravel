@@ -39,7 +39,7 @@ class WardLeadersRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $wajumbe = Post::where('deep', 'mj_mkutano_mkuu_W')->first();
+//        $wajumbe = Post::where('deep', 'mj_mkutano_mkuu_W')->first();
 //        return !DB::table($this->table)
 //            ->where('isActive', true )
 //            ->where('post_id', $this->post_id )

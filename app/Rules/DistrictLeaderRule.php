@@ -38,13 +38,14 @@ class DistrictLeaderRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $wajumbe = Post::whereIn('deep', ['wj_mkt_kuu_taifa', 'wj_kamat_siasa', 'wj_h_kuu_wilaya'])->pluck('id');
-        return !DB::table($this->table)
-            ->where('post_id', $this->post_id )
-            ->where('isActive', true )
-            ->whereNotIn('post_id', $wajumbe )
-            ->where( $this->side_column, $this->side_id)
-            ->exists();
+//        $wajumbe = Post::whereIn('deep', ['wj_mkt_kuu_taifa', 'wj_kamat_siasa', 'wj_h_kuu_wilaya'])->pluck('id');
+//        return !DB::table($this->table)
+//            ->where('post_id', $this->post_id )
+//            ->where('isActive', true )
+//            ->whereNotIn('post_id', $wajumbe )
+//            ->where( $this->side_column, $this->side_id)
+//            ->exists();
+        return true;
     }
 
     /**

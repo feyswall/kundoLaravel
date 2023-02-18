@@ -14,7 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('leader_id')->constrained()->nullable();
+            try{
+                $table->foreignId('leader_id')->constrained()->nullable();
+            }catch (Exception $e){
+                print( $e );
+            }
         });
     }
 

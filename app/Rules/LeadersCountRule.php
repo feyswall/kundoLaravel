@@ -77,7 +77,7 @@ class LeadersCountRule implements Rule
      */
     public function message()
     {
-        return ("Viongozi wenye wadhifa ". $this->postObject->name. " Hawatakiwi Kuzidi ". $this->count );
+        return ("Viongozi wenye wadhifa \"". $this->postObject->name. "\" Hawatakiwi Kuzidi ". $this->count );
     }
 
 

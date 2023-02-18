@@ -27,16 +27,15 @@ class ValidateRegionLeaderRequest extends FormRequest
     public function rules()
     {
         $post = Post::find($this->input('post_id'));
-        $idadi_wajumbe_wilaya = $post->numberCount;
+        $idadi = $post->numberCount;
         return [
             'firstName' => ['required', 'string', 'max:50'],
             'middleName' => ['required', 'string', 'max:50'],
             'lastName' => ['required', 'string', 'max:50'],
             'phone' => ['required', 'max:15', new PhoneNumber()],
             'post_id' =>  [
-                new DistrictLeaderRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column')),
-                new LeadersCountRule(3, 'leader_region', 'wj_kamat_siasa_M', 'region_id', $this->input('side_id')),
-                new LeadersCountRule(13, 'leader_region', 'wj_h_kuu_M', 'region_id', $this->input('side_id'))
+//                new DistrictLeaderRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column')),
+                new LeadersCountRule($idadi, 'leader_region', $post->deep, 'region_id', $this->input('side_id'))
             ]
         ];
     }

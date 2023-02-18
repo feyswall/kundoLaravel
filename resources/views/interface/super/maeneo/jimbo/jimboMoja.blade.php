@@ -68,6 +68,7 @@
                             <x-slot:content>
                                 <form method="post" action="{{ route('super.leader.jimbo.ongeza') }}">
                                     @csrf
+                                    <input type="hidden" name="side" value="chama">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                             <div class="mb-3 mb-4">
