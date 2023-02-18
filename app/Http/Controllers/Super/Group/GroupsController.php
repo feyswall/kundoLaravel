@@ -20,7 +20,8 @@ class GroupsController extends Controller
      * @return 
      */
     public function index($side) {
-        $groups = Group::where('side', $side)->get();
+//        dd("here is the place we met before");
+        $groups = Group::where('side', $side)->orderBy('id', 'desc')->get();
         return view("interface.super.vikundi.orodhaMakundi")
         ->with("groups", $groups)
             ->with('side', $side);
