@@ -54,8 +54,6 @@
 
                 </li>
 
-
-
                  <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         
@@ -69,6 +67,11 @@
 
                 <li><a href="{{ route("super.challenge.orodha") }}"><span>Changamoto za Wabunge</span> </a></li>
 
+                    <li> <a href="javascript: void(0);" class="has-arrow">Ziala</a>
+                        <ul class="sub-menu" aria-expanded="true">
+                            <li> <a href="{{ route('super.sial.allList') }}">Orodha</a></li>
+                        </ul>
+                    </li>
                 {{--<li>--}}
                     {{--<a href="javascript: void(0);" class="has-arrow waves-effect">--}}
                         {{----}}

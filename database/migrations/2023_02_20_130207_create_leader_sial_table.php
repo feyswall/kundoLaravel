@@ -13,9 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('users', function (Blueprint $table) {
-        //     $table->foreignId('leader_id')->constrained();
-        // });
+        Schema::create('leader_sial', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('sial_id')->constrained();
+            $table->foreignId('leader_id')->constrained();
+
+            $table->string("titled")->default('copyTo');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -25,8 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('Users', function (Blueprint $table) {
-            // $table->dropColumn('leader_id');
-        });
+        Schema::dropIfExists('leader_sial');
     }
 };

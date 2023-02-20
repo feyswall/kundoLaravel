@@ -218,3 +218,16 @@ Route::controller(\App\Http\Controllers\Super\ChallengesController::class)
         Route::get('/changamoto', 'index')->name('orodha');
         Route::put('/changamoto/weka/imakamilika/{challenge}', 'acomplished')->name('acomplished');
     });
+
+
+
+
+
+Route::controller(\App\Http\Controllers\Super\SialsController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/ziara')
+    ->as('super.sial.')
+    ->group(function () {
+        Route::get('/orodhesha', 'index')->name('allList');
+        Route::get('/ongeza', 'create')->name('create');
+    });

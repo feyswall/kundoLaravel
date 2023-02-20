@@ -137,6 +137,13 @@ class Leader extends Model
     }
 
 
+    function sials()
+    {
+        return $this->belongsToMany(Sial::class)->withPivot(
+            'titled'
+        )->withTimestamps();
+    }
+
 
     
 }
