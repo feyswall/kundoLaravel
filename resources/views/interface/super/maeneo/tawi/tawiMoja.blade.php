@@ -84,16 +84,26 @@
                             $mjumbe = \App\Models\Post::where('deep', 'mjumbe_tawi')->first();
                             @endphp
 
-
+                            @php
+                                $postValue = '';
+                            @endphp
                             <div class="d-flex justify-start gap-4 flex-wrap">
                                 @foreach( $branch->leaders->where('side', 'chama') as $leader )
                                     @if( $leader->pivot->isActive == true )
+                                        @php
+                                            $postName = \App\Models\Post::find( $leader->pivot->post_id )->name;
+                                        @endphp
                                     <div class="text-center">
                                         <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
                                         <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small><br>
+                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $postName }}</small><br>
                                         <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
                                     </div>
+                                        @if( $postValue == $postName )
+                                        @else
+                                            @php $postValue = $postName; @endphp
+                                            <div class="row w-100"></div>
+                                        @endif
                                     @endif
                                 @endforeach
                             </div>

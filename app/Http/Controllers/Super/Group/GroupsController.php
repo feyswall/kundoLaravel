@@ -25,6 +25,7 @@ class GroupsController extends Controller
         return view("interface.super.vikundi.orodhaMakundi")
         ->with("groups", $groups)
             ->with('side', $side);
+
     }
 
 
