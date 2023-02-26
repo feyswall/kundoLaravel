@@ -40,6 +40,7 @@ class PDFController extends Controller
         /**this will force download your file**/
         return Storage::download($request->pdf);
     }
+
 }
 
 

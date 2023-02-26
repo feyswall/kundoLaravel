@@ -136,16 +136,32 @@ class DivisionsController extends Controller
 
 
     public function getWardsApi($id){
-        $region = Division::find( $id );
-        if ( $region ){
-            $wards = $region->wards;
-            return ['status' => 'success', 'response' => $wards ];
+        $division = Division::find( $id );
+        if ( $division ){
+            $wards = $division->wards;
+            $leaders = $division->leaders;
+            $leadersWithPosts = [];
+            foreach( $leaders as $leader ){
+                if ( $leader->pivot->isActive == true ){
+                    $post = $this->apiPostObj($leader->pivot->post_id);
+                    $leadersWithPosts[] = ['leader' => $leader, 'post' => $post];
+                }
+            }
+            $leadersWithPosts = collect($leadersWithPosts)->groupBy('leader.side');
+            return ['status' => 'success', 'response' => $wards, 'leaders' => $leadersWithPosts, 'division' => $division ];
         }else{
             return ['status' => 'error', 'message' => 'Tarafa Haukupatikana.'];
         }
 //        return ['status' => 'success'];
     }
 
-
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function apiPostObj($id) {
+        $post = Post::find( $id );
+        return $post;
+    }
 
 }

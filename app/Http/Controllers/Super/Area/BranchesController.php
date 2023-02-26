@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Super\Area;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Models\Post;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -127,5 +128,38 @@ class BranchesController extends Controller
     public function destroy(Branch $branch)
     {
         //
+    }
+
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changedbranchsApi($id)
+    {
+        $branch = Branch::where('id',  $id )->first();
+        if ( $branch ){
+            $leaders = $branch->leaders;
+            $leadersWithPosts = [];
+            foreach( $leaders as $leader ){
+                if ( $leader->pivot->isActive == true ){
+                    $post = $this->apiPostObj($leader->pivot->post_id);
+                    $leadersWithPosts[] = ['leader' => $leader, 'post' => $post];
+                }
+            }
+            $leadersWithPosts = collect($leadersWithPosts)->groupBy('leader.side');
+            return ['status' => 'success', 'leaders' => $leadersWithPosts, 'branch' => $branch ];
+        }else{
+            return ['status' => 'error', 'message' => 'Tawi Haukupatikana.'];
+        }
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function apiPostObj($id) {
+        $post = Post::find( $id );
+        return $post;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Super\Area;
 
 use App\Http\Controllers\Controller;
+use App\Models\Leader;
 use App\Models\Region;
 use Illuminate\Http\Request;
 
@@ -91,10 +92,28 @@ class RegionsController extends Controller
         $region = Region::find( $id );
         if ( $region ){
             $districts = $region->districts;
-            return ['status' => 'success', 'response' => $districts ];
+            $leaders = $region->leaders;
+            $leadersWithPosts = [];
+            foreach( $leaders as $leader ){
+                if ( $leader->pivot->isActive == true ){
+                    $post = $this->apiPostObj($leader->pivot->post_id);
+                    $leadersWithPosts[] = ['leader' => $leader, 'post' => $post, 'region' => $region];
+                }
+            }
+            $leadersWithPosts = collect($leadersWithPosts)->groupBy('leader.side');
+            return ['status' => 'success', 'response' => $districts, 'leaders' => $leadersWithPosts, 'region' => $region ];
         }else{
             return ['status' => 'error', 'message' => 'Mkoak Haukupatikana.'];
         }
 //        return ['status' => 'success'];
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function apiPostObj($id) {
+        $post = Post::find( $id );
+        return $post;
     }
 }

@@ -230,4 +230,10 @@ Route::controller(\App\Http\Controllers\Super\SialsController::class)
     ->group(function () {
         Route::get('/orodhesha', 'index')->name('allList');
         Route::get('/ongeza', 'create')->name('create');
+        Route::post('/jaza', 'store')->name('jaza');
     });
+
+// Route::controller(\App\Http\Controllers\Super\Area\WardsController::class)
+//     ->group(function () {
+//         Route::get('/watu/{id}', 'getbranchsApi')->name('create');
+//     });

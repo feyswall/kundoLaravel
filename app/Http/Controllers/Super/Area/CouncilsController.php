@@ -139,14 +139,32 @@ class CouncilsController extends Controller
      * return
      */
     public function getDivisionsApi($id){
-        $region = Council::find( $id );
-        if ( $region ){
-            $divisons = $region->divisions;
-            return ['status' => 'success', 'response' => $divisons ];
+        $council = Council::find( $id );
+        if ( $council ){
+            $divisons = $council->divisions;
+            $leaders = $council->leaders;
+            $leadersWithPosts = [];
+            foreach( $leaders as $leader ){
+                if ( $leader->pivot->isActive == true ){
+                    $post = $this->apiPostObj($leader->pivot->post_id);
+                    $leadersWithPosts[] = ['leader' => $leader, 'post' => $post];
+                }
+            }
+            $leadersWithPosts = collect($leadersWithPosts)->groupBy('leader.side');
+            return ['status' => 'success', 'response' => $divisons, 'leaders' => $leadersWithPosts, 'council' => $council ];
         }else{
             return ['status' => 'error', 'message' => 'Halmashauri Haukupatikana.'];
         }
 //        return ['status' => 'success'];
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function apiPostObj($id) {
+        $post = Post::find( $id );
+        return $post;
     }
 
 }

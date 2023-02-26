@@ -127,17 +127,33 @@ class DistrictsController extends Controller
 
 
     public function getCouncilsApi($id){
-        $region = District::find( $id );
-        if ( $region ){
-            $councils = $region->councils;
-            return ['status' => 'success', 'response' => $councils ];
+        $district = District::find( $id );
+        if ( $district ){
+            $councils = $district->councils;
+            $leaders = $district->leaders;
+            $leadersWithPosts = [];
+            foreach( $leaders as $leader ){
+                if ( $leader->pivot->isActive == true ){
+                    $post = $this->apiPostObj($leader->pivot->post_id);
+                    $leadersWithPosts[] = ['leader' => $leader, 'post' => $post];
+                }
+            }
+            $leadersWithPosts = collect($leadersWithPosts)->groupBy('leader.side');
+            return ['status' => 'success', 'response' => $councils, 'leaders' => $leadersWithPosts, 'district' => $district ];
         }else{
             return ['status' => 'error', 'message' => 'wilaya Haukupatikana.'];
         }
 //        return ['status' => 'success'];
     }
 
-
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function apiPostObj($id) {
+        $post = Post::find( $id );
+        return $post;
+    }
 
 
 }

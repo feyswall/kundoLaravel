@@ -66,6 +66,14 @@ Route::controller(\App\Http\Controllers\Super\Area\WardsController::class)
         Route::get('/tawi/orodha/{id}', 'getbranchsApi')->name('tawi.orodha');
     });
 
+Route::controller(\App\Http\Controllers\Super\Area\BranchesController::class)
+    ->prefix('/super/areas/')
+    ->as('super.areas.')
+    ->group(function () {
+//        Route::get('/wilaya/orodha/{id}', 'getDistrictsApi')->name('wilaya.orodha');
+        Route::get('/tawi/badirishwa/{id}', 'changedbranchsApi')->name('tawi.badirishwa');
+    });
+
 
 
 Route::controller(SmsServicesControlller::class)

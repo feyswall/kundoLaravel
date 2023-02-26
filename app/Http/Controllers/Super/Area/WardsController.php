@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Super\Area;
 
 use App\Http\Controllers\Controller;
 use App\Models\Division;
+use App\Models\Post;
 use App\Models\Ward;
 use function GuzzleHttp\Promise\all;
 use Illuminate\Http\Request;
@@ -136,13 +137,35 @@ class WardsController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return array
+     */
     public  function getbranchsApi($id) {
-        $region = Ward::find( $id );
-        if ( $region ){
-            $branches = $region->branches;
-            return ['status' => 'success', 'response' => $branches ];
+        $ward = Ward::where('id',  $id )->first();
+        if ( $ward ){
+            $branches = $ward->branches;
+            $leaders = $ward->leaders;
+            $leadersWithPosts = [];
+            foreach( $leaders as $leader ){
+                if ( $leader->pivot->isActive == true ){
+                    $post = $this->apiPostObj($leader->pivot->post_id);
+                    $leadersWithPosts[] = ['leader' => $leader, 'post' => $post];
+                }
+            }
+            $leadersWithPosts = collect($leadersWithPosts)->groupBy('leader.side');
+            return ['status' => 'success', 'response' => $branches, 'leaders' => $leadersWithPosts, 'ward' => $ward ];
         }else{
             return ['status' => 'error', 'message' => 'Kata Haukupatikana.'];
         }
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function apiPostObj($id) {
+        $post = Post::find( $id );
+        return $post;
     }
 }

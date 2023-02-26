@@ -237,26 +237,3 @@
         }
 </script>
 @endsection
-
-
- 
-
-
-
-
-{{-- testosterone
-
-
-Wanyama pia walionyesha wasiwasi mdogo baada ya kusikiliza.
-
-
- Imagine wa John Lennon ulitungwa katika 528 Hz.
-
-
-inaweza kusaidia uponyaji na siha ili kukusaidia kujisikia vizuri (hata hivyo, unapaswa kushauriana na daktari wako kila wakati)
-
-
-watu wanaotumia masafa ya Solfeggio pia wanaamini kuwa sauti hii itakusaidia kukuleta katika usawa bora na ulimwengu
-
-
-Kukusaidia kujisikia kushikamana zaidi na kila kitu kinachokuzunguka na kuongeza nishati yako chanya --}}
