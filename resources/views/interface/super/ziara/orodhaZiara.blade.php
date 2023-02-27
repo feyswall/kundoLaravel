@@ -46,7 +46,7 @@
                                 <td>{{ $sial->note }}</td>
                                <td>{{  Carbon\Carbon::parse($sial->created_at)->format('M d Y') }} </td>
                                <td>
-                                <a href="" class="btn btn-success btn-sm">fungua</a>
+                                <a href="{{ route("super.sial.show", $sial->id) }}" class="btn btn-success btn-sm">fungua</a>  
                                </td>
                             </tr>
                         @endforeach

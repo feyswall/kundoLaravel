@@ -4,10 +4,16 @@ namespace App\Http\Controllers\Super;
 
 use App\Models\Sial;
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
+use App\Models\Council;
+use App\Models\District;
+use App\Models\Division;
+use App\Models\Leader;
+use App\Models\Post;
+use App\Models\Region;
+use App\Models\Ward;
 use Illuminate\Support\Facades\Storage;
 use PDF;
-use \Dompdf\Dompdf;
-use Dompdf\Options;
 use Illuminate\Http\Request;
 
 class SialsController extends Controller
@@ -43,79 +49,100 @@ class SialsController extends Controller
     public function store(Request $request)
     {
 
-        $ziara = explode('-', $request->ziara );
+        $selectedCopyToLeaders = [];
+        foreach($request->selectedCopyToOptions as $requestCopyTo ){
+            $selected = explode(',', $requestCopyTo);
+            $selectedLeaderId = $selected[0];
+            $selectedPostId = $selected[1];
+            $copyToLeader = Leader::where('id', $selectedLeaderId)
+                ->with('posts', function ($query) use ($selectedPostId) {
+                    $query->where('post_id', $selectedPostId);
+                })
+                ->first();
+            $selectedCopyToLeaders[] = $copyToLeader;
+        }
 
-        $sials = $ziara;
+        $sendToPieces = explode(',', $request->selectedSendToOptions);
+        $leaderId = $sendToPieces[0];
+        $postId = $sendToPieces[1];
 
-       $datas = [ 'sials' => $sials, 'yahusu' => $request->yahusu ];
+        $sendToLeader = Leader::where('id', $leaderId)
+        ->with('posts', function($query) use ($postId){
+            $query->where('post_id', $postId);
+        })
+        ->first();
 
-//        $pdf->loadHtml('interface.super.ziara.ziaraPdf.blade.php', $data);
+
+        $sials = explode('-', $request->ziara );
+
+        $datas = [
+            'sials' => $sials,
+            'title' => $request->yahusu,
+            'copyTo' => $selectedCopyToLeaders,
+            'sendTo' => $sendToLeader
+         ];
+
 
         $pdf = PDF::loadView('interface.super.ziara.ziaraPdf', $datas);
-
         $pdfFile = $pdf->stream("challenge_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf");
-
-        $path = "app/ziara_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf";
-
+        $path = "ziara/ziara_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf";
         Storage::put($path, $pdfFile );
 
-        dd( $path );
-
-        $isImagePresent = false;
-
-        $path = null;
-
-//        $file = $request->file('pdfFile');
+  
 
         $rules = [
-//            'pdfFile' => 'sometimes|mimes:pdf|max:10000',
             'yahusu' => 'required|min:4'
         ];
 
         $messages = [
-//            'mimes' => 'Tafadhali Weka Pdf Pekee',
             'yahusu' => 'Tafadhali Jaza Yahusu'
         ];
 
-        $request->validate($rules, $messages);
+        // $request->validate($rules, $messages);
 
-//        if ( $file ){
-//            $path = Storage::putFile('ziara', $file);
-//            $fileNamesParticles = explode('/', $path );
-//            $isImagePresent = true;
-//            $fileName = end( $fileNamesParticles );
-//        }
+        $vals = [
+            'status' => 'fail',
+            'message' => 'tatizo Halikufahamika Tafadhali Jaribu Tena'
+        ];
 
-        $ziara = $request->input('ziara');
+        $image_path_particles = explode('/', $path);
 
-        $ziara = Sial::create([
-            'letter_url' => 'http://letter.pdf',
-            'note' => $request->ziara,
-            'title' => $request->yahusu
-        ]);
+        $image_name = end( $image_path_particles );
 
-        if ( !$ziara )
-        {
-            if(Storage::exists("$path")){
-                Storage::delete("$file");
-                /*
-                    Delete Multiple files this way
-                    Storage::delete(['upload/test.png', 'upload/test2.png']);
-                */
+        if (Storage::exists("$path")) {
+            $ziara = Sial::create([
+                'letter_url' => $image_name,
+                'note' => $request->ziara,
+                'title' => $request->yahusu,
+                'receiver_id' =>  $sendToLeader->id,
+                'receiver_post_id' => $sendToLeader->posts->first()->id,
+                'area_name' => $request->area['area'],
+                'area_id' =>  $request->area['id'],
+            ]);
+            if ( $ziara ){
+                foreach($request->selectedCopyToOptions as $requestCopyTo ){
+                    $selected = explode(',', $requestCopyTo);
+                    $selectedLeaderId = $selected[0];
+                    $selectedPostId = $selected[1];
+                    $copyToLeader = Leader::where('id', $selectedLeaderId)
+                    ->with('posts', function ($query) use ($selectedPostId) {
+                        $query->where('post_id', $selectedPostId);
+                    })
+                        ->first();
+                    $ziara->leaders()->attach($copyToLeader->id , ['titled' => 'copyTo', 'receiver_post_id' => $selectedPostId]);                    
+                }
+                return json_encode([
+                    'status' => 'success',
+                    'message' => 'Barua Imetumwa',
+                    'sialId' => $ziara->id,
+                ]);
+            }else{
+                return json_encode($vals);
             }
-            return redirect()->back()->with(['status' => 'error', 'message' => 'hatukuweza kuhifadhi Taalifa. Jaribu Tena']);
+        }else{
+            return json_encode( $vals );
         }
-
-//        if ( isset($path) || $path ){
-//            if ($isImagePresent) {
-//                $challenge->assets()->create([
-//                    'type' => 'pdf',
-//                    'url' => $fileName,
-//                    'user_id' => $user->id
-//                ]);
-//            }
-//        }
-        return redirect()->route('mbunge.challenges.show.exist', $ziara);
+;
     }
 
     /**
@@ -126,7 +153,56 @@ class SialsController extends Controller
      */
     public function show(Sial $sial)
     {
-        //
+        if( !$sial ){ return redirect()->back()->with(['status' => 'error', 'message' => 'barua Haikupatikana']); }
+
+        $fetchArea = $this->discoverArea($sial->area_name, $sial->area_id);
+
+        if( $fetchArea && isset( $fetchArea['status']) && $fetchArea['status'] == 'error' ){ return redirect()->back()->with(['status' => 'error', 'message' => 'barua Haikupatikana']); }
+
+        $areaObj = $fetchArea['data'];
+
+        dd( $areaObj );
+
+        $receiverObj = Leader::where('id',  $sial->receiver_id )
+        ->with('posts', function($query) use ($sial) {
+            $query->where('post_id', $sial->receiver_post_id);
+        })->first();
+
+        $copyToLeaders = [];
+        foreach( $sial->leaders as $leader ){
+            $postId = $leader->pivot->receiver_post_id;
+            $copyTo = Leader::where('id', $leader->id)->with('posts', function($query) use ($postId){
+                $query->where('post_id', $postId);
+            })->first();
+            $copyToLeaders[] = $copyTo;
+         }
+        return view("interface.super.ziara.ziaraMoja")
+        ->with("sial", $sial)
+        ->with("sendTo", $receiverObj)
+        ->with('copyTo', $copyToLeaders);
+    }
+
+
+    private function discoverArea($name, $id){
+        $locObj = '';
+        if ( $name == 'mkoa' ){
+            $locObj = Region::where('id', $id)->first();
+        }elseif( $name == 'wilaya'){
+            $locObj = District::where('id', $id)->first();
+        }elseif( $name == 'halmashauri'){
+            $locObj = Council::where('id', $id)->first();
+        }elseif( $name == 'tarafa'){
+            $locObj = Division::where('id', $id)->first();
+        }elseif( $name == 'kata'){
+            $locObj = Ward::where('id', $id)->first();
+        }elseif( $name == 'tawi' ){
+            $locObj = Branch::where('id', $id)->first();
+        }
+        if( !$locObj ){
+            return ['status' => 'error', 'message' => 'Tatizo Tafadhali Jaribu Tena'];
+        }
+        return ['status' => 'success', 'data' => $locObj ];
+
     }
 
     /**
@@ -162,4 +238,5 @@ class SialsController extends Controller
     {
         //
     }
+
 }

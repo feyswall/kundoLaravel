@@ -9,6 +9,7 @@ use App\Models\State;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class StateLeadersController extends Controller
 {
@@ -45,9 +46,22 @@ class StateLeadersController extends Controller
 
         $password = strtolower($request->firstName)." ".strtolower($request->firstName); 
 
+         $email = $request->firstName." ".$request->lastName."@kmis.com";
+
+         $rules = [
+            'email' => 'unique:users,email',
+         ];
+
+         $validate = Validator::make( ['email' => $email], $rules );
+
+         if ( $validate->fails() ) {
+               return redirect()->back()->with(['status' => 'error', 'message' => 'Email Imejirudia Katika Mfumo']);
+         }
+
+
         $user = User::create([
             'name' => $request->firstName." ".$request->lastName,
-            'email' => "default@kmis.com",
+            'email' => $email,
             'leader_id' => $leader->id,
             'password' => Hash::make($password),
         ]);

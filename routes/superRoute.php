@@ -230,6 +230,7 @@ Route::controller(\App\Http\Controllers\Super\SialsController::class)
     ->group(function () {
         Route::get('/orodhesha', 'index')->name('allList');
         Route::get('/ongeza', 'create')->name('create');
+        Route::get('/fungua/{sial}', 'show')->name('show');
         Route::post('/jaza', 'store')->name('jaza');
     });
 

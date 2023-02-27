@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid" id="app">
         <!-- start page title -->
-        <div class="row">
+        <div v-bind:class="{ 'row': niButton, 'd-none': false }">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
                     <h4 class="mb-0">Ukurasa wa Mbunge</h4>
@@ -16,7 +16,26 @@
             </div>
         </div>
         <!-- end page title -->
-        <div class="row justify-content-between">
+
+                <div v-bind:class="{ 'row': true, 'justify-content-between' : true, 'd-none': hideDom }">
+                    <div class="col-xl-12 col-md-12 col-sm-12">
+                        <div class="custom-accordion">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="p-5">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            <div v-bind:class="{ 'row': true, 'justify-content-between' : true, 'd-none': !hideDom }">
             <div class="col-xl-6 col-md-6 col-sm-12">
                 <div class="custom-accordion">
                     <div class="card">
@@ -113,7 +132,7 @@
                                 <label class="form-label">Tuma Barua Kwa  - @{{ areaSelected }}</label>
                                 <select class="form-control letterToLeader select2" v-model="selectedSendToOptions">
                                     <optgroup  v-for="(leaderArray, index) in leaders" :key="index" v-bind:label="index">
-                                        <option v-for="(leader, index) in leaderArray" :key="index" v-bind:value="leader.leader.id">
+                                        <option v-for="(leader, index) in leaderArray" :key="index" v-bind:value="leader.leader.id+','+leader.post.id">
                                             @{{ leader.leader.firstName }}  @{{ leader.leader.lastName }} - <b>@{{ leader.post.name }}</b>
                                         </option>
                                     </optgroup>
@@ -259,8 +278,7 @@
 
                                     </div>
                                 </div>
-                                <form method="POST" action="{{ route('super.sial.jaza') }}" id="withPdfForm"
-                                    enctype="multipart/form-data">
+                                <form method="POST" action="{{ route('super.sial.jaza') }}" id="withPdfForm" v-on:submit.prevent="submitSial()">
                                     @csrf
                                     <input type="hidden" name="yahusu" v-model="yahusu">
                                     <div class="col-md-12 col-sm-12 my-2">
@@ -275,16 +293,12 @@
                                     </div>
                                     <input type="hidden" name="sendTo" v-bind:value="selectedSendToOptions">
                                     <input type="hidden" name="ziara" v-bind:value="ziara">
-                                    <input type="hidden" v-bind:value="selectedCopyToOption" name="copyTo[]">
+                                    <input type="hidden" v-bind:value="selectedCopyToOption" name="copyTo">
                                     <button type="submit"
                                             v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': fichaTumaBtn }">
                                         <i class="la la-print"></i>
                                         Tuma
                                     </button>
-                                </form>
-                                <form action="{{ route('generatePDF') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" v-bind:value="ziara" name="ziara">
                                 </form>
                             </div>
                         </div>
@@ -303,6 +317,7 @@
         var app = new Vue({
             el: '#app',
             data: {
+
                 yahusu: 'Changamoto za jimbo',
                 ziara: "{!! old('ziara') !!}",
                 continueBtn: true,
@@ -314,14 +329,12 @@
                 formPrintedHide: true,
                 oldChangamoto: "{!! old('ziara') !!}",
 
-
                     region: '',
                     district: '',
                     council: '',
                     division: '',
                     ward: '',
                     branch: '',
-
 
                     districts: [],
                     councils: [],
@@ -331,6 +344,7 @@
                     leaders: [],
 
                     areaSelected: '',
+                    areaToSend: {},
                     selectedSendToOptions: '',
                     selectedCopyToOption: [],
 
@@ -343,6 +357,7 @@
                     items: [
                         {name: 'feyswall chambila'}
                     ],
+                    hideDom: true,
             },
             watch: {
                 districts: {
@@ -384,6 +399,7 @@
                                      obj.leaders = responseData.leaders;
                                      obj.districts = responseData.response;
                                      obj.areaSelected = `Mkoa - ${responseData.region.name}`;
+                                     obj.areaToSend = { 'area': 'mkoa', 'id': responseData.region.id };
                                  }else{
                                      alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                  }
@@ -413,6 +429,7 @@
                                         obj.councils = responseData.response;
                                         obj.leaders = responseData.leaders;
                                         obj.areaSelected = `Wilaya - ${responseData.district.name}`;
+                                        obj.areaToSend = { 'area': 'wilaya', 'id': responseData.district.id  };
                                     }else{
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                     }
@@ -441,6 +458,7 @@
                                         obj.divisions = responseData.response;
                                         obj.leaders = responseData.leaders;
                                         obj.areaSelected = `Halmashauri - ${responseData.council.name}`;
+                                        obj.areaToSend = { 'area': 'halmashauri', 'id': responseData.council.id };
                                     }else{
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                     }
@@ -468,6 +486,7 @@
                                         obj.wards = responseData.response;
                                         obj.leaders = responseData.leaders;
                                         obj.areaSelected = `Tarafa - ${responseData.division.name}`;
+                                        obj.areaToSend = { 'area': 'tarafa', 'id': responseData.division.id };
                                     }else{
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                     }
@@ -494,6 +513,7 @@
                                         obj.branches = responseData.response;
                                         obj.leaders = responseData.leaders;
                                         obj.areaSelected = `Kata - ${responseData.ward.name}`;
+                                        obj.areaToSend = { 'area': 'kata', 'id': responseData.ward.id };
                                     }else{
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                     }
@@ -518,6 +538,7 @@
                                     if  ( true ){
                                         obj.leaders = responseData.leaders;
                                         obj.areaSelected = `Tawi - ${responseData.branch.name}`;
+                                        obj.areaToSend = { 'area': 'tawi', 'id': responseData.ward.id };
                                     }else{
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                     }
@@ -529,6 +550,43 @@
                         .catch(function (error) {
                             alert(error);
                         });
+                },
+
+                submitSial() {
+                    const obj = this;
+                    obj.hideDom = false;
+                    axios.post(`/super/ziara/jaza`, {
+                            yahusu: this.yahusu,
+                            selectedSendToOptions: this.selectedSendToOptions,
+                            ziara: this.ziara,
+                            selectedCopyToOptions: this.selectedCopyToOption,
+                            area: this.areaToSend,
+                        })
+                        .then(function (response) {
+                            let responseData = Array;
+                            if ( response.data ){
+                                responseData = response.data;
+                                if ( responseData.status === 'success' ){
+                                    if  ( true ){
+                                        alert('Barua Imetumwa');
+                                        location.href = `/super/ziara/fungua/${responseData.sialId}`;
+                                    }else{
+                                          obj.hideDom = true;
+                                        alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
+                                    }
+                                }else{
+                                      obj.hideDom = true;
+                                    alert( responseData.message )
+                                }
+                            }
+                        })
+                        .catch(function (error) {
+                              obj.hideDom = true;
+                            alert(error);
+                        })
+                        .then(() => { 
+                           
+                         })
                 },
             },
             computed: {

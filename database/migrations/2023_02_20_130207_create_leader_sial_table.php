@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sial_id')->constrained();
             $table->foreignId('leader_id')->constrained();
+            $table->integer('receiver_post_id');
 
             $table->string("titled")->default('copyTo');
             $table->timestamps();
