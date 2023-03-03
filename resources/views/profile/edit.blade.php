@@ -27,8 +27,16 @@
         </div>
     </div>
 </x-app-layout> --}}
-
-@extends('layouts.super_system')
+<?php
+    $user = Illuminate\Support\Facades\Auth::user();
+?>
+@if ( $user->hasRole('super') )
+    @extends('layouts.super_system')
+@elseif ( $user->hasRole('mbunge') )
+    @extends('layouts.mbunge_system')    
+@elseif ( $user->hasRole('general') )
+    @extends('layouts.general_system')
+@endif
 
 @section('content')
     <div class="row justify-content-start">

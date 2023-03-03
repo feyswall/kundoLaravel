@@ -18,14 +18,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-//        DB::table('users')->delete();
-//
-//        $user = User::create([
-//            'name' => "Feyswal Alphonce",
-//            'email' => 'owner@gmail.com',
-//            'password' => Hash::make('password'),
-//        ]);
-//        $user->assignRole('super');
+       DB::table('users')->delete();
+
+       $user = User::create([
+           'name' => "Feyswal Alphonce",
+           'email' => 'owner@gmail.com',
+           'password' => Hash::make('password'),
+       ]);
+       $user->assignRole('super');
 
         // $mbunge = User::create([
         //     'name' => "Juma Pesambili",

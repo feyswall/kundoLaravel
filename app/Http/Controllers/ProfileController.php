@@ -35,12 +35,12 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-              $rules = [
+        $rules = [
             'name' => [
                 'required', 'string', 'max:50',
             ],
             'email' => [
-                'required', 'string', 'max:50',
+                'required', 'string', 'max:50', 'unique:users,email',
             ],
         ];
 
@@ -52,6 +52,7 @@ class ProfileController extends Controller
             "email.required" => "Barua pepe lazima ijazwe",
             "email.string"  => "Barua pepe lazima iwe na maneno pekee",
             "email.max" => "Barua pepe isizidi herufi hamsini (50)",
+            "email.unique" => "Email tayari imepatikana katika mfumo",
         ];
 
         $validate = Validator::make($request->all() ,$rules, $messages );
@@ -148,4 +149,6 @@ class ProfileController extends Controller
                 ->with(['status' => 'error', 'message' => 'Nywila ya zamani sio sahihi!']);
         }
     }
+
+
 }

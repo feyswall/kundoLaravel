@@ -24,6 +24,7 @@ class PermissionSeeder extends Seeder
         $super_role = Role::create([
             'name' => 'super',
         ]);
+
         $mbunge_role = Role::create([
             'name' => 'mbunge'
         ]);

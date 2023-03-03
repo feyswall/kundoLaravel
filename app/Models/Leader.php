@@ -140,7 +140,7 @@ class Leader extends Model
     function sials()
     {
         return $this->belongsToMany(Sial::class)->withPivot(
-            'titled', 'receiver_post_id',
+            'titled', 'receiver_post_id', 'seen',
         )->withTimestamps();
     }
 

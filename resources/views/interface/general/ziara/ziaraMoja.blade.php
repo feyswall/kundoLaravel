@@ -1,4 +1,4 @@
-@extends("layouts.super_system")
+@extends("layouts.general_system")
 
 @section("content")
     <div class="col-md-12 col-sm-12">
@@ -10,7 +10,7 @@
                     <input type="hidden" value="{{ 'ziara/'.$sial->letter_url }}" name="pdf">
                     <button  class="btn btn-dark float-end mt-lg-3 mt-sm-2" type="submit">pakua pdf ya barua</button>
                 </form>
-                     <a href="{{ route('super.sial.allList') }}"  class="btn btn-primary float-end mt-lg-3 mt-sm-2 mx-2">Orodha Barua Zote</a> 
+                     <a href="{{ route('general.sial.orodha') }}"  class="btn btn-primary float-end mt-lg-3 mt-sm-2 mx-2">Orodha Barua Zote</a> 
             </div>
         </div>
         <div class="card-body">

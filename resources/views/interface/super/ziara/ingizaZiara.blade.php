@@ -499,6 +499,7 @@
                             alert(error);
                         });
                 },
+                
                 wardOnChange() {
                     let obj = this;
                     this.branches = [];
@@ -538,7 +539,7 @@
                                     if  ( true ){
                                         obj.leaders = responseData.leaders;
                                         obj.areaSelected = `Tawi - ${responseData.branch.name}`;
-                                        obj.areaToSend = { 'area': 'tawi', 'id': responseData.ward.id };
+                                        obj.areaToSend = { 'area': 'tawi', 'id': responseData.branch.id };
                                     }else{
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                     }

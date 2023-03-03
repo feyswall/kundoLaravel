@@ -72,7 +72,6 @@ class SialsController extends Controller
         })
         ->first();
 
-
         $sials = explode('-', $request->ziara );
 
         $datas = [
@@ -82,13 +81,10 @@ class SialsController extends Controller
             'sendTo' => $sendToLeader
          ];
 
-
         $pdf = PDF::loadView('interface.super.ziara.ziaraPdf', $datas);
         $pdfFile = $pdf->stream("challenge_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf");
         $path = "ziara/ziara_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf";
         Storage::put($path, $pdfFile );
-
-  
 
         $rules = [
             'yahusu' => 'required|min:4'
@@ -155,13 +151,11 @@ class SialsController extends Controller
     {
         if( !$sial ){ return redirect()->back()->with(['status' => 'error', 'message' => 'barua Haikupatikana']); }
 
-        $fetchArea = $this->discoverArea($sial->area_name, $sial->area_id);
+        $fetchArea = AreasController::discoverArea($sial->area_name, $sial->area_id);
 
         if( $fetchArea && isset( $fetchArea['status']) && $fetchArea['status'] == 'error' ){ return redirect()->back()->with(['status' => 'error', 'message' => 'barua Haikupatikana']); }
 
         $areaObj = $fetchArea['data'];
-
-        dd( $areaObj );
 
         $receiverObj = Leader::where('id',  $sial->receiver_id )
         ->with('posts', function($query) use ($sial) {
@@ -179,31 +173,10 @@ class SialsController extends Controller
         return view("interface.super.ziara.ziaraMoja")
         ->with("sial", $sial)
         ->with("sendTo", $receiverObj)
+        ->with('area', $areaObj )
         ->with('copyTo', $copyToLeaders);
     }
 
-
-    private function discoverArea($name, $id){
-        $locObj = '';
-        if ( $name == 'mkoa' ){
-            $locObj = Region::where('id', $id)->first();
-        }elseif( $name == 'wilaya'){
-            $locObj = District::where('id', $id)->first();
-        }elseif( $name == 'halmashauri'){
-            $locObj = Council::where('id', $id)->first();
-        }elseif( $name == 'tarafa'){
-            $locObj = Division::where('id', $id)->first();
-        }elseif( $name == 'kata'){
-            $locObj = Ward::where('id', $id)->first();
-        }elseif( $name == 'tawi' ){
-            $locObj = Branch::where('id', $id)->first();
-        }
-        if( !$locObj ){
-            return ['status' => 'error', 'message' => 'Tatizo Tafadhali Jaribu Tena'];
-        }
-        return ['status' => 'success', 'data' => $locObj ];
-
-    }
 
     /**
      * Show the form for editing the specified resource.

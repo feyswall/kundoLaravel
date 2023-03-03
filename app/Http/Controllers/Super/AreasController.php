@@ -4,83 +4,36 @@ namespace App\Http\Controllers\Super;
 
 use App\Http\Controllers\Controller;
 use App\Models\Area;
+use App\Models\Branch;
+use App\Models\Council;
+use App\Models\District;
+use App\Models\Division;
+use App\Models\Region;
+use App\Models\Ward;
 use Illuminate\Http\Request;
 
 class AreasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    
+    public static function discoverArea($name, $id)
     {
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Area  $area
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Area $area)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Area  $area
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Area $area)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Area  $area
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Area $area)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Area  $area
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Area $area)
-    {
-        //
+        $locObj = '';
+        if ($name == 'mkoa') {
+            $locObj = Region::where('id', $id)->first();
+        } elseif ($name == 'wilaya') {
+            $locObj = District::where('id', $id)->first();
+        } elseif ($name == 'halmashauri') {
+            $locObj = Council::where('id', $id)->first();
+        } elseif ($name == 'tarafa') {
+            $locObj = Division::where('id', $id)->first();
+        } elseif ($name == 'kata') {
+            $locObj = Ward::where('id', $id)->first();
+        } elseif ($name == 'tawi') {
+            $locObj = Branch::where('id', $id)->first();
+        }
+        if (!$locObj) {
+            return ['status' => 'error', 'message' => 'Tatizo Tafadhali Jaribu Tena'];
+        }
+        return ['status' => 'success', 'data' => $locObj];
     }
 }

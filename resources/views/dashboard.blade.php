@@ -24,3 +24,6 @@
     @include('interface.mbunge.dashboard')
 @endhasrole
 
+@hasrole("general")
+    @include('interface.general.dashboard')
+@endhasrole

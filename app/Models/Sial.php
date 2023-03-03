@@ -14,7 +14,13 @@ class Sial extends Model
     public function leaders()
     {
         return $this->belongsToMany(Leader::class)->withPivot(
-            'titled', 'receiver_post_id',
+            'titled', 'receiver_post_id', 'seen'
         )->withTimestamps();
+    }
+
+    public function inToMany(User $user)
+    {
+        $leader = $this->leaders()->where('leader_id', $user->leader->id)->first();
+        return $leader;
     }
 }

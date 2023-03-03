@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('receiver_post_id');
 
             $table->string("titled")->default('copyTo');
+            $table->boolean('seen')->default('false');
             $table->timestamps();
         });
     }

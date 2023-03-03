@@ -24,13 +24,61 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/account', function (){
+
+        $gen = \Spatie\Permission\Models\Role::where('name', 'general')->first();
+
+        if ( !$gen ){
+            $general = \Spatie\Permission\Models\Role::create([
+                'name' => 'general',
+            ]);
+        }
+
+        $leaders = Leader::select('firstName', 'lastName')->distinct('firstName', 'lastName')->get();
+        $wanted = [];
+        foreach ( $leaders as $leader ){
+            $wanted[] = Leader::where('firstName', $leader->firstName)
+                ->where('lastName', $leader->lastName)
+                ->first();
+        }
+
+        foreach ( $wanted as $leader )
+        {
+        if ( $leader->user == null ){
+
+                $password = strtolower($leader->firstName)."".strtolower($leader->lastName);
+
+                $email = strtolower($leader->firstName)."".strtolower($leader->lastName).".general@kims.com";
+
+                $rules = [
+                    'email' => 'unique:users,email',
+                ];
+
+                $validate = \Illuminate\Support\Facades\Validator::make( ['email' => $email], $rules );
+
+                if ( $validate->fails() ) {
+                    continue;
+                }
+
+                $user = \App\Models\User::create([
+                    'name' => $leader->firstName." ".$leader->lastName,
+                    'email' => $email,
+                    'leader_id' => $leader->id,
+                    'password' => Hash::make($password),
+                ]);
+
+                $user->assignRole("general");
+            }
+        }
+});
+
 Route::get('/dashboard', function () {
     /** selecting all leaders from our database */
     $leaders = Leader::where("id", ">",  0)
         ->with('posts')->get();
     return view('dashboard')
     ->with("leaders", $leaders);
-})->middleware(['auth', 'verified', 'role:super|mbunge'])->name('dashboard');
+})->middleware(['auth', 'verified', 'role:super|mbunge|general'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/show', [ProfileController::class, 'show'])->name('profile.show');
@@ -63,3 +111,5 @@ require __DIR__.'/auth.php';
 require __DIR__.'/superRoute.php';
 
 require __DIR__.'/mbungeRoute.php';
+
+require __DIR__."/general.php";

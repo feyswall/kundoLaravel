@@ -39,14 +39,13 @@ class StateLeadersController extends Controller
      */
     public function store(ValidateStateLeaderRequest $request)
     {
-  
         $obj = new LeadersController();
         $leader = $obj->store( $request );
         $obj->attachMany( $leader->states(), $request, $leader );
 
-        $password = strtolower($request->firstName)." ".strtolower($request->firstName); 
+        $password = strtolower($request->firstName)."".strtolower($request->firstName);
 
-         $email = $request->firstName." ".$request->lastName."@kmis.com";
+         $email = strtolower($request->firstName)."".strtolower($request->firstName).".mbunge@kims.com";
 
          $rules = [
             'email' => 'unique:users,email',
@@ -55,9 +54,8 @@ class StateLeadersController extends Controller
          $validate = Validator::make( ['email' => $email], $rules );
 
          if ( $validate->fails() ) {
-               return redirect()->back()->with(['status' => 'error', 'message' => 'Email Imejirudia Katika Mfumo']);
+               return redirect()->back()->with(['status' => 'error', 'message' => 'Email Imejirudia Katika Mfumo.']);
          }
-
 
         $user = User::create([
             'name' => $request->firstName." ".$request->lastName,
