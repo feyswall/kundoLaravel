@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-         Schema::table('users', function (Blueprint $table) {
-             if ( !( Schema::hasColumn('users', 'leader_id') ) ){
-                 $table->foreignId('leader_id')->constrained();
-             }
-         });
+        Schema::create('garages', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('region_id')->constrained();
+            $table->string('name');
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -27,9 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('Users', function (Blueprint $table) {
-            $table->dropForeign(['leader_id']);
-            $table->dropColumn('leader_id');
-        });
+        Schema::dropIfExists('garages');
     }
 };

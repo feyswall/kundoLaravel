@@ -1,0 +1,160 @@
+<?php
+
+namespace App\Http\Controllers\Super;
+
+use App\Models\Motor;
+use App\Http\Controllers\Controller;
+use function App\Repositories\rules;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class MotorsController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $motors = Motor::all();
+        return view('interface.super.vyomboMoto.vyomboOrodha')
+            ->with('motors', $motors);
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $rules = [
+            'identityName' => 'required',
+            'writeTypeBool' => 'required',
+            'owner' => 'required',
+            'writeOwnerBool' => 'required',
+            'year' => 'required',
+            'color' => 'required',
+            'gender' => 'required',
+            'motorCategory' => 'required',
+        ];
+
+        $messages = [
+            'identityName.required' => 'Jina la Utambulisho wa Chombo Linahitajika',
+            'writeTypeBool.required' => 'Taradhali azisha ukurasa upya na ujaribu tena',
+            'owner.required' => 'Taradhali anzisha ukurasa upya na ujaribu tena',
+            'writeOwnerBool.required' => 'Taradhali anzisha ukurasa upya na ujaribu tena',
+            'year.required' => 'Taradhali Jaza Mwaka Wa Kutengezezwa Chombo',
+            'color' => 'Tafadhali jaza rangi ya gari',
+        ];
+        $validate = Validator::make($request->all(), $rules, $messages);
+
+        if ( $validate->fails() ){
+            return response()->json(['status' => 'fail', 'messages' => $validate->errors()->all() ]);
+        }
+
+        // Initialize all data required to create motor
+        $motorTypeId = $request->input('motorType');
+        $motorModelId = $request->input('motorModel');
+        $ownerId = $request->input('owner');
+
+        if ( $request->writeTypeBool ){
+            //  create new motor type
+            $motorType = new MotorTypesController();
+            $motorTypeFunct = $motorType->createNewTypeLogic([
+                'name' => $request->input('type_name'),
+                'id' => $request->input('motorCategory'),
+            ]);
+            if ( $motorTypeFunct['status'] == 'fail'){
+                return response()->json( $motorTypeFunct );
+            }
+            $motorTypeObj = $motorTypeFunct['obj'];
+
+            // create new motor model
+            $motorModel = new MotorModelsController();
+            $motorModelFunct = $motorModel->createNewModelLogic(['name' => $request->input('model_name'), 'id' => $motorTypeObj->id ]);
+            if ( $motorModelFunct['status'] == 'fail'){
+                return response()->json( $motorModelFunct );
+            }
+            $motorModelObj = $motorModelFunct['obj'];
+            $motorTypeId = $motorTypeObj->id;
+            $motorModelId = $motorModelObj->id;
+        }
+
+        if ( $request->writeOwnerBool ){
+            // create owner
+            $owner = new OwnersController();
+            $ownerFunct = $owner->createNewOwnerLogic([
+                'name' => $request->input('owner_name'),
+                'gender' => $request->input('gender'),
+            ]);
+
+            if ( $ownerFunct['status'] == 'fail'){
+                return response()->json( $ownerFunct);
+            }
+            $ownerObj = $ownerFunct['obj'];
+            $ownerId = $ownerObj->id;
+        }
+        // create motor
+        $motor = Motor::create([
+            'owner_id' => $ownerId,
+            'motor_type_id' => $motorTypeId,
+            'motor_model_id' => $motorModelId,
+            'identity_name' => $request->input('identityName'),
+            'year' => $request->input('year'),
+            'color' => $request->input('color'),
+            'motor_category_id' => $request->input('motorCategory'),
+        ]);
+        if ( !$motor ){
+            return response()->json(['status' => 'fail', 'messages' => ['Imeshindikana kusajiri kwa sasa tafadhari jaribu tena']]);
+        }
+        return response()->json(['status' => 'success', 'messages' => ['Chombo kimesajiriwa']], 201);
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Motor  $motor
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Motor $motor)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Motor  $motor
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Motor $motor)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Motor  $motor
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Motor $motor)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Motor  $motor
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Motor $motor)
+    {
+        //
+    }
+}

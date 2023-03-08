@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-         Schema::table('users', function (Blueprint $table) {
-             if ( !( Schema::hasColumn('users', 'leader_id') ) ){
-                 $table->foreignId('leader_id')->constrained();
-             }
-         });
+        Schema::table('motors', function (Blueprint $table) {
+              $table->foreignId('motor_model_id')->constrained();
+        });
     }
 
     /**
@@ -27,9 +25,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('Users', function (Blueprint $table) {
-            $table->dropForeign(['leader_id']);
-            $table->dropColumn('leader_id');
+        Schema::table('motors', function (Blueprint $table) {
+            $table->dropForeign(['motor_model_id']);
+            $table->dropColumn('motor_model_id');
         });
     }
 };

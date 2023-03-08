@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('leader_sms', function (Blueprint $table) {
+        Schema::create('owners', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("sms_id")->constrained();
-            $table->foreignId("leader_id")->constrained();
-
-            $table->index("sms_id");
-            $table->index("leader_id");
+            $table->string('name');
+            $table->string('gender');
             $table->timestamps();
         });
     }
@@ -27,10 +24,10 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      *
-     * @return void
+     * @return voidside
      */
     public function down()
     {
-        Schema::dropIfExists('leader_sms');
+        Schema::dropIfExists('owners');
     }
 };

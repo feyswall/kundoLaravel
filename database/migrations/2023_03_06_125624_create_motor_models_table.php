@@ -12,14 +12,11 @@ return new class extends Migration
      * @return void
      */
     public function up()
-    {
-        Schema::create('leader_sms', function (Blueprint $table) {
+    {   
+        Schema::dropIfExists('motor_models');
+        Schema::create('motor_models', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("sms_id")->constrained();
-            $table->foreignId("leader_id")->constrained();
-
-            $table->index("sms_id");
-            $table->index("leader_id");
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('leader_sms');
+       Schema::dropIfExists('motor_models');
     }
 };

@@ -84,5 +84,26 @@ Route::controller(SmsServicesControlller::class)
     Route::get('status/{phone}/{request_id}', 'smsStatusApi')->name('group.orodha');
 });
 
+Route::controller(\App\Http\Controllers\Super\MotorTypesController::class)
+->prefix('/super/motor/type/')
+->as('super.motor.type.')
+->group(function () {
+    Route::get('getModels/{id}', 'getModels')->name('get.models');
+});
 
+
+Route::controller(\App\Http\Controllers\Super\MotorCategoriesController::class)
+    ->prefix('/super/motor/category/')
+    ->as('super.motor.category.')
+    ->group(function () {
+        Route::get('getTypes/{id}', 'getTypes')->name('get.types');
+    });
+
+
+Route::controller(\App\Http\Controllers\Super\MotorsController::class)
+    ->prefix('/super/vyombo/vya/moto')
+    ->as('super.motor.')
+    ->group(function () {
+        Route::POST('/sajiri', 'store')->name('store');
+    });
 

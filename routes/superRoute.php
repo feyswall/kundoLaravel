@@ -221,8 +221,6 @@ Route::controller(\App\Http\Controllers\Super\ChallengesController::class)
 
 
 
-
-
 Route::controller(\App\Http\Controllers\Super\SialsController::class)
     ->middleware(['auth', 'role:super'])
     ->prefix('/super/ziara')
@@ -232,6 +230,24 @@ Route::controller(\App\Http\Controllers\Super\SialsController::class)
         Route::get('/ongeza', 'create')->name('create');
         Route::get('/fungua/{sial}', 'show')->name('show');
         Route::post('/jaza', 'store')->name('jaza');
+    });
+
+
+Route::controller(\App\Http\Controllers\Super\MotorsController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/vyombo/vya/moto')
+    ->as('super.motor.')
+    ->group(function () {
+        Route::get('/orodhesha', 'index')->name('allList');
+    });
+
+
+Route::controller(\App\Http\Controllers\Super\ServicesController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/services/')
+    ->as('super.service.')
+    ->group(function () {
+        Route::get('/orodhesha', 'index')->name('allList');
     });
 
 // Route::controller(\App\Http\Controllers\Super\Area\WardsController::class)
