@@ -32,4 +32,9 @@ class Motor extends Model
     {
         return $this->belongsTo( MotorModel::class );
     }
+
+    public function services()
+    {
+        return $this->hasMany( Service::class );
+    }
 }

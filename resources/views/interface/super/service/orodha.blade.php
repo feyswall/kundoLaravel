@@ -36,10 +36,19 @@
                             <th></th>
                             </thead>
                             <tbody>
+                            @php $totalCost = 0; @endphp
                             @foreach( $services as $key => $service )
                                 <tr>
                                     <td>{{ \Carbon\Carbon::parse($service->created_at)->format("D M Y") }}</td>
-                                    <td></td>
+                                    <td>{{ $service->motor->identityName }}</td>
+                                    <td>{{ $service->garage->name }}</td>
+                                    <td>
+                                        @foreach( $service->service_types as $serviceType )
+                                                <p>{{ $serviceType->name }}, </p>
+                                            @php $totalCost += $totalCost + $serviceType->cost; @endphp
+                                            @endforeach
+                                    </td>
+                                    <td>{{ $totalCost }}</td>
                                     <td>
                                         <a href="#" class="btn btn-sm btn-success">fungua</a>
                                     </td>
