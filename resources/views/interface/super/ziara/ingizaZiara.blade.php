@@ -6,7 +6,7 @@
         <div v-bind:class="{ 'row': niButton, 'd-none': false }">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0">Ukurasa wa Mbunge</h4>
+                    <h4 class="mb-0">Tuma Barua Hapa</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Changamoto</a></li>
@@ -120,7 +120,7 @@
 
 
                              <div class="col-lg-3" v-if="branches.length > 0">
-                              <label class="form-label">Branches</label>
+                              <label class="form-label">Matawi</label>
                                     <select name="branch" id="branch" v-model="branch" class="form-control select2" v-on:change="branchOnChange()">
                                         <optgroup>
                                             <option class="text-dark" v-for="branch in branches" v-bind:value="branch.id">@{{ branch.name }}</option>
@@ -318,7 +318,7 @@
             el: '#app',
             data: {
 
-                yahusu: 'Changamoto za jimbo',
+                yahusu: 'Kuhusu Ziara Yangu',
                 ziara: "{!! old('ziara') !!}",
                 continueBtn: true,
                 route: '',
