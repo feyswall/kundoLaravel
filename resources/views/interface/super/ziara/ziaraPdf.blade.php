@@ -72,9 +72,9 @@
 </div>
 
 <div style="text-align: center; margin-top: 10px;">
-    <img src="{{ public_path('assets/images/sign.jpeg') }}"  style="width: 120px;">
+    <img src="{{ public_path('assets/images/true_sign.jpg') }}"  style="width: 120px;">
     <div>
-        <span style="font-family: "Lucida Console", monospace, sans-serif"><i>Eng: Nkundo Mathew</i></span>
+        <span style="font-family: "Lucida Console", monospace, sans-serif"><i>Mhe.Eng. Kundo Andrea Mathew(Mb)</i></span>
     </div>
 </div>
 
