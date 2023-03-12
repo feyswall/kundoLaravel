@@ -39,14 +39,28 @@ class LeadersController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  App\Models\Leader;
-     * @return \Illuminate\Http\Response
-     */
+
     public function store($formData)
     {
+        // first create user with exact details
+        $gen = \Spatie\Permission\Models\Role::where('name', 'general')->first();
+
+        if ( !$gen ){
+            $general = \Spatie\Permission\Models\Role::create([
+                'name' => 'general',
+            ]);
+        }
+        $firstAndLastName = strtolower($formData->firstName)."".strtolower($formData->lastName);
+        $user = \App\Models\User::create([
+            'name' => $firstAndLastName,
+            'email' => $firstAndLastName.".general@kims.com",
+            'password' => Hash::make($firstAndLastName),
+        ]);
+
+        if ( !$user ){
+            return redirect()->back()->with(['status' => 'error', 'message' => 'imeshindikana tafadhali jaribu tena']);
+        }
+
         $phone = preg_replace("/^0/", "255", $formData->phone);
         $phone = preg_replace("/\s/", "", $phone );
         $leader = Leader::create([
@@ -55,6 +69,7 @@ class LeadersController extends Controller
             'lastName' => $formData->lastName,
             'phone' => $phone,
             'side' => $formData->side,
+            'user_id' => $user->id,
         ]);
         return $leader;
     }

@@ -25,7 +25,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'leader_id',
     ];
 
     /**
@@ -48,11 +47,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function leader(): BelongsTo
+    public function leader(): HasOne
     {
-        return $this->belongsTo( Leader::class );
+        return $this->hasOne( Leader::class );
     }
 
 
