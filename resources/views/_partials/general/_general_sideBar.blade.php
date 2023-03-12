@@ -25,7 +25,7 @@
                     <a href="{{ route('dashboard') }}"> <span>Nyumbani</span> </a>
                 </li>
                 <li>
-                    <a href="{{ route('general.sials.orodha') }}"><span>Barua</span> </a>
+                    <a href="{{ route('general.sial.orodha') }}"><span>Barua</span> </a>
                 </li>
             </ul>
         </div>
