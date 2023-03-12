@@ -95,6 +95,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/update-profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/update-password', [ProfileController::class, 'password'])->name('profile.password');
+    Route::patch('/update-phone-number/{id}', [ProfileController::class, 'phone'])->name('profile.phone');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

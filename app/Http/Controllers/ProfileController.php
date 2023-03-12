@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
+use App\Rules\PhoneNumber;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -148,6 +149,48 @@ class ProfileController extends Controller
             return redirect()->back()
                 ->with(['status' => 'error', 'message' => 'Nywila ya zamani sio sahihi!']);
         }
+    }
+
+
+    public function phone($id, Request $request)
+    {
+        $rules = [
+            'phone' => ['required', new PhoneNumber() ],
+        ];
+        $messages = [
+            'required' => 'namba ya simu Inahitajika',
+        ];
+        $validate = Validator::make($request->all(), $rules, $messages);
+        if ( $validate->fails() ){
+            return \redirect()->back()->withErrors( $validate->errors() );
+        }
+        $userBuilder = User::where('id', $id);
+        if( !($userBuilder->exists()) ){
+              return \redirect()->back()->with(['status' => 'error', 'message' => 'Imeshindikana Tafadhari Jaribu Tena']);
+        }
+        $user = $userBuilder->first();
+        if( !($user->leader) ){
+            return \redirect()->back()->with(['status' => 'error', 'message' => 'Imeshindikana Tafadhari Jaribu Tena']);
+        }
+        // change the phone number
+        $phone = $request->phone;
+
+        if( preg_match("/^255[0-9]{9}$/", $phone ) ){
+            return ['status' => 'error','name' => 'validation', 'error' => ['phone' => 'Namba ya simu si sahihi yabididi kuandikwa "0628960877"'] ];
+        }
+        $phone = preg_replace("/^0/", "255", $phone);
+        $phone = preg_replace("/\s/", "", $phone );
+
+        $isUpdated = $user->leader->update([
+            'phone' => $phone
+        ]);
+
+        if( $isUpdated ){
+            return \redirect()->back()->with(['status' => 'success', 'message' => 'Namba ya simu Imebadirishwa']);
+        }else{
+            return \redirect()->back()->with(['status' => 'error', 'message' => 'imeshindikana tafadhali jaribu tena']);
+        }
+
     }
 
 

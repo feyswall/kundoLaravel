@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Leader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class LeadersController extends Controller
@@ -50,15 +51,29 @@ class LeadersController extends Controller
                 'name' => 'general',
             ]);
         }
+
         $firstAndLastName = strtolower($formData->firstName)."".strtolower($formData->lastName);
+        $email = $firstAndLastName.".general@kims.com";
+
+        $rules = [
+            'email' => 'unique:users,email',
+        ];
+
+        $validate = Validator::make( ['email' => $email], $rules );
+
+        if ( $validate->fails() ) {
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Email Imejirudia Katika Mfumo.']);
+        }
+
+
         $user = \App\Models\User::create([
             'name' => $firstAndLastName,
-            'email' => $firstAndLastName.".general@kims.com",
+            'email' => $email,
             'password' => Hash::make($firstAndLastName),
         ]);
 
         if ( !$user ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'imeshindikana tafadhali jaribu tena']);
+            return null;
         }
 
         $phone = preg_replace("/^0/", "255", $formData->phone);

@@ -24,11 +24,7 @@ class SialsController extends Controller
         });
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $copyTo = Sial::select("*")
@@ -62,12 +58,9 @@ class SialsController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Sial  $sial
-     * @return \Illuminate\Http\Response
-     */
+
+
+
     public function show(Sial $sial)
     {
         $this->authorize('view', $sial);

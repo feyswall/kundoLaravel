@@ -41,9 +41,12 @@ class StateLeadersController extends Controller
     {
         $obj = new LeadersController();
         $leader = $obj->store( $request );
-        $obj->attachMany( $leader->states(), $request, $leader );
 
-        $password = strtolower($request->firstName)."".strtolower($request->firstName);
+        if ( !$leader ){
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Usajiri umashindikana tafadhali jaribu tena.']);
+        }
+
+        $obj->attachMany( $leader->states(), $request, $leader );
 
          $email = strtolower($request->firstName)."".strtolower($request->firstName).".mbunge@kims.com";
 
@@ -57,12 +60,7 @@ class StateLeadersController extends Controller
                return redirect()->back()->with(['status' => 'error', 'message' => 'Email Imejirudia Katika Mfumo.']);
          }
 
-        $user = User::create([
-            'name' => $request->firstName." ".$request->lastName,
-            'email' => $email,
-            'leader_id' => $leader->id,
-            'password' => Hash::make($password),
-        ]);
+         $user = $leader->user;
 
         $user->assignRole("mbunge");
 
