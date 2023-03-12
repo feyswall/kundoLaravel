@@ -21,7 +21,7 @@ use App\Http\Controllers\Super\Posts\PostsController;
 Route::controller(\App\Http\Controllers\General\SialsController::class)
     ->middleware(['auth', 'role:general'])
     ->prefix('/general/ziara')
-    ->as('general.ziara.')
+    ->as('general.sials.')
     ->group(function () {
         Route::get('/orodha', 'index')->name('orodha');
     });

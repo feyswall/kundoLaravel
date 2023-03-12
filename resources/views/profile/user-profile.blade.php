@@ -6,5 +6,5 @@
 @elseif ( $user->hasRole('mbunge'))
   @include('profile.mbunge-profile')
 @elseif ( $user->hasRole('general'))
-  @include('profi')
+  @include('profile.general-profile')
 @endif
