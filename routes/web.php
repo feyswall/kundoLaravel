@@ -29,8 +29,8 @@ Route::get('/account', function (){
         $gen = \Spatie\Permission\Models\Role::where('name', 'general')->first();
 
         if ( !$gen ){
-            $general = \Spatie\Permission\Models\Role::create([
-                'name' => 'general',
+                $general = \Spatie\Permission\Models\Role::create([
+                    'name' => 'general',
             ]);
         }
 
@@ -70,6 +70,16 @@ Route::get('/account', function (){
                 $user->assignRole("general");
             }
         }
+});
+
+
+Route::get('/reverse_account', function (){
+    $users = \App\Models\User::all();
+    foreach ( $users as $user ){
+        $user->leader()->update([
+            'user_id' => $user->id,
+        ]);
+    }
 });
 
 Route::get('/dashboard', function () {

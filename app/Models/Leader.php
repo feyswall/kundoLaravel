@@ -126,8 +126,6 @@ class Leader extends Model
 
 
 
-
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -140,7 +138,7 @@ class Leader extends Model
     function sials()
     {
         return $this->belongsToMany(Sial::class)->withPivot(
-            'titled', 'receiver_post_id', 'seen',
+            'titled', 'receiver_post_id', 'seen'
         )->withTimestamps();
     }
 
