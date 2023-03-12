@@ -48,7 +48,6 @@ class SialsController extends Controller
      */
     public function store(Request $request)
     {
-
         $selectedCopyToLeaders = [];
         foreach($request->selectedCopyToOptions as $requestCopyTo ){
             $selected = explode(',', $requestCopyTo);
@@ -82,6 +81,7 @@ class SialsController extends Controller
          ];
 
         $pdf = PDF::loadView('interface.super.ziara.ziaraPdf', $datas);
+
         $pdfFile = $pdf->stream("challenge_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf");
         $path = "ziara/ziara_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf";
         Storage::put($path, $pdfFile );

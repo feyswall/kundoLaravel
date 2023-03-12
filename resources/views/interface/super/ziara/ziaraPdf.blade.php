@@ -26,10 +26,38 @@
             size: letter;
             margin: 20mm;
         }
+
+        /**
+  * Define the width, height, margins and position of the watermark.
+  **/
+        #watermark {
+            position: fixed;
+
+            /**
+                Set a position in the page for your image
+                This should center it vertically
+            **/
+            bottom:   8cm;
+            left:     6.2cm;
+
+            /** Change image dimensions**/
+            width:    8cm;
+            height:   8cm;
+
+            /** Your watermark should be behind every content**/
+            z-index:  -1000;
+
+            opacity: 0.05;
+        }
     </style>
 </head>
 
 <body>
+
+<div id="watermark">
+    <img src="{{ public_path('assets/images/kLogo2.jpeg') }}" height="90%" width="90%" />
+</div>
+
 <div style="text-align: center; margin: 0 auto;">
     <h5><b>JAMHURI YA MUUNGANO WA TANZANIA</b></h5>
     <hr style="width: 70%; margin: auto; ">
@@ -72,7 +100,7 @@
 </div>
 
 <div style="text-align: center; margin-top: 10px;">
-    <img src="{{ public_path('assets/images/true_sign.jpg') }}"  style="width: 120px;">
+    <img src="{{ public_path('assets/images/true_sign.png') }}"  style="width: 100px;">
     <div>
         <span style="font-family: "Lucida Console", monospace, sans-serif"><i>Mhe.Eng. Kundo Andrea Mathew(Mb)</i></span>
     </div>
