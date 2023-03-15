@@ -110,6 +110,14 @@ class Leader extends Model
     /**
      * @return BelongsToMany
      */
+    public  function trunks()
+    {
+        return $this->belongsToMany( Trunk::class );
+    }
+
+    /**
+     * @return BelongsToMany
+     */
     public function smses(): BelongsToMany
     {
         return $this->belongsToMany( Sms::class );

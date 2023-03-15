@@ -1,5 +1,11 @@
 @extends('layouts.super_system')
 
+@section('extra_style')
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
+    @endsection
+
 @section('content')
     <div class="container-fluid" id="app">
         <!-- start page title -->
@@ -184,9 +190,12 @@
                                         <div class="row mt-4">
                                             <div class="mb-4">
                                                 <label class="form-label" for="billing-address">Wasilisha Changamoto</label>
-                                                <textarea @keyup="ziaraChange()" class="form-control" rows="6" placeholder="Andika Hapa.."
+                                                <textarea id="summernote" @keyup="ziaraChange()" class="form-control" rows="6" placeholder="Andika Hapa.."
                                                     v-model="ziara"></textarea>
                                             </div>
+                                            <form method="post">
+                                                <textarea id="summernote" name="editordata"></textarea>
+                                            </form>
                                         </div>
                                     </div>
                                 </form>
@@ -313,6 +322,7 @@
 @endsection
 
 @section('extra_script')
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
         var app = new Vue({
             el: '#app',
@@ -611,6 +621,10 @@
                 $('.letterCopyToLeader').on('change', () => {
                     this.selectedCopyToOption = $('.letterCopyToLeader').val();
                     this.ziaraChange();
+                });
+
+                $(document).ready(function() {
+                    $('#summernote').summernote();
                 });
 
             }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Branch extends Model
 {
@@ -32,5 +33,14 @@ class Branch extends Model
     public function leaders(): BelongsToMany
     {
         return $this->belongsToMany(Leader::class)->withPivot('isActive', 'post_id');
+    }
+
+
+    /**
+     * @return HasMany
+     */
+    public function trunks():HasMany
+    {
+        return $this->hasMany( Trunk::class );
     }
 }

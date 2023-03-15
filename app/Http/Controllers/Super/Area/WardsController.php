@@ -44,9 +44,7 @@ class WardsController extends Controller
      */
     public function store(Request $request)
     {
-
         $division_id = $request->division_id;
-
         $rules = [
             'kata' => [
                 'required', 'string', 'max:50',

@@ -274,7 +274,7 @@
                         <div class="col-lg-12">
                             <div class="mb-3 mb-4">
                                 <label class="form-label" for="billing-name">Jina La Mkoa</label>
-                                <input type="text" readonly class="form-control" value="Bariadi">
+                                <input type="text" readonly class="form-control" value="Simiyu">
                             </div>
                         </div>
                         <div class="col-lg-12">

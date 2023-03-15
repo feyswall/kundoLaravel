@@ -57,7 +57,7 @@
         </x-slot:content>
     </x-system.collapse>
 
-        <div class="col-12">
+    <div class="col-12">
             <div class="card px-md-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-md-start justify-content-center flex-wrap my-2">
@@ -110,12 +110,14 @@
                         </div>
 
 
-                         @foreach ($branch->leaders as $leader)
+                        @foreach ($branch->leaders as $leader)
+                         @if( $leader->pivot->isActive == true )
                                 <x-system.modal id="badiriTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama Ngazi Ya Kata Hapa">
                                 <x-slot:content>
                                         <x-system.edit-leader :leader="$leader" :route="route('super.leader.tawi.sasisha', $leader->id)" />
                                 </x-slot:content>
                                 </x-system.modal>
+                        @endif
                         @endforeach
 
 
@@ -275,5 +277,84 @@
     </div> <!-- end row -->
 
 </div> <!-- container-fluid -->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h2>Orodha ya Mashina</h2>
+                    <button data-bs-toggle="modal" data-bs-target="#ongezaShinaModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Shina</button>
+                    <x-system.shina-table :trunks="$trunks" :branch="$branch"></x-system.shina-table>
+
+                    <!-- model location here -->
+                    <x-system.modal id="ongezaShinaModal" aria="ongezaShinaLabel" size="modal-lg" title="Ongeza Shina Hapa Tarafa Hapa">
+                        <x-slot:content>
+                                <form method="post" action="{{ route('super.areas.shina.ongeza') }}">
+                                    @csrf
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="mb-3 mb-4">
+                                                    <label class="form-label" for="billing-name">Jina La Mkoa</label>
+                                                    <input type="text" readonly class="form-control" value="Simiyu">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="mb-3 mb-4">
+                                                    <label class="form-label" for="billing-name">Jina La Wilaya</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $branch->ward->division->council->district->name }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="mb-3 mb-4">
+                                                    <label class="form-label" for="billing-name">Jina La Halmashauri</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $branch->ward->division->council->name }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="mb-3 mb-4">
+                                                    <label class="form-label" for="billing-name">Jina La Tarafa</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $branch->ward->division->name }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="mb-3 mb-4">
+                                                    <label class="form-label" for="billing-name">Jina La Kata</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $branch->ward->name }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="mb-3 mb-4">
+                                                    <label class="form-label" for="billing-name">Jina La Tawi</label>
+                                                    <input type="text" class="form-control" readonly value="{{ $branch->name }}">
+                                                    <input type="hidden" name="branch_id" class="form-control" readonly value="{{ $branch->id }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="mb-3 mb-4">
+                                                    <label class="form-label" for="billing-name">Jina La Shina</label>
+                                                    <input type="text" name="shina" class="form-control" placeholder="" required>
+                                                </div>
+                                                @error("shina")
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                                            </div>
+                                        </div>
+                                </form>
+                        </x-slot:content>
+                    </x-system.modal>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- end main content-->
 @endsection
+<x-system.table-script id="superOrodhaShinaTable"></x-system.table-script>

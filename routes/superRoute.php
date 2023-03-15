@@ -20,6 +20,7 @@ use \App\Http\Controllers\Super\Area\CouncilsController;
 use \App\Http\Controllers\Super\Area\DivisionsController;
 use \App\Http\Controllers\Super\Area\WardsController;
 use \App\Http\Controllers\Super\Area\BranchesController;
+use \App\Http\Controllers\Super\Area\TrunksController;
 use App\Http\Controllers\Super\Group\GroupsController;
 use \App\Http\Controllers\Super\Leader\BranchLeadersController;
 use App\Http\Controllers\Super\Leader\DivisionLeadersController;
@@ -93,6 +94,19 @@ Route::controller(BranchesController::class)
     });
 
 
+Route::controller(TrunksController::class)
+->middleware(['auth', 'role:super'])
+    ->prefix('/super/areas/trunk')
+    ->as('super.areas.shina.')
+    ->group(function () {
+        Route::get('/orodha/{branch}', 'index')->name('orodha');
+        Route::post('/ongeza', 'store')->name('ongeza');
+        Route::get('/fungua/{trunk}', 'show')->name('fungua');
+        Route::get('/badiri/{trunk}', 'update')->name('sahihisha');
+    });
+
+
+
 Route::controller(\App\Http\Controllers\Super\Area\StatesController::class)
 ->middleware(['auth', 'role:super'])
     ->prefix('/super/areas/state')
@@ -113,6 +127,16 @@ Route::controller(BranchLeadersController::class)
     Route::post('/ongeza', 'store')->name('ongeza');
     Route::put('/badili/{leader}', 'update')->name('sasisha');
 });
+
+Route::controller( \App\Http\Controllers\Super\Area\TrunkLeadersController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/leader/trunk')
+    ->as('super.leader.shina.')
+    ->group(function () {
+        Route::get('/orodha/{branch}', 'index')->name('orodha');
+        Route::post('/ongeza', 'store')->name('ongeza');
+        Route::put('/badili/{trunk}', 'update')->name('sasisha');
+    });
 
 
 Route::controller(WardLeadersController::class)
