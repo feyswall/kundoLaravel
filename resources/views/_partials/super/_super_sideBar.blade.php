@@ -72,6 +72,7 @@
                             <li> <a href="{{ route('super.sial.allList') }}">Orodha</a></li>
                         </ul>
                     </li>
+                     <li> <a href="{{ route('pdf.door.index') }}" class="">pdf</a></li>
                 <hr>
                 <li> <a href="javascript: void(0);" class="has-arrow">Vyombo Vya Moto</a>
                     <ul class="sub-menu" aria-expanded="true">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Super\Area;
+namespace App\Http\Controllers\Super\Leader;
 
 use App\Models\Trunk;
 use App\Http\Controllers\Controller;

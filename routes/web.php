@@ -8,6 +8,7 @@ use  App\Http\Controllers\Super\Area\DistrictsController;
 use App\Models\Leader;
 use App\Http\Controllers\Super\PostsController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\PdfDoorsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,58 +25,57 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/account', function (){
+Route::get('/account', function () {
 
-        $gen = \Spatie\Permission\Models\Role::where('name', 'general')->first();
+    $gen = \Spatie\Permission\Models\Role::where('name', 'general')->first();
 
-        if ( !$gen ){
-                $general = \Spatie\Permission\Models\Role::create([
-                    'name' => 'general',
-            ]);
-        }
+    if (!$gen) {
+        $general = \Spatie\Permission\Models\Role::create([
+            'name' => 'general',
+        ]);
+    }
 
-        $leaders = Leader::select('firstName', 'lastName')->distinct('firstName', 'lastName')->get();
-        $wanted = [];
-        foreach ( $leaders as $leader ){
-            $wanted[] = Leader::where('firstName', $leader->firstName)
-                ->where('lastName', $leader->lastName)
-                ->first();
-        }
+    $leaders = Leader::select('firstName', 'lastName')->distinct('firstName', 'lastName')->get();
+    $wanted = [];
+    foreach ($leaders as $leader) {
+        $wanted[] = Leader::where('firstName', $leader->firstName)
+            ->where('lastName', $leader->lastName)
+            ->first();
+    }
 
-        foreach ( $wanted as $leader )
-        {
-        if ( $leader->user == null ){
+    foreach ($wanted as $leader) {
+        if ($leader->user == null) {
 
-                $password = strtolower($leader->firstName)."".strtolower($leader->lastName);
+            $password = strtolower($leader->firstName) . "" . strtolower($leader->lastName);
 
-                $email = strtolower($leader->firstName)."".strtolower($leader->lastName).".general@kims.com";
+            $email = strtolower($leader->firstName) . "" . strtolower($leader->lastName) . ".general@kims.com";
 
-                $rules = [
-                    'email' => 'unique:users,email',
-                ];
+            $rules = [
+                'email' => 'unique:users,email',
+            ];
 
-                $validate = \Illuminate\Support\Facades\Validator::make( ['email' => $email], $rules );
+            $validate = \Illuminate\Support\Facades\Validator::make(['email' => $email], $rules);
 
-                if ( $validate->fails() ) {
-                    continue;
-                }
-
-                $user = \App\Models\User::create([
-                    'name' => $leader->firstName." ".$leader->lastName,
-                    'email' => $email,
-                    'leader_id' => $leader->id,
-                    'password' => Hash::make($password),
-                ]);
-
-                $user->assignRole("general");
+            if ($validate->fails()) {
+                continue;
             }
+
+            $user = \App\Models\User::create([
+                'name' => $leader->firstName . " " . $leader->lastName,
+                'email' => $email,
+                'leader_id' => $leader->id,
+                'password' => Hash::make($password),
+            ]);
+
+            $user->assignRole("general");
         }
+    }
 });
 
 
-Route::get('/reverse_account', function (){
+Route::get('/reverse_account', function () {
     $users = \App\Models\User::all();
-    foreach ( $users as $user ){
+    foreach ($users as $user) {
         $user->leader()->update([
             'user_id' => $user->id,
         ]);
@@ -87,7 +87,7 @@ Route::get('/dashboard', function () {
     $leaders = Leader::where("id", ">",  0)
         ->with('posts')->get();
     return view('dashboard')
-    ->with("leaders", $leaders);
+        ->with("leaders", $leaders);
 })->middleware(['auth', 'verified', 'role:super|mbunge|general'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -111,16 +111,25 @@ Route::controller(SmsServicesControlller::class)
         Route::get('/orodha/sms', 'orodhaGroups')->name('orodha.group');
         Route::get('/orodha/group', 'selectReceivers')->name('group.select');
         Route::get('/orodha/show/{sms}', 'orodhaGroupMoja')->name('orodha.group.moja');
-});
+    });
+
+Route::controller(PdfDoorsController::class)
+    ->prefix('/pdf/door')
+    ->as('pdf.door.')
+    ->group(function () {
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+    Route::get('/index', 'index')->name('index');
+    });
 
 Route::post('generate-pdf', [PDFController::class, 'generatePDF'])->name("generatePDF");
 
-  Route::post('/download/pdf', [PDFController::class,'downloadPdf'])->name('downloadPDF');
+Route::post('/download/pdf', [PDFController::class, 'downloadPdf'])->name('downloadPDF');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-require __DIR__.'/superRoute.php';
+require __DIR__ . '/superRoute.php';
 
-require __DIR__.'/mbungeRoute.php';
+require __DIR__ . '/mbungeRoute.php';
 
-require __DIR__."/general.php";
+require __DIR__ . "/general.php";

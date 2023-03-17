@@ -128,7 +128,7 @@ Route::controller(BranchLeadersController::class)
     Route::put('/badili/{leader}', 'update')->name('sasisha');
 });
 
-Route::controller( \App\Http\Controllers\Super\Area\TrunkLeadersController::class)
+Route::controller( \App\Http\Controllers\Super\leader\TrunkLeadersController::class)
     ->middleware(['auth', 'role:super'])
     ->prefix('/super/leader/trunk')
     ->as('super.leader.shina.')

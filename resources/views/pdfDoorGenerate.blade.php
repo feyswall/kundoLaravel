@@ -21,10 +21,6 @@
             font-family: 'Times New Roman',
         }
 
-        p {
-            margin-bottom: 6px;
-        }
-
         @page {
             size: letter;
             margin: 20mm;
@@ -70,16 +66,14 @@
         <img src="{{ public_path('assets/images/bunge.png') }}" style="margin-left: 280px; width: 120px;">
     </div>
 
+
+
     <div style="display: block;">
         <table style="width: 100%">
             <tbody>
                 <tr>
                     <td>
-                        <span style="float: left;">
-                            <strong>{{ ucfirst($sendTo->posts->first()->name) }}</strong><br>
-                            S.L.P.54,<br>
-                            BARIADI,<br>
-                        </span>
+                        {!! $address !!}
                     </td>
                     <td></td>
                     <td>
@@ -92,23 +86,7 @@
         </table>
     </div>
 
-    <div
-        style="margin-top: 50px; margin-bottom: 0px; text-align: center; width: 80%; margin-left: 50px; display: block;">
-        <h6 style="margin-top: 10px; padding: 0px;"> <span style="font-family: sans-serif;">YAH :</span> <b
-                style="text-decoration: underline;">{{ strtoupper($title) }}</b></h6>.
-    </div>
-
-
-    @foreach ($sials as $sial)
-        <div style="margin-top: 0px; margin-bottom: 0px;">
-            <p style="font-size: 0.97em">{{ $sial }}</p>
-        </div>
-    @endforeach
-
-
-    <div style="margin-top: 10px;">
-        <p><b>Wako mtiifu katika ujenzi wa chama na Taifa letu</b></p>
-    </div>
+    {!! $content !!}
 
     <div style="text-align: center; margin-top: 10px;">
         <img src="{{ public_path('assets/images/true_sign.png') }}" style="width: 100px;">
@@ -125,12 +103,7 @@
 
     <div>
         <div style="display: flex;">
-            <b>Nakala :- </b>
-            <div style="margin-left: 40px; margin-top: 5px;">
-                @foreach ($copyTo as $leader)
-                    <span style="display: block;">{{ ucfirst($leader->posts->first()->name) }}</span>
-                @endforeach
-            </div>
+            {!! $copy !!}
         </div>
     </div>
 </body>

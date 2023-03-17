@@ -3,8 +3,7 @@
 @section('extra_style')
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-
-    @endsection
+@endsection
 
 @section('content')
     <div class="container-fluid" id="app">
@@ -23,156 +22,187 @@
         </div>
         <!-- end page title -->
 
-                <div v-bind:class="{ 'row': true, 'justify-content-between' : true, 'd-none': hideDom }">
-                    <div class="col-xl-12 col-md-12 col-sm-12">
-                        <div class="custom-accordion">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="p-5">
-                                        <div class="spinner-border text-primary" role="status">
-                                            <span class="sr-only">Loading...</span>
-                                        </div>
-                                    </div>
+        <div v-bind:class="{ 'row': true, 'justify-content-between' : true, 'd-none': hideDom }">
+            <div class="col-xl-12 col-md-12 col-sm-12">
+                <div class="custom-accordion">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="p-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
 
 
-            <div v-bind:class="{ 'row': true, 'justify-content-between' : true, 'd-none': !hideDom }">
-            <div class="col-xl-6 col-md-6 col-sm-12">
+        <div v-bind:class="{ 'row': true, 'justify-content-between' : true, 'd-none': !hideDom }">
+            <div class="col-xl-12 col-md-12 col-sm-12">
                 <div class="custom-accordion">
                     <div class="card">
 
                         <div class="card-body">
                             <!-- create a receiver uniselector -->
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
 
-                    <form>
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div class="mb-3">
-                                    <label class="form-label">Mikoa</label>
-                                    @php
-                                        $regions = \App\Models\Region::all();
-                                    @endphp
-                                    <div class="d-flex">
-                                        <select name="region" v-on:change="regionChange()" id="region" v-model="region" class="form-control">
-                                            <option v-for="region in collection.regions" v-bind:value="region.id" selected>@{{ region.name }}</option>
-                                        </select>
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Mikoa</label>
+                                                        @php
+                                                            $regions = \App\Models\Region::all();
+                                                        @endphp
+                                                        <div class="d-flex">
+                                                            <select name="region" v-on:change="regionChange()"
+                                                                id="region" v-model="region" class="form-control">
+                                                                <option v-for="region in collection.regions"
+                                                                    v-bind:value="region.id" selected>@{{ region.name }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-lg-3" v-if="districts.length > 0">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Wilaya</label>
+                                                        <div class="d-flex">
+                                                            {{-- <a :href="'/super/areas/district/orodha'" class="btn btn-primary btn-sm">fungua</a> --}}
+                                                            <select name="district" v-on:change="districtChange()"
+                                                                id="district" v-model="district" class="form-control">
+                                                                <option v-for="district in districts"
+                                                                    v-bind:value="district.id" selected>
+                                                                    @{{ district.name }}</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-lg-3" v-if="councils.length > 0">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Halmashauri</label>
+                                                        <div class="d-flex">
+                                                            {{-- <a :href="'/super/areas/council/orodha/'+ district" class="btn btn-primary btn-sm">fungua</a> --}}
+                                                            <select name="council" id="council" v-model="council"
+                                                                class="form-control" v-on:change="councilOnChange()">
+                                                                <option v-for="council in councils"
+                                                                    v-bind:value="council.id" selected>
+                                                                    @{{ council.name }}</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-lg-3" v-if="divisions.length > 0">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Tarafa</label>
+                                                        <div class="d-flex">
+                                                            {{-- <a :href="'/super/areas/division/orodha/'+ council" class="btn btn-primary btn-sm">fungua</a> --}}
+                                                            <select name="division" id="division" v-model="division"
+                                                                class="form-control" v-on:change="divisionOnChange()">
+                                                                <option v-for="division in divisions"
+                                                                    v-bind:value="division.id" selected>
+                                                                    @{{ division.name }}</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-lg-3" v-if="wards.length > 0">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Kata</label>
+                                                        <div class="d-flex">
+                                                            {{-- <a :href="'/super/areas/ward/orodha/'+ division" class="btn btn-primary btn-sm">fungua</a> --}}
+                                                            <select name="ward" id="ward" v-model="ward"
+                                                                class="form-control" v-on:change="wardOnChange()">
+                                                                <option v-for="ward in wards" v-bind:value="ward.id"
+                                                                    selected>@{{ ward.name }}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-lg-3" v-if="branches.length > 0">
+                                                    <label class="form-label">Matawi</label>
+                                                    <select name="branch" id="branch" v-model="branch"
+                                                        class="form-control select2" v-on:change="branchOnChange()">
+                                                        <optgroup>
+                                                            <option class="text-dark" v-for="branch in branches"
+                                                                v-bind:value="branch.id">@{{ branch.name }}</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-lg-12 mt-5" v-if="typeof(leaders) == 'object'">
+                                                    <label class="form-label">Tuma Barua Kwa -
+                                                        @{{ areaSelected }}</label>
+                                                    <select class="form-control letterToLeader select2"
+                                                        v-model="selectedSendToOptions">
+                                                        <optgroup v-for="(leaderArray, index) in leaders"
+                                                            :key="index" v-bind:label="index">
+                                                            <option v-for="(leader, index) in leaderArray"
+                                                                :key="index"
+                                                                v-bind:value="leader.leader.id+','+leader.post.id">
+                                                                @{{ leader.leader.firstName }} @{{ leader.leader.lastName }} -
+                                                                <b>@{{ leader.post.name }}</b>
+                                                            </option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+
+
+                                                <div class="col-lg-12 mt-5" v-if="typeof(leaders) == 'object'">
+                                                    <label class="form-label">Tuma Nakala Kwa -
+                                                        @{{ areaSelected }}</label>
+                                                    <select
+                                                        class="form-control letterCopyToLeader select2 select2-multiple"
+                                                        multiple="multiple" v-model="selectedCopyToOption">
+                                                        <optgroup v-for="(leaderArray, index) in leaders"
+                                                            :key="index" v-bind:label="index">
+                                                            <option v-for="(leader, index) in leaderArray"
+                                                                :key="index"
+                                                                v-bind:value="leader.leader.id+','+leader.post.id">
+                                                                @{{ leader.leader.firstName }} @{{ leader.leader.lastName }} -
+                                                                <b>@{{ leader.post.name }}</b>
+                                                            </option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </form>
+
                                     </div>
 
                                 </div>
+                                <!-- end select2 -->
                             </div>
-
-
-                            <div class="col-lg-3" v-if="districts.length > 0">
-                                <div class="mb-3">
-                                    <label class="form-label">Wilaya</label>
-                                    <div class="d-flex">
-                                        {{-- <a :href="'/super/areas/district/orodha'" class="btn btn-primary btn-sm">fungua</a> --}}
-                                        <select name="district" v-on:change="districtChange()" id="district" v-model="district" class="form-control">
-                                            <option v-for="district in districts" v-bind:value="district.id" selected>@{{ district.name }}</option>
-                                        </select>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-3" v-if="councils.length > 0">
-                                <div class="mb-3">
-                                    <label class="form-label">Halmashauri</label>
-                                    <div class="d-flex">
-                                        {{-- <a :href="'/super/areas/council/orodha/'+ district" class="btn btn-primary btn-sm">fungua</a> --}}
-                                        <select name="council" id="council" v-model="council" class="form-control" v-on:change="councilOnChange()">
-                                            <option v-for="council in councils" v-bind:value="council.id" selected>@{{ council.name }}</option>
-                                        </select>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-3" v-if="divisions.length > 0">
-                                <div class="mb-3">
-                                    <label class="form-label">Tarafa</label>
-                                    <div class="d-flex">
-                                        {{-- <a :href="'/super/areas/division/orodha/'+ council" class="btn btn-primary btn-sm">fungua</a> --}}
-                                        <select name="division" id="division" v-model="division" class="form-control" v-on:change="divisionOnChange()">
-                                            <option v-for="division in divisions" v-bind:value="division.id" selected>@{{ division.name }}</option>
-                                        </select>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-3" v-if="wards.length > 0">
-                                <div class="mb-3">
-                                    <label class="form-label">Kata</label>
-                                    <div class="d-flex">
-                                        {{-- <a :href="'/super/areas/ward/orodha/'+ division" class="btn btn-primary btn-sm">fungua</a> --}}
-                                        <select name="ward" id="ward" v-model="ward" class="form-control" v-on:change="wardOnChange()">
-                                            <option v-for="ward in wards" v-bind:value="ward.id" selected>@{{ ward.name }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                             <div class="col-lg-3" v-if="branches.length > 0">
-                              <label class="form-label">Matawi</label>
-                                    <select name="branch" id="branch" v-model="branch" class="form-control select2" v-on:change="branchOnChange()">
-                                        <optgroup>
-                                            <option class="text-dark" v-for="branch in branches" v-bind:value="branch.id">@{{ branch.name }}</option>
-                                        </optgroup>
-                                    </select>
-                             </div>
-
-                            <div class="col-lg-12 mt-5" v-if="typeof(leaders) == 'object'">
-                                <label class="form-label">Tuma Barua Kwa  - @{{ areaSelected }}</label>
-                                <select class="form-control letterToLeader select2" v-model="selectedSendToOptions">
-                                    <optgroup  v-for="(leaderArray, index) in leaders" :key="index" v-bind:label="index">
-                                        <option v-for="(leader, index) in leaderArray" :key="index" v-bind:value="leader.leader.id+','+leader.post.id">
-                                            @{{ leader.leader.firstName }}  @{{ leader.leader.lastName }} - <b>@{{ leader.post.name }}</b>
-                                        </option>
-                                    </optgroup>
-                                </select>
-                            </div>
-
-
-                            <div class="col-lg-12 mt-5" v-if="typeof(leaders) == 'object'">
-                                <label class="form-label">Tuma Nakala Kwa  - @{{ areaSelected }}</label>
-                                <select class="form-control letterCopyToLeader select2 select2-multiple" multiple="multiple" v-model="selectedCopyToOption">
-                                    <optgroup  v-for="(leaderArray, index) in leaders" :key="index" v-bind:label="index">
-                                        <option v-for="(leader, index) in leaderArray" :key="index" v-bind:value="leader.leader.id+','+leader.post.id">
-                                            @{{ leader.leader.firstName }}  @{{ leader.leader.lastName }} - <b>@{{ leader.post.name }}</b>
-                                        </option>
-                                    </optgroup>
-                                </select>
-                            </div>
-
-                        </div>
-                    </form>
-
-                </div>
-
-            </div>
-            <!-- end select2 -->
-        </div>
                             <!-- create a  copy multiselector -->
-    </div>
+                        </div>
 
                         <a href="#checkout-billinginfo-collapse" class="text-dark" data-bs-toggle="collapse">
                             <div class="p-4">
                                 <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i> </div>
-                                    <div class="flex-shrink-0"> <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i>
+                                    <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i>
+                                    </div>
+                                    <div class="flex-shrink-0"> <i
+                                            class="mdi mdi-chevron-up accor-down-icon font-size-24"></i>
                                     </div>
                                 </div>
                             </div>
@@ -189,13 +219,10 @@
                                         </div>
                                         <div class="row mt-4">
                                             <div class="mb-4">
-                                                <label class="form-label" for="billing-address">Wasilisha Changamoto</label>
-                                                <textarea id="summernote" @keyup="ziaraChange()" class="form-control" rows="6" placeholder="Andika Hapa.."
-                                                    v-model="ziara"></textarea>
+                                                <label class="form-label" for="billing-address">Wasilisha
+                                                    Changamoto</label>
+                                                <textarea v-on:change="ziaraChange()" class="form-control" rows="6" v-model="ziara"></textarea>
                                             </div>
-                                            <form method="post">
-                                                <textarea id="summernote" name="editordata"></textarea>
-                                            </form>
                                         </div>
                                     </div>
                                 </form>
@@ -211,7 +238,7 @@
                 <!-- end row-->
             </div>
 
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-12 col-sm-12">
                 <div class="row justify-content-center">
                     <div class="col-xl-12">
                         <div class="card">
@@ -287,7 +314,8 @@
 
                                     </div>
                                 </div>
-                                <form method="POST" action="{{ route('super.sial.jaza') }}" id="withPdfForm" v-on:submit.prevent="submitSial()">
+                                <form method="POST" action="{{ route('super.sial.jaza') }}" id="withPdfForm"
+                                    v-on:submit.prevent="submitSial()">
                                     @csrf
                                     <input type="hidden" name="yahusu" v-model="yahusu">
                                     <div class="col-md-12 col-sm-12 my-2">
@@ -295,16 +323,16 @@
                                             Ambatanisha (pdf)
                                             (Pdf yenye maelezo ya kuunga mkono barua yako**)
                                         </label>
-                                        {{--<input type="file" class="form-control" accept="application/pdf" name="pdfFile">--}}
-                                        {{--@error('pdfFile')--}}
-                                            {{--<span class="text-danger">{{ $message }}</span>--}}
-                                        {{--@enderror--}}
+                                        {{-- <input type="file" class="form-control" accept="application/pdf" name="pdfFile"> --}}
+                                        {{-- @error('pdfFile') --}}
+                                        {{-- <span class="text-danger">{{ $message }}</span> --}}
+                                        {{-- @enderror --}}
                                     </div>
                                     <input type="hidden" name="sendTo" v-bind:value="selectedSendToOptions">
                                     <input type="hidden" name="ziara" v-bind:value="ziara">
                                     <input type="hidden" v-bind:value="selectedCopyToOption" name="copyTo">
                                     <button type="submit"
-                                            v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': fichaTumaBtn }">
+                                        v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': fichaTumaBtn }">
                                         <i class="la la-print"></i>
                                         Tuma
                                     </button>
@@ -339,35 +367,35 @@
                 formPrintedHide: true,
                 oldChangamoto: "{!! old('ziara') !!}",
 
-                    region: '',
-                    district: '',
-                    council: '',
-                    division: '',
-                    ward: '',
-                    branch: '',
+                region: '',
+                district: '',
+                council: '',
+                division: '',
+                ward: '',
+                branch: '',
 
-                    districts: [],
-                    councils: [],
-                    divisions: [],
-                    wards: [],
-                    branches: [],
-                    leaders: [],
+                districts: [],
+                councils: [],
+                divisions: [],
+                wards: [],
+                branches: [],
+                leaders: [],
 
-                    areaSelected: '',
-                    areaToSend: {},
-                    selectedSendToOptions: '',
-                    selectedCopyToOption: [],
+                areaSelected: '',
+                areaToSend: {},
+                selectedSendToOptions: '',
+                selectedCopyToOption: [],
 
-                    collection: {
-                        regions:  {!! $regions !!},
-                        councils: Object,
-                        Divisions: Object,
-                        wards: Object,
-                    },
-                    items: [
-                        {name: 'feyswall chambila'}
-                    ],
-                    hideDom: true,
+                collection: {
+                    regions: {!! $regions !!},
+                    councils: Object,
+                    Divisions: Object,
+                    wards: Object,
+                },
+                items: [{
+                    name: 'feyswall chambila'
+                }],
+                hideDom: true,
             },
             watch: {
                 districts: {
@@ -385,13 +413,13 @@
                     console.log("the form is changebd a bit");
                 },
                 ziaraChange() {
-                    if ( this.selectedCopyToOption.length > 0 &&  this.selectedSendToOptions.length > 0 ){
-                    this.fichaTumaBtn = this.ziara.trim().length < 1;
-                    }else {
+                    if (this.selectedCopyToOption.length > 0 && this.selectedSendToOptions.length > 0) {
+                        this.fichaTumaBtn = this.ziara.trim().length < 1;
+                    } else {
                         this.fichaTumaBtn = true;
                     }
                 },
-                regionChange(){
+                regionChange() {
                     let obj = this;
                     this.districts = [];
                     this.councils = [];
@@ -400,29 +428,32 @@
                     this.branches = [];
                     this.leaders = [];
                     axios.get(`/api/super/areas/wilaya/orodha/${this.region}`)
-                        .then(function (response) {
-                        let responseData = Array;
-                            if ( response.data ){
+                        .then(function(response) {
+                            let responseData = Array;
+                            if (response.data) {
                                 responseData = response.data;
-                             if ( responseData.status === 'success' ){
-                                 if  ( Array.isArray(responseData.response) ){
-                                     obj.leaders = responseData.leaders;
-                                     obj.districts = responseData.response;
-                                     obj.areaSelected = `Mkoa - ${responseData.region.name}`;
-                                     obj.areaToSend = { 'area': 'mkoa', 'id': responseData.region.id };
-                                 }else{
-                                     alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
-                                 }
-                             }else{
-                                 alert( responseData.message )
-                             }
+                                if (responseData.status === 'success') {
+                                    if (Array.isArray(responseData.response)) {
+                                        obj.leaders = responseData.leaders;
+                                        obj.districts = responseData.response;
+                                        obj.areaSelected = `Mkoa - ${responseData.region.name}`;
+                                        obj.areaToSend = {
+                                            'area': 'mkoa',
+                                            'id': responseData.region.id
+                                        };
+                                    } else {
+                                        alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
+                                    }
+                                } else {
+                                    alert(responseData.message)
+                                }
                             }
                         })
-                        .catch(function (error) {
+                        .catch(function(error) {
                             alert(error);
-                    });
+                        });
                 },
-                districtChange(){
+                districtChange() {
                     let obj = this;
                     this.councils = [];
                     this.divisions = [];
@@ -430,25 +461,28 @@
                     this.branches = [];
                     this.leaders = [];
                     axios.get(`/api/super/areas/halmashauri/orodha/${this.district}`)
-                        .then(function (response) {
+                        .then(function(response) {
                             let responseData = Array;
-                            if ( response.data ){
+                            if (response.data) {
                                 responseData = response.data;
-                                if ( responseData.status === 'success' ){
-                                    if  ( Array.isArray(responseData.response) ){
+                                if (responseData.status === 'success') {
+                                    if (Array.isArray(responseData.response)) {
                                         obj.councils = responseData.response;
                                         obj.leaders = responseData.leaders;
                                         obj.areaSelected = `Wilaya - ${responseData.district.name}`;
-                                        obj.areaToSend = { 'area': 'wilaya', 'id': responseData.district.id  };
-                                    }else{
+                                        obj.areaToSend = {
+                                            'area': 'wilaya',
+                                            'id': responseData.district.id
+                                        };
+                                    } else {
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                     }
-                                }else{
-                                    alert( responseData.message )
+                                } else {
+                                    alert(responseData.message)
                                 }
                             }
                         })
-                        .catch(function (error) {
+                        .catch(function(error) {
                             alert(error);
                         });
                 },
@@ -459,25 +493,28 @@
                     this.branches = [];
                     this.leaders = [];
                     axios.get(`/api/super/areas/tarafa/orodha/${this.council}`)
-                        .then(function (response) {
+                        .then(function(response) {
                             let responseData = Array;
-                            if ( response.data ){
+                            if (response.data) {
                                 responseData = response.data;
-                                if ( responseData.status === 'success' ){
-                                    if  ( Array.isArray(responseData.response) ){
+                                if (responseData.status === 'success') {
+                                    if (Array.isArray(responseData.response)) {
                                         obj.divisions = responseData.response;
                                         obj.leaders = responseData.leaders;
                                         obj.areaSelected = `Halmashauri - ${responseData.council.name}`;
-                                        obj.areaToSend = { 'area': 'halmashauri', 'id': responseData.council.id };
-                                    }else{
+                                        obj.areaToSend = {
+                                            'area': 'halmashauri',
+                                            'id': responseData.council.id
+                                        };
+                                    } else {
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                     }
-                                }else{
-                                    alert( responseData.message )
+                                } else {
+                                    alert(responseData.message)
                                 }
                             }
                         })
-                        .catch(function (error) {
+                        .catch(function(error) {
                             alert(error);
                         });
                 },
@@ -487,53 +524,59 @@
                     this.branches = [];
                     this.leaders = [];
                     axios.get(`/api/super/areas/kata/orodha/${this.division}`)
-                        .then(function (response) {
+                        .then(function(response) {
                             let responseData = Array;
-                            if ( response.data ){
+                            if (response.data) {
                                 responseData = response.data;
-                                if ( responseData.status === 'success' ){
-                                    if  ( Array.isArray(responseData.response) ){
+                                if (responseData.status === 'success') {
+                                    if (Array.isArray(responseData.response)) {
                                         obj.wards = responseData.response;
                                         obj.leaders = responseData.leaders;
                                         obj.areaSelected = `Tarafa - ${responseData.division.name}`;
-                                        obj.areaToSend = { 'area': 'tarafa', 'id': responseData.division.id };
-                                    }else{
+                                        obj.areaToSend = {
+                                            'area': 'tarafa',
+                                            'id': responseData.division.id
+                                        };
+                                    } else {
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                     }
-                                }else{
-                                    alert( responseData.message )
+                                } else {
+                                    alert(responseData.message)
                                 }
                             }
                         })
-                        .catch(function (error) {
+                        .catch(function(error) {
                             alert(error);
                         });
                 },
-                
+
                 wardOnChange() {
                     let obj = this;
                     this.branches = [];
                     this.leaders = [];
                     axios.get(`/api/super/areas/tawi/orodha/${this.ward}`)
-                        .then(function (response) {
+                        .then(function(response) {
                             let responseData = Array;
-                            if ( response.data ){
+                            if (response.data) {
                                 responseData = response.data;
-                                if ( responseData.status === 'success' ){
-                                    if  ( Array.isArray(responseData.response) ){
+                                if (responseData.status === 'success') {
+                                    if (Array.isArray(responseData.response)) {
                                         obj.branches = responseData.response;
                                         obj.leaders = responseData.leaders;
                                         obj.areaSelected = `Kata - ${responseData.ward.name}`;
-                                        obj.areaToSend = { 'area': 'kata', 'id': responseData.ward.id };
-                                    }else{
+                                        obj.areaToSend = {
+                                            'area': 'kata',
+                                            'id': responseData.ward.id
+                                        };
+                                    } else {
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                     }
-                                }else{
-                                    alert( responseData.message )
+                                } else {
+                                    alert(responseData.message)
                                 }
                             }
                         })
-                        .catch(function (error) {
+                        .catch(function(error) {
                             alert(error);
                         });
                 },
@@ -541,24 +584,27 @@
                     let obj = this;
                     this.leaders = [];
                     axios.get(`/api/super/areas/tawi/badirishwa/${this.branch}`)
-                        .then(function (response) {
+                        .then(function(response) {
                             let responseData = Array;
-                            if ( response.data ){
+                            if (response.data) {
                                 responseData = response.data;
-                                if ( responseData.status === 'success' ){
-                                    if  ( true ){
+                                if (responseData.status === 'success') {
+                                    if (true) {
                                         obj.leaders = responseData.leaders;
                                         obj.areaSelected = `Tawi - ${responseData.branch.name}`;
-                                        obj.areaToSend = { 'area': 'tawi', 'id': responseData.branch.id };
-                                    }else{
+                                        obj.areaToSend = {
+                                            'area': 'tawi',
+                                            'id': responseData.branch.id
+                                        };
+                                    } else {
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                     }
-                                }else{
-                                    alert( responseData.message )
+                                } else {
+                                    alert(responseData.message)
                                 }
                             }
                         })
-                        .catch(function (error) {
+                        .catch(function(error) {
                             alert(error);
                         });
                 },
@@ -573,31 +619,31 @@
                             selectedCopyToOptions: this.selectedCopyToOption,
                             area: this.areaToSend,
                         })
-                        .then(function (response) {
+                        .then(function(response) {
                             let responseData = Array;
-                            if ( response.data ){
+                            if (response.data) {
                                 responseData = response.data;
-                                if ( responseData.status === 'success' ){
-                                    if  ( true ){
+                                if (responseData.status === 'success') {
+                                    if (true) {
                                         alert('Barua Imetumwa');
                                         location.href = `/super/ziara/fungua/${responseData.sialId}`;
-                                    }else{
-                                          obj.hideDom = true;
+                                    } else {
+                                        obj.hideDom = true;
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                     }
-                                }else{
-                                      obj.hideDom = true;
-                                    alert( responseData.message )
+                                } else {
+                                    obj.hideDom = true;
+                                    alert(responseData.message)
                                 }
                             }
                         })
-                        .catch(function (error) {
-                              obj.hideDom = true;
+                        .catch(function(error) {
+                            obj.hideDom = true;
                             alert(error);
                         })
-                        .then(() => { 
-                           
-                         })
+                        .then(() => {
+
+                        })
                 },
             },
             computed: {
@@ -610,6 +656,7 @@
                 }
             },
             mounted() {
+                const obj = this;
                 if (this.oldChangamoto != '') {
                     this.continueBtn = false;
                 }
@@ -624,9 +671,18 @@
                 });
 
                 $(document).ready(function() {
-                    $('#summernote').summernote();
+                    const sumNote = $('#ziaraId');
+                    sumNote.on('keyup', function() {
+                        var content = sumNote.summernote('code');
+                        console.log(content);
+                    });
                 });
 
+                console.log($('#ziaraId'));
+
+                $('#ziaraId').on('keyup', function() {
+                    console.log('chansges are just been made in there')
+                });
             }
         });
     </script>

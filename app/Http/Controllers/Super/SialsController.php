@@ -138,7 +138,6 @@ class SialsController extends Controller
         }else{
             return json_encode( $vals );
         }
-;
     }
 
     /**
