@@ -116,11 +116,13 @@ Route::controller(SmsServicesControlller::class)
 Route::controller(PdfDoorsController::class)
     ->prefix('/pdf/door')
     ->as('pdf.door.')
+    ->middleware(['auth', 'role:super'])
     ->group(function () {
         Route::get('/create', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
     Route::get('/index', 'index')->name('index');
     });
+
 
 Route::post('generate-pdf', [PDFController::class, 'generatePDF'])->name("generatePDF");
 
