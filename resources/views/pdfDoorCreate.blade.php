@@ -18,6 +18,7 @@
 
 <body>
     <div class="container">
+        <h5 class="lead mt-3 mb-4">Pdf Generator For KIMS </h5>
 <form method="post" action="{{ route('pdf.door.store') }}" target="_blank">
         @csrf
         <label for="content">Anuani ya mpokeaji</label>
@@ -31,7 +32,7 @@
 
         <div>
             <button class="btn btn-primary btn-md" type="submit" name="btn" value="send">tuma</button>
-            <button class="btn btn-dark btn-md" type="submit" name="btn" value="test">jaribu</button>
+            <button class="btn btn-warning btn-md" type="submit" name="btn" value="test">jaribu</button>
         </div>
     </form>
 
