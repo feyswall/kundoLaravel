@@ -24,15 +24,15 @@
                         <thead>
                             <td>#</td>
                             <td>Kumb No:-</td>
-                            <th>url</th>
+                            <th>Tar</th>
                             <th></th>
                         </thead>
                         <tbody>
                             @foreach ($pdfs as $key => $pdf)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $pdfs->count() - $key }}</td>
                                     <td>{{ $pdf->name }}</td>
-                                    <td>{{ $pdf->url }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($pdf->created_at)->format('d/m/Y') }}</td>
                                     <td>
                                         <form id="downloaderBtn_{{ $pdf->id }}" action="{{ route('newDownload') }}" method="post"
                                             target="_blank">

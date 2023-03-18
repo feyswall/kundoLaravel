@@ -19,6 +19,7 @@
 <body>
     <div class="container">
         <h5 class="lead mt-3 mb-4">Pdf Generator For KIMS </h5>
+        <a href="{{ route('pdf.door.index') }}" class="btn btn-primary btn-md mb-5"><< rudi kwenye orodha</a>
 <form method="post" action="{{ route('pdf.door.store') }}" target="_blank">
         @csrf
         <label for="content">Anuani ya mpokeaji</label>

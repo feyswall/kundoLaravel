@@ -91,6 +91,7 @@
                     <td>
                         <span style="float: right;">
                             <strong>Tarehe:</strong> {{ date(' d/m/Y') }}
+                            <p>{{ $name }}</p>
                         </span>
                     </td>
                 </tr>

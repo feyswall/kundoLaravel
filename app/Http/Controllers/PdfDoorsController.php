@@ -49,6 +49,12 @@ class PdfDoorsController extends Controller
 
     public function store(Request $request)
     {
+        $number = PdfDoor::all()->count();
+
+        $year = Carbon::now()->format("Y");
+        $number = $number + 1;
+        $name = 'SMY-BRD/EKAM40/' . $year . '-000' . $number;
+
         if ( $request->btn == 'send' ) {
             $datas = [
                 'address' => $request->address,
@@ -65,14 +71,6 @@ class PdfDoorsController extends Controller
             $image_path_particles = explode('/', $path);
 
             $image_name = end($image_path_particles);
-
-            $number = PdfDoor::all()->count();
-
-            $year = Carbon::now()->format("Y");
-
-            $number = $number + 1;
-
-            $name = 'SMY-BRD/EKAM40/' . $year . '-000' . $number;
 
             if (Storage::exists("$path")) {
                 $padf = PdfDoor::create([
@@ -91,6 +89,7 @@ class PdfDoorsController extends Controller
                 'address' => $request->address,
                 'content' => $request->input('content'),
                 'copy' => $request->copy,
+                'name' => $name,
             ];
             $pdf = PDF::loadView('pdfDoorGenerate', $datas);
             return $pdf->stream("myPdf_No_" . str_replace(['\s', '.', '/', '-', ':'], '_', now()) . ".pdf");
