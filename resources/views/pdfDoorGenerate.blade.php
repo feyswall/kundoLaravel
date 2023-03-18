@@ -48,6 +48,18 @@
 
             opacity: 0.05;
         }
+
+        #adrSide p{
+            margin: 0;
+            font-size: 1em;
+        }
+        #copyDiv p{
+            margin: 0;
+            font-size: 1em;
+        }
+        td p {
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -72,7 +84,7 @@
         <table style="width: 100%">
             <tbody>
                 <tr>
-                    <td>
+                    <td id="adrSide">
                         {!! $address !!}
                     </td>
                     <td></td>
@@ -102,7 +114,7 @@
     </div>
 
     <div>
-        <div style="display: flex;">
+        <div id="copyDiv" style="display: flex;">
             {!! $copy !!}
         </div>
     </div>
