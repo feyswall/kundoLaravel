@@ -17,8 +17,8 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-<form method="post" action="{{ route('pdf.door.store') }}">
+    <div class="container">
+<form method="post" action="{{ route('pdf.door.store') }}" target="_blank">
         @csrf
         <label for="content">Anuani ya mpokeaji</label>
         <textarea class="summernote" name="address" rows="4"></textarea>
@@ -30,9 +30,11 @@
         <textarea class="summernote" name="copy" rows="5"></textarea>
 
         <div>
-            <button class="btn btn-primary btn-md" type="submit">tuma</button>
+            <button class="btn btn-primary btn-md" type="submit" name="btn" value="send">tuma</button>
+            <button class="btn btn-dark btn-md" type="submit" name="btn" value="test">jaribu</button>
         </div>
     </form>
+
     </div>
 
     <script>
@@ -41,6 +43,8 @@
                 height: 400,
                 focus: true,
             });
+
+            $('.')
         });
     </script>
 </body>

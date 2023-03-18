@@ -124,6 +124,10 @@ Route::controller(PdfDoorsController::class)
 
 Route::post('generate-pdf', [PDFController::class, 'generatePDF'])->name("generatePDF");
 
+Route::post('newDownload', [PDFController::class, 'newDownload'])->name("newDownload");
+
+Route::post('testPdf', [PDFController::class, 'testPdf'])->name("testPdf");
+
 Route::post('/download/pdf', [PDFController::class, 'downloadPdf'])->name('downloadPDF');
 
 require __DIR__ . '/auth.php';

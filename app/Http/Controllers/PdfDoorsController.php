@@ -41,43 +41,59 @@ class PdfDoorsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function testPdf(Request $request)
+    {
+
+    }
+
     public function store(Request $request)
     {
-        $datas = [
-            'address' => $request->address,
-            'content' => $request->content,
-            'copy' => $request->copy,
-        ];
-
-        $pdf = PDF::loadView('pdfDoorGenerate', $datas);
-
-        $pdfFile = $pdf->stream("myPdf_No_" . str_replace(['\s', '.', '/', '-', ':'], '_', now()) . ".pdf");
-        $path = "pdfs/pdf_No_" . str_replace(['\s', '.', '/', '-', ':'], '_', now()) . ".pdf";
-        Storage::put($path, $pdfFile);
-
-        $image_path_particles = explode('/', $path);
-
-        $image_name = end($image_path_particles);
-
-        $number = PdfDoor::all()->count();
-
-        $year = Carbon::now()->format("Y");
-
-        $number = $number + 1;
-
-        $name = 'SMY-BRD/EKAM40/' . $year . '-000' . $number;
-
-        if (Storage::exists("$path")) {
-            $padf = PdfDoor::create([
-                'url' => $image_name,
-                'content' => $request->content,
-                'copy' => $request->copy,
+        if ( $request->btn == 'send' ) {
+            $datas = [
                 'address' => $request->address,
-                'name' => $name,
-            ]);
-            return redirect()->route('pdf.door.index');
-        } else {
-            return redirect()->back()->with(['status' => 'error', 'message' => 'tafadhali jaribu tena']);
+                'content' => $request->input('content'),
+                'copy' => $request->copy,
+            ];
+
+            $pdf = PDF::loadView('pdfDoorGenerate', $datas);
+
+            $pdfFile = $pdf->stream("myPdf_No_" . str_replace(['\s', '.', '/', '-', ':'], '_', now()) . ".pdf");
+            $path = "pdfs/pdf_No_" . str_replace(['\s', '.', '/', '-', ':'], '_', now()) . ".pdf";
+            Storage::put($path, $pdfFile);
+
+            $image_path_particles = explode('/', $path);
+
+            $image_name = end($image_path_particles);
+
+            $number = PdfDoor::all()->count();
+
+            $year = Carbon::now()->format("Y");
+
+            $number = $number + 1;
+
+            $name = 'SMY-BRD/EKAM40/' . $year . '-000' . $number;
+
+            if (Storage::exists("$path")) {
+                $padf = PdfDoor::create([
+                    'url' => $image_name,
+                    'content' => $request->input('content'),
+                    'copy' => $request->copy,
+                    'address' => $request->address,
+                    'name' => $name,
+                ]);
+                return redirect()->route('pdf.door.index');
+            } else {
+                return redirect()->back()->with(['status' => 'error', 'message' => 'tafadhali jaribu tena']);
+            }
+        }else{
+            $datas = [
+                'address' => $request->address,
+                'content' => $request->input('content'),
+                'copy' => $request->copy,
+            ];
+            $pdf = PDF::loadView('pdfDoorGenerate', $datas);
+            return $pdf->stream("myPdf_No_" . str_replace(['\s', '.', '/', '-', ':'], '_', now()) . ".pdf");
         }
     }
     /**

@@ -34,12 +34,12 @@
                                     <td>{{ $pdf->name }}</td>
                                     <td>{{ $pdf->url }}</td>
                                     <td>
-                                        <form id="downloaderBtn" action="{{ route('downloadPDF') }}" method="post"
+                                        <form id="downloaderBtn_{{ $pdf->id }}" action="{{ route('newDownload') }}" method="post"
                                             target="_blank">
                                             @csrf
                                             <input type="hidden" value="{{ 'pdfs/'.$pdf->url }}" name="pdf">
                                         </form>
-                                        <button form="downloaderBtn" class="btn btn-dark float-end mt-lg-3 mt-sm-2"
+                                        <button form="downloaderBtn_{{ $pdf->id }}" class="btn btn-dark float-end mt-lg-3 mt-sm-2"
                                             type="submit">pakua pdf
                                             ya barua
                                         </button>
