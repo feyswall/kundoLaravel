@@ -62,7 +62,8 @@ class LeadersController extends Controller
         $validate = Validator::make( ['email' => $email], $rules );
 
         if ( $validate->fails() ) {
-            return redirect()->back()->with(['status' => 'error', 'message' => 'Email Imejirudia Katika Mfumo.']);
+            return null;
+//            return ['status' => 'error', 'message' => 'Email Imejirudia Katika Mfumo.'];
         }
 
 
@@ -202,7 +203,7 @@ class LeadersController extends Controller
     }
 
 
-    public static function filterLeaders($leaders_id, $post){
+    public static function  filterLeaders($leaders_id, $post){
         $onQueue = [];
         $qualified = DB::table('leader_post')
             ->whereIn('leader_id', $leaders_id)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Super\Leader;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Super\LeadersController;
+use App\Http\Requests\ValidateBranchLeaderRequest;
 use App\Http\Requests\ValidateWardLeaderRequest;
 use App\Models\Leader;
 use Illuminate\Http\Request;
@@ -34,10 +35,13 @@ class BranchLeadersController extends Controller
      * Store a newly created resource in storage.
      *
      */
-    public function store(ValidateWardLeaderRequest $request)
+    public function store(ValidateBranchLeaderRequest $request)
     {
         $obj = new LeadersController();
         $leader = $obj->store( $request );
+        if ( !$leader ){
+            return redirect()->back()->with(['status' => 'error', 'message' => 'hatujaweza kumuweka kiongozi']);
+        }
         $obj->attachMany( $leader->branches(), $request, $leader );
 
         return redirect()->back()

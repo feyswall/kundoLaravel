@@ -42,16 +42,15 @@
                                 <li><a href="{{ route("super.posts.orodha", 'serikali') }}"><span>Orodha Nyadhifa </span> </a></li>
                             </ul>
                         </li>
-                        <li> <a href="javascript: void(0);" class="has-arrow">Maeneo</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li> <a href="{{ route("super.areas.wilaya.orodha") }}">Orodha</a></li>
-                                {{--    <li><a href="/lo"><span>Orodha  Kamati</span> </a></li>--}}
-                                <li><a href="{{ route("super.areas.general.anza") }}"><span>Tafuta</span> </a></li>
-                            </ul>
-                        </li>
                     </ul>
+                </li>
 
-
+                <li> <a href="javascript: void(0);" class="has-arrow">Maeneo</a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li> <a href="{{ route("super.areas.wilaya.orodha") }}">Orodha</a></li>
+                        {{--    <li><a href="/lo"><span>Orodha  Kamati</span> </a></li>--}}
+                        <li><a href="{{ route("super.areas.general.anza") }}"><span>Tafuta</span> </a></li>
+                    </ul>
                 </li>
 
                  <li>

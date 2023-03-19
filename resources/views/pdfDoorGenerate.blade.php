@@ -60,6 +60,9 @@
         td p {
             margin: 0;
         }
+        #main-section ul, ol{
+            margin-top: 2px;
+        }
     </style>
 </head>
 
@@ -71,17 +74,17 @@
 
     <div style="text-align: center; margin: 0px auto;">
         <h5 style="padding: 0px; margin: 0px;"><b>JAMHURI YA MUUNGANO WA TANZANIA</b></h5>
-        <hr style="width: 50%; margin-left: auto;">
+        <hr style="width: 50%; margin-left: auto; border: 1px solid gray;">
         <h6 style="padding: 0px; margin: 0px;"><?php echo strtoupper('Ofisi Ya Mbunge wa Jimbo la Bariadi'); ?></h6>
     </div>
     <div>
-        <img src="{{ public_path('assets/images/bunge.png') }}" style="margin-left: 280px; width: 120px;">
+        <img src="{{ public_path('assets/images/bunge.png') }}" style="margin-left: 280px;margin-top: 5px;width: 120px;">
     </div>
 
 
 
     <div style="display: block;">
-        <table style="width: 100%">
+        <table style="width: 100%; margin-bottom: 20px;">
             <tbody>
                 <tr>
                     <td id="adrSide">
@@ -99,7 +102,9 @@
         </table>
     </div>
 
-    {!! $content !!}
+    <div id="main-section">
+        {!! $content !!}
+    </div>
 
     <div style="text-align: center; margin-top: 10px;">
         <img src="{{ public_path('assets/images/true_sign.png') }}" style="width: 100px;">
@@ -116,7 +121,9 @@
 
     <div>
         <div id="copyDiv" style="display: flex;">
-            {!! $copy !!}
+            @if( $copy != 'null')
+                {!! $copy !!}
+            @endif
         </div>
     </div>
 </body>

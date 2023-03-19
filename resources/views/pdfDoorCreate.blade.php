@@ -23,10 +23,10 @@
 <form method="post" action="{{ route('pdf.door.store') }}" target="_blank">
         @csrf
         <label for="content">Anuani ya mpokeaji</label>
-        <textarea class="summernoteOne" name="address" rows="4"></textarea>
+        <textarea class="summernoteOne" name="address" rows="4" required></textarea>
 
         <label for="copy">Andika Barua</label>
-        <textarea class="summernoteTwo" name="content" rows="30"></textarea>
+        <textarea class="summernoteTwo" name="content" rows="30" required></textarea>
 
         <label for="copy">Nakala</label>
         <textarea class="summernoteThree" name="copy" rows="5"></textarea>
@@ -44,16 +44,37 @@
             $('.summernoteOne').summernote({
                 height: 100,
                 focus: true,
+                toolbar: [
+                    ['font', ['bold']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen']],
+                ],
             });
 
             $('.summernoteTwo').summernote({
                 height: 400,
                 focus: true,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['picture', 'hr']],
+                    ['view', ['fullscreen']],
+                ],
             });
 
             $('.summernoteThree').summernote({
                 height: 200,
                 focus: true,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['hr']],
+                    ['view', ['fullscreen']],
+                ],
             });
 
         });

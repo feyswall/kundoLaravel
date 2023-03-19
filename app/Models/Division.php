@@ -8,12 +8,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Znck\Eloquent\Traits\BelongsToThrough;
 
 class Division extends Model
 {
     use HasFactory;
+    use BelongsToThrough;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     protected  $fillable = ['name', 'council_id'];
+
+
+    public function region()
+    {
+        return $this->belongsToThrough( Region::class, [District::class, Council::class] );
+    }
+
+    public function district()
+    {
+        return $this->belongsToThrough( District::class, Council::class );
+    }
 
     /**
      * Get the council  that owns the Division
@@ -24,7 +38,6 @@ class Division extends Model
     {
         return $this->belongsTo(Council::class );
     }
-
 
     /**
      * Get all of the wards for the Division
@@ -45,6 +58,13 @@ class Division extends Model
         return $this->hasManyThrough(Branch::class, Ward::class );
     }
 
+
+    /**
+     * The long relations starts here and now
+     */
+    public function trunks(){
+        return $this->hasManyDeep(Trunk::class, [Ward::class, Branch::class ]);
+    }
 
 
     /**

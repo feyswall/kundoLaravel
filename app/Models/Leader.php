@@ -112,7 +112,9 @@ class Leader extends Model
      */
     public  function trunks()
     {
-        return $this->belongsToMany( Trunk::class );
+        return $this->belongsToMany( Trunk::class )
+            ->withPivot('isActive', 'post_id')
+            ->withTimestamps();
     }
 
     /**

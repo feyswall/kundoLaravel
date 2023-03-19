@@ -26,21 +26,18 @@ class District extends Model
     {
         return $this->belongsTo( Region::class );
     }
-
-    /**
-     * Get all of the council for the District
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function divisions(): HasManyThrough
-    {
-        return $this->hasManyThrough(Division::class,Council::class);
-    }
     
 
     public function councils()
     {
         return $this->hasMany(Council::class);
+    }
+
+
+    
+    public function divisions(): HasManyThrough
+    {
+        return $this->hasManyThrough(Division::class,Council::class);
     }
 
 
@@ -64,13 +61,21 @@ class District extends Model
     }
 
 
-
     /**
      * @return HasManyDeep
      */
     public function branches(): HasManyDeep
     {
         return $this->hasManyDeep(Branch::class, [Council::class, Division::class, Ward::class]);
+    }
+
+
+    /**
+     * @return HasManyDeep
+     */
+    public function trunks(): HasManyDeep
+    {
+        return $this->hasManyDeep(Trunk::class, [Council::class, Division::class, Ward::class, Branch::class]);
     }
 
 

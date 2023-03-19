@@ -39,6 +39,9 @@ class DivisionLeadersController extends Controller
     {
         $obj = new LeadersController();
         $leader = $obj->store( $request );
+        if ( !$leader ){
+            return redirect()->back()->with(['status' => 'error', 'message' => 'hatujaweza kumuweka kiongozi']);
+        }
         $obj->attachMany( $leader->divisions(), $request, $leader );
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }

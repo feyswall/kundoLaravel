@@ -91,11 +91,7 @@
                                         <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $postName }}</small><br>
                                         <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
                                     </div>
-                                        @if( $postValue == $postName )
-                                        @else
-                                            @php $postValue = $postName; @endphp
-                                            <div class="row w-100"></div>
-                                        @endif
+
                                     @endif
                                 @endforeach
                             </div>
@@ -116,7 +112,7 @@
 
                     <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                         <div class="d-flex justify-content-md-between justify-content-center items-center flex-wrap-reverse">
-                            <h3 class="fs-4 me-3">Viongozi Wa Serikali Ngazi Ya Tawi</h3>
+                            <h3 class="fs-4 me-3">Viongozi Wa Serikali Ngazi Ya Shina</h3>
                             <div class="d-flex items-center justify-content-center gap-2">
                                 <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziSerikaliModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri </button>
                                 <a href="{{ route("super.areas.tawi.fungua", $trunk->branch->id) }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Tawi</a>
@@ -191,7 +187,7 @@
                                             <div class="mb-3 mb-4">
                                                 <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                 <select class="form-control" name="post_id">
-                                                    @foreach( \App\Models\Post::where('area', 'trunk')->where('side', 'serikali')->get() as $post )
+                                                    @foreach( \App\Models\Post::where('area', 'shina')->where('side', 'chama')->get() as $post )
                                                         <option value="{{ $post->id }}">{{ $post->name }}</option>
                                                     @endforeach
                                                 </select>
@@ -247,7 +243,7 @@
                                             <div class="mb-3 mb-4">
                                                 <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                 <select class="form-control" name="post_id">
-                                                    @foreach( \App\Models\Post::where('area', 'trunk')->where('side', 'serikali')->get() as $post )
+                                                    @foreach( \App\Models\Post::where('area', 'shina')->where('side', 'serikali')->get() as $post )
                                                         <option value="{{ $post->id }}">{{ $post->name }}</option>
                                                     @endforeach
                                                 </select>

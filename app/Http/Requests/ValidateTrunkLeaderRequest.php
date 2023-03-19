@@ -7,7 +7,7 @@ use App\Rules\LeadersCountRule;
 use App\Rules\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ValidateBranchLeaderRequest extends FormRequest
+class ValidateTrunkLeaderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,8 +34,8 @@ class ValidateBranchLeaderRequest extends FormRequest
             'lastName' => ['required', 'string', 'max:50'],
             'phone' => ['required', 'max:15', new PhoneNumber()],
             'post_id' =>  [
-//                new ModelExistsRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column')),
-                new LeadersCountRule($idadi, 'branch_leader', $post->deep, "branch_id", $this->input('side_id')),
+//                new WardLeadersRule($this->input('side_id'), $this->input('post_id'), $this->input('table'), $this->input('side_column')),
+                new LeadersCountRule($idadi, 'leader_trunk', $post->deep,'trunk_id', $this->input('side_id'))
             ]
         ];
     }
@@ -47,9 +47,10 @@ class ValidateBranchLeaderRequest extends FormRequest
             'middleName.required' => "Tafadhali jaza jina la Kati",
             'lastName.required' => "Tafadhali jaza jina la Mwisho",
             'phone.required' => "Tafadhali jaza Namba ya simu",
+
+
             '*.string' => "Ni lazima Lina lihusishe maneno pekee",
             '*.max' => "Jina linahusisha Herufi    Zisizozidi Hamsini",
         ];
     }
 }
-

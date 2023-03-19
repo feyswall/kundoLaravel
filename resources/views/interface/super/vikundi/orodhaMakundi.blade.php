@@ -134,6 +134,7 @@
                         <option value="tarafa">Tarafa</option>
                         <option value="kata">Kata</option>
                         <option value="tawi">Tawi</option>
+                        <option value="shina">Shina</option>
                     </select>
                 </div>
                 <div>

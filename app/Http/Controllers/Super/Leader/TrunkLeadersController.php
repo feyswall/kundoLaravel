@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Super\Leader;
 
+use App\Http\Controllers\Super\LeadersController;
+use App\Http\Requests\ValidateTrunkLeaderRequest;
 use App\Models\Trunk;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -28,15 +30,19 @@ class TrunkLeadersController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+
+    public function store(ValidateTrunkLeaderRequest $request)
     {
-        //
+        $obj = new LeadersController();
+        $leader = $obj->store( $request );
+        if ( !$leader ){
+            return redirect()->back()->with(['status' => 'error', 'message' => 'hatujaweza kumuweka kiongozi']);
+        }
+        $obj->attachMany( $leader->trunks(), $request, $leader );
+
+        return redirect()->back()
+            ->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 
     /**

@@ -7,8 +7,6 @@
  */
 ?>
 
-
-
 @extends("layouts.super_system")
 
 @section('extra_style')
@@ -62,6 +60,7 @@
                         <option value="tarafa">Tarafa</option>
                         <option value="kata">Kata</option>
                         <option value="tawi">tawi</option>
+                        <option value="shina">shina</option>
                     </select>
                 </div>
                 <div class="row">

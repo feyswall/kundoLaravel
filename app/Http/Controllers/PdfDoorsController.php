@@ -55,11 +55,16 @@ class PdfDoorsController extends Controller
         $number = $number + 1;
         $name = 'SMY-BRD/EKAM40/' . $year . '-000' . $number;
 
+        if ( !($request->copy) ){
+            $request->copy = 'null';
+        }
+
         if ( $request->btn == 'send' ) {
             $datas = [
                 'address' => $request->address,
                 'content' => $request->input('content'),
                 'copy' => $request->copy,
+                'name' => $name,
             ];
 
             $pdf = PDF::loadView('pdfDoorGenerate', $datas);

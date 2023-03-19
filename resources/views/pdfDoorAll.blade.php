@@ -39,7 +39,9 @@
                                             @csrf
                                             <input type="hidden" value="{{ 'pdfs/'.$pdf->url }}" name="pdf">
                                         </form>
-                                        <button form="downloaderBtn_{{ $pdf->id }}" class="btn btn-dark float-end mt-lg-3 mt-sm-2"
+                                        <button
+                                                form="downloaderBtn_{{ $pdf->id }}"
+                                                class="d-flex btn btn-dark float-end mt-lg-3 mt-sm-2"
                                             type="submit">pakua pdf
                                             ya barua
                                         </button>

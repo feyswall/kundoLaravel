@@ -110,6 +110,7 @@
 
                     @if ( $post->area == 'tawi')
                         @php
+
                             if ( method_exists($table, "branches") ){
                                           $bool_contains = $table->branches()->with('leaders')->get();
                                            foreach( $bool_contains as $obj ){
@@ -117,12 +118,28 @@
                                                 $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
                                             }
                                        }else{
-                                           $bool_contains = $table->branch;
+                                   $bool_contains = $table->branch;
+                                   $leaders_id = $bool_contains->leaders->pluck('id');
+                                   $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
+                             }
+                        @endphp
+                    @endif
+
+                    @if ( $post->area == 'shina')
+                        @php
+                            if ( method_exists($table, "trunks") ){
+                                          $bool_contains = $table->trunks()->with('leaders')->get();
+                                           foreach( $bool_contains as $obj ){
+                                                $leaders_id = $obj->leaders->pluck('id');
+                                                $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
+                                            }
+                                       }
+                                       else{
+                                           $bool_contains = $table->trunk;
                                            $leaders_id = $bool_contains->leaders->pluck('id');
-                                           $all_leaders = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
+                                           $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
                                      }
                         @endphp
-
                     @endif
 
                 @endif
@@ -136,9 +153,12 @@
                     <div class="container">
                         <div class="row">
                   @foreach( $all_leaders as $leadersCollection )
+
                       @foreach($leadersCollection as $key => $leaders)
+
                               @foreach($leaders as  $bey => $leader)
-                                  @if( $tracker == $post->name )
+
+                                  @if( $tracker == $post->name && is_object($leader) )
                                       @php
                                           $counter++ ;
                                       @endphp
@@ -169,21 +189,22 @@
                                                 </div>
                                             </div>
                                     @else
-                                        <!-- Force next columns to break to new line -->
-                                            <div class="w-100"></div>
-                                            <hr>
-                                        <h3><b>{{ $post->name }}</b></h3>
-                                          @php
-                                              $tracker = $post->name;
-                                                $counter = 1;
-                                          @endphp
-                                            <div class="col-md-3 col-sm-12 col-12 p-3">
-                                                <div class="text-center">
-                                                    <h4 class="fs-5 text-capitalize mb-1">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                                    <span class="d-block mb-2">{{ $leader->phone }}</span>
-                                                    <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $post->name }}</small>
-                                                    <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $counter }}</small>
-                                                    <span class="d-block mb-2">
+                                        @if( is_object( $leader))
+                                            <!-- Force next columns to break to new line -->
+                                                <div class="w-100"></div>
+                                                <hr>
+                                                <h3><b>{{ $post->name }}</b></h3>
+                                                @php
+                                                    $tracker = $post->name;
+                                                      $counter = 1;
+                                                @endphp
+                                                <div class="col-md-3 col-sm-12 col-12 p-3">
+                                                    <div class="text-center">
+                                                        <h4 class="fs-5 text-capitalize mb-1">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
+                                                        <span class="d-block mb-2">{{ $leader->phone }}</span>
+                                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $post->name }}</small>
+                                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $counter }}</small>
+                                                        <span class="d-block mb-2">
                                                         @php
                                                             $area = $post->area;
                                                             if ( $area == 'tawi'){
@@ -201,8 +222,9 @@
                                                             }
                                                         @endphp
                                                     </span>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
                                     @endif
                             @endforeach
                       @endforeach
@@ -210,7 +232,7 @@
                         </div>
                     </div>
                 @endif
-                @endforeach
+            @endforeach
         </div>
 
     </div>

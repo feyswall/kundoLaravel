@@ -14,14 +14,16 @@ class Council extends Model
 {
     use HasFactory;
     use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
+    use \Znck\Eloquent\Traits\BelongsToThrough;
 
     protected  $fillable = ['name', 'district_id'];
 
-    /**
-     * Get the district that owns the Council
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+    public function region()
+    {
+        return $this->belongsToThrough(Region::class, District::class);
+    }
+
+
     public function district(): BelongsTo
     {
         return $this->belongsTo(District::class);
@@ -53,6 +55,12 @@ class Council extends Model
     public function branches(): HasManyDeep
     {
         return $this->hasManyDeep(Branch::class, [Division::class, Ward::class]);
+    }
+
+
+    public function trunks(): HasManyDeep
+    {
+        return $this->hasManyDeep(Trunk::class, [Division::class, Ward::class, Branch::class ]);
     }
 
 
