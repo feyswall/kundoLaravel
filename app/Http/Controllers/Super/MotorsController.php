@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Super;
 
 use App\Models\Motor;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+
 use function App\Repositories\rules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -95,6 +97,19 @@ class MotorsController extends Controller
             }
             $ownerObj = $ownerFunct['obj'];
             $ownerId = $ownerObj->id;
+
+            // The owner should also have a user Account in the system
+            $userObj = new UsersController();
+            $userRequestData = [];
+            $userRequestData['name'] = $ownerObj->name;
+            $nameString = str_replace('\s', '', $ownerObj->name);
+            $userRequestData['email'] = strtolower( $nameString.".motorOwner@gmail.com" );
+            $userRequestData['password'] = $ownerObj->name;
+            $userFunct = $userObj->createApi($userRequestData);
+            if( $userFunct['status'] == 'fail' ){
+                return response()->json( $userFunct );
+            }
+            $userFunct['obj']->assignRole('motorOwner');
         }
         // create motor
         $motor = Motor::create([

@@ -18,7 +18,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="">Orodha ya vyombo vya moto</h2>
-                        <button data-bs-toggle="modal" data-bs-target="#ongezaChomo" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri Kiongozi</button>
+                        <button data-bs-toggle="modal" data-bs-target="#ongezaChomo" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri Chombo</button>
                         <label class="form-label  font-size-24" id="machagulio-mkoa"></label>
                         <label class="form-label font-size-24" id="machagulio-wilaya"></label>
                         <table id="datatable-viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">

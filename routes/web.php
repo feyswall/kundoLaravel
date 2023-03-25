@@ -9,6 +9,7 @@ use App\Models\Leader;
 use App\Http\Controllers\Super\PostsController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PdfDoorsController;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +64,6 @@ Route::get('/account', function () {
             $user = \App\Models\User::create([
                 'name' => $leader->firstName . " " . $leader->lastName,
                 'email' => $email,
-                'leader_id' => $leader->id,
                 'password' => Hash::make($password),
             ]);
 
@@ -88,7 +88,7 @@ Route::get('/dashboard', function () {
         ->with('posts')->get();
     return view('dashboard')
         ->with("leaders", $leaders);
-})->middleware(['auth', 'verified', 'role:super|mbunge|general'])->name('dashboard');
+})->middleware(['auth', 'verified', 'role:super|mbunge|general|motorOwner'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/show', [ProfileController::class, 'show'])->name('profile.show');

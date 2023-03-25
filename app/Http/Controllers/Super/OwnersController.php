@@ -16,12 +16,12 @@ class OwnersController extends Controller
         if ( $validate['status'] == 'error'){
             return $validate['output'];
         }
-        $motorType = Owner::create([
+        $motorOwner = Owner::create([
             'name' => $request['name'],
             'gender' => $request['gender'],
         ]);
-        if (!$motorType ) { return ['status' => 'fail', 'messages' => ['Tafadhali Jaribu Tena']]; }
-        return ['status' => 'success', 'obj' => $motorType];
+        if (!$motorOwner ) { return ['status' => 'fail', 'messages' => ['Tafadhali Jaribu Tena']]; }
+        return ['status' => 'success', 'obj' => $motorOwner];
     }
 
     public function validateRequest($request)
