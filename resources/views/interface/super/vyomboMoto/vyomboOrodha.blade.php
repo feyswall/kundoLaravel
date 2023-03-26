@@ -205,7 +205,6 @@
 
                     owners: {!! json_encode($owners) !!},
                     owner: '',
-                    writeOwnerBool: false,
 
                     year: '',
                     color: '',
@@ -255,7 +254,6 @@
                     this.motorCategory = '';
                     this.writeTypeBool = false;
                     this.writeCategoryBool = false;
-                    this.writeOwnerBool = false;
                     this.owner = false;
                 },
                 registerMotor: function () {
@@ -266,7 +264,6 @@
                         motorModel: obj.motorModel,
                         writeTypeBool: obj.writeTypeBool,
                         owner: obj.owner,
-                        writeOwnerBool: obj.writeOwner,
                         year: obj.year,
                         color: obj.color,
                         identityName: obj.identityName,
@@ -275,11 +272,13 @@
                         model_name: obj.model_name,
                         type_name: obj.type_name,
                         motorCategory: obj.motorCategory,
+                        writeOwner: obj.writeOwner,
                     })
                         .then(function(response){
                             if ( response.data['status'] == 'fail' ){
                                 alert( response.data['messages'][0] );
                                 obj.hideForm = false;
+                                location.reload();
                             }else {
                                 alert('Chombo Kimesajiriwa');
                                 location.reload();

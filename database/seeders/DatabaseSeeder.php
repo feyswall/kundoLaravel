@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
 //        $this->call( PostsTableSeeder::class );
 //        $this->call(GroupsTableSeeder::class);
 //        $this->call(groupPostTableSeeder::class);
-$this->call( MotorCategorySeeder::class );
+//$this->call( MotorCategorySeeder::class );
 $this->call( MotorOwner::class );
     }
 }

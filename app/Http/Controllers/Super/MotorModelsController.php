@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Super;
 
 use App\Models\MotorModel;
 use App\Http\Controllers\Controller;
+use App\Rules\UniqueMotorModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,10 +14,11 @@ class MotorModelsController extends Controller
     public function validateRequest($request)
     {
         $rules = [
-            'name' => 'required|unique:motor_models,name',
+            'name' => ['required', new UniqueMotorModel($request['id'])],
         ];
         $messages = [
-            'name.required' => 'Jina la Model ya Chombo Inahitajika'
+            'name.required' => 'Jina la Model ya Chombo Inahitajika',
+            'name.unique' => 'Model ya chombo tayari imeshasajiriwa',
         ];
         $validate = Validator::make($request, $rules, $messages);
         if ( $validate->fails() ){

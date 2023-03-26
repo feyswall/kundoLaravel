@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Super;
 
 use App\Http\Controllers\Controller;
 use App\Models\MotorType;
+use App\Rules\UniqueMotorType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,7 +20,7 @@ class MotorTypesController extends Controller
     public function validateRequest($request)
     {
         $rules = [
-            'name' => 'required|unique:motor_types,name',
+            'name' => ['required', new UniqueMotorType($request['id'])],
         ];
         $messages = [
             'name.required' => 'Jina la Aina ya Chombo Linahitajika',
@@ -36,7 +37,7 @@ class MotorTypesController extends Controller
 
     public function createNewTypeLogic($request)
     {
-        $validate = $this->validateRequest(['name' => $request['name']]);
+        $validate = $this->validateRequest($request);
         if ( $validate['status'] == 'error'){
             return $validate['output'];
         }

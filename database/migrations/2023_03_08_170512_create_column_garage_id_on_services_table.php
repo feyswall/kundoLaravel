@@ -26,11 +26,13 @@ return new class extends Migration
     public function down()
     {
         Schema::table('services', function (Blueprint $table) {
+            Schema::dropIfExists('services');
+
             if (Schema::hasColumn('services', 'garage_id')) {
                 $table->dropColumn('garage_id');
             }
             $foreignKeys = $this->listTableForeignKeys('services');
-            if(in_array('services_garage_id_foreign', $foreignKeys))  $table->dropForeign(['garage_id']);
+            if(in_array('services_garage_id_foreign', $foreignKeys)) { $table->dropForeign(['garage_id']) ;}
         });
     }
 

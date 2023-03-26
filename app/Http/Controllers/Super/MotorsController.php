@@ -8,6 +8,7 @@ use App\Models\User;
 
 use function App\Repositories\rules;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
 class MotorsController extends Controller
@@ -34,8 +35,6 @@ class MotorsController extends Controller
         $rules = [
             'identityName' => 'required',
             'writeTypeBool' => 'required',
-            'owner' => 'required',
-            'writeOwnerBool' => 'required',
             'year' => 'required',
             'color' => 'required',
             'gender' => 'required',
@@ -44,10 +43,8 @@ class MotorsController extends Controller
 
         $messages = [
             'identityName.required' => 'Jina la Utambulisho wa Chombo Linahitajika',
-            'writeTypeBool.required' => 'Taradhali azisha ukurasa upya na ujaribu tena',
-            'owner.required' => 'Taradhali anzisha ukurasa upya na ujaribu tena',
-            'writeOwnerBool.required' => 'Taradhali anzisha ukurasa upya na ujaribu tena',
-            'year.required' => 'Taradhali Jaza Mwaka Wa Kutengezezwa Chombo',
+            'writeTypeBool.required' => 'Tafadhali azisha ukurasa upya na ujaribu tena',
+            'year.required' => 'Tafadhali Jaza Mwaka Wa Kutengezezwa Chombo',
             'color' => 'Tafadhali jaza rangi ya gari',
         ];
         $validate = Validator::make($request->all(), $rules, $messages);
@@ -84,7 +81,7 @@ class MotorsController extends Controller
             $motorModelId = $motorModelObj->id;
         }
 
-        if ( $request->writeOwnerBool ){
+        if ( $request->writeOwner ){
             // create owner
             $owner = new OwnersController();
             $ownerFunct = $owner->createNewOwnerLogic([
