@@ -32,6 +32,7 @@ class OwnersController extends Controller
 
         $messages = [
             'name.required' => 'Jina la Mmilikiwa wa chombo Linahitajika',
+            'name.unique' => 'Jina la Mmiliki wa chombo Limeshasajiriwa',
         ];
         $validate = Validator::make($request, $rules, $messages);
         if ( $validate->fails() ){

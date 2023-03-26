@@ -76,7 +76,7 @@
                 <li> <a href="javascript: void(0);" class="has-arrow">Vyombo Vya Moto</a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li> <a href="{{ route('super.motor.allList') }}">Orodha Ya Vyombo</a></li>
-                        <li> <a href="{{ route('super.service.allList') }}">Services Ya Service</a></li>
+                        <li> <a href="{{ route('super.service.allList') }}">Orodha Ya Service</a></li>
                     </ul>
                 </li>
             </ul>

@@ -54,7 +54,7 @@
         </div> <!-- end row -->
 
         <!-- model location here -->
-        <x-system.modal id="ongezaChomo" aria="orodhaTawiLabel" size="modal-fullscreen" title="Ongeza Tawi Hapa">
+        <x-system.modal id="ongezaChomo" aria="orodhaTawiLabel" size="modal-fullscreen" title="Ongeza Chombo Hapa">
             <x-slot:content>
                 <div v-bind:class="{'row': true, 'justify-content-center': true, 'd-none': !hideForm}">
                     <div class="col-md-3 col-sm-6">
