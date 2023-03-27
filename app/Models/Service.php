@@ -10,7 +10,7 @@ class Service extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['motor_id'];
+    protected $fillable = ['motor_id', 'owner_id'];
 
     public function motor()
     {

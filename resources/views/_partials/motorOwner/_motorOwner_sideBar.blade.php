@@ -32,8 +32,7 @@
                         <span>Services</span>
                     </a>
                     <ul class="sub-menu mm-collapse mm-show" aria-expanded="true" style="">
-                        <li><a href="{{ route('mbunge.challenges.orodha', 'chama') }}">Orodha ya Service</a></li>
-                        <li><a href="{{ route('mbunge.challenges.orodha', 'wananchi') }}">Aina Ya Service</a></li>
+                        <li><a href="{{ route('mbunge.challenges.orodha', 'wananchi') }}">Orodha ya Vyombo</a></li>
                     </ul>
                 </li>
                 <hr>

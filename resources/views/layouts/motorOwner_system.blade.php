@@ -40,9 +40,7 @@
         </div>
         <!-- End Page-content -->
         <footer class="footer">
-
             @include('_partials.motorOwner._motorOwner_footer');
-
         </footer>
     </div>
     <!-- end main content-->
