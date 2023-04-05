@@ -58,9 +58,9 @@
                                     <tbody>
                                         <tr v-for="smsLeader in smsWithLeaders">
                                             <td v-if="smsLeader.status == 'DELIVERED'" class="text-success"><b>@{{ smsLeader.status }}</b></td>
-                                            <td v-if="smsLeader.status == 'PENDING'" class="text-primary"><b>@{{ smsLeader.status }}</b></td>
-                                            <td v-else="smsLeader.status == 'FAILED'" class="text-danger"><b>@{{ smsLeader.status }}</b></td>
-
+                                            <td v-else-if="smsLeader.status == 'PENDING'" class="text-primary"><b>@{{ smsLeader.status }}</b></td>
+                                            <td v-else-if="smsLeader.status == 'FAILED'" class="text-danger"><b>@{{ smsLeader.status }}</b></td>
+                                            <td v-else class="text-danger">Error</td>
                                             <td>@{{ sms }}</td>
                                             <td>@{{ smsLeader.leader.firstName }}</td>
                                             <td>@{{ smsLeader.leader.lastName }}</td>
@@ -146,6 +146,9 @@
         },
         mounted() {
             this.loadSmsOfGroup();
+            setTimeout(() => {
+                this.loadSmsOfGroup();
+            }, 2000);
         },
         methods: {
                 loadSmsOfGroup() {

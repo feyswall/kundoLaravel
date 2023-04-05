@@ -17,7 +17,7 @@ class Leader extends Model
 
     protected $fillable = ['firstName', 'middleName', 'lastName', 'phone', 'side', 'user_id'];
 
-    
+
     /**
      * The regions that belong to the Leader
      *
@@ -29,7 +29,7 @@ class Leader extends Model
     }
 
 
-    
+
     /**
      * The district that belong to the Leader
      *
@@ -51,7 +51,7 @@ class Leader extends Model
         return $this->belongsToMany(Council::class)->withPivot('isActive', 'post_id');
     }
 
-    
+
     /**
      * The division that belong to the Leader
      *
@@ -122,7 +122,9 @@ class Leader extends Model
      */
     public function smses(): BelongsToMany
     {
-        return $this->belongsToMany( Sms::class );
+        return $this->belongsToMany( Sms::class )
+        ->withPivot('phone')
+        ->withTimestamps();
     }
 
 
@@ -154,5 +156,5 @@ class Leader extends Model
     }
 
 
-    
+
 }

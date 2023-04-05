@@ -150,7 +150,8 @@ class SmsServicesControlller extends Controller
                 // fill the variables in relation
                 if ( $smsRequestId ){
                     foreach ( $savedLeaders as $leader ){
-                        $smsRequestId->leaders()->attach($leader);
+                        $leaderObj = Leader::find($leader);
+                        $smsRequestId->leaders()->attach($leader, ['phone' => $leaderObj->phone]);
                     }
                 }
                 return (['status' => 'success' ,'response' => $response_obj['response'], 'obj' => $smsRequestId]);
@@ -187,7 +188,8 @@ class SmsServicesControlller extends Controller
                 // fill the variables in relation
                 if ( $smsRequestId ){
                     foreach ( $leaders as $leader ){
-                        $smsRequestId->leaders()->attach($leader);
+                        $leaderObj = Leader::find($leader);
+                        $smsRequestId->leaders()->attach($leader, ['phone' => $leaderObj->phone]);
                     }
                 }
                 return (['status' => 'success' ,'response' => $response_obj['response'], 'obj' => $smsRequestId]);
@@ -356,7 +358,7 @@ class SmsServicesControlller extends Controller
         $sms = Sms::find($id);
         $leaders = $sms->leaders()->select('*')->get();
         foreach ($leaders as $leader) {
-            $response = self::deriveryReport($leader->phone, $sms->request_id);
+            $response = self::deriveryReport($leader->pivot->phone, $sms->request_id);
               if ($response['status'] == 'success') {
                     if( isset($response['response']->error) ){
                         $outputArray[] = [ 'status' => $response['response']->error, 'leader' => $leader ];
