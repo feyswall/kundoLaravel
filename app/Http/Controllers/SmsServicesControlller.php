@@ -51,7 +51,7 @@ class SmsServicesControlller extends Controller
         $posts = [];
         $groups = Group::whereIn('id', $request->groups_ids)->get();
         foreach ($groups as $key => $group) {
-            $results = $group->posts->pluck('id');      
+            $results = $group->posts->pluck('id');
             foreach( $results as $result ) {
                 $posts[] = $result;
             }
@@ -132,7 +132,7 @@ class SmsServicesControlller extends Controller
         }
 
         $postData = array(
-            'source_addr' => 'INFO',
+            'source_addr' => 'Kundo Web',
             'encoding'=>0,
             'schedule_time' => '',
             'message' => $request->message['value'],
@@ -169,7 +169,7 @@ class SmsServicesControlller extends Controller
 
     public function sendingProtocol($message, $receptionist, $leaders){
         $postData = array(
-            'source_addr' => 'INFO',
+            'source_addr' => 'Kundo Web',
             'encoding'=>0,
             'schedule_time' => '',
             'message' => $message,
@@ -358,7 +358,11 @@ class SmsServicesControlller extends Controller
         foreach ($leaders as $leader) {
             $response = self::deriveryReport($leader->phone, $sms->request_id);
               if ($response['status'] == 'success') {
-                    $outputArray[] = [ 'status' => $response['response']->status, 'leader' => $leader ];
+                    if( isset($response['response']->error) ){
+                        $outputArray[] = [ 'status' => $response['response']->error, 'leader' => $leader ];
+                    }elseif( isset($response['response']->status) ){
+                        $outputArray[] = [ 'status' => $response['response']->status, 'leader' => $leader ];
+                    }
                 } else {
                     $outputArray[] = [ 'status' => "loading...", 'leader' => $leader ];
                 }

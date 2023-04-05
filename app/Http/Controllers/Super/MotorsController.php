@@ -100,8 +100,8 @@ class MotorsController extends Controller
             $userRequestData = [];
             $userRequestData['name'] = $ownerObj->name;
             $nameString = str_replace('\s', '', $ownerObj->name);
-            $userRequestData['email'] = strtolower( $nameString.".motorOwner@gmail.com" );
-            $userRequestData['password'] = $ownerObj->name;
+            $userRequestData['email'] = strtolower( $nameString.".motor@kims.com" );
+            $userRequestData['password'] = strtolower( $nameString );
             $userFunct = $userObj->createApi($userRequestData);
             if( $userFunct['status'] == 'fail' ){
                 return response()->json( $userFunct );

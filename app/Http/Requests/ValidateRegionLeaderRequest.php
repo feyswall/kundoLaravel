@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Post;
 use App\Rules\DistrictLeaderRule;
 use App\Rules\LeadersCountRule;
 use App\Rules\PhoneNumber;

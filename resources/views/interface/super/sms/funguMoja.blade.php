@@ -59,7 +59,8 @@
                                         <tr v-for="smsLeader in smsWithLeaders">
                                             <td v-if="smsLeader.status == 'DELIVERED'" class="text-success"><b>@{{ smsLeader.status }}</b></td>
                                             <td v-if="smsLeader.status == 'PENDING'" class="text-primary"><b>@{{ smsLeader.status }}</b></td>
-                                            <td v-if="smsLeader.status == 'FAILED'" class="text-danger"><b>@{{ smsLeader.status }}</b></td>
+                                            <td v-else="smsLeader.status == 'FAILED'" class="text-danger"><b>@{{ smsLeader.status }}</b></td>
+
                                             <td>@{{ sms }}</td>
                                             <td>@{{ smsLeader.leader.firstName }}</td>
                                             <td>@{{ smsLeader.leader.lastName }}</td>
@@ -131,26 +132,6 @@
 @endsection
 
 @section("extra_script")
-    {{--<x-system.table-script id="allSmsTable" />--}}
-    {{-- <script>
-        const app = new  Vue({
-            el: "#app",
-
-            data: {
-                sms: {!! $sms->id !!},
-                leaders: @json($leaders),
-            },
-
-            methods: {
-                fetchMessages() {
-
-                }
-            },
-            created() {
-                console.log( this.leaders );
-            },
-        });
-    </script> --}}
     <script>
         const app = new  Vue({
         el: "#app",
