@@ -61,7 +61,7 @@
                                             <td v-else-if="smsLeader.status == 'PENDING'" class="text-primary"><b>@{{ smsLeader.status }}</b></td>
                                             <td v-else-if="smsLeader.status == 'FAILED'" class="text-danger"><b>@{{ smsLeader.status }}</b></td>
                                             <td v-else class="text-danger">Error</td>
-                                            <td>@{{ sms }}</td>
+                                            <td>@{{ request_id }}</td>
                                             <td>@{{ smsLeader.leader.firstName }}</td>
                                             <td>@{{ smsLeader.leader.lastName }}</td>
                                             <td>@{{  smsLeader.leader.phone }}</td>
