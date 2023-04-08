@@ -7,12 +7,9 @@
  */
 ?>
 
-
-
 <div class="vertical-menu">
     <!-- LOGO -->
     <div class="navbar-brand-box">
-
     </div>
     <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn"> <i class="fa fa-fw fa-bars"></i> </button>
     <div data-simplebar class="sidebar-menu-scroll">
@@ -20,9 +17,9 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title">Menu</li>
+                      <li class="menu-title">Menu</li>
                 <li>
-                    <a href="/kundo/mbunge/mbunge_dashboard.php"> <i class="iconify " data-icon="uil-home-alt" data-inline="false"></i><span>Dashboard</span> </a>
+                    <a href="{{ route('dashboard') }}"> <span>Nyumbani</span> </a>
                 </li>
                 <li class="mm-active">
                     <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">
@@ -32,11 +29,10 @@
                         <span>Services</span>
                     </a>
                     <ul class="sub-menu mm-collapse mm-show" aria-expanded="true" style="">
-                        <li><a href="{{ route('mbunge.challenges.orodha', 'wananchi') }}">Orodha ya Vyombo</a></li>
+                        <li><a href="#">Orodha ya Vyombo</a></li>
                     </ul>
                 </li>
                 <hr>
-
             </ul>
         </div>
         <!-- Sidebar -->
