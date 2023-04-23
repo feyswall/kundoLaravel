@@ -38,15 +38,12 @@ class ServicesController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Services  $services
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Services $services)
+
+    public function showService($id)
     {
-        //
+        $service = Service::where('id', $id)->first();
+        return  view('interface.super.vyomboMoto.chomboKimoja')
+            ->with('service', $service);
     }
 
     /**
@@ -82,4 +79,5 @@ class ServicesController extends Controller
     {
         //
     }
+
 }

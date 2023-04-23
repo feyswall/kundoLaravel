@@ -64,4 +64,7 @@ class User extends Authenticatable
         return $this->hasMany(Asset::class );
     }
 
+    public  function owner(){
+        return $this->hasOne( Owner::class );
+    }
 }

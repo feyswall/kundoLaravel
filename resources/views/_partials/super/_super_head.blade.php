@@ -15,9 +15,6 @@
 <meta content="informations" name="g3net" />
 <!-- App favicon -->
 
-<!-- default laravel mix javascript -->
-{{--<script src="{{ asset('build/assets/app-f44b9a4f.js') }}"></script>--}}
-
 <!-- Bootstrap Css -->
 <link href="{{ asset('assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
 
@@ -33,9 +30,15 @@
 
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+{{--<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>--}}
 
- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+{{--<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>--}}
 
+<!-- offline vue -->
+<script src="{{ asset('assets/js/vue.min.js') }}"></script>
+<!-- connect with axios offline -->
+<script src="{{ asset('assets/axios.min.js') }}"></script>
+
+{{--@vite('app.js');--}}
 
 

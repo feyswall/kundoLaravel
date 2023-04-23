@@ -32,25 +32,32 @@
                             <th>Chombo</th>
                             <th>Garage</th>
                             <th>services</th>
-                            <th>cost</th>
+                            <th>total cost</th>
+                            <th>Tar.</th>
                             <th></th>
                             </thead>
                             <tbody>
                             @php $totalCost = 0; @endphp
                             @foreach( $services as $key => $service )
                                 <tr>
+                                    <td>{{ $services->count() - $key }}</td>
                                     <td>{{ \Carbon\Carbon::parse($service->created_at)->format("D M Y") }}</td>
-                                    <td>{{ $service->motor->identityName }}</td>
+                                    <td>{{ $service->motor->identity_name }}</td>
                                     <td>{{ $service->garage->name }}</td>
                                     <td>
-                                        @foreach( $service->service_types as $serviceType )
-                                                <p>{{ $serviceType->name }}, </p>
-                                            @php $totalCost += $totalCost + $serviceType->cost; @endphp
-                                            @endforeach
+{{--                                        @foreach( $service->service_types as $serviceType )--}}
+{{--                                                <p>{{ $serviceType->name }}, </p>--}}
+{{--                                            @php $totalCost += $totalCost + $serviceType->cost; @endphp--}}
+{{--                                        @endforeach--}}
+                                        {{ $service->service_types->count() }}
                                     </td>
+                                            @foreach( $service->service_types as $serviceType )
+                                                @php $totalCost += ($serviceType->pivot->cost * $serviceType->pivot->itemCount); @endphp
+                                            @endforeach
                                     <td>{{ $totalCost }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($serviceType->created_at)->format("M-d-Y") }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-success">fungua</a>
+                                        <a href="{{ route("super.service.showService", $service->id) }}" class="btn btn-sm btn-success">fungua</a>
                                     </td>
                                 </tr>
                             @endforeach

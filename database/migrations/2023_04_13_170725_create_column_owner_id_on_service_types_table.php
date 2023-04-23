@@ -13,8 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('services', function (Blueprint $table) {
+        Schema::table('service_types', function (Blueprint $table) {
+
+            $foreignKeys = $this->listTableForeignKeys('service_types');
+            if(in_array('service_types_owner_id_foreign', $foreignKeys)) {
+                $table->dropForeign(['owner_id']) ;
+            }
+
+            if (Schema::hasColumn('service_types', 'owner_id')) {
+                $table->dropColumn('owner_id');
+            }
+
             $table->foreignId('owner_id')->constrained();
+
         });
     }
 
@@ -25,19 +36,19 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('services', function (Blueprint $table) {
+        Schema::table('service_types', function (Blueprint $table) {
+            $foreignKeys = $this->listTableForeignKeys('service_types');
+            if(in_array('service_types_owner_id_foreign', $foreignKeys)) { $table->dropForeign(['owner_id']) ;}
 
-            $foreignKeys = $this->listTableForeignKeys('services');
-            if(in_array('services_owner_id_foreign', $foreignKeys)) { $table->dropForeign(['owner_id']) ;}
-
-            if (Schema::hasColumn('services', 'owner_id')) {
+            if (Schema::hasColumn('service_types', 'owner_id')) {
                 $table->dropColumn('owner_id');
             }
         });
     }
 
+
     /**
-     * @param  string $table
+     * @param  $table
      * @return array
      */
     private function listTableForeignKeys($table):Array

@@ -82,11 +82,27 @@ class MotorsController extends Controller
         }
 
         if ( $request->writeOwner ){
+
+            // The owner should also have a user Account in the system
+            $userObj = new UsersController();
+            $userRequestData = [];
+            $userRequestData['name'] = $request->input('owner_name');
+            $nameString = str_replace('\s', '', $request->input('owner_name'));
+            $userRequestData['email'] = strtolower( $nameString.".motor@kims.com" );
+            $userRequestData['password'] = strtolower( $nameString );
+            $userFunct = $userObj->createApi($userRequestData);
+            if( $userFunct['status'] == 'fail' ){
+                return response()->json( $userFunct );
+            }
+            $userFunct['obj']->assignRole('motorOwner');
+
+
             // create owner
             $owner = new OwnersController();
             $ownerFunct = $owner->createNewOwnerLogic([
                 'name' => $request->input('owner_name'),
                 'gender' => $request->input('gender'),
+                'user_id' => $userFunct['obj']->id,
             ]);
 
             if ( $ownerFunct['status'] == 'fail'){
@@ -95,18 +111,6 @@ class MotorsController extends Controller
             $ownerObj = $ownerFunct['obj'];
             $ownerId = $ownerObj->id;
 
-            // The owner should also have a user Account in the system
-            $userObj = new UsersController();
-            $userRequestData = [];
-            $userRequestData['name'] = $ownerObj->name;
-            $nameString = str_replace('\s', '', $ownerObj->name);
-            $userRequestData['email'] = strtolower( $nameString.".motor@kims.com" );
-            $userRequestData['password'] = strtolower( $nameString );
-            $userFunct = $userObj->createApi($userRequestData);
-            if( $userFunct['status'] == 'fail' ){
-                return response()->json( $userFunct );
-            }
-            $userFunct['obj']->assignRole('motorOwner');
         }
         // create motor
         $motor = Motor::create([
@@ -123,6 +127,13 @@ class MotorsController extends Controller
         }
         return response()->json(['status' => 'success', 'messages' => ['Chombo kimesajiriwa']], 201);
 
+    }
+
+    public function orodhaMotorServices($id)
+    {
+        $motor = Motor::where('id', $id)->first();
+        return view('interface.super.vyomboMoto.motorServiceList')
+            ->with('motor', $motor);
     }
 
     /**

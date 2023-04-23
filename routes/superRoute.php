@@ -263,6 +263,7 @@ Route::controller(\App\Http\Controllers\Super\MotorsController::class)
     ->as('super.motor.')
     ->group(function () {
         Route::get('/orodhesha', 'index')->name('allList');
+        Route::get('/orodhesha/service/{id}', 'orodhaMotorServices')->name('orodhaServices');
     });
 
 
@@ -272,6 +273,7 @@ Route::controller(\App\Http\Controllers\Super\ServicesController::class)
     ->as('super.service.')
     ->group(function () {
         Route::get('/orodhesha', 'index')->name('allList');
+        Route::get('/moja/{id}', 'showService')->name('showService');
     });
 
 // Route::controller(\App\Http\Controllers\Super\Area\WardsController::class)

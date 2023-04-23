@@ -107,3 +107,11 @@ Route::controller(\App\Http\Controllers\Super\MotorsController::class)
         Route::POST('/sajiri', 'store')->name('store');
     });
 
+
+Route::controller(\App\Http\Controllers\GaragesController::class)
+    ->prefix('/garage')
+    ->as('garage')
+    ->group(function () {
+        Route::get('/orodha/{id}', 'garageChangedApi')->name('.orodha');
+    });
+

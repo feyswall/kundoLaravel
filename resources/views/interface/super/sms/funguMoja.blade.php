@@ -41,7 +41,6 @@
                     <div class="card-body">
                         <a href="{{ route('sms.orodha.group') }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Orodha</a>
 
-
                             <div>
                                 <table v-if="!loader" id="allSmsTable" class="table table-striped table-bordered dt-responsive nowrap"
                                     style="border-collapse: collapse; border-spacing: 0; width: 100%;">

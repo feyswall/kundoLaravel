@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('services', function (Blueprint $table) {
-            $table->foreignId('owner_id')->constrained();
+        Schema::table('owners', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained();
         });
     }
 
@@ -25,19 +25,19 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('services', function (Blueprint $table) {
+        Schema::table('owners', function (Blueprint $table) {
 
-            $foreignKeys = $this->listTableForeignKeys('services');
-            if(in_array('services_owner_id_foreign', $foreignKeys)) { $table->dropForeign(['owner_id']) ;}
+                $foreignKeys = $this->listTableForeignKeys('owners');
+                if(in_array('owners_user_id_foreign', $foreignKeys)) { $table->dropForeign(['user_id']) ;}
 
-            if (Schema::hasColumn('services', 'owner_id')) {
-                $table->dropColumn('owner_id');
-            }
+                if (Schema::hasColumn('owners', 'user_id')) {
+                    $table->dropColumn('user_id');
+                }
         });
     }
 
     /**
-     * @param  string $table
+     * @param  $table
      * @return array
      */
     private function listTableForeignKeys($table):Array

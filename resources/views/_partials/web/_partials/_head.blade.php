@@ -33,6 +33,15 @@
 <!-- Template Main CSS File -->
 <link href="{{ asset('assets/assets/css/style.css') }}" rel="stylesheet">
 
+{{--<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>--}}
+
+{{--<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>--}}
+
+<!-- offline vue -->
+<script src="{{ asset('assets/js/vue.min.js') }}"></script>
+<!-- connect with axios offline -->
+<script src="{{ asset('assets/axios.min.js') }}"></script>
+
 <!-- =======================================================
 * Template Name: Arsha - v4.9.1
 * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/

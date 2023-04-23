@@ -29,7 +29,9 @@
                         <span>Services</span>
                     </a>
                     <ul class="sub-menu mm-collapse mm-show" aria-expanded="true" style="">
-                        <li><a href="#">Orodha ya Vyombo</a></li>
+                        <li><a href="{{ route("motorOwner.motor.orodha") }}">Orodha ya Vyombo</a></li>
+                        <li><a href="{{ route("motorOwner.service.orodha") }}">Service</a></li>
+                        <li><a href="{{ route("motorOwner.service.type.orodha") }}">Aina Ya Service</a></li>
                     </ul>
                 </li>
                 <hr>

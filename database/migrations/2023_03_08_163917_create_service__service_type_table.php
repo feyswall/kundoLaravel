@@ -17,6 +17,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('service_id');
             $table->unsignedBigInteger('service_type_id');
+
+            $table->integer('cost');
+            $table->integer('prevCost');
+            $table->integer('itemCount');
             $table->timestamps();
         });
     }

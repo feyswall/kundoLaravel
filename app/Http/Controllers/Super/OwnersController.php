@@ -19,6 +19,7 @@ class OwnersController extends Controller
         $motorOwner = Owner::create([
             'name' => $request['name'],
             'gender' => $request['gender'],
+            'user_id' => $request['user_id'],
         ]);
         if (!$motorOwner ) { return ['status' => 'fail', 'messages' => ['Tafadhali Jaribu Tena']]; }
         return ['status' => 'success', 'obj' => $motorOwner];

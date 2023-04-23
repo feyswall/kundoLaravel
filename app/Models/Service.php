@@ -10,7 +10,7 @@ class Service extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['motor_id', 'owner_id'];
+    protected $fillable = ['motor_id', 'owner_id', 'garage_id'];
 
     public function motor()
     {
@@ -19,11 +19,18 @@ class Service extends Model
 
     public function garage()
     {
-        return $this->belongsToMany( Garage::class );
+        return $this->belongsTo( Garage::class );
     }
 
     public function service_types()
     {
-        return $this->belongsToMany( ServiceType::class, 'service_service_type' );
+        return $this->belongsToMany( ServiceType::class, 'service_service_type' )
+            ->withPivot(['cost', 'prevCost', 'itemCount'])
+            ->withTimestamps();
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo( Owner::class );
     }
 }

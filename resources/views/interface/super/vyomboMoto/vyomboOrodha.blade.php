@@ -42,7 +42,7 @@
                                             <td>{{ $motor->motor_type->name }}</td>
                                             <td>{{ $motor->motor_model->name }}</td>
                                             <td>
-                                                <a href="#" class="btn btn-sm btn-success">fungua</a>
+                                                <a href="{{ route('super.motor.orodhaServices', $motor->id) }}" class="btn btn-sm btn-success">fungua</a>
                                             </td>
                                         </tr>
                                     @endforeach
