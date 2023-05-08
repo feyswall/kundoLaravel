@@ -13,12 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('houses', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('houseName');
-            $table->string('location');
 
-            $table->foreignId('house_type_id');
+            $table->morphs('payable');
+
+            $table->integer('perMonth_payment');
+            $table->integer('received_payment');
+
+            $table->dateTime('start_month');
+            $table->integer('month_count');
+            $table->dateTime('end_month');
+
             $table->timestamps();
         });
     }
@@ -30,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('houses');
+        Schema::dropIfExists('payments');
     }
 };

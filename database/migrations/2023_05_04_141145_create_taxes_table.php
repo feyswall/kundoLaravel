@@ -13,12 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('houses', function (Blueprint $table) {
+        Schema::create('taxes', function (Blueprint $table) {
             $table->id();
-            $table->string('houseName');
-            $table->string('location');
+            $table->string('cost');
 
-            $table->foreignId('house_type_id');
+            $table->morphs('taxable');
+
+            $table->dateTime('start_at');
+            $table->dateTime('end_at');
+            $table->string('count');
+
+            $table->foreignId('tax_type_id');
+
             $table->timestamps();
         });
     }
@@ -30,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('houses');
+        Schema::dropIfExists('taxes');
     }
 };

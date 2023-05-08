@@ -14,6 +14,10 @@
  */
 
 
+use App\Http\Controllers\Super\Apartment\ApartmentsController;
+use App\Http\Controllers\Super\House\HousesController;
+use App\Http\Controllers\Super\HouseTypesController;
+use App\Http\Controllers\Super\TenantsController;
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\Super\Area\DistrictsController;
 use \App\Http\Controllers\Super\Area\CouncilsController;
@@ -280,3 +284,58 @@ Route::controller(\App\Http\Controllers\Super\ServicesController::class)
 //     ->group(function () {
 //         Route::get('/watu/{id}', 'getbranchsApi')->name('create');
 //     });
+
+
+Route::controller(HousesController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/houses')
+    ->as('super.houses.')
+    ->group(function () {
+        Route::get('/houses/show/{id}', 'show')->name('showHouse');
+        Route::get('/all/houses', 'index')->name('allHouses');
+        Route::post('/houses/create', 'store')->name('storeHouse');
+    });
+
+Route::controller(ApartmentsController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/apartment')
+    ->as('super.apartment.')
+    ->group(function () {
+        Route::get('/show/{id}', 'show')->name('showApartment');
+        Route::post('/store', 'store')->name('storeApartment');
+    });
+
+Route::controller(\App\Http\Controllers\Super\Payments\PaymentsController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/payment')
+    ->as('super.payments.')
+    ->group(function () {
+        Route::post('/store', 'store')->name('storePayment');
+        Route::post('/store/for/shop', 'storeForShop')->name('storeShopPayment');
+    });
+
+Route::controller(TenantsController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/tenants')
+    ->as('super.tenants.')
+    ->group(function () {
+        Route::post('/assign', 'assignTenant')->name('assignTenant');
+        Route::post('/store', 'storeTenant')->name('storeTenant');
+        Route::post('/storeForShop', 'storeTenantForShop')->name('storeTenantForShop');
+        Route::delete('/delete/{id}', 'deleteTenant')->name('deleteTenant');
+    });
+
+Route::controller(HouseTypesController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/houseTypes')
+    ->as('super.houseTypes.')
+    ->group(function () {
+        Route::get('/', 'showAll')->name('showAll');
+        Route::post('/store', 'storeHouseType')->name('storeHouseType');
+    });
+
+
+
+
+
+

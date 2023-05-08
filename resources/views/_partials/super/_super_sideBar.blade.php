@@ -26,7 +26,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        
+
                         <span>Usimamizi wa Viongozi</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
@@ -53,9 +53,16 @@
                     </ul>
                 </li>
 
+                <li> <a href="javascript: void(0);" class="has-arrow">Houses</a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{ route('super.houseTypes.showAll') }}"><span>House Types</span> </a></li>
+                        <li><a href="{{ route('super.houses.allHouses') }}"><span>All Houses</span> </a></li>
+                    </ul>
+                </li>
+
                  <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        
+
                         <span>Huduma Za Sms</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
