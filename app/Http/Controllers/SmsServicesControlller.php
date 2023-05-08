@@ -132,7 +132,7 @@ class SmsServicesControlller extends Controller
         }
 
         $postData = array(
-            'source_addr' => 'Kundo Web',
+            'source_addr' => "INFO",
             'encoding'=>0,
             'schedule_time' => '',
             'message' => $request->message['value'],
@@ -170,7 +170,7 @@ class SmsServicesControlller extends Controller
 
     public function sendingProtocol($message, $receptionist, $leaders){
         $postData = array(
-            'source_addr' => 'Kundo Web',
+            'source_addr' => "INFO",
             'encoding'=>0,
             'schedule_time' => '',
             'message' => $message,

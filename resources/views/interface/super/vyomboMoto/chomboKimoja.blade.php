@@ -29,7 +29,7 @@
 
                         <div class="mt-3">
                             <h4 class="text-danger"><b>services Zilizofanyika</b></h4>
-                            <table class="table table-responsive table-bordered">
+                            <table id="datatable-serviceGarage" class="table table-responsive table-bordered">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -65,10 +65,10 @@
                                         $tofauti = $totalCost - $expectedCost;
                                     }
                                 @endphp
-                                <h4><b>Jumla ya Gharama: </b> <i>Tsh {{ $totalCost }}/=</i></h4>
-                                <h4><b>Gharama Iliyotegemewa: </b><i>Tsh {{ $expectedCost }}/=</i></h4>
-                                <h3 class="@if($tofauti < 1) d-none @endif">Kiasi Kilichozidi: <b>Tsh {{ $tofauti }}/=</b></h3>
-                                <h3 class="@if($tofauti > 1) d-none @endif">Kiasi Kilichopungua: <b>Tsh {{ $tofauti }}/=</b></h3>
+                                <h4><b>Jumla ya Gharama: </b> <i>Tsh {{ number_format($totalCost, 0, '.', ',') }}/=</i></h4>
+                                <h4><b>Gharama Iliyotegemewa: </b><i>Tsh {{ number_format($expectedCost, 0, '.', ',') }}/=</i></h4>
+                                <h3 class="@if($tofauti < 1) d-none @endif">Kiasi Kilichozidi: <b>Tsh {{ number_format($tofauti, 0, '.', ',') }}/=</b></h3>
+                                <h3 class="@if($tofauti > 1) d-none @endif">Kiasi Kilichopungua: Tsh {{ number_format(abs($tofauti)), 0, '.', ',' }}/=</h3>
                             </div>
                         </div>
                     </div>
@@ -80,6 +80,6 @@
 @endsection
 
 @section("extra_script")
-    <x-system.table-script id="datatable-motorsTable"/>
+    <x-system.table-script id="datatable-serviceGarage"/>
 @endsection
 
