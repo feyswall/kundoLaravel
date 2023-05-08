@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Super\Area;
 
 use App\Http\Controllers\Controller;
 use App\Models\Leader;
+use App\Models\Post;
 use App\Models\Region;
 use Illuminate\Http\Request;
 

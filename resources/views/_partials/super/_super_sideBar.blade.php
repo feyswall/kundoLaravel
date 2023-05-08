@@ -24,38 +24,17 @@
                 <li>
                     <a href="{{ route('dashboard') }}"> <span>Nyumbani</span> </a>
                 </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-
-                        <span>Usimamizi wa Viongozi</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li> <a href="javascript: void(0);" class="has-arrow">Viongozi Chama</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="{{ route("super.group.orodha", 'chama') }}"><span>Orodha  Kamati</span> </a></li>
-                                <li><a href="{{ route("super.posts.orodha", 'chama') }}"><span>Orodha Nyadhifa </span> </a></li>
-                            </ul>
-                        </li>
-                        <li> <a href="javascript: void(0);" class="has-arrow">Viongozi Serikali</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="{{ route("super.group.orodha", 'serikali') }}"><span>Orodha  Kamati</span> </a></li>
-                                <li><a href="{{ route("super.posts.orodha", 'serikali') }}"><span>Orodha Nyadhifa </span> </a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
 
                 <li> <a href="javascript: void(0);" class="has-arrow">Maeneo</a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li> <a href="{{ route("super.areas.wilaya.orodha") }}">Orodha</a></li>
+                        <li> <a href="{{ route('super.areas.wilaya.orodha') }}">Orodha</a></li>
                         {{--    <li><a href="/lo"><span>Orodha  Kamati</span> </a></li>--}}
-                        <li><a href="{{ route("super.areas.general.anza") }}"><span>Tafuta</span> </a></li>
+                        <li><a href="{{ route('super.areas.general.anza') }}"><span>Tafuta</span> </a></li>
                     </ul>
                 </li>
 
-                <li> <a href="javascript: void(0);" class="has-arrow">Houses</a>
+                <li> <a href="javascript: void(0);" class="has-arrow">Nyumba</a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('super.houseTypes.showAll') }}"><span>House Types</span> </a></li>
                         <li><a href="{{ route('super.houses.allHouses') }}"><span>All Houses</span> </a></li>
                     </ul>
                 </li>
@@ -66,19 +45,20 @@
                         <span>Huduma Za Sms</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="{{ route("sms.group.select") }}"><span>Tuma Sms</span> </a></li>
-                                <li> <a href="{{ route("sms.orodha.group") }}">Orodha Sms</a></li>
+                                <li><a href="{{ route('sms.group.select') }}"><span>Tuma Sms</span> </a></li>
+                                <li> <a href="{{ route('sms.orodha.group') }}">Orodha Sms</a></li>
                     </ul>
                  </li>
 
-                <li><a href="{{ route("super.challenge.orodha") }}"><span>Changamoto za Wabunge</span> </a></li>
+                <li><a href="{{ route('super.challenge.orodha') }}"><span>Changamoto za Wabunge</span> </a></li>
 
-                    <li> <a href="javascript: void(0);" class="has-arrow">Barua</a>
-                        <ul class="sub-menu" aria-expanded="true">
-                            <li> <a href="{{ route('super.sial.allList') }}">Orodha</a></li>
-                        </ul>
-                    </li>
-                     <li> <a href="{{ route('pdf.door.index') }}" class="">pdf</a></li>
+                <li> <a href="javascript: void(0);" class="has-arrow">Barua</a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li> <a href="{{ route('super.sial.allList') }}">Orodha</a></li>
+                    </ul>
+                </li>
+                    <li> <a href="{{ route('pdf.door.index') }}" class="">pdf</a>
+                </li>
                 <hr>
                 <li> <a href="javascript: void(0);" class="has-arrow">Vyombo Vya Moto</a>
                     <ul class="sub-menu" aria-expanded="true">
@@ -86,6 +66,33 @@
                         <li> <a href="{{ route('super.service.allList') }}">Orodha Ya Service</a></li>
                     </ul>
                 </li>
+
+                <li> <a href="javascript: void(0);" class="has-arrow">settings</a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <span>Usimamizi wa Viongozi</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="true">
+                            <li> <a href="javascript: void(0);" class="has-arrow">Viongozi Chama</a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li><a href="{{ route("super.group.orodha", 'chama') }}"><span>Orodha  Kamati</span> </a></li>
+                                    <li><a href="{{ route("super.posts.orodha", 'chama') }}"><span>Orodha Nyadhifa </span> </a></li>
+                                </ul>
+                            </li>
+                            <li> <a href="javascript: void(0);" class="has-arrow">Viongozi Serikali</a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li><a href="{{ route("super.group.orodha", 'serikali') }}"><span>Orodha  Kamati</span> </a></li>
+                                    <li><a href="{{ route("super.posts.orodha", 'serikali') }}"><span>Orodha Nyadhifa </span> </a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                        <li><a href="{{ route('super.houseTypes.showAll') }}"><span>House Types</span> </a></li>
+                    </ul>
+                </li>
+
             </ul>
         </div>
         <!-- Sidebar -->
