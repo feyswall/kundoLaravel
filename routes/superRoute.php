@@ -15,6 +15,7 @@
 
 
 use App\Http\Controllers\Super\Apartment\ApartmentsController;
+use App\Http\Controllers\Super\CharitiesController;
 use App\Http\Controllers\Super\House\HousesController;
 use App\Http\Controllers\Super\HouseTypesController;
 use App\Http\Controllers\Super\TenantsController;
@@ -332,6 +333,17 @@ Route::controller(HouseTypesController::class)
     ->group(function () {
         Route::get('/', 'showAll')->name('showAll');
         Route::post('/store', 'storeHouseType')->name('storeHouseType');
+    });
+
+
+Route::controller(CharitiesController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/charity')
+    ->as('super.charity.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/show/{id}', 'show')->name('show');
+        Route::get('/store', 'store')->name('store');
     });
 
 

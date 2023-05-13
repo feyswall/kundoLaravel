@@ -39,16 +39,15 @@
                     </ul>
                 </li>
 
-                 <li>
+                <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-
                         <span>Huduma Za Sms</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="{{ route('sms.group.select') }}"><span>Tuma Sms</span> </a></li>
-                                <li> <a href="{{ route('sms.orodha.group') }}">Orodha Sms</a></li>
+                        <li><a href="{{ route('sms.group.select') }}"><span>Tuma Sms</span> </a></li>
+                        <li> <a href="{{ route('sms.orodha.group') }}">Orodha Sms</a></li>
                     </ul>
-                 </li>
+                </li>
 
                 <li><a href="{{ route('super.challenge.orodha') }}"><span>Changamoto za Wabunge</span> </a></li>
 
@@ -57,9 +56,16 @@
                         <li> <a href="{{ route('super.sial.allList') }}">Orodha</a></li>
                     </ul>
                 </li>
-                    <li> <a href="{{ route('pdf.door.index') }}" class="">pdf</a>
+
+                <li> <a href="{{ route('pdf.door.index') }}" class="">pdf</a></li>
+
+                <li> <a href="javascript: void(0);" class="has-arrow">Misaada</a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li> <a href="{{ route('super.charity.index') }}">Orodha Ya Misaada</a></li>
+                    </ul>
                 </li>
                 <hr>
+
                 <li> <a href="javascript: void(0);" class="has-arrow">Vyombo Vya Moto</a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li> <a href="{{ route('super.motor.allList') }}">Orodha Ya Vyombo</a></li>
