@@ -79,32 +79,42 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="name">Charity Name</label>
+                                    <label class="form-label" for="name">Jina La Utambulisho</label>
                                     <input type="text" name="name" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="cost"></label>
+                                    <label class="form-label" for="cost">Jumla ya Gharama</label>
                                     <input type="number" name="cost" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="billing-name">Description</label>
+                                    <label class="form-label" for="billing-name">Maelezo Zaidi</label>
                                     <textarea class="form-control" rows="5" name="description"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <button class="btn btn-sm btn-success" type="submit">submit</button>
+                                    <label for="charityType" class="form-label">Aina Ya Msaada</label>
+                                    <select class="form-control" name="charityType_id" id="charityType">
+                                        @foreach( \App\Models\CharityCategory::all() as $charity )
+                                            <option value="{{ $charity->id }}">{{ $charity->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <p>You didn't find your House Category?
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#createNewHouseType" class="mb-4"> <b>Click Here</b> </a>
-                                        to create a new one</p>
+                                    <button class="btn btn-sm btn-success" type="submit">hifadhi</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-sm-12">
+                                <div class="mb-3 mb-4">
+                                    <p>Je Aina ya Msaada Haikuorodheshwa?
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#createNewHouseType" class="mb-4"> <b>Bonyeza Hapa</b> </a>
+                                        Kutengeneza Aina</p>
                                 </div>
                             </div>
                         </div>
@@ -114,19 +124,19 @@
         </x-system.modal>
         <x-system.modal id="createNewHouseType" aria="houseRegistration" size="modal-fullscreen" title="Register A New House Type">
             <x-slot:content>
-                <form method="POST" action="{{ route('super.houseTypes.storeHouseType') }}">
+                <form method="POST" action="{{ route('super.charityCategory.store') }}">
                     @csrf
                     <div>
                         <div class="row justify-content-center">
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="billing-name">House Category's name</label>
+                                    <label class="form-label" for="billing-name">Jina la Aina Ya Msaada</label>
                                     <input type="text" name="name" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <button class="btn btn-sm btn-success" type="submit">submit</button>
+                                    <button class="btn btn-sm btn-success" type="submit">Sajiri</button>
                                 </div>
                             </div>
                         </div>

@@ -9,5 +9,5 @@ class Charity extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'cost'];
+    protected $fillable = ['name', 'description', 'cost', 'charity_categories_id'];
 }

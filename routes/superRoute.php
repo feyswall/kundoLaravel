@@ -343,8 +343,19 @@ Route::controller(CharitiesController::class)
     ->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/show/{id}', 'show')->name('show');
-        Route::get('/store', 'store')->name('store');
+        Route::post('/store', 'store')->name('store');
     });
+
+
+Route::controller(\App\Http\Controllers\Super\CharityCategories::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/charity/category')
+    ->as('super.charity.category')
+    ->group(function () {
+        Route::get('/', 'store')->name('store');
+    });
+
+
 
 
 
