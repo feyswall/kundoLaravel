@@ -10,4 +10,9 @@ class CharityCategory extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function charities()
+    {
+        return $this->hasMany(Charity::class );
+    }
 }

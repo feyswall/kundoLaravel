@@ -69,6 +69,7 @@
                 </div>
             </div>
             <!-- end col -->
+
         </div>
         <!-- end row -->
         <x-system.modal id="createNewHouse" aria="houseRegistration" size="modal-lg" title="Jaza Msaada Mpya">
@@ -80,13 +81,19 @@
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
                                     <label class="form-label" for="name">Jina La Utambulisho</label>
-                                    <input type="text" name="name" class="form-control">
+                                    <input required type="text" name="name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-sm-12">
+                                <div class="mb-3 mb-4">
+                                    <label class="form-label" for="name">Tarehe Ya Kutolewa</label>
+                                    <input type="date" required name="inDate" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
                                     <label class="form-label" for="cost">Jumla ya Gharama</label>
-                                    <input type="number" name="cost" class="form-control">
+                                    <input type="number" name="cost" required class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
@@ -122,7 +129,7 @@
                 </form>
             </x-slot:content>
         </x-system.modal>
-        <x-system.modal id="createNewHouseType" aria="houseRegistration" size="modal-fullscreen" title="Register A New House Type">
+        <x-system.modal id="createNewHouseType" aria="houseRegistration" size="modal-fullscreen" title="Sajiri Aina Ya Msaada">
             <x-slot:content>
                 <form method="POST" action="{{ route('super.charityCategory.store') }}">
                     @csrf
@@ -142,6 +149,15 @@
                         </div>
                     </div>
                 </form>
+               <div class="row justify-content-center">
+                   <div class="col-sm-12 col-md-8 col-lg-8">
+                       <ul>
+                           @foreach( \App\Models\CharityCategory::all() as $category )
+                            </ul><p>{{ $category->name }}</p></li>
+                           @endforeach
+                       </ul>
+                   </div>
+               </div>
             </x-slot:content>
         </x-system.modal>
     </div>

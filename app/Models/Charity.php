@@ -9,5 +9,10 @@ class Charity extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'cost', 'charity_categories_id'];
+    protected $fillable = ['name', 'description', 'cost', 'charity_categories_id', 'inDate'];
+
+    public function charity_category()
+    {
+        return $this->belongsTo( CharityCategory::class, 'charity_categories_id' );
+    }
 }

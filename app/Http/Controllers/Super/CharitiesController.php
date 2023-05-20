@@ -19,7 +19,8 @@ class CharitiesController extends Controller
     public function show($id)
     {
         $charity = Charity::where('id', $id)->first();
-        dd( $charity );
+        return view("interface.super.charities.showCharity")
+            ->with('charity', $charity);
     }
 
     public function store(Request $request)
@@ -29,6 +30,7 @@ class CharitiesController extends Controller
            'cost' => 'required',
            'description' => 'required',
            'charityType_id' => 'required',
+           'inDate' => 'required',
        ];
 
        $validate = Validator::make( $request->all(), $rules );
@@ -39,6 +41,7 @@ class CharitiesController extends Controller
             'name' => $request->input('name'),
             'cost' => $request->input( 'cost'),
             'description' => $request->input('description'),
+            'inDate' => $request->input( 'inDate'),
             'charity_categories_id' => $request->input('charityType_id'),
        ]);
        if ( !$charity ){

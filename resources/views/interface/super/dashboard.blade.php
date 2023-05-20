@@ -158,6 +158,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <div>
+                        {!! $leaders->links(); !!}
+                    </div>
                 </div>
             </div>
             <!-- end col -->
