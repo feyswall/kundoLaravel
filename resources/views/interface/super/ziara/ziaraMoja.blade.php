@@ -26,14 +26,18 @@
                                         <div class="card-body">
                                             <div class="row justify-content-start">
                                                 <div class="col-lg-12 col-md-7 col-sm-6">
-                                                    <h5><b>Barua Kwenda / {{ $sendTo->posts->first()->area }} /</b> {{ $area->name }}</h5>
+                                                    <h5><b>Barua Kwenda</h5>
+                                                    @foreach( $sendTos as $sendTo )
+                                                        <p>{{ $sendTo->posts->first()->area }} /</b> {{ $area->name }} </p>
+                                                        @break
+                                                        @endforeach
                                                     {{-- <img src="{{ asset('assets/images/bunge.png')}}" alt="" class="w-100 mx-auto"> --}}
                                                 </div>
                                             </div>
 
                                             <div class="col-12">
                                                 <div class="row justify-content-end mt-3">
-                                                    <div class="col-md-2 mt-4">
+                                                    <div class="col-md-4 mt-4">
                                                         <address class="mini-text">
                                                             Tarehe: {{ Carbon\Carbon::parse($sial->created_at)->format("d M Y") }}<br>
                                                         </address>
@@ -41,39 +45,10 @@
                                                 </div>
                                             </div>
 
-
-                                            <div class="col-12">
-                                                <div class="row mt-3">
-                                                    <div class="col-md-5 mt-4">
-                                                        <address class="mini-text">
-                                                            Eng. Kundo Andrea Mathew ,<br>
-                                                            Naibu Waziri,<br>
-                                                            Wizara Habari, Mawasiliano na Teknolojia ya Habari ,<br>
-                                                            Dodoma- Magufuli City<br>
-                                                        </address>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 mt-3">
-                                                <div class="row justify-content-center">
-                                                    <div class="col-sm-12 col-md-8 text-center">
-                                                        <h5><b>Yah: <span style="text-decoration: underline;">{{ $sial->title }}</span></b></h5>     
-                                                    </div>
-                                                </div>
-                                                <p>Ngudu: <b>{{ ucfirst($sendTo->firstName) }} {{ ucfirst($sendTo->lastName) }} - {{ $sendTo->posts->first()->name }}</b></p>
-                                            </div>
-
-
                                             <div class="col-12">
                                                 <div class="row justify-content-start">
                                                     <div class="col-sm-12 col-md-12">
-                                                            @php
-                                                                $sialParticles = explode('-', $sial->note);
-                                                            @endphp
-                                                        @foreach ($sialParticles as $sialPiece)
-                                                            <p>{{ $sialPiece }}</p>
-                                                        @endforeach
+                                                        {!! $sial->note !!}
                                                     </div>
                                                 </div>
                                             </div>

@@ -76,7 +76,9 @@
                 <tr>
                     <td>
                         <span style="float: left;">
-                            <strong>{{ ucfirst($sendTo->posts->first()->name) }}</strong><br>
+                            @foreach( $sendTo as $to )
+                                <strong>{{ ucfirst($to->posts->first()->name) }}</strong><br>
+                            @endforeach
                             S.L.P.54,<br>
                             BARIADI,<br>
                         </span>
@@ -85,6 +87,13 @@
                     <td>
                         <span style="float: right;">
                             <strong>Tarehe:</strong> {{ date(' d/m/Y') }}
+                            @php
+                            $number = \App\Models\PdfDoor::all()->count();
+                            $year = \Carbon\Carbon::now()->format("Y");
+                            $number = $number + 1;
+                            $name = 'SMY-BRD/EKAM40/' . $year . '-000' . $number;
+                            @endphp
+                            <p>{{ $name }}</p>
                         </span>
                     </td>
                 </tr>
@@ -92,19 +101,9 @@
         </table>
     </div>
 
-    <div
-        style="margin-top: 50px; margin-bottom: 0px; text-align: center; width: 80%; margin-left: 50px; display: block;">
-        <h6 style="margin-top: 10px; padding: 0px;"> <span style="font-family: sans-serif;">YAH :</span> <b
-                style="text-decoration: underline;">{{ strtoupper($title) }}</b></h6>.
+    <div style="margin-top: 0px; margin-bottom: 0px;">
+        <p style="font-size: 0.97em">{!! $sials !!}</p>
     </div>
-
-
-    @foreach ($sials as $sial)
-        <div style="margin-top: 0px; margin-bottom: 0px;">
-            <p style="font-size: 0.97em">{{ $sial }}</p>
-        </div>
-    @endforeach
-
 
     <div style="margin-top: 10px;">
         <p><b>Wako mtiifu katika ujenzi wa chama na Taifa letu</b></p>

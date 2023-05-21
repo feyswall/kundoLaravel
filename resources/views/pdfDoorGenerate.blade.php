@@ -81,8 +81,6 @@
         <img src="{{ public_path('assets/images/bunge.png') }}" style="margin-left: 280px;margin-top: 5px;width: 120px;">
     </div>
 
-
-
     <div style="display: block;">
         <table style="width: 100%; margin-bottom: 20px;">
             <tbody>

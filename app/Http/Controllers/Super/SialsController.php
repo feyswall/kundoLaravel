@@ -46,7 +46,7 @@ class SialsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeTrue(Request $request)
     {
         $selectedCopyToLeaders = [];
         foreach($request->selectedCopyToOptions as $requestCopyTo ){
@@ -140,6 +140,116 @@ class SialsController extends Controller
         }
     }
 
+    public function store(Request $request){
+        $areaToBeSend = json_decode($request->input('area'));
+        $selectedCopyToLeaders = [];
+        foreach($request->copyTo as $requestCopyTo ){
+            $selected = explode(',', $requestCopyTo);
+            $selectedLeaderId = $selected[0];
+            $selectedPostId = $selected[1];
+            $copyToLeader = Leader::where('id', $selectedLeaderId)
+                ->with('posts', function ($query) use ($selectedPostId) {
+                    $query->where('post_id', $selectedPostId)->first();
+                })
+                ->first();
+            $selectedCopyToLeaders[] = $copyToLeader;
+        }
+
+        $selectedSendToLeaders = [];
+        foreach($request->sendTo as $requestSendTo ){
+            $selected = explode(',', $requestSendTo);
+            $selectedLeaderId = $selected[0];
+            $selectedPostId = $selected[1];
+            $copyToLeader = Leader::where('id', $selectedLeaderId)
+                ->with('posts', function ($query) use ($selectedPostId) {
+                    $query->where('post_id', $selectedPostId)->first();
+                })
+                ->first();
+            $selectedSendToLeaders[] = $copyToLeader;
+        }
+
+        $datas = [
+            'sials' => $request->input('content'),
+            'title' => $request->input('title'),
+            'copyTo' => $selectedCopyToLeaders,
+            'sendTo' => $selectedSendToLeaders,
+         ];
+
+        $pdf = PDF::loadView('interface.super.ziara.ziaraPdf', $datas);
+
+        $pdfFile = $pdf->stream("challenge_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf");
+        $path = "ziara/ziara_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf";
+        Storage::put($path, $pdfFile );
+
+        $rules = [
+            'title' => 'required|min:4'
+        ];
+
+        $messages = [
+            'title' => 'Tafadhali Jaza Yahusu'
+        ];
+
+        // $request->validate($rules, $messages);
+
+        $vals = [
+            'status' => 'fail',
+            'message' => 'tatizo Halikufahamika Tafadhali Jaribu Tena'
+        ];
+
+        $image_path_particles = explode('/', $path);
+
+        $image_name = end( $image_path_particles );
+
+        if (Storage::exists("$path")) {
+            $sialObjectData = [
+                'letter_url' => $image_name,
+                'note' => $request->input('content'),
+                'title' => $request->input('title'),
+                'area_name' => $areaToBeSend->area,
+                'area_id' =>  $areaToBeSend->id,
+            ];
+
+            $ziara = Sial::create($sialObjectData);
+            if ( $ziara ){
+                foreach($selectedCopyToLeaders as $requestCopyTo ){
+                    $selectedLeaderId = $requestCopyTo->id;
+                    $selectedPostId = $requestCopyTo->posts->first()->id;
+                    $copyToLeader = Leader::where('id', $selectedLeaderId)
+                    ->with('posts', function ($query) use ($selectedPostId) {
+                        $query->where('post_id', $selectedPostId);
+                    })
+                        ->first();
+                    if ( $copyToLeader ) {
+                        $ziara->leaders()->attach($copyToLeader->id, ['titled' => 'copyTo', 'receiver_post_id' => $selectedPostId]);
+                    }
+                }
+
+                foreach($selectedSendToLeaders as $requestSendTo ){
+                    $selectedLeaderId = $requestSendTo->id;
+                    $selectedPostId = $requestSendTo->posts->first()->id;
+                    $sendToLeader = Leader::where('id', $selectedLeaderId)
+                        ->with('posts', function ($query) use ($selectedPostId) {
+                            $query->where('post_id', $selectedPostId);
+                        })
+                        ->first();
+                    if ( $sendToLeader ) {
+                        $ziara->leaders()->attach($sendToLeader->id, ['titled' => 'sendTo', 'receiver_post_id' => $selectedPostId]);
+                    }
+                }
+
+                return redirect()->back()->with([
+                    'status' => 'success',
+                    'message' => 'Barua Imetumwa',
+                    'sialId' => $ziara->id,
+                ]);
+            }else{
+                return redirect()->back()->with($vals);
+            }
+        }else{
+            return redirect()->back()->with( $vals );
+        }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -156,13 +266,17 @@ class SialsController extends Controller
 
         $areaObj = $fetchArea['data'];
 
-        $receiverObj = Leader::where('id',  $sial->receiver_id )
-        ->with('posts', function($query) use ($sial) {
-            $query->where('post_id', $sial->receiver_post_id);
-        })->first();
+        $receiverObjs = [];
+        foreach( $sial->leaders()->where('titled', 'sendTo')->get() as $leader ) {
+            $postId = $leader->pivot->receiver_post_id;
+            $receiverObj = Leader::where('id', $leader->id)->with('posts', function ($query) use ($postId) {
+                    $query->where('post_id', $postId);
+                })->first();
+            $receiverObjs[] = $receiverObj;
+        }
 
         $copyToLeaders = [];
-        foreach( $sial->leaders as $leader ){
+        foreach( $sial->leaders()->where('titled', 'sendTo')->get() as $leader ){
             $postId = $leader->pivot->receiver_post_id;
             $copyTo = Leader::where('id', $leader->id)->with('posts', function($query) use ($postId){
                 $query->where('post_id', $postId);
@@ -171,7 +285,7 @@ class SialsController extends Controller
          }
         return view("interface.super.ziara.ziaraMoja")
         ->with("sial", $sial)
-        ->with("sendTo", $receiverObj)
+        ->with("sendTos", $receiverObjs)
         ->with('area', $areaObj )
         ->with('copyTo', $copyToLeaders);
     }

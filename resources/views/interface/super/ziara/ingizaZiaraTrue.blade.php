@@ -51,8 +51,7 @@
                                 <div class="card">
                                     <div class="card-body">
 
-                                        <form method="post" action="{{ route("super.sial.jaza") }}" enctype="multipart/form-data">
-                                            @csrf
+                                        <form>
                                             <div class="row">
                                                 <div class="col-lg-3">
                                                     <div class="mb-3">
@@ -153,8 +152,8 @@
                                                 <div class="col-lg-12 mt-5" v-if="typeof(leaders) == 'object'">
                                                     <label class="form-label">Tuma Barua Kwa -
                                                         @{{ areaSelected }}</label>
-                                                    <select name="sendTo[]"  multiple="multiple"
-                                                     class="form-control letterToLeader select2">
+                                                    <select  multiple="multiple"  class="form-control letterToLeader select2"
+                                                        v-model="selectedSendToOptions">
                                                         <optgroup v-for="(leaderArray, index) in leaders"
                                                             :key="index" v-bind:label="index">
                                                             <option v-for="(leader, index) in leaderArray"
@@ -172,9 +171,8 @@
                                                     <label class="form-label">Tuma Nakala Kwa -
                                                         @{{ areaSelected }}</label>
                                                     <select
-                                                        name="copyTo[]"
                                                         class="form-control letterCopyToLeader select2 select2-multiple"
-                                                        multiple="multiple">
+                                                        multiple="multiple" v-model="selectedCopyToOption">
                                                         <optgroup v-for="(leaderArray, index) in leaders"
                                                             :key="index" v-bind:label="index">
                                                             <option v-for="(leader, index) in leaderArray"
@@ -186,102 +184,173 @@
                                                         </optgroup>
                                                     </select>
                                                 </div>
-                                            </div>
-                                            <a href="#checkout-billinginfo-collapse" class="text-dark" data-bs-toggle="collapse">
-                                                <div class="p-4">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i>
-                                                        </div>
-                                                        <div class="flex-shrink-0"> <i
-                                                            class="mdi mdi-chevron-up accor-down-icon font-size-24"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <div id="checkout-billinginfo-collapse" class="collapse show">
-                                                <div class="p-4 border-top">
-                                                    <div>
-                                                        <div class="row mt-4">
-                                                            <div class="mb-4">
-                                                                <label class="form-label" for="billing-address">Yahusu</label>
-                                                                <input name="title" required class="form-control" v-model="yahusu">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mt-4">
-                                                            <div class="mb-4">
-                                                                <label class="form-label" for="billing-address">Wasilisha
-                                                                    Changamoto</label>
-                                                                <textarea class="summernoteTwo" id="content" name="content" v-on:change="ziaraChange()" class="form-control" rows="6" v-model="ziara"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <button type="submit"
-                                                                v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': fichaTumaBtn }">
-                                                            <i class="la la-print"></i>
-                                                            Tuma
-                                                        </button>
-                                                        <div>
-                                                            <input type="hidden" v-model="JSON.stringify(areaToSend)" name="area">
-                                                        </div>
-                                                    </div>
-                                                </div>
+
                                             </div>
                                         </form>
+
+                                    </div>
+
                                 </div>
                                 <!-- end select2 -->
                             </div>
                             <!-- create a  copy multiselector -->
                         </div>
+
+                        <a href="#checkout-billinginfo-collapse" class="text-dark" data-bs-toggle="collapse">
+                            <div class="p-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i>
+                                    </div>
+                                    <div class="flex-shrink-0"> <i
+                                            class="mdi mdi-chevron-up accor-down-icon font-size-24"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <div id="checkout-billinginfo-collapse" class="collapse show">
+                            <div class="p-4 border-top">
+                                <form>
+                                    <div>
+                                        <div class="row mt-4">
+                                            <div class="mb-4">
+                                                <label class="form-label" for="billing-address">Yahusu</label>
+                                                <input required class="form-control" v-model="yahusu">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <div class="mb-4">
+                                                <label class="form-label" for="billing-address">Wasilisha
+                                                    Changamoto</label>
+                                                <textarea v-on:change="ziaraChange()" class="form-control" rows="6" v-model="ziara"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
+
+                </div>
+                <div class="row my-4">
+
                 </div>
                 <!-- end row-->
             </div>
+
+            <div class="col-md-12 col-sm-12">
+                <div class="row justify-content-center">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card shadow-none">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-md-2">
+                                                        {{-- <img src="/assets/images/bunge.png" alt="" class="w-50 mx-auto"> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="row mt-3">
+                                                    <div class="col-md-5 mt-4">
+                                                        <address class="mini-text">
+                                                            Eng. Kundo Andrea Mathew ,<br>
+                                                            Naibu Waziri,<br>
+                                                            Wizara Habari, Mawasiliano na Teknolojia ya Habari ,<br>
+                                                            Dodoma- Magufuli City<br>
+                                                        </address>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-sm-12 col-md-8 text-center">
+                                                        <h5><b>YAH: </b>
+                                                            @{{ yahusu }}
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="row justify-content-start">
+                                                    <div class="col-sm-12 col-md-12">
+                                                        <p style="line-height: 2;">
+                                                            @{{ ziara }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-sm-8 col-md-8 text-center">
+                                                        Wako mtiifu katika ujenzi wa mawasiliano Bora katika Taifa
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-sm-8 col-md-4 text-center">
+                                                        <i>_______</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-sm-6 col-md-4 text-center">
+                                                        <i>Mhe. name</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <form method="POST" action="{{ route('super.sial.jaza') }}" id="withPdfForm"
+                                    v-on:submit.prevent="submitSial()">
+                                    @csrf
+                                    <input type="hidden" name="yahusu" v-model="yahusu">
+                                    <div class="col-md-12 col-sm-12 my-2">
+                                        <label for="" class="form-label">
+                                            Ambatanisha (pdf)
+                                            (Pdf yenye maelezo ya kuunga mkono barua yako**)
+                                        </label>
+                                        {{-- <input type="file" class="form-control" accept="application/pdf" name="pdfFile"> --}}
+                                        {{-- @error('pdfFile') --}}
+                                        {{-- <span class="text-danger">{{ $message }}</span> --}}
+                                        {{-- @enderror --}}
+                                    </div>
+                                    <input type="hidden" name="sendTo" v-bind:value="selectedSendToOptions">
+                                    <input type="hidden" name="ziara" v-bind:value="ziara">
+                                    <input type="hidden" v-bind:value="selectedCopyToOption" name="copyTo">
+                                    <button type="submit"
+                                        v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': fichaTumaBtn }">
+                                        <i class="la la-print"></i>
+                                        Tuma
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
     </div>
     <!-- container-fluid -->
 @endsection
 
 @section('extra_script')
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.summernoteOne').summernote({
-                height: 100,
-                focus: true,
-                toolbar: [
-                    ['font', ['bold']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen']],
-                ],
-            });
-
-            $('.summernoteTwo').summernote({
-                height: 400,
-                focus: true,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['picture', 'hr']],
-                    ['view', ['fullscreen']],
-                ],
-            });
-
-            $('.summernoteThree').summernote({
-                height: 200,
-                focus: true,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['hr']],
-                    ['view', ['fullscreen']],
-                ],
-            });
-
-        });
-    </script>
     <script>
         var app = new Vue({
             el: '#app',
@@ -337,8 +406,10 @@
             },
             methods: {
                 nameChanges() {
+                    console.log("The right ways are there...");
                 },
                 formChanged() {
+                    console.log("the form is changebd a bit");
                 },
                 ziaraChange() {
                     if (this.selectedCopyToOption.length > 0 && this.selectedSendToOptions.length > 0) {
@@ -347,7 +418,6 @@
                         this.fichaTumaBtn = true;
                     }
                 },
-
                 regionChange() {
                     let obj = this;
                     this.districts = [];
@@ -382,7 +452,6 @@
                             alert(error);
                         });
                 },
-
                 districtChange() {
                     let obj = this;
                     this.councils = [];
@@ -416,7 +485,6 @@
                             alert(error);
                         });
                 },
-
                 councilOnChange() {
                     let obj = this;
                     this.divisions = [];
@@ -449,7 +517,6 @@
                             alert(error);
                         });
                 },
-
                 divisionOnChange() {
                     let obj = this;
                     this.wards = [];
@@ -512,7 +579,6 @@
                             alert(error);
                         });
                 },
-
                 branchOnChange() {
                     let obj = this;
                     this.leaders = [];
@@ -598,14 +664,6 @@
                     this.ziaraChange();
                 });
 
-                var textArea = $('#content').on('summernote.change', () => {
-                    var content = $('#content').summernote('code');
-                    console.log( content );
-                    this.ziara = content;
-                    this.ziaraChange();
-                });
-
-
                 $('.letterCopyToLeader').on('change', () => {
                     this.selectedCopyToOption = $('.letterCopyToLeader').val();
                     this.ziaraChange();
@@ -615,8 +673,11 @@
                     const sumNote = $('#ziaraId');
                     sumNote.on('keyup', function() {
                         var content = sumNote.summernote('code');
+                        console.log(content);
                     });
                 });
+
+                console.log($('#ziaraId'));
 
                 $('#ziaraId').on('keyup', function() {
                     console.log('chansges are just been made in there')
@@ -624,6 +685,4 @@
             }
         });
     </script>
-
-
 @endsection

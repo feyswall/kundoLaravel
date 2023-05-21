@@ -19,11 +19,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('letter_url')->nullable();
             $table->longText('note')->nullable();
-            $table->string('area_name');
-            
-            $table->integer('receiver_id');
-            $table->integer('receiver_post_id');
-            $table->integer('area_id');
 
             $table->timestamps();
         });

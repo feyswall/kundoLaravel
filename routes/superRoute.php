@@ -251,7 +251,7 @@ Route::controller(\App\Http\Controllers\Super\ChallengesController::class)
 
 
 Route::controller(\App\Http\Controllers\Super\SialsController::class)
-    ->middleware(['auth', 'role:super'])
+     ->middleware(['auth', 'role:super'])
     ->prefix('/super/ziara')
     ->as('super.sial.')
     ->group(function () {

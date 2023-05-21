@@ -9,7 +9,7 @@ class Sial extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['letter_url', 'note', 'title', 'receiver_id', 'receiver_post_id', 'area_name', 'area_id'];
+    protected $fillable = ['letter_url', 'note', 'title', 'area_name', 'area_id'];
 
     public function leaders()
     {

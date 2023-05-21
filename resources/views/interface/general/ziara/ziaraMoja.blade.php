@@ -10,7 +10,7 @@
                     <input type="hidden" value="{{ 'ziara/'.$sial->letter_url }}" name="pdf">
                     <button  class="btn btn-dark float-end mt-lg-3 mt-sm-2" type="submit">pakua pdf ya barua</button>
                 </form>
-                     <a href="{{ route('general.sial.orodha') }}"  class="btn btn-primary float-end mt-lg-3 mt-sm-2 mx-2">Orodha Barua Zote</a> 
+                     <a href="{{ route('general.sial.orodha') }}"  class="btn btn-primary float-end mt-lg-3 mt-sm-2 mx-2">Orodha Barua Zote</a>
             </div>
         </div>
         <div class="card-body">
@@ -26,7 +26,10 @@
                                         <div class="card-body">
                                             <div class="row justify-content-start">
                                                 <div class="col-lg-12 col-md-7 col-sm-6">
-                                                    <h5><b>Barua Kwenda / {{ $sendTo->posts->first()->area }} /</b> {{ $area->name }}</h5>
+                                                    <h5><b>Barua Kwenda</b></h5>
+                                                    @foreach( $sendTos as $sendTo )
+                                                        {{ $sendTo->posts->first()->area }} /</b> {{ $area->name }}
+                                                        @endforeach
                                                     {{-- <img src="{{ asset('assets/images/bunge.png')}}" alt="" class="w-100 mx-auto"> --}}
                                                 </div>
                                             </div>
@@ -58,7 +61,7 @@
                                             <div class="col-12 mt-3">
                                                 <div class="row justify-content-center">
                                                     <div class="col-sm-12 col-md-8 text-center">
-                                                        <h5><b>Yah: <span style="text-decoration: underline;">{{ $sial->title }}</span></b></h5>     
+                                                        <h5><b>Yah: <span style="text-decoration: underline;">{{ $sial->title }}</span></b></h5>
                                                     </div>
                                                 </div>
                                                 <p>Ngudu: <b>{{ ucfirst($sendTo->firstName) }} {{ ucfirst($sendTo->lastName) }} - {{ $sendTo->posts->first()->name }}</b></p>
@@ -93,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

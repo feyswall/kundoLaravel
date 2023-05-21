@@ -115,6 +115,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="m-5">
+                            {!! $leaders->links()!!}
+                        </div>
                         <h4 class="card-title">Orodha ya Viongozi Wote</h4>
                         <table id="viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
@@ -157,9 +160,6 @@
                             @endforeach
                             </tbody>
                         </table>
-                    </div>
-                    <div>
-                        {!! $leaders->links(); !!}
                     </div>
                 </div>
             </div>
