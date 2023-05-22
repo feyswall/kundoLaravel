@@ -14,37 +14,15 @@ use PHPUnit\TextUI\XmlConfiguration\Groups;
 
 class SmsServicesControlller extends Controller
 {
-    public static $api_key = '9e1f6010dcefe438';
-    public static $secret_key = 'ZjgyYjk2NGVhNDdiZDFhNTJkOTkzYzBhMWUxZmJiNmJiZGQ1ODhmNWYzNzEwMTZkYjI0NjZhNjEwN2RmYzQzYg==';
 
+    private static $api_key = '9e1f6010dcefe438';
+    private static $secret_key = 'ZjgyYjk2NGVhNDdiZDFhNTJkOTkzYzBhMWUxZmJiNmJiZGQ1ODhmNWYzNzEwMTZkYjI0NjZhNjEwN2RmYzQzYg==';
+    private static $senderId = "jimbo letu";
     /**
      * SmsServicesControlller constructor.
      * @param $postData
      */
-    public function __construct()
-    {
-
-    }
-
-
-
-    public function sendj(Request $request)
-    {
-        $smsRequestId = Sms::create([
-            'request_id' => 3,
-            'message' => 'sdafsd',
-            'sms_amount' => 34
-        ]);
-        // fill the variables in relation
-//        dd( $smsRequestId->leaders );
-        if ( is_object($smsRequestId) ){
-            $smsRequestId->leaders()->attach(2);
-        }
-
-    }
-
-
-
+    public function __construct(){}
 
     public function sendToGroup(Request $request){
         $receptionist_array = [];
@@ -56,11 +34,6 @@ class SmsServicesControlller extends Controller
                 $posts[] = $result;
             }
         }
-        // $posts = Post::whereIn('id', $posts)
-        // ->where('leaders', function($query){
-        //     $query->where('isActive', true);
-        // })
-        // ->get();
         $leaders_id = DB::table('leader_post')
         ->where('isActive', true)
         ->whereIn('post_id', $posts)->pluck('leader_id');
@@ -132,7 +105,7 @@ class SmsServicesControlller extends Controller
         }
 
         $postData = array(
-            'source_addr' => "INFO",
+            'source_addr' => self::$senderId,
             'encoding'=>0,
             'schedule_time' => '',
             'message' => $request->message['value'],
@@ -170,7 +143,7 @@ class SmsServicesControlller extends Controller
 
     public function sendingProtocol($message, $receptionist, $leaders){
         $postData = array(
-            'source_addr' => "INFO",
+            'source_addr' => self::$senderId,
             'encoding'=>0,
             'schedule_time' => '',
             'message' => $message,

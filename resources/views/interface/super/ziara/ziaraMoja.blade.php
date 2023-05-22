@@ -14,10 +14,10 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="invoice-title">
+            <div>
                 <div class="mb-4">
                 </div>
-                <div class="text-muted">
+                <div>
                     <div class="row justify-content-center">
                         <div class="col-10">
                             <div class="row justify-content-center" >
@@ -26,23 +26,26 @@
                                         <div class="card-body">
                                             <div class="row justify-content-start">
                                                 <div class="col-lg-12 col-md-7 col-sm-6">
-                                                    <h5><b>Barua Kwenda</h5>
-                                                    @foreach( $sendTos as $sendTo )
-                                                        <p>{{ $sendTo->posts->first()->area }} /</b> {{ $area->name }} </p>
-                                                        @break
-                                                        @endforeach
+                                                    <h5><b>Barua Kwenda  kwa</h5>
+                                                    <div style="line-height: 5px;">
+                                                        @foreach( $sendTos as $sendTo )
+                                                            <p>{{ $sendTo->posts->first()->name }}</p>
+                                                            @endforeach
+                                                    </div>
                                                     {{-- <img src="{{ asset('assets/images/bunge.png')}}" alt="" class="w-100 mx-auto"> --}}
                                                 </div>
                                             </div>
 
                                             <div class="col-12">
                                                 <div class="row justify-content-end mt-3">
-                                                    <div class="col-md-4 mt-4">
+                                                    <div class="col-md-5 mt-4">
                                                         <address class="mini-text">
                                                             Tarehe: {{ Carbon\Carbon::parse($sial->created_at)->format("d M Y") }}<br>
+                                                            Ref: {{  $sial->letterNumber }}
                                                         </address>
                                                     </div>
                                                 </div>
+                                                <h4 style="text-align: center;">{{ $sial->title }}</h4>
                                             </div>
 
                                             <div class="col-12">

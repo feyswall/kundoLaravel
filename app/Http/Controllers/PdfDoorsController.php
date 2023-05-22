@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LetterNumber;
 use App\Models\PdfDoor;
 use App\Http\Controllers\Controller;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
@@ -49,16 +50,22 @@ class PdfDoorsController extends Controller
 
     public function store(Request $request)
     {
-        $number = PdfDoor::all()->count();
-
+        $number = 1;
+        $latestLetter = LetterNumber::latest()->first();
         $year = Carbon::now()->format("Y");
-        $number = $number + 1;
-        $name = 'SMY-BRD/EKAM40/' . $year . '-000' . $number;
-
+        if ( $latestLetter ){
+            $currentYear = Carbon::now();
+            $lastIntranceYear = Carbon::parse( $latestLetter->created_at );
+            $number = !($currentYear->isSameYear($lastIntranceYear)) ? 1 : ($latestLetter->numberCount + 1);
+        }
+        $letter = LetterNumber::create([
+            'number' => 'SMY-BRD/EKAM40/' . $year . '-0' . $number,
+            'numberCount' => $number,
+        ]);
+        $name = 'SMY-BRD/EKAM40/' . $year . '-0' . $number;
         if ( !($request->copy) ){
             $request->copy = 'null';
         }
-
         if ( $request->btn == 'send' ) {
             $datas = [
                 'address' => $request->address,

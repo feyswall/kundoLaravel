@@ -1,44 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.super_system')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pdf Generate Page</title>
-    <!-- include libraries(jQuery, bootstrap) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+@section('extra_style')
     <!-- include summernote css/js -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-</head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css"
+    integrity="sha256-IKhQVXDfwbVELwiR0ke6dX+pJt0RSmWky3WB2pNx9Hg=" crossorigin="anonymous">
+@endsection
 
-<body>
-    <div class="container">
-        <h5 class="lead mt-3 mb-4">Pdf Generator For KIMS </h5>
-        <a href="{{ route('pdf.door.index') }}" class="btn btn-primary btn-md mb-5"><< rudi kwenye orodha</a>
-<form method="post" action="{{ route('pdf.door.store') }}" target="_blank">
+@section('content')
+    <div class="card">
+        <div class="card-body">
+        <div class="container">
+        <h5 class="lead mt-3 mb-2">Pdf Generator For KIMS </h5>
+        <a href="{{ route('pdf.door.index') }}" class="btn btn-primary btn-sm mb-2"><< rudi kwenye orodha</a>
+        <form method="post" action="{{ route('pdf.door.store') }}" id="pdfForm">
         @csrf
-        <label for="content">Anuani ya mpokeaji</label>
-        <textarea class="summernoteOne" name="address" rows="4" required></textarea>
+        <div class="mb-3">
+            <label for="content">Anuani ya mpokeaji</label>
+            <textarea class="summernoteOne" name="address" rows="4" required></textarea>
+        </div>
 
-        <label for="copy">Andika Barua</label>
-        <textarea class="summernoteTwo" name="content" rows="30" required></textarea>
+        <div class="mb-3">
+            <label for="copy">Andika Barua</label>
+            <textarea class="summernoteTwo" name="content" rows="30" required></textarea>
+        </div>
 
         <label for="copy">Nakala</label>
         <textarea class="summernoteThree" name="copy" rows="5"></textarea>
 
-        <div>
-            <button class="btn btn-primary btn-md" type="submit" name="btn" value="send">tuma</button>
-            <button class="btn btn-warning btn-md" type="submit" name="btn" value="test">jaribu</button>
+        <div class="mt-3">
+            <button class="btn btn-primary btn-sm" id="sendBtn" type="button" name="btn" value="send">tuma</button>
+            <button class="btn btn-warning btn-sm" id="testBtn" type="button" name="btn" value="test">jaribu</button>
         </div>
     </form>
 
     </div>
+        </div>
+    </div>
+@endsection
 
+@section('extra_script')
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"
+    integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
             $('.summernoteOne').summernote({
@@ -77,8 +79,28 @@
                 ],
             });
 
+            $('#testBtn').on('click', function (e) {
+                e.preventDefault();
+                testFormSubmit()
+            });
+            $('#sendBtn').on('click', function (e) {
+                e.preventDefault();
+                sendFormSubmit();
+            });
+
+            function testFormSubmit(){
+                let form = $("#pdfForm");
+                $(form).attr('target', '_blank');
+                form.submit();
+            }
+            function sendFormSubmit(){
+                let form = $("#pdfForm");
+                $(form).attr('target', '_self');
+                let input = "<input name='btn' value='send' type='hidden'>";
+                $(form).append( input );
+                form.submit();
+            }
+
         });
     </script>
-</body>
-
-</html>
+@endsection

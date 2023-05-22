@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class SmsConfigController extends Controller
 {
     public static $api_key = '9e1f6010dcefe438';
-    public static $sourceAddress = 'INFO';
+    public static $sourceAddress = 'jimbo letu';
     public static $secret_key = 'ZjgyYjk2NGVhNDdiZDFhNTJkOTkzYzBhMWUxZmJiNmJiZGQ1ODhmNWYzNzEwMTZkYjI0NjZhNjEwN2RmYzQzYg==';
     private static $instance;
 
@@ -167,36 +167,36 @@ class SmsConfigController extends Controller
                 if ( count($receptionist_array) > intval($balance) ){
                     return ['status' => 'error', 'message' => 'run out of sms'];
                 }
-}else{
-    return ['status' => 'error', 'message' => '0 sms left'];
-}
-}
+                }else{
+                    return ['status' => 'error', 'message' => '0 sms left'];
+                }
+            }
 
-$postData = array(
-    'source_addr' => self::$sourceAddress,
-    'encoding'=>0,
-    'schedule_time' => '',
-    'message' => $message,
-    'recipients' => $receptionist_array,
-);
-$response_obj = $this->configurations( $postData );
-if ($response_obj['status'] == 'success') {
-    if ( isset($response_obj['response']->successful) ){
-        return (['status' => 'success' ,'response' => $response_obj['response']]);
+        $postData = array(
+            'source_addr' => self::$sourceAddress,
+            'encoding'=>0,
+            'schedule_time' => '',
+            'message' => $message,
+            'recipients' => $receptionist_array,
+        );
+        $response_obj = $this->configurations( $postData );
+        if ($response_obj['status'] == 'success') {
+            if ( isset($response_obj['response']->successful) ){
+                return (['status' => 'success' ,'response' => $response_obj['response']]);
+            }
+            if ( isset($response_obj['response']->message) ){
+                return ['status' => 'fail', 'message' => $response_obj['response']->message];
+            }elseif  ( isset($response_obj['response']->data) ){
+                        return ['status' => 'fail', 'message' => $response_obj['response']->data->message];
+            }
+            }else {
+                if ($response_obj['status'] == 'fail') {
+                            return ['status' => 'fail', 'message' => $response_obj['response']->data->message];
+                }else{
+                    return ['status' => 'fail', 'message' => 'Unknown Error please Try again later!'];
+                }
+            }
     }
-    if ( isset($response_obj['response']->message) ){
-        return ['status' => 'fail', 'message' => $response_obj['response']->message];
-    }elseif  ( isset($response_obj['response']->data) ){
-                return ['status' => 'fail', 'message' => $response_obj['response']->data->message];
-    }
-}else {
-    if ($response_obj['status'] == 'fail') {
-                return ['status' => 'fail', 'message' => $response_obj['response']->data->message];
-    }else{
-        return ['status' => 'fail', 'message' => 'Unknown Error please Try again later!'];
-    }
-}
-}
 
 
 }

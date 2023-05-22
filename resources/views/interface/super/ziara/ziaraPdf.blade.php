@@ -14,15 +14,11 @@
 <head>
     <title></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         * {
             font-size: 0.98em;
             font-family: 'Times New Roman',
-        }
-
-        p {
-            margin-bottom: 6px;
         }
 
         @page {
@@ -52,86 +48,96 @@
 
             opacity: 0.05;
         }
+
+        #adrSide p{
+            margin: 0;
+            font-size: 1em;
+        }
+        #copyDiv p{
+            margin: 0;
+            font-size: 1em;
+        }
+        td p {
+            margin: 0;
+        }
+        #main-section ul, ol{
+            margin-top: 2px;
+        }
+        #main-section p{
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
     </style>
 </head>
 
 <body>
 
-    <div id="watermark">
-        <img src="{{ public_path('assets/images/kLogo2.jpeg') }}" height="90%" width="90%" />
-    </div>
+<div id="watermark">
+    <img src="{{ public_path('assets/images/kLogo2.jpeg') }}" height="90%" width="90%" />
+</div>
 
-    <div style="text-align: center; margin: 0px auto;">
-        <h5 style="padding: 0px; margin: 0px;"><b>JAMHURI YA MUUNGANO WA TANZANIA</b></h5>
-        <hr style="width: 50%; margin-left: auto;">
-        <h6 style="padding: 0px; margin: 0px;"><?php echo strtoupper('Ofisi Ya Mbunge wa Jimbo la Bariadi'); ?></h6>
-    </div>
+<div style="text-align: center; margin: 0px auto;">
+    <h5 style="padding: 0px; margin: 0px;"><b>JAMHURI YA MUUNGANO WA TANZANIA</b></h5>
+    <hr style="width: 50%; margin: 3px auto; border: 1px solid gray;">
+    <h6 style="padding: 0px; margin: 0px;"><?php echo strtoupper('Ofisi Ya Mbunge wa Jimbo la Bariadi'); ?></h6>
+</div>
+<div>
+    <img src="{{ public_path('assets/images/bunge.png') }}" style="margin-left: 280px;margin-top: 5px;width: 100px;">
+</div>
+
+<div style="display: block; width: 100%">
+    <table style="width: 100%; margin-bottom: 6px;">
+        <tbody>
+        <tr>
+            <td id="adrSide">
+                   <span>
+                        @foreach( $sendTo as $to )
+                       <strong>{{ ucfirst($to->posts->first()->name) }}</strong><br>
+                       @endforeach
+                       S.L.P.54,<br>
+                        BARIADI,<br>
+                   </span>
+            </td>
+            <td></td>
+            <td>
+                <span style="float: right;">
+                    <strong>Tarehe:</strong> {{ date(' d/m/Y') }}
+                    <p>{{ $name }}</p>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+
+<div id="main-section">
+    {!! $sials !!}
+</div>
+
+<div style="text-align: center; margin-top: 10px;">
+    <img src="{{ public_path('assets/images/true_sign.png') }}" style="width: 100px;">
     <div>
-        <img src="{{ public_path('assets/images/bunge.png') }}" style="margin-left: 280px; width: 120px;">
+        <span style="font-family: "Lucida Console", monospace, sans-serif"><i>Mhe.Eng. Kundo Andrea
+            Mathew(Mb)</i></span>
     </div>
-
-    <div style="display: block;">
-        <table style="width: 100%">
-            <tbody>
-                <tr>
-                    <td>
-                        <span style="float: left;">
-                            @foreach( $sendTo as $to )
-                                <strong>{{ ucfirst($to->posts->first()->name) }}</strong><br>
-                            @endforeach
-                            S.L.P.54,<br>
-                            BARIADI,<br>
-                        </span>
-                    </td>
-                    <td></td>
-                    <td>
-                        <span style="float: right;">
-                            <strong>Tarehe:</strong> {{ date(' d/m/Y') }}
-                            @php
-                            $number = \App\Models\PdfDoor::all()->count();
-                            $year = \Carbon\Carbon::now()->format("Y");
-                            $number = $number + 1;
-                            $name = 'SMY-BRD/EKAM40/' . $year . '-000' . $number;
-                            @endphp
-                            <p>{{ $name }}</p>
-                        </span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div id="lowerEnd" style="margin-top: 3px; margin-bottom: 3px; text-align: center;">
+        <span style="margin-bottom: 1px; padding: 0px;"><b>MBUNGE JIMBO LA BARIADI</b></span><br>
+        <span style="margin-bottom: 1px; padding: 0px;"><b>NA</b></span><br>
+        <span><b>NEMBO YA MAENDELEO JIMBO LA BARIADI</b></span><br>
     </div>
+</div>
 
-    <div style="margin-top: 0px; margin-bottom: 0px;">
-        <p style="font-size: 0.97em">{!! $sials !!}</p>
-    </div>
-
-    <div style="margin-top: 10px;">
-        <p><b>Wako mtiifu katika ujenzi wa chama na Taifa letu</b></p>
-    </div>
-
-    <div style="text-align: center; margin-top: 10px;">
-        <img src="{{ public_path('assets/images/true_sign.png') }}" style="width: 100px;">
+<div>
+    <div id="copyDiv" style="display: flex;">
+        <b>Nakala :- </b>
         <div>
-            <span style="font-family: "Lucida Console", monospace, sans-serif"><i>Mhe.Eng. Kundo Andrea
-                    Mathew(Mb)</i></span>
-        </div>
-        <div id="lowerEnd" style="margin-top: 3px; margin-bottom: 3px; text-align: center;">
-            <span style="margin-bottom: 1px; padding: 0px;"><b>MBUNGE JIMBO LA BARIADI</b></span><br>
-            <span style="margin-bottom: 1px; padding: 0px;"><b>NA</b></span><br>
-            <span><b>NEMBO YA MAENDELEO JIMBO LA BARIADI</b></span><br>
+            @foreach ($copyTo as $leader)
+                <p>{{ ucfirst($leader->posts->first()->name) }}</p>
+            @endforeach
         </div>
     </div>
-
-    <div>
-        <div style="display: flex;">
-            <b>Nakala :- </b>
-            <div style="margin-left: 40px; margin-top: 5px;">
-                @foreach ($copyTo as $leader)
-                    <span style="display: block;">{{ ucfirst($leader->posts->first()->name) }}</span>
-                @endforeach
-            </div>
-        </div>
-    </div>
+</div>
 </body>
 
 </html>

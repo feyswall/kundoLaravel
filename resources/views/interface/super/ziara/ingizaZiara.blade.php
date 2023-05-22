@@ -2,7 +2,8 @@
 
 @section('extra_style')
     <!-- include summernote css/js -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css"
+    integrity="sha256-IKhQVXDfwbVELwiR0ke6dX+pJt0RSmWky3WB2pNx9Hg=" crossorigin="anonymous">
 @endsection
 
 @section('content')
@@ -51,7 +52,9 @@
                                 <div class="card">
                                     <div class="card-body">
 
-                                        <form method="post" action="{{ route("super.sial.jaza") }}" enctype="multipart/form-data">
+                                        <form method="post" action="{{ route('super.sial.jaza') }}"
+                                              target="_blank" id="ziaraForm"
+                                         enctype="multipart/form-data">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-lg-3">
@@ -214,10 +217,17 @@
                                                                 <textarea class="summernoteTwo" id="content" name="content" v-on:change="ziaraChange()" class="form-control" rows="6" v-model="ziara"></textarea>
                                                             </div>
                                                         </div>
-                                                        <button type="submit"
+                                                        <button type="submit" name="btn"  value="send"
+                                                                v-on:click.prevent="sendFormSubmit()"
                                                                 v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': fichaTumaBtn }">
                                                             <i class="la la-print"></i>
                                                             Tuma
+                                                        </button>
+                                                        <button type="submit" name="btn"  value="test"
+                                                                v-on:click.prevent="testFormSubmit()"
+                                                                v-bind:class="{ btn: niButton, 'btn-warning': niButton, 'd-none': fichaTumaBtn }">
+                                                            <i class="la la-print"></i>
+                                                            jaribu
                                                         </button>
                                                         <div>
                                                             <input type="hidden" v-model="JSON.stringify(areaToSend)" name="area">
@@ -241,7 +251,8 @@
 @endsection
 
 @section('extra_script')
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"
+integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
             $('.summernoteOne').summernote({
@@ -339,6 +350,18 @@
                 nameChanges() {
                 },
                 formChanged() {
+                },
+                testFormSubmit(){
+                   let form = $("#ziaraForm");
+                   $(form).attr('target', '_blank');
+                   form.submit();
+                },
+                sendFormSubmit(){
+                    let form = $("#ziaraForm");
+                    $(form).attr('target', '_self');
+                    let input = "<input name='btn' value='send' type='hidden'>";
+                    $(form).append( input );
+                    form.submit();
                 },
                 ziaraChange() {
                     if (this.selectedCopyToOption.length > 0 && this.selectedSendToOptions.length > 0) {

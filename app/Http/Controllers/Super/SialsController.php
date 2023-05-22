@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Super;
 
+use App\Models\LetterNumber;
 use App\Models\Sial;
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
@@ -12,6 +13,7 @@ use App\Models\Leader;
 use App\Models\Post;
 use App\Models\Region;
 use App\Models\Ward;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 use Illuminate\Http\Request;
@@ -168,11 +170,40 @@ class SialsController extends Controller
             $selectedSendToLeaders[] = $copyToLeader;
         }
 
+        $number = 1;
+        $latestLetter = LetterNumber::latest()->first();
+        $year = Carbon::now()->format("Y");
+        if ( $latestLetter ){
+            $currentYear = Carbon::now();
+            $lastIntranceYear = Carbon::parse( $latestLetter->created_at );
+            $number = !($currentYear->isSameYear($lastIntranceYear)) ? 1 : ($latestLetter->numberCount + 1);
+        }
+        $name = 'SMY-BRD/EKAM40/' . $year . '-0' . $number;
+
+        if($request->input('btn') != 'send'){
+            $datas = [
+                'sials' => $request->input('content'),
+                'title' => $request->input('title'),
+                'copyTo' => $selectedCopyToLeaders,
+                'sendTo' => $selectedSendToLeaders,
+                'name' => $name,
+            ];
+
+            $pdf = PDF::loadView('interface.super.ziara.ziaraPdf', $datas);
+            return $pdf->stream("challenge_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf");
+        }
+
+        LetterNumber::create([
+            'number' => 'SMY-BRD/EKAM40/' . $year . '-0' . $number,
+            'numberCount' => $number,
+        ]);
+
         $datas = [
             'sials' => $request->input('content'),
             'title' => $request->input('title'),
             'copyTo' => $selectedCopyToLeaders,
             'sendTo' => $selectedSendToLeaders,
+            'name' => $name,
          ];
 
         $pdf = PDF::loadView('interface.super.ziara.ziaraPdf', $datas);
@@ -207,8 +238,8 @@ class SialsController extends Controller
                 'title' => $request->input('title'),
                 'area_name' => $areaToBeSend->area,
                 'area_id' =>  $areaToBeSend->id,
+                'letterNumber' => $name,
             ];
-
             $ziara = Sial::create($sialObjectData);
             if ( $ziara ){
                 foreach($selectedCopyToLeaders as $requestCopyTo ){
@@ -237,7 +268,7 @@ class SialsController extends Controller
                     }
                 }
 
-                return redirect()->back()->with([
+                return redirect()->route("super.sial.show", $ziara->id)->with([
                     'status' => 'success',
                     'message' => 'Barua Imetumwa',
                     'sialId' => $ziara->id,

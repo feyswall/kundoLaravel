@@ -43,12 +43,13 @@ class SmsNotificationsController extends Controller
         $out = $instance->send($this->receivers, $message);
         if ($out['status'] == 'success') {
             if ( isset($out['response']->successful) ){
-//                $smsRequestId = Sms::create([
-//                    'request_id' => $out['response']->request_id,
-//                    'message' => $message,
-//                    'smsCount' => count($receivers),
-//                    'about' => $about
-//                ]);
+                // create sms object for later retrival
+                $smsRequestId = Sms::create([
+                    'request_id' => $out['response']->request_id,
+                    'message' => $message,
+                    'sms_amount' => count($receivers)
+                ]);
+                // fill the variables in relation
             }
         }
         return $out;

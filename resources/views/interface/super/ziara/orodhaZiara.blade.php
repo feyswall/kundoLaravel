@@ -34,7 +34,7 @@
                         <thead>
                         <td>#</td>
                         <th>Kichwa</th>
-                        <th>Maelezo</th>
+                        <th>Rf: No_</th>
                         <th>Tarehe</th>
                         <th></th>
                         </thead>
@@ -43,7 +43,7 @@
                             <tr>
                                 <td>{{ $sials->count() - $key }}</td>
                                 <td>{{ $sial->title }}</td>
-                                <td>{!! $sial->note !!}</td>
+                                <td>{{ $sial->letterNumber }}</td>
                                <td>{{  Carbon\Carbon::parse($sial->created_at)->format('M d Y') }} </td>
                                <td>
                                 <a href="{{ route("super.sial.show", $sial->id) }}" class="btn btn-success btn-sm">fungua</a>  

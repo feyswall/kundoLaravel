@@ -24,7 +24,7 @@
                         <thead>
                             <td>#</td>
                             <td>Kumb No:-</td>
-                            <th>Tar</th>
+                            <th>Tarehe</th>
                             <th></th>
                         </thead>
                         <tbody>
@@ -34,17 +34,17 @@
                                     <td>{{ $pdf->name }}</td>
                                     <td>{{ \Carbon\Carbon::parse($pdf->created_at)->format('d/m/Y') }}</td>
                                     <td>
-                                        <form id="downloaderBtn_{{ $pdf->id }}" action="{{ route('newDownload') }}" method="post"
-                                            target="_blank">
-                                            @csrf
-                                            <input type="hidden" value="{{ 'pdfs/'.$pdf->url }}" name="pdf">
-                                        </form>
-                                        <button
-                                                form="downloaderBtn_{{ $pdf->id }}"
-                                                class="d-flex btn btn-dark float-end mt-lg-3 mt-sm-2"
-                                            type="submit">pakua pdf
-                                            ya barua
-                                        </button>
+                                    <button
+                                        form="downloaderBtn_{{ $pdf->id }}"
+                                        class="btn btn-sm btn-dark float-end mt-sm-2 mt-lg-0 mt-md-0"
+                                        type="submit">pakua pdf
+                                        ya barua
+                                    </button>
+                                    <form id="downloaderBtn_{{ $pdf->id }}" action="{{ route('newDownload') }}" method="post"
+                                        target="_blank">
+                                        @csrf
+                                        <input type="hidden" value="{{ 'pdfs/'.$pdf->url }}" name="pdf">
+                                    </form>
                                     </td>
                                 </tr>
                             @endforeach
