@@ -13,25 +13,25 @@
         <h5 class="lead mt-3 mb-2">Pdf Generator For KIMS </h5>
         <a href="{{ route('pdf.door.index') }}" class="btn btn-primary btn-sm mb-2"><< rudi kwenye orodha</a>
         <form method="post" action="{{ route('pdf.door.store') }}" id="pdfForm">
-        @csrf
-        <div class="mb-3">
-            <label for="content">Anuani ya mpokeaji</label>
-            <textarea class="summernoteOne" name="address" rows="4" required></textarea>
-        </div>
+            @csrf
+            <div class="mb-3">
+                <label for="content">Anuani ya mpokeaji</label>
+                <textarea class="summernoteOne" name="address" rows="4" required></textarea>
+            </div>
 
-        <div class="mb-3">
-            <label for="copy">Andika Barua</label>
-            <textarea class="summernoteTwo" name="content" rows="30" required></textarea>
-        </div>
+            <div class="mb-3">
+                <label for="copy">Andika Barua</label>
+                <textarea class="summernoteTwo" name="content" rows="30" required></textarea>
+            </div>
 
-        <label for="copy">Nakala</label>
-        <textarea class="summernoteThree" name="copy" rows="5"></textarea>
+            <label for="copy">Nakala</label>
+            <textarea class="summernoteThree" name="copy" rows="5"></textarea>
 
-        <div class="mt-3">
-            <button class="btn btn-primary btn-sm" id="sendBtn" type="button" name="btn" value="send">tuma</button>
-            <button class="btn btn-warning btn-sm" id="testBtn" type="button" name="btn" value="test">jaribu</button>
-        </div>
-    </form>
+            <div class="mt-3">
+                <button class="btn btn-primary btn-sm" id="sendBtn" type="button" name="btn" value="send">tuma</button>
+                <button class="btn btn-warning btn-sm" id="testBtn" type="button" name="btn" value="test">jaribu</button>
+            </div>
+        </form>
 
     </div>
         </div>
