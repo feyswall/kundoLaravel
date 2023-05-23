@@ -74,7 +74,7 @@
 
     <div style="text-align: center; margin: 0px auto;">
         <h5 style="padding: 0px; margin: 0px;"><b>JAMHURI YA MUUNGANO WA TANZANIA</b></h5>
-        <hr style="width: 50%; margin-left: auto; border: 1px solid gray;">
+        <hr style="width: 50%; margin: 3px auto; border: 1px solid gray;">
         <h6 style="padding: 0px; margin: 0px;"><?php echo strtoupper('Ofisi Ya Mbunge wa Jimbo la Bariadi'); ?></h6>
     </div>
     <div>

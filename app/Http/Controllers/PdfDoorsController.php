@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\Storage;
 
 class PdfDoorsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $pdfs = PdfDoor::all();
@@ -36,17 +32,6 @@ class PdfDoorsController extends Controller
         return view("pdfDoorCreate");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
-    public function testPdf(Request $request)
-    {
-
-    }
 
     public function store(Request $request)
     {
@@ -58,15 +43,16 @@ class PdfDoorsController extends Controller
             $lastIntranceYear = Carbon::parse( $latestLetter->created_at );
             $number = !($currentYear->isSameYear($lastIntranceYear)) ? 1 : ($latestLetter->numberCount + 1);
         }
-        $letter = LetterNumber::create([
-            'number' => 'SMY-BRD/EKAM40/' . $year . '-0' . $number,
-            'numberCount' => $number,
-        ]);
+
         $name = 'SMY-BRD/EKAM40/' . $year . '-0' . $number;
         if ( !($request->copy) ){
             $request->copy = 'null';
         }
         if ( $request->btn == 'send' ) {
+            $letter = LetterNumber::create([
+                'number' => 'SMY-BRD/EKAM40/' . $year . '-0' . $number,
+                'numberCount' => $number,
+            ]);
             $datas = [
                 'address' => $request->address,
                 'content' => $request->input('content'),
