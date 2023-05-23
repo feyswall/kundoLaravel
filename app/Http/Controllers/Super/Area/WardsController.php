@@ -142,10 +142,23 @@ class WardsController extends Controller
     public  function getbranchsApi($id) {
         $ward = Ward::where('id',  $id )->first();
         if ( $ward ){
+            $leadersCollection = [];
+            $firstFilter = [];
+
             $branches = $ward->branches;
-            $leaders = $ward->leaders;
+            $leadersCollection[] = $ward->leaders;
+            $leadersCollection[] = $ward->division->leaders;
+            $leadersCollection[] = $ward->council->leaders;
+            $leadersCollection[] = $ward->district->leaders;
+            $leadersCollection[] = $ward->region->leaders;
+
             $leadersWithPosts = [];
-            foreach( $leaders as $leader ){
+            foreach ( $leadersCollection as $leaders ){
+                foreach ($leaders as $leader ){
+                    $firstFilter[] = $leader;
+                }
+            }
+            foreach( $firstFilter as $leader ){
                 if ( $leader->pivot->isActive == true ){
                     $post = $this->apiPostObj($leader->pivot->post_id);
                     $leadersWithPosts[] = ['leader' => $leader, 'post' => $post];

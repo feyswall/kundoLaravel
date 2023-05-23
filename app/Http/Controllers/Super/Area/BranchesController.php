@@ -140,9 +140,23 @@ class BranchesController extends Controller
     {
         $branch = Branch::where('id',  $id )->first();
         if ( $branch ){
-            $leaders = $branch->leaders;
+            $leadersCollection = [];
+            $firstFilter = [];
+
+            $leadersCollection[] = $branch->leaders;
+            $leadersCollection[] = $branch->ward->leaders;
+            $leadersCollection[] = $branch->division->leaders;
+            $leadersCollection[] = $branch->council->leaders;
+            $leadersCollection[] = $branch->district->leaders;
+            $leadersCollection[] = $branch->region->leaders;
+
+            foreach ( $leadersCollection as $leaders ){
+                foreach ( $leaders as $leader ){
+                    $firstFilter[] = $leader;
+                }
+            }
             $leadersWithPosts = [];
-            foreach( $leaders as $leader ){
+            foreach( $firstFilter as $leader ){
                 if ( $leader->pivot->isActive == true ){
                     $post = $this->apiPostObj($leader->pivot->post_id);
                     $leadersWithPosts[] = ['leader' => $leader, 'post' => $post];

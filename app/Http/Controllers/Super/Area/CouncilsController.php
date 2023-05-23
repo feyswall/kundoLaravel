@@ -141,10 +141,21 @@ class CouncilsController extends Controller
     public function getDivisionsApi($id){
         $council = Council::find( $id );
         if ( $council ){
+            $leadersCollection = [];
+            $firstFilter = [];
+
             $divisons = $council->divisions;
-            $leaders = $council->leaders;
+            $leadersCollection[] = $council->leaders;
+            $leadersCollection[] = $council->district->leaders;
+            $leadersCollection[] = $council->region->leaders;
+
             $leadersWithPosts = [];
-            foreach( $leaders as $leader ){
+            foreach ( $leadersCollection as $leaders ){
+                foreach ($leaders as $leader ){
+                    $firstFilter[] = $leader;
+                }
+            }
+            foreach( $firstFilter as $leader ){
                 if ( $leader->pivot->isActive == true ){
                     $post = $this->apiPostObj($leader->pivot->post_id);
                     $leadersWithPosts[] = ['leader' => $leader, 'post' => $post];
