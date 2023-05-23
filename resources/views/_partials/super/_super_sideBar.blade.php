@@ -35,7 +35,7 @@
 
                 <li> <a href="javascript: void(0);" class="has-arrow">Nyumba</a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('super.houses.allHouses') }}"><span>All Houses</span> </a></li>
+                        <li><a href="{{ route('super.houses.allHouses') }}"><span>Orodha ya Nyumba</span> </a></li>
                     </ul>
                 </li>
 
@@ -95,7 +95,7 @@
                             </li>
                         </ul>
                     </li>
-                        <li><a href="{{ route('super.houseTypes.showAll') }}"><span>House Types</span> </a></li>
+                        <li><a href="{{ route('super.houseTypes.showAll') }}"><span>Aina ya Nyumba</span> </a></li>
                     </ul>
                 </li>
 

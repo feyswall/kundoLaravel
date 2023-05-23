@@ -16,25 +16,32 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h3>House's Name: <b>{{ $apartment->house->houseName }}</b></h3>
-                        <h3>Apartment's Name: <b>{{ $apartment->name }}</b></h3>
-                        <h5 class="mt-2">Apartment's description:</h5>
+                        <h3>Jina la Nyumba: <b>{{ $apartment->house->houseName }}</b></h3>
+                        <h3>Jina la Apartment: <b>{{ $apartment->name }}</b></h3>
+                        <h5 class="mt-2">Maelezo Kuhusu Apartment:</h5>
                         <p> {{ $apartment->desc }}</p>
-                        <h5>Current Apartment Costs: <b>{{ number_format( floatval($apartment->cost), 0, '.', ',')}}</b>Tsh</h5>
-                        <span>Current Tenant: <b>{{ $apartment->tenant->name ?? "No Tenant" }}  </b>
+                        <h5>Gharama ya Apartment Hii: <b>{{ number_format( floatval($apartment->cost), 0, '.', ',')}}</b>Tsh</h5>
+                        <span>Mpanga Wa Apartment: <b>{{ $apartment->tenant->name ?? "Hakuna Mpangaji" }}  </b>
                             @if( $apartment->tenant == null )
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#assignTenant"><i class="fas fa-plus"> </i>Assign a Tenant</a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#assignTenant">
+                                    <i class="fas fa-plus"> </i>Weka Mpangaji</a>
                             @else
-                                <form method="post" action="{{ route('super.tenants.deleteTenant', $apartment->tenant->id ) }}" class="m-3">
+                                <form method="post"
+                                 action="{{ route('super.tenants.deleteTenant', $apartment->tenant->id ) }}"
+                                  class="m-3">
                                     @method('delete')
                                     @csrf
-                                    <i class="fas fa-minus-circle text-danger"> </i><input type="submit" class="border-0 bg-white text-danger" value="remove tenant">
+                                    <i class="fas fa-minus-circle text-danger">
+
+                                    </i><input type="submit" class="border-0 bg-white text-danger" 
+                                    value="remove tenant">
                                 </form>
                             @endif
                         </span>
                         <div class="mt-3">
                             @if( $apartment->tenant )
-                                <button data-bs-toggle="modal" data-bs-target="#createNewPayment" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Register Payment</button>
+                                <button data-bs-toggle="modal" data-bs-target="#createNewPayment" 
+                                class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i>Sajir</button>
                             @endif
                         </div>
                         <h4 class="card-title mt-2">Apartment's Payments Lists</h4>

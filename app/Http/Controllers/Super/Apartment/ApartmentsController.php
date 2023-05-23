@@ -41,10 +41,10 @@ class ApartmentsController extends Controller
         ]);
         $house = House::find( $request->house_id );
         if ( !$apartment ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'Something went wrong please try again']);
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Kunajambo halikwenda sawa tafadhari jaribu  tena']);
         }
         return redirect()->back()
             ->with('house', $house)
-            ->with(['status' => 'success', 'message' => 'Apartmenr With Tha name '.$apartment->name.' was created successfully']);
+            ->with(['status' => 'success', 'message' => 'Apartmenr Yenye Jina '.$apartment->name.' Imesajiriwa']);
     }
 }

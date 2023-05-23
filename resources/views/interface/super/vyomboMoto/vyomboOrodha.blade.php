@@ -67,7 +67,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-4 col-lg-3">
                             <div class="mb-3 mb-4">
-                                <label class="form-label" for="firstName">Name</label>
+                                <label class="form-label" for="firstName">Jina la Utambulisho</label>
                                 <input v-model:value="identityName" type="text" class="form-control" name="name" placeholder="">
                             </div>
                         </div>
@@ -152,14 +152,14 @@
 
                         <div class="col-sm-12 col-md-4 col-lg-3">
                             <div class="mb-3 mb-4">
-                                    <label for="color">Color</label>
+                                    <label for="color">Rangi ya Chombo</label>
                                     <input type="text" name="color" class="form-control" v-model="color">
                             </div>
                         </div>
 
                         <div class="col-sm-12 col-md-4 col-lg-3">
                             <div class="mb-3 mb-4">
-                                <label for="color">year</label>
+                                <label for="color">Mwaka wa Kutengenezwa</label>
                                 <input type="date" name="year" class="form-control" v-model="year">
                             </div>
                         </div>
