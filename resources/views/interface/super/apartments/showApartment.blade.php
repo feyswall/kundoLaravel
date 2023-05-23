@@ -20,7 +20,7 @@
                         <h3>Jina la Apartment: <b>{{ $apartment->name }}</b></h3>
                         <h5 class="mt-2">Maelezo Kuhusu Apartment:</h5>
                         <p> {{ $apartment->desc }}</p>
-                        <h5>Gharama ya Apartment Hii: <b>{{ number_format( floatval($apartment->cost), 0, '.', ',')}}</b>Tsh</h5>
+                        <h5>Gharama ya Apartment Hii: <b>{{ number_format( floatval($apartment->cost), 0, '.', ',')}}/= </b>Tsh</h5>
                         <span>Mpanga Wa Apartment: <b>{{ $apartment->tenant->name ?? "Hakuna Mpangaji" }}  </b>
                             @if( $apartment->tenant == null )
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#assignTenant">
@@ -41,18 +41,18 @@
                         <div class="mt-3">
                             @if( $apartment->tenant )
                                 <button data-bs-toggle="modal" data-bs-target="#createNewPayment" 
-                                class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i>Sajir</button>
+                                class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i>Sajiri</button>
                             @endif
                         </div>
-                        <h4 class="card-title mt-2">Apartment's Payments Lists</h4>
+                        <h4 class="card-title mt-2">Orodha ya malipo ya Apartment</h4>
                         <table id="apartment-table" class="table table-striped table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Amount Received</th>
-                                <th>Months</th>
-                                <th>Start Date:</th>
-                                <th>End date:</th>
+                                <th>Kiasi Kilicholipwa</th>
+                                <th>Miezi</th>
+                                <th>Mwezi wa kuanza:</th>
+                                <th>Mwezi wa kuisha:</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -71,7 +71,8 @@
                 </div>
             </div>
         </div>
-        <x-system.modal id="createNewPayment" aria="apartmentRegistration" size="modal-lg" title="Register A New Apartment">
+        <x-system.modal id="createNewPayment" aria="apartmentRegistration" size="modal-lg" 
+        title="Sajiri Apartment Mpya">
             <x-slot:content>
                 <form method="POST" action="{{ route('super.payments.storePayment') }}">
                     @csrf
@@ -79,20 +80,20 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="billing-name">Received Amount</label>
+                                    <label class="form-label" for="billing-name">Kiasi Ulichopokea</label>
                                     <input name="received" class="form-control" type="number">
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="billing-name">Staring Month</label>
+                                    <label class="form-label" for="billing-name">Mwezi wa kuanza</label>
                                     <input type="date" name="date" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
                                     <input name="apartment_id" value="{{ $apartment->id }}" type="hidden">
-                                    <button class="btn btn-sm btn-success" type="submit">submit</button>
+                                    <button class="btn btn-sm btn-success" type="submit">sajiri</button>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +101,8 @@
                 </form>
             </x-slot:content>
         </x-system.modal>
-        <x-system.modal id="assignTenant" aria="apartmentTenantRegistration" size="modal-lg" title="Assign Tenant For Your Apartment">
+        <x-system.modal id="assignTenant" aria="apartmentTenantRegistration" size="modal-lg" 
+        title="Sajiri Mpangaji wa Apartment">
             <x-slot:content>
                 <form method="POST" action="{{ route('super.tenants.assignTenant') }}">
                     @csrf
@@ -108,7 +110,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="billing-name">Select Tenant</label>
+                                    <label class="form-label" for="billing-name">Chagua Mpangaji</label>
                                     <select name="tenant_id" class="form-control">
                                         @foreach( $tenants as $tenant )
                                             <option value="{{ $tenant->id }}">{{ $tenant->name }}</option>
@@ -117,16 +119,17 @@
                                     @error('tenant')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                    <p>This is the list of Tenants that do not possess any apartment.</p>
+                                    <p>Hii ni orodha ya wapangaji wasiokuwa na vyumba.</p>
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
                                     <input name="apartment_id" value="{{ $apartment->id }}" type="hidden">
-                                    <button class="btn btn-sm btn-success" type="submit">submit</button>
+                                    <button class="btn btn-sm btn-success" type="submit">tuma</button>
                                 </div>
-                                <p>Didn't find a tenant? Register a new one here.
-                                    <a href="#" type="button" data-bs-toggle="modal" data-bs-target="#registerNewTenant" ><i class="fas fa-plus"> </i> Register Tenant</a>
+                                <p>Je hukupata Mpangaji? Sajiri mpangaji Mpya.
+                                    <a href="#" type="button" data-bs-toggle="modal" data-bs-target="#registerNewTenant" >
+                                        <i class="fas fa-plus"> </i>Sajiri Mpangaji</a>
                                 </p>
                             </div>
                         </div>
@@ -134,7 +137,8 @@
                 </form>
             </x-slot:content>
         </x-system.modal>
-        <x-system.modal id="registerNewTenant" aria="apartmentTenantRegistration" size="modal-fullscreen" title="Register A New Tenant For Your Apartments">
+        <x-system.modal id="registerNewTenant" aria="apartmentTenantRegistration"
+         size="modal-fullscreen" title="Form ya kusajiri mpangaji mpya kwenye mfumo">
             <x-slot:content>
                 <form method="POST" action="{{ route('super.tenants.storeTenant') }}">
                     @csrf
@@ -142,7 +146,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="billing-name">Full Name</label>
+                                    <label class="form-label" for="billing-name">Jina Kamili</label>
                                     <input name="name" class="form-control" type="text">
                                     @error('name')
                                     <span class="text-danger">{{ $message }}</span>
@@ -151,14 +155,14 @@
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="billing-name">Gender</label><br>
-                                    Male <input type="radio" name="gender" class="form-radio-pink" value="male" checked>
-                                    Female <input type="radio" name="gender" class="form-radio-pink" value="female">
+                                    <label class="form-label" for="billing-name">Jinsia</label><br>
+                                    Me: <input type="radio" name="gender" class="form-radio-pink" value="male" checked>
+                                    Ke: <input type="radio" name="gender" class="form-radio-pink" value="female">
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="billing-name">Phone Number</label>
+                                    <label class="form-label" for="billing-name">Namba ya simu</label>
                                     <input name="phone" class="form-control" type="number">
                                     @error('phone')
                                     <span class="text-danger">{{ $message }}</span>
@@ -168,7 +172,7 @@
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
                                     <input name="apartment_id" value="{{ $apartment->id }}" type="hidden">
-                                    <button class="btn btn-sm btn-success" type="submit">submit</button>
+                                    <button class="btn btn-sm btn-success" type="submit">sajiri</button>
                                 </div>
                             </div>
                         </div>
