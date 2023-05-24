@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * Created by feyswal on 1/13/2023.
  * Time 12:16 PM.
  * EastCoders & G3NET.
@@ -95,6 +95,22 @@
                                         @endphp
                                     <div class="text-center">
                                         <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                        <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                            data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
+                                            data-bs-placement="top" title="Badilisha" href="#">
+                                        </a>
+                                        <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="futaKiongoziKataLabel" size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                            <x-slot:content>
+                                                <form action="{{ route('super.leader.unpower')}}" method="POST">
+                                                    @csrf
+                                                    @method('put')
+                                                    <input name='leader_id' value="{{ $leader->id }}" type="hidden">
+                                                    <input type="hidden" name="branch_id" value="{{ $branch->id }}">
+                                                    <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
+                                                    <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
+                                                </form>
+                                            </x-slot:content>
+                                        </x-system.modal>
                                         <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
                                         <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $postName }}</small><br>
                                         <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
@@ -113,10 +129,12 @@
                         @foreach ($branch->leaders as $leader)
                          @if( $leader->pivot->isActive == true )
                                 <x-system.modal id="badiriTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama Ngazi Ya Kata Hapa">
-                                <x-slot:content>
-                                        <x-system.edit-leader :leader="$leader" :route="route('super.leader.tawi.sasisha', $leader->id)" />
-                                </x-slot:content>
+                                    <x-slot:content>
+                                            <x-system.edit-leader :leader="$leader" :route="route('super.leader.tawi.sasisha', $leader->id)" />
+                                    </x-slot:content>
                                 </x-system.modal>
+
+
                         @endif
                         @endforeach
 
@@ -131,25 +149,29 @@
                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                             <div class="mb-3 mb-4">
                                                 <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                <input type="text" class="form-control" name="firstName" placeholder="eg: mgalanga">
+                                                <input type="text" class="form-control" name="firstName"
+                                                placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                             <div class="mb-3 mb-4">
                                                 <label class="form-label" for="middleName">Jina La Kati</label>
-                                                <input type="text" class="form-control" name="middleName" placeholder="eg: mosi">
+                                                <input type="text" class="form-control" name="middleName"
+                                                placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                             <div class="mb-3 mb-4">
                                                 <label class="form-label" for="lastName">Jina La Mwisho</label>
-                                                <input type="text" class="form-control" name="lastName" placeholder="eg: mgalanga simo">
+                                                <input type="text" class="form-control" name="lastName"
+                                                placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                             <div class="mb-3 mb-4">
                                                 <label class="form-label" for="phone">Namba ya Simu</label>
-                                                <input type="text" class="form-control" name="phone" placeholder="eg: 0678 987 897">
+                                                <input type="text" class="form-control" name="phone"
+                                                placeholder="">
 
                                                 <!-- data to simplify the validation process -->
                                                 <input type="hidden" value="{{ $branch->id }}" class="form-control" name="side_id">
@@ -195,6 +217,23 @@
                                     @if( $leader->pivot->isActive == true )
                                         <div class="text-center">
                                             <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                            <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                            data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
+                                            data-bs-placement="top" title="Badilisha" href="#">
+                                            </a>
+                                        <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="futaKiongoziKataLabel" size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                            <x-slot:content>
+                                                <form action="{{ route('super.leader.unpower')}}" method="POST">
+                                                    @csrf
+                                                    @method('put')
+                                                    <input type="hidden" name="table" value="branch">
+                                                    <input name='leader_id' value="{{ $leader->id }}" type="hidden">
+                                                    <input type="hidden" name="branch_id" value="{{ $branch->id }}">
+                                                    <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
+                                                    <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
+                                                </form>
+                                            </x-slot:content>
+                                        </x-system.modal>
                                             <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
                                             <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small><br>
                                             <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
@@ -206,9 +245,12 @@
 
 
                         @foreach ($branch->leaders->where('side', 'serikali') as $leader)
-                            <x-system.modal id="badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Serikali Kata Hapa">
+                            <x-system.modal id="badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}"
+                                aria="ongezaKiongoziKataLabel" size="modal-fullscreen"
+                                title="Ongeza Kiongozi Wa Serikali Kata Hapa">
                                 <x-slot:content>
-                                    <x-system.edit-leader :leader="$leader" :route="route('super.leader.tawi.sasisha', $leader->id)" />
+                                    <x-system.edit-leader :leader="$leader"
+                                    :route="route('super.leader.tawi.sasisha', $leader->id)" />
                                 </x-slot:content>
                             </x-system.modal>
                         @endforeach

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Super\Area;
 
 use App\Models\Trunk;
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;

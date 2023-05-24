@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Super\Area;
 use App\Http\Controllers\Controller;
 use App\Models\Council;
 use App\Models\District;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Region;
@@ -134,7 +135,7 @@ class CouncilsController extends Controller
     }
 
 
-    
+
         /**
      * return
      */

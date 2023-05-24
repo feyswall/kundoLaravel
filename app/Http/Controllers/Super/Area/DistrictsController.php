@@ -7,6 +7,7 @@ use App\Models\Area;
 use App\Models\AreaDescription;
 use App\Models\District;
 use App\Models\Leader;
+use App\Models\Post;
 use App\Models\Region;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;

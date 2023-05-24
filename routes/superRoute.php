@@ -304,6 +304,7 @@ Route::controller(ApartmentsController::class)
     ->group(function () {
         Route::get('/show/{id}', 'show')->name('showApartment');
         Route::post('/store', 'store')->name('storeApartment');
+        Route::get('/unpaid', 'unpaid')->name('unpaid');
     });
 
 Route::controller(\App\Http\Controllers\Super\Payments\PaymentsController::class)
@@ -353,6 +354,15 @@ Route::controller(\App\Http\Controllers\Super\CharityCategoriesController::class
     ->as('super.charityCategory.')
     ->group(function () {
         Route::post('/store', 'store')->name('store');
+    });
+
+
+Route::controller(\App\Http\Controllers\Super\LeadersController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/leader')
+    ->as('super.leader.')
+    ->group(function () {
+        Route::put('/remove/from/power', 'removeFromPower')->name('unpower');
     });
 
 

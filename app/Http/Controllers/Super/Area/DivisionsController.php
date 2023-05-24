@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Super\Area;
 use App\Http\Controllers\Controller;
 use App\Models\Council;
 use App\Models\Division;
+use App\Models\Post;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -60,7 +61,7 @@ class DivisionsController extends Controller
             "tarafa.string"  => "Jina lazima lihusishe maneno pekee",
             "tarafa.max" => "Jina Lihusishe herufi zisizozidi hamsini (50)",
             "tarafa.unique" => "Jina limeshasajiriwa"
-        ];        
+        ];
 
         $validate = Validator::make($request->all() ,$rules, $messages);
 

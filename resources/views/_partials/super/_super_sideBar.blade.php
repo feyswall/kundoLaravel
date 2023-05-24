@@ -57,7 +57,7 @@
                     </ul>
                 </li>
 
-                <li> <a href="{{ route('pdf.door.index') }}" class="">pdf</a></li>
+                <li> <a href="{{ route('pdf.door.index') }}" class="">tengeneza pdf</a></li>
 
                 <li> <a href="javascript: void(0);" class="has-arrow">Misaada</a>
                     <ul class="sub-menu" aria-expanded="true">
