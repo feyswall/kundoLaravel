@@ -43,83 +43,20 @@ class LeadersController extends Controller
     public function removeFromPower(Request $request)
     {
         $table = $request->input('table');
+        $column_id = $request->input('column_id');
+        $column_value = $request->input('column_value');
+
         $leader = Leader::where('id', $request->input('leader_id'))->first();
-        if($table == 'region'){
-            $this->detachLeaderFromRegion($leader, $request->input('post_id'), $request->input('region_id'));
-        }elseif($table == 'district'){
-            $this->detachLeaderFromDistrict($leader, $request->input('post_id'), $request->input('district_id'));
-        }elseif($table == 'council'){
-            $this->detachLeaderFromCouncil($leader, $request->input('post_id'), $request->input('council_id'));
-        }elseif($table == 'division'){
-            $this->detachLeaderFromDivision($leader, $request->input('post_id'), $request->input('division_id'));
-        }elseif($table == "ward"){
-            $this->detachLeaderFromWard($leader, $request->input('post_id'), $request->input('ward_id'));
-        }elseif($table == "branch") {
-            $this->detachLeaderFromBranch($leader, $request->input('post_id'), $request->input('branch_id'));
-        }elseif ($table == 'trunk'){
-            $this->detachLeaderFromBranch($leader, $request->input('post_id'), $request->input('branch_id'));
-        }
+        $this->detachLeaderFrom($leader, $request->input('post_id'),$table, $column_id, $column_value);
         $this->deactivateALeader($leader, $request->input('post_id') );
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Ametolewa Madarakani']);
     }
 
-    private function detachLeaderFromRegion(Leader $leader, $post_id, $region_id)
+    private function detachLeaderFrom(Leader $leader, $post_id, $table,$column_id, $column_value)
     {
-        $pivit = $leader->regions()->where('post_id', $post_id)
+        $pivit = $leader->$table()->where('post_id', $post_id)
             ->where('isActive', true)
-            ->where('region_id', $region_id)
-            ->first()->pivot;
-        $pivit->isActive = false;
-        $pivit->save();
-    }
-
-    private function detachLeaderFromDistrict(Leader $leader, $post_id, $district_id)
-    {
-        $pivit = $leader->districts()->where('post_id', $post_id)
-            ->where('isActive', true)
-            ->where('district_id', $district_id)
-            ->first()->pivot;
-        $pivit->isActive = false;
-        $pivit->save();
-    }
-
-    private function detachLeaderFromCouncil(Leader $leader, $post_id, $council_id)
-    {
-        $pivit = $leader->councils()->where('post_id', $post_id)
-            ->where('isActive', true)
-            ->where('council_id', $council_id)
-            ->first()->pivot;
-        $pivit->isActive = false;
-        $pivit->save();
-    }
-
-    private function detachLeaderFromDivision(Leader $leader, $post_id, $division_id)
-    {
-        $pivit = $leader->divisions()->where('post_id', $post_id)
-            ->where('isActive', true)
-            ->where('division_id', $division_id)
-            ->first()->pivot;
-        $pivit->isActive = false;
-        $pivit->save();
-    }
-
-
-    private function detachLeaderFromWard(Leader $leader, $post_id, $ward_id)
-    {
-        $pivit = $leader->wards()->where('post_id', $post_id)
-            ->where('isActive', true)
-            ->where('ward_id', $ward_id)
-            ->first()->pivot;
-        $pivit->isActive = false;
-        $pivit->save();
-    }
-
-
-    private function detachLeaderFromBranch(Leader $leader, $post_id, $branch_id)
-    {
-        $pivit = $leader->branches()->where('post_id', $post_id)
-            ->where('isActive', true)
-            ->where('branch_id', $branch_id)
+            ->where($column_id, $column_value)
             ->first()->pivot;
         $pivit->isActive = false;
         $pivit->save();

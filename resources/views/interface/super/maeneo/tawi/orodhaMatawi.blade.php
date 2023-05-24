@@ -60,6 +60,26 @@
                                                         @endphp
                                                         <div class="text-center">
                                                             <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                                            <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                                            data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
+                                                            data-bs-placement="top" title="Badilisha" href="#">
+                                                            </a>
+                                                        <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="futaKiongoziKataLabel"
+                                                             size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                                            <x-slot:content>
+                                                                <form action="{{ route('super.leader.unpower')}}" method="POST">
+                                                                    @csrf
+                                                                    @method('put')
+                                                                    <input type="hidden" name="table" value="wards">
+                                                                    <input type="hidden" name="column_id" value="ward_id">
+                                                                    <input type="hidden" name="column_value" value="{{ $ward->id }}">
+
+                                                                    <input name='leader_id' value="{{ $leader->id }}" type="hidden">
+                                                                    <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
+                                                                    <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
+                                                                </form>
+                                                            </x-slot:content>
+                                                        </x-system.modal>
                                                             <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
                                                             <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $postName }}</small>
                                                         </div>
@@ -90,25 +110,25 @@
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                                <input type="text" class="form-control" name="firstName" placeholder="eg: mgalanga">
+                                                                <input type="text" class="form-control" name="firstName" placeholder="">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="middleName">Jina La Kati</label>
-                                                                <input type="text" class="form-control" name="middleName" placeholder="eg: mosi">
+                                                                <input type="text" class="form-control" name="middleName" placeholder="">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="lastName">Jina La Mwisho</label>
-                                                                <input type="text" class="form-control" name="lastName" placeholder="eg: mgalanga simo">
+                                                                <input type="text" class="form-control" name="lastName" placeholder="">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="phone">Namba ya Simu</label>
-                                                                <input type="text" class="form-control" name="phone" placeholder="eg: 0678 987 897">
+                                                                <input type="text" class="form-control" name="phone" placeholder="">
 
                                                                 <!-- data to simplify the validation process -->
                                                                 <input type="hidden" value="{{ $ward->id }}" class="form-control" name="side_id">

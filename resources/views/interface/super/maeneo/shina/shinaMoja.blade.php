@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * Created by feyswal on 1/13/2023.
  * Time 12:16 PM.
  * EastCoders & G3NET.
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <div>
-                           
+
                             <div class="d-flex justify-start gap-4 flex-wrap">
                                 @foreach( $trunk->leaders->where('side', 'chama') as $leader )
                                     @if( $leader->pivot->isActive == true )
@@ -87,6 +87,25 @@
                                         @endphp
                                     <div class="text-center">
                                         <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                        <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                        data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
+                                        data-bs-placement="top" title="Badilisha" href="#">
+                                        </a>
+                                    <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="futaKiongoziKataLabel" size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                        <x-slot:content>
+                                            <form action="{{ route('super.leader.unpower')}}" method="POST">
+                                                @csrf
+                                                @method('put')
+                                                <input type="hidden" name="table" value="trunks">
+                                                <input type="hidden" name="column_id" value="trunk_id">
+                                                <input type="hidden" name="column_value" value="{{ $trunk->id }}">
+
+                                                <input name='leader_id' value="{{ $leader->id }}" type="hidden">
+                                                <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
+                                                <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
+                                            </form>
+                                        </x-slot:content>
+                                    </x-system.modal>
                                         <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
                                         <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $postName }}</small><br>
                                         <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
@@ -125,6 +144,25 @@
                                     @if( $leader->pivot->isActive == true )
                                         <div class="text-center">
                                             <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                            <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                            data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}"
+                                            data-bs-placement="top" title="Badilisha" href="#">
+                                            </a>
+                                        <x-system.modal id="futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}" aria="futaKiongoziKataLabel" size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                            <x-slot:content>
+                                                <form action="{{ route('super.leader.unpower')}}" method="POST">
+                                                    @csrf
+                                                    @method('put')
+                                                    <input type="hidden" name="table" value="trunks">
+                                                    <input type="hidden" name="column_id" value="trunk_id">
+                                                    <input type="hidden" name="column_value" value="{{ $trunk->id }}">
+
+                                                    <input name='leader_id' value="{{ $leader->id }}" type="hidden">
+                                                    <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
+                                                    <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
+                                                </form>
+                                            </x-slot:content>
+                                        </x-system.modal>
                                             <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
                                             <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small><br>
                                             <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
@@ -139,7 +177,7 @@
                             @if( $leader->pivot->isActive == true )
                             <x-system.modal id="badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Serikali Kata Hapa">
                                 <x-slot:content>
-                                    <x-system.edit-leader :leader="$leader" :route="route('super.leader.shina.sahihisha', $leader->id)" />
+                                    <x-system.edit-leader :leader="$leader" :route="route('super.leader.shina.sasisha', $leader->id)" />
                                 </x-slot:content>
                             </x-system.modal>
                             @endif

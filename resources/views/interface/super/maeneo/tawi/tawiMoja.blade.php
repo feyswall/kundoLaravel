@@ -218,17 +218,19 @@
                                         <div class="text-center">
                                             <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
                                             <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
-                                            data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
+                                            data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}"
                                             data-bs-placement="top" title="Badilisha" href="#">
                                             </a>
-                                        <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="futaKiongoziKataLabel" size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                        <x-system.modal id="futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}" aria="futaKiongoziKataLabel" size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
                                             <x-slot:content>
                                                 <form action="{{ route('super.leader.unpower')}}" method="POST">
                                                     @csrf
                                                     @method('put')
-                                                    <input type="hidden" name="table" value="branch">
+                                                    <input type="hidden" name="table" value="branches">
+                                                    <input type="hidden" name="column_id" value="branch_id">
+                                                    <input type="hidden" name="column_value" value="{{ $branch->id }}">
+
                                                     <input name='leader_id' value="{{ $leader->id }}" type="hidden">
-                                                    <input type="hidden" name="branch_id" value="{{ $branch->id }}">
                                                     <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
                                                     <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
                                                 </form>

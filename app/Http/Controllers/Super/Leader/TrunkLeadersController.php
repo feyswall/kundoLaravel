@@ -37,7 +37,8 @@ class TrunkLeadersController extends Controller
         $obj = new LeadersController();
         $leader = $obj->store( $request );
         if ( !$leader ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'hatujaweza kumuweka kiongozi']);
+            return redirect()->back()->with(['status' => 'error', 'message' =>
+            'hatujaweza kumuweka kiongozi Jina '.$request->firstName.' '.$request->lastName.' Limejirudia kwenye Mfumo']);
         }
         $obj->attachMany( $leader->trunks(), $request, $leader );
 
