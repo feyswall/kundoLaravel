@@ -50,6 +50,26 @@
                                                     @if( $leader->pivot->isActive == true )
                                                     <div class="text-center">
                                                         <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Badilisha" href="{{ route("super.leader.tarafa.badili", $leader->id ) }}"></a>
+                                                        <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                                        data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
+                                                        data-bs-placement="top" title="Badilisha" href="#">
+                                                        </a>
+                                                    <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="futaKiongoziKataLabel"
+                                                         size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                                        <x-slot:content>
+                                                            <form action="{{ route('super.leader.unpower')}}" method="POST">
+                                                                @csrf
+                                                                @method('put')
+                                                                <input type="hidden" name="table" value="councils">
+                                                                <input type="hidden" name="column_id" value="council_id">
+                                                                <input type="hidden" name="column_value" value="{{ $council->id }}">
+
+                                                                <input name='leader_id' value="{{ $leader->id }}" type="hidden">
+                                                                <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
+                                                                <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
+                                                            </form>
+                                                        </x-slot:content>
+                                                    </x-system.modal>
                                                         <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
                                                         <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
                                                     </div>
@@ -134,6 +154,26 @@
                                                     @if( $leader->pivot->isActive == true )
                                                         <div class="text-center">
                                                             <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Badilisha" href="{{ route("super.leader.tarafa.badili", $leader->id ) }}"></a>
+                                                            <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                                            data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}"
+                                                            data-bs-placement="top" title="Badilisha" href="#">
+                                                            </a>
+                                                        <x-system.modal id="futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}" aria="futaKiongoziKataLabel"
+                                                             size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                                            <x-slot:content>
+                                                                <form action="{{ route('super.leader.unpower')}}" method="POST">
+                                                                    @csrf
+                                                                    @method('put')
+                                                                    <input type="hidden" name="table" value="councils">
+                                                                    <input type="hidden" name="column_id" value="council_id">
+                                                                    <input type="hidden" name="column_value" value="{{ $council->id }}">
+
+                                                                    <input name='leader_id' value="{{ $leader->id }}" type="hidden">
+                                                                    <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
+                                                                    <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
+                                                                </form>
+                                                            </x-slot:content>
+                                                        </x-system.modal>
                                                             <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
                                                             <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
                                                         </div>

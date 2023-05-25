@@ -67,7 +67,8 @@
                                 </div>
                             </div>
 
-                            <a href="{{ route("super.areas.tawi.orodha", $branch->ward->id) }}" class="btn btn-primary btn-md mb-4" >Rudi Kwenye Kata</a>
+                            <a href="{{ route("super.areas.tawi.orodha", $branch->ward->id) }}"
+                                class="btn btn-primary btn-md mb-4" >Rudi Kwenye Kata</a>
                             <button  data-bs-toggle="modal" data-bs-target="#ongezaKiongoziModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri </button>
                             <!-- model location here -->
                             <x-system.modal id="ongezaKiongoziModal" aria="orodhaTawiLabel" size="modal-fullscreen" title="Ongeza Tawi Hapa" >
@@ -78,25 +79,25 @@
                                             <div class="col-sm-12 col-md-4 col-lg-3">
                                                 <div class="mb-3 mb-4">
                                                     <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                    <input type="text" class="form-control" name="firstName" placeholder="eg: mgalanga">
+                                                    <input type="text" class="form-control" name="firstName" placeholder="">
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-4 col-lg-3">
                                                 <div class="mb-3 mb-4">
                                                     <label class="form-label" for="middleName">Jina La Kati</label>
-                                                    <input type="text" class="form-control" name="middleName" placeholder="eg: mosi">
+                                                    <input type="text" class="form-control" name="middleName" placeholder="">
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-4 col-lg-3">
                                                 <div class="mb-3 mb-4">
                                                     <label class="form-label" for="lastName">Jila La Mwisho</label>
-                                                    <input type="text" class="form-control" name="lastName" placeholder="eg: mgalanga simo">
+                                                    <input type="text" class="form-control" name="lastName" placeholder="">
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-4 col-lg-3">
                                                 <div class="mb-3 mb-4">
                                                     <label class="form-label" for="phone">Namba ya Simu</label>
-                                                    <input type="text" class="form-control" name="phone" placeholder="eg: 0678 987 897">
+                                                    <input type="text" class="form-control" name="phone" placeholder="">
 
                                                     <!-- data to simplify the validation process -->
                                                     <input type="hidden" value="{{ $branch->id }}" class="form-control" name="side_id" >

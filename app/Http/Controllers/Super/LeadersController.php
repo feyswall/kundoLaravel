@@ -98,7 +98,6 @@ class LeadersController extends Controller
 //            return ['status' => 'error', 'message' => 'Email Imejirudia Katika Mfumo.'];
         }
 
-
         $user = \App\Models\User::create([
             'name' => $firstAndLastName,
             'email' => $email,
