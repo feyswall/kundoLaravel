@@ -299,7 +299,7 @@
             <div class="card">
                 <div class="card-body">
                     <button data-bs-toggle="modal" data-bs-target="#orodhaKataModal" class="btn btn-info btn-sm mb-4"><i class="fas fa-plus"> </i> Ongeza Kata</button>
-                    <a href="{{ route('super.areas.tarafa.orodha', $division->council->id) }}" class="btn btn-primary btn-sm mb-4">Rudi Kwenye Tarafa</a>
+                    <a href="{{ route('super.areas.tarafa.orodha', $division->council->id) }}" class="btn btn-primary btn-sm mb-4">Rudi Kwenye Halmashauri</a>
                     <x-system.kata-table :areas="$areas">
                     </x-system.kata-table>
                 </div>
@@ -351,7 +351,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                            <button type="submit" name="submit" class="btn btn-primary btn-sm">Ongeza</button>
                         </div>
                     </div>
             </form>

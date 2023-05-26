@@ -10,6 +10,7 @@ use App\Models\Post;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Builder\Class_;
 
 class WardLeadersController extends Controller
 {
@@ -41,14 +42,30 @@ class WardLeadersController extends Controller
     public function store(ValidateWardLeaderRequest $request)
     {
         $obj = new LeadersController();
-        $leader = $obj->store( $request );
-        if ( !$leader ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'hatujaweza kumuweka kiongozi']);
+        $leader = null;
+        if( !($request->input('withLeader'))) {
+            $leader = $obj->store($request);
+            if (!$leader) {
+                return redirect()->back()->with([
+                    'status' => 'error',
+                    'message' => 'hatujaweza kumuweka kiongozi, Mtumiaji Amesha sajiriwa',
+                ]);
+            }
+        }else {
+            $output = $obj->assignPowerToPresentLeader(
+                $request->input('leader_id'),
+                $request->input('table'),
+                $request->input('post_id'),
+                $request->input('side_id'),
+                $request->input('side_column')
+            );
+            if ($output['status'] == 'error') { return redirect()->back()->with($output); }
         }
         $obj->attachMany( $leader->wards(), $request, $leader );
         return redirect()->back()
-            ->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
+            ->with(['status' => 'success', 'message' => 'Kiongozi Amepewe Madaraka']);
     }
+
 
     /**
      * Display the specified resource.

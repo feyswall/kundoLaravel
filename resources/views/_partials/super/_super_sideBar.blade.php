@@ -20,7 +20,6 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title">Menu</li>
                 <li>
                     <a href="{{ route('dashboard') }}"> <span>Nyumbani</span> </a>
                 </li>
@@ -57,7 +56,7 @@
                     </ul>
                 </li>
 
-                <li> <a href="{{ route('pdf.door.index') }}" class="">tengeneza pdf</a></li>
+                <li> <a href="{{ route('pdf.door.index') }}" class="">Tengeneza PDF</a></li>
 
                 <li> <a href="javascript: void(0);" class="has-arrow">Misaada</a>
                     <ul class="sub-menu" aria-expanded="true">

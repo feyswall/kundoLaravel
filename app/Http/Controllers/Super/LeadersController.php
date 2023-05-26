@@ -40,6 +40,39 @@ class LeadersController extends Controller
         //
     }
 
+    public function assignPowerToPresentLeader($leader_id, $table, $post_id, $side_id, $side_column)
+    {
+        $leader = Leader::where('id', $leader_id)->first();
+        $leaderHasPostQueryBuilder = DB::table($table)->select('*')
+            ->where('leader_id', $leader_id)
+            ->where('post_id', $post_id)
+            ->where('isActive', true);
+        if ($leaderHasPostQueryBuilder->exists()) {
+            return ([
+                'status' => 'error',
+                'message' => 'Kiongozi huyu Tayari Anawadhifa Huu.',
+            ]);
+        }
+        // find out if this post has an active leader here
+        $class = "App\Models\Post";
+        $post = $class::where('id', $post_id)->first();
+        $allowed = $post->numberCount;
+        $leaderWardQueryBuilder = DB::table($table)
+            ->select('*')
+            ->where('post_id', $post->id)
+            ->where('isActive', true )
+            ->where($side_column, $side_id);
+        if ($leaderWardQueryBuilder->exists()){
+            if ( $leaderWardQueryBuilder->count() >= $allowed ){
+                return ([
+                    'status' => 'error',
+                    'message' => 'Kiongozi mwenye wadhifa wa '.$post->name.' Hawaruhusiwi kuzidi '.$allowed,
+                ]);
+            }
+        }
+        return ['status' => 'success'];
+    }
+
     public function removeFromPower(Request $request)
     {
         $table = $request->input('table');

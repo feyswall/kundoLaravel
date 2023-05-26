@@ -6,14 +6,14 @@
         <th></th>
     </tr>
     </thead>
-    <tbody> 
+    <tbody>
 
     @foreach( $areas as $key => $ward )
         <tr>
             <td>{{ $ward->name }}</td>
             <td>{{ $ward->branches()->count() }}</td>
             <td>
-                <a href="{{ route("super.areas.tawi.orodha", $ward->id) }}" class="btn btn-primary">fungua</a>
+                <a href="{{ route("super.areas.tawi.orodha", $ward->id) }}" class="btn btn-primary btn-sm">fungua</a>
             </td>
         </tr>
     @endforeach

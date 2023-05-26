@@ -59,12 +59,16 @@
                                                             $postName = \App\Models\Post::find( $leader->pivot->post_id )->name;
                                                         @endphp
                                                         <div class="text-center">
-                                                            <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                                            <a class="fas fa-edit"  data-bs-toggle="modal"
+                                                                data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $leader->id }}"
+                                                                data-bs-placement="top" title="Badilisha" href="#">
+                                                            </a>
                                                             <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
                                                             data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
                                                             data-bs-placement="top" title="Badilisha" href="#">
                                                             </a>
-                                                        <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="futaKiongoziKataLabel"
+                                                        <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
+                                                            aria="futaKiongoziKataLabel"
                                                              size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
                                                             <x-slot:content>
                                                                 <form action="{{ route('super.leader.unpower')}}" method="POST">
@@ -101,7 +105,8 @@
                                              </x-system.modal>
                                         @endforeach
                                         <!-- model location here -->
-                                        <x-system.modal id="ongezaKiongoziChamaModal" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
+                                        <x-system.modal id="ongezaKiongoziChamaModal" aria="ongezaKiongoziKataLabel"
+                                            size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
                                             <x-slot:content>
                                                 <form method="post" action="{{ route('super.leader.kata.ongeza') }}">
                                                     @csrf
@@ -134,7 +139,6 @@
                                                                 <input type="hidden" value="{{ $ward->id }}" class="form-control" name="side_id">
                                                                 <input type="hidden" value="leader_ward" class="form-control" name="table">
                                                                 <input type="hidden" value="ward_id" class="form-control" name="side_column">
-
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
@@ -146,6 +150,42 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <form method="post" action="{{ route('super.leader.kata.ongeza') }}">
+                                                    @csrf
+                                                    <h4>Endapo Kiongozi Ameshasajiriwa Muongeze Wadhafa Hapa</h4>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <select class="form-control" name="leader_id" required>
+                                                                <option value="">choose leader</option>
+                                                                @foreach( \App\Models\Leader::select('id', 'firstName', 'lastName')->orderBy('firstName')->get() as $leader )
+                                                                <option value="{{ $leader->id }}">{{ $leader->firstName }}  {{ $leader->lastName }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
+                                                            <select class="form-control" name="post_id">
+                                                                @foreach( \App\Models\Post::where('area', 'kata')->where('side', 'chama')->get() as $post )
+                                                                <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div>
+                                                            <!-- data to simplify the validation process -->
+                                                            <input type="hidden" value="{{ $ward->id }}" class="form-control" name="side_id">
+                                                            <input type="hidden" value="leader_ward" class="form-control" name="table">
+                                                            <input type="hidden" value="ward_id" class="form-control" name="side_column">
+                                                            <input type="hidden" name="withLeader" value="true">
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-12">
@@ -339,8 +379,8 @@
             <div class="card">
                 <div class="card-body">
 
-                    <button data-bs-toggle="modal" data-bs-target="#orodhaTawiModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Tawi</button>
-                    <a href="{{ route('super.areas.kata.orodha', $ward->division->id) }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Kata</a>
+                    <button data-bs-toggle="modal" data-bs-target="#orodhaTawiModal" class="btn btn-info btn-sm mb-4"><i class="fas fa-plus"> </i> Ongeza Tawi</button>
+                    <a href="{{ route('super.areas.kata.orodha', $ward->division->id) }}" class="btn btn-primary btn-sm mb-4">Rudi Kwenye Tarafa</a>
 
                     <x-system.tawi-table :areas="$areas">
                     </x-system.tawi-table>

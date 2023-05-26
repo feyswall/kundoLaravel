@@ -28,6 +28,9 @@ class ValidateWardLeaderRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->input('withLeader') == 'true'){
+            return [];
+        }
         $post = Post::find($this->input('post_id'));
         $idadi = $post->numberCount;
         return [

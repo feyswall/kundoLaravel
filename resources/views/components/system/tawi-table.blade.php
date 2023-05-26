@@ -11,7 +11,8 @@
         <tr>
             <td>{{ $branch->name }}</td>
             <td>
-                <a href="{{ route("super.areas.tawi.fungua", $branch->id) }}" class="btn btn-primary">fungua</a>
+                <a href="{{ route("super.areas.tawi.fungua", $branch->id) }}"
+                     class="btn btn-primary btn-sm">fungua</a>
             </td>
         </tr>
     @endforeach

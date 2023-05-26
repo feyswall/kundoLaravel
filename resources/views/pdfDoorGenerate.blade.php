@@ -107,7 +107,7 @@
     <div style="text-align: center; margin-top: 10px;">
         <img src="{{ public_path('assets/images/true_sign.png') }}" style="width: 100px;">
         <div>
-            <span style="font-family: "Lucida Console", monospace, sans-serif"><i>Mhe.Eng. Kundo Andrea
+            <span style="font-family: Lucida Console, monospace, sans-serif"><i>Mhe.Eng. Kundo Andrea
                     Mathew(Mb)</i></span>
         </div>
         <div id="lowerEnd" style="margin-top: 3px; margin-bottom: 3px; text-align: center;">
