@@ -52,6 +52,7 @@ class WardLeadersController extends Controller
                 ]);
             }
         }else {
+            $leader = Leader::where('id', $request->input('leader_id'))->first();
             $output = $obj->assignPowerToPresentLeader(
                 $request->input('leader_id'),
                 $request->input('table'),
@@ -75,7 +76,7 @@ class WardLeadersController extends Controller
      */
     public function show(Leader $leader)
     {
-      
+
     }
 
     /**

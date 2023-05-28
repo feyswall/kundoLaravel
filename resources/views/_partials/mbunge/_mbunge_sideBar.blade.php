@@ -20,9 +20,8 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title">Menu</li>
                 <li>
-                    <a href="/kundo/mbunge/mbunge_dashboard.php"> <i class="iconify " data-icon="uil-home-alt" data-inline="false"></i><span>Dashboard</span> </a>
+                    <a href="{{ route('dashboard') }}"><span>Dashboard</span> </a>
                 </li>
                 <li class="mm-active">
                     <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">

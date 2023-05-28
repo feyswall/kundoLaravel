@@ -10,6 +10,13 @@
 
 @extends('layouts.mbunge_system')
 
+
+@section('extra_style')
+    <!-- include summernote css/js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css"
+    integrity="sha256-IKhQVXDfwbVELwiR0ke6dX+pJt0RSmWky3WB2pNx9Hg=" crossorigin="anonymous">
+@endsection
+
 @section('content')
     <div class="container-fluid" id="app">
         <!-- start page title -->
@@ -73,8 +80,9 @@
                                         <div class="row mt-4">
                                             <div class="mb-4">
                                                 <label class="form-label" for="billing-address">Wasilisha Changamoto</label>
-                                                <textarea @keyup="changamotoChange()" class="form-control" rows="6" placeholder="Andika Hapa.."
-                                                    v-model="changamoto"></textarea>
+                                                <textarea class="summernoteTwo" id="content" name="content"
+                                                    class="form-control" rows="6">
+                                                </textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -107,35 +115,11 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12">
-                                                <div class="row mt-3">
-                                                    <div class="col-md-5 mt-4">
-                                                        <address class="mini-text">
-                                                            Eng. Kundo Andrea Mathew ,<br>
-                                                            Naibu Waziri,<br>
-                                                            Wizara Habari, Mawasiliano na Teknolojia ya Habari ,<br>
-                                                            Dodoma- Magufuli City<br>
-                                                        </address>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <div class="row justify-content-center">
-                                                    <div class="col-sm-12 col-md-8 text-center">
-                                                        <h5><b>YAH: </b>
-                                                            @{{ yahusu }}
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                             <div class="col-12">
                                                 <div class="row justify-content-start">
-                                                    <div class="col-sm-12 col-md-12">
-                                                        <p style="line-height: 2;">
-                                                            @{{ changamoto }}
-                                                        </p>
+                                                    <div class="col-sm-12 col-md-12" id="letterView">
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,33 +152,36 @@
 
                                     </div>
                                 </div>
-                                <form method="POST" action="{{ route('mbunge.challenges.jaza') }}" id="withPdfForm"
-                                    enctype="multipart/form-data">
+                                <form method="POST" action="{{ route('mbunge.challenges.jaza') }}"
+                                    id="withPdfForm" enctype="multipart/form-data">
                                     @csrf
+                                    <textarea name="changamoto" value="kama hakuna"
+                                        id="changamotoSend"
+                                        class="d-none anuani form-control">
+                                    </textarea>
                                     <input type="hidden" name="yahusu" v-model="yahusu">
                                     <div class="col-md-12 col-sm-12 my-2">
                                         <label for="" class="form-label">
                                             Ambatanisha (pdf)
                                             (Pdf yenye maelezo ya kuunga mkono barua yako**)
                                         </label>
-                                        <input type="file" class="form-control" accept="application/pdf"
+                                        <input type="file" class="form-control"
                                             name="pdfFile">
                                         @error('pdfFile')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <input type="hidden" name="from" value="chama">
-                                    <input type="hidden" v-bind:value="changamoto" name="changamoto">
+                                    <input type="hidden" name="from" value="{{ $from }}">
                                 </form>
                                 <form action="{{ route('generatePDF') }}" method="POST" target="_blank">
                                     @csrf
-                                    <input type="hidden" v-bind:value="changamoto" name="changamoto">
+                                    <textarea class="d-none" id="changamotoTest" name="changamoto"></textarea>
                                     <input readonly="" type="hidden" name="firstName"
                                         value="{{ $mbunge->leader->firstName }}">
                                     <input readonly type="hidden" name="lastName"
                                         value="{{ $mbunge->leader->lastName }}">
                                     <button v-on:click="showContinueBtn()" type="submit"
-                                        v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': fichaPrint }">
+                                        v-bind:class="{ btn: niButton, 'btn-dark': niButton, 'd-none': false }">
                                         <i class="la la-print"></i>
                                         Print Barua
                                     </button>
@@ -215,11 +202,15 @@
 @endsection
 
 @section('extra_script')
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"
+    integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="anonymous">
+    </script>
+
     <script>
         var app = new Vue({
             el: '#app',
             data: {
-                yahusu: 'Changamoto za jimbo',
+                yahusu: '',
                 changamoto: "{!! old('changamoto') !!}",
                 continueBtn: true,
                 route: '',
@@ -257,8 +248,45 @@
                 if (this.oldChangamoto != '') {
                     this.continueBtn = false;
                 }
-                console.log("just get into it")
+                const sumNote = $('#content');
+                $(sumNote).on('summernote.change', function() {
+                    var content = sumNote.summernote('code');
+                    this.changamoto = content;
+
+                    var test = document.getElementById('changamotoTest');
+                    test.value = this.changamoto;
+
+                    var send = document.getElementById('changamotoSend');
+                    send.value = this.changamoto;
+
+                    $('#letterView').html( this.changamoto );
+                });
             }
         });
     </script>
+        <script>
+            $('.summernoteTwo').summernote({
+              height: 400,
+              focus: true,
+              toolbar: [
+                  ['style', ['style']],
+                  ['font', ['bold', 'italic', 'underline', 'clear']],
+                  ['fontname', ['fontname']],
+                  ['color', ['color']],
+                  ['para', ['ul', 'ol', 'paragraph']],
+              ],
+          });
+
+          $('.changamotoTest').summernote({
+              height: 400,
+              focus: true,
+              toolbar: [
+                  ['style', ['style']],
+                  ['font', ['bold', 'italic', 'underline', 'clear']],
+                  ['fontname', ['fontname']],
+                  ['color', ['color']],
+                  ['para', ['ul', 'ol', 'paragraph']],
+              ],
+          });
+  </script>
 @endsection

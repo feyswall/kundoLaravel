@@ -14,7 +14,7 @@
 @section("content")
 <!-- Start right Content here -->
 <!-- ============================================================== -->
-<div class="row">
+<div class="row" id="app">
     <div class="col-12">
         <div class="card">
             <a href="#checkout-orodhaKata-collapse" class="text-dark" data-bs-toggle="collapse">
@@ -44,7 +44,7 @@
                                     <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                                         <div class="d-flex justify-content-md-between justify-content-center items-center flex-wrap-reverse mb-3">
                                             <h3 class="fs-4 me-3">Viongozi Wa Chama Kata</h3>
-                                            <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziChamaModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajili Kiongozi Wa Chama</button>
+                                            <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziChamaModal" class="btn btn-info btn-sm mb-4"><i class="fas fa-plus"> </i> Sajili Kiongozi Wa Chama</button>
                                         </div>
 
                                         <div>
@@ -79,7 +79,8 @@
                                                                     <input type="hidden" name="column_value" value="{{ $ward->id }}">
 
                                                                     <input name='leader_id' value="{{ $leader->id }}" type="hidden">
-                                                                    <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
+                                                                    <input name="post_id" value="{{ $leader->pivot->post_id }}"
+                                                                    type="hidden">
                                                                     <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
                                                                 </form>
                                                             </x-slot:content>
@@ -108,7 +109,14 @@
                                         <x-system.modal id="ongezaKiongoziChamaModal" aria="ongezaKiongoziKataLabel"
                                             size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
                                             <x-slot:content>
-                                                <form method="post" action="{{ route('super.leader.kata.ongeza') }}">
+                                                <button v-on:click="changeSides()"
+                                                class="btn btn-success btn-sm mb-lg-4" type="button" id="readyRegistered">
+                                                     @{{ togglerBtnText }}
+                                                </button>
+
+                                                <form method="post" id="submitForm"
+                                                :class="{'d-none': !formToggler}"
+                                                action="{{ route('super.leader.kata.ongeza') }}">
                                                     @csrf
                                                     <input type="hidden" name="side" value="chama">
                                                     <div class="row">
@@ -153,19 +161,24 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-12">
-                                                                <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                                                                <button form="submitForm" type="submit" name="submit" class="btn btn-primary btn-sm">Ongeza</button>
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </form>
-                                                <form method="post" action="{{ route('super.leader.kata.ongeza') }}">
+
+                                                <form  method="post"
+                                                action="{{ route('super.leader.kata.ongeza') }}"
+                                                :class="{'d-none': formToggler}">
                                                     @csrf
-                                                    <h4>Endapo Kiongozi Ameshasajiriwa Muongeze Wadhafa Hapa</h4>
+
+                                                    <h4>Endapo Kiongozi Ameshasajiriwa Muongeze Wadhifa Hapa</h4>
                                                     <div class="col-sm-12 col-md-4 col-lg-3">
                                                         <div class="mb-3 mb-4">
                                                             <select class="form-control" name="leader_id" required>
                                                                 <option value="">choose leader</option>
-                                                                @foreach( \App\Models\Leader::select('id', 'firstName', 'lastName')->orderBy('firstName')->get() as $leader )
+                                                                @foreach( \App\Models\Leader::select('id', 'firstName', 'lastName')->where('side', 'chama')->orderBy('firstName')->get() as $leader )
                                                                 <option value="{{ $leader->id }}">{{ $leader->firstName }}  {{ $leader->lastName }}</option>
                                                                 @endforeach
                                                             </select>
@@ -189,7 +202,7 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-12">
-                                                                <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                                                                <button type="submit" name="submit" class="btn btn-primary btn-sm">Ongeza</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -219,7 +232,9 @@
                                                 @foreach( $ward->leaders->where('side', 'serikali') as $leader )
                                                     @if( $leader->pivot->isActive == true )
                                                         <div class="text-center">
-                                                            <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                                            <a class="fas fa-edit"  data-bs-toggle="modal"
+                                                            data-bs-target="#badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}"
+                                                            data-bs-placement="top" title="Badilisha" href="#"></a>
                                                             <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
                                                             data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}"
                                                             data-bs-placement="top" title="Badilisha" href="#">
@@ -258,32 +273,39 @@
                                     <!-- model location here -->
                                         <x-system.modal id="ongezaKiongoziSerikaliModal" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
                                             <x-slot:content>
-                                                <form method="post" action="{{ route('super.leader.kata.ongeza') }}">
+                                                <button v-on:click="changeSides()"
+                                                class="btn btn-success btn-sm mb-lg-4" type="button">
+                                                     @{{ togglerBtnText }}
+                                                </button>
+
+                                                <form method="post"
+                                                    :class="{'d-none': formToggler}"
+                                                    action="{{ route('super.leader.kata.ongeza') }}">
                                                     @csrf
                                                     <input type="hidden" name="side" value="serikali">
                                                     <div class="row">
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                                <input type="text" class="form-control" name="firstName" placeholder="eg: mgalanga">
+                                                                <input type="text" class="form-control" name="firstName" placeholder="">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="middleName">Jina La Kati</label>
-                                                                <input type="text" class="form-control" name="middleName" placeholder="eg: mosi">
+                                                                <input type="text" class="form-control" name="middleName" placeholder="">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="lastName">Jina La Mwisho</label>
-                                                                <input type="text" class="form-control" name="lastName" placeholder="eg: mgalanga simo">
+                                                                <input type="text" class="form-control" name="lastName" placeholder="">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="phone">Namba ya Simu</label>
-                                                                <input type="text" class="form-control" name="phone" placeholder="eg: 0678 987 897">
+                                                                <input type="text" class="form-control" name="phone" placeholder="">
 
                                                                 <!-- data to simplify the validation process -->
                                                                 <input type="hidden" value="{{ $ward->id }}" class="form-control" name="side_id">
@@ -305,6 +327,45 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                                <form  method="post"
+                                                action="{{ route('super.leader.kata.ongeza') }}"
+                                                :class="{'d-none': !formToggler}">
+                                                    @csrf
+                                                    <h4>Endapo Kiongozi Ameshasajiriwa Muongeze Wadhifa Hapa</h4>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <select class="form-control" name="leader_id" required>
+                                                                <option value="">choose leader</option>
+                                                                @foreach( \App\Models\Leader::select('id', 'firstName', 'lastName')->where('side', 'serikali')->orderBy('firstName')->get() as $leader )
+                                                                <option value="{{ $leader->id }}">{{ $leader->firstName }}  {{ $leader->lastName }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
+                                                            <select class="form-control" name="post_id">
+                                                                @foreach( \App\Models\Post::where('area', 'kata')->where('side', 'serikali')->get() as $post )
+                                                                <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div>
+                                                            <!-- data to simplify the validation process -->
+                                                            <input type="hidden" value="{{ $ward->id }}" class="form-control" name="side_id">
+                                                            <input type="hidden" value="leader_ward" class="form-control" name="table">
+                                                            <input type="hidden" value="ward_id" class="form-control" name="side_column">
+                                                            <input type="hidden" name="withLeader" value="true">
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <button type="submit" name="submit" class="btn btn-primary btn-sm">Ongeza</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -451,6 +512,22 @@
 @endsection
 
 @section("extra_script")
-<x-system.table-script id="superOrodhaKataTable">
-</x-system.table-script>
+<x-system.table-script id="superOrodhaKataTable"></x-system.table-script>
+<script>
+    let app =  new Vue({
+        el: '#app',
+        data() {
+            return {
+                formToggler: true,
+                togglerBtnText: 'kwa aliyesajiriwa',
+            }
+        },
+        methods: {
+            changeSides: function(){
+                this.formToggler = !this.formToggler;
+                this.togglerBtnText = ( this.formToggler ? 'kwa aliyesajiriwa' : 'sajiri mpya');
+            }
+        },
+    });
+</script>
 @endsection

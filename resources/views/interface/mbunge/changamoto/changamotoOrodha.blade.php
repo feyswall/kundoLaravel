@@ -18,13 +18,13 @@
             <div class="card">
                 <div class="card-body">
                     <h2 class="">Taarifa Ya Changamoto Ulizowahi Kuwakilisha</h2>
-                    <a href="{{ route('mbunge.challenges.wasirisha') }}" class="btn btn-primary my-3">Wasirisha Changamoto +</a>
+                    <a href="{{ route('mbunge.challenges.wasirisha', $from) }}" class="btn btn-primary my-3">Wasirisha Changamoto +</a>
                     <label class="form-label  font-size-24" id="machagulio-mkoa"></label>
                     <label class="form-label font-size-24" id="machagulio-wilaya"></label>
                     <table id="datatable-viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                             <td>#</td>
-                        <th>Changamoto</th>
+                        <th>Yahusu</th>
                         <th>Tarehe</th>
                         <th>Status</th>
                         <th></th>
@@ -35,7 +35,9 @@
                                     <td>
                                         {{ $challenges->count() - $key }}
                                     </td>
-                                    <td>{{ substr( $challenge->challenge, 0, 30); }} @if ( strlen($challenge->challenge) > 30 )  ... @endif</td>
+                                    <td>{{ substr( $challenge->yahusu, 0, 60); }}
+                                         @if ( strlen($challenge->yahusu) > 60 )  ... @endif
+                                    </td>
                                     <td>{{ $challenge->created_at }}</td>
                                     <td>
                                         <span class="text-danger">
@@ -47,7 +49,7 @@
                                                 <span class="text-success">kamilika</span>
                                             @elseif ( $challenge->status == 'preExist')
                                                 <span class="text-dark"><b>Haijatumwa</b></span>
-                                            @endif    
+                                            @endif
                                         </span>
                                     </td>
                                     @if ( $challenge->status != 'preExist')

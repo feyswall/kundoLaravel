@@ -55,23 +55,10 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12">
-                                                <div class="row mt-3">
-                                                    <div class="col-md-5 mt-4">
-                                                        <address class="mini-text">
-                                                            Eng. Kundo Andrea Mathew ,<br>
-                                                            Naibu Waziri,<br>
-                                                            Wizara Habari, Mawasiliano na Teknolojia ya Habari ,<br>
-                                                            Dodoma- Magufuli City<br>
-                                                        </address>
-                                                    </div>
-                                                </div>
-                                            </div>
-
                                             <div class="col-12 mt-3">
-                                                <div class="row justify-content-center">
-                                                    <div class="col-sm-12 col-md-8 text-center">
-                                                        <h5><b>Yah: </b>{{ $challenge->yahusu }}</h5>
+                                                <div class="row justify-content-start">
+                                                    <div class="col-sm-12 col-md-8">
+                                                        <h5>Yahusu: {{ $challenge->yahusu }}</h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -80,9 +67,9 @@
                                             <div class="col-12">
                                                 <div class="row justify-content-start">
                                                     <div class="col-sm-12 col-md-12">
-                                                        <p>
-                                                            {{ $challenge->challenge }}
-                                                        </p>
+
+                                                            {!! $challenge->challenge !!}
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -128,7 +115,7 @@
                         </div>
                         <hr>
 
-                
+
                         @if ( $challenge->status == 'new' )
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-8">
@@ -194,7 +181,7 @@
                                 @if( \Illuminate\Support\Facades\Storage::exists("pdfs/$pdf->url"))
                                     <div class="row justify-content-center">
                                         <div class="col-sm-12 col-md-8 mt-2">
-                                            
+
                                             <div>
                                                 <span style="font-size: 2em;">Attachments</span>
                                             </div>
@@ -214,7 +201,7 @@
                             @endforeach
                         @endif
 
-                        
+
                     </div>
                 </div>
             </div>
@@ -227,7 +214,7 @@
 @section("extra_script")
 <script>
     $(document).ready(function(){
-        
+
     });
     function markCompleteFunct(event){
             event.preventDefault();

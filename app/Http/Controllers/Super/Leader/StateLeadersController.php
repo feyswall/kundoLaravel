@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Super\Leader;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Super\LeadersController;
 use App\Http\Requests\ValidateStateLeaderRequest;
+use App\Models\Leader;
 use App\Models\State;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -39,31 +40,40 @@ class StateLeadersController extends Controller
      */
     public function store(ValidateStateLeaderRequest $request)
     {
-        $obj = new LeadersController();
-        $leader = $obj->store( $request );
-
-        if ( !$leader ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'Usajiri umashindikana tafadhali jaribu tena.']);
-        }
-
-        $obj->attachMany( $leader->states(), $request, $leader );
-
-         $email = strtolower($request->firstName)."".strtolower($request->firstName).".mbunge@kims.com";
-
-         $rules = [
+        $firstAndLastName = strtolower($request->firstName)."".strtolower($request->lastName);
+        $email = strtolower($firstAndLastName.".mbunge@kims.com" );
+        $rules = [
             'email' => 'unique:users,email',
-         ];
-
-         $validate = Validator::make( ['email' => $email], $rules );
-
-         if ( $validate->fails() ) {
-               return redirect()->back()->with(['status' => 'error', 'message' => 'Email Imejirudia Katika Mfumo.']);
-         }
-
+        ];
+        $validate = Validator::make( ['email' => $email], $rules );
+        if ( $validate->fails() ) {
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Email Imejirudia Katika Mfumo, Mtumiaji mwenye majina haya ameshasajiriwa'
+            ]);
+        }
+        $user = \App\Models\User::create([
+            'name' => $firstAndLastName,
+            'email' => $email,
+            'password' => Hash::make($firstAndLastName),
+        ]);
+        $obj = new LeadersController();
+        $phone = preg_replace("/^0/", "255", $request->phone);
+        $phone = preg_replace("/\s/", "", $phone );
+        $leader = Leader::create([
+            'firstName' => $request->firstName,
+            'middleName' => $request->middleName,
+            'lastName' => $request->lastName,
+            'phone' => $phone,
+            'side' => $request->side,
+            'user_id' => $user->id,
+        ]);
+        if ( !$leader ){
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Usajiri umeshindikana  tafadhali jaribu tena.']);
+        }
+        $obj->attachMany( $leader->states(), $request, $leader );
          $user = $leader->user;
-
         $user->assignRole("mbunge");
-
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 

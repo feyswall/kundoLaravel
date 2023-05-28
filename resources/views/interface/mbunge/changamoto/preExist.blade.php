@@ -29,13 +29,13 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="card">
-                           
+
                             <div class="card-body">
                                 <div class="invoice-title">
                                     <div class="mb-4">
-                                        
+
                                     </div>
-                                    <div class="text-muted">                             
+                                    <div class="text-muted">
                                         <div class="row justify-content-center">
                                             <div class="col-10">
                                                 <div class="row justify-content-center" >
@@ -48,23 +48,11 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-12">
-                                                                    <div class="row mt-3">
-                                                                        <div class="col-md-5 mt-4">
-                                                                            <address class="mini-text">
-                                                                                Eng. Kundo Andrea Mathew ,<br>
-                                                                                Naibu Waziri,<br>
-                                                                                Wizara Habari, Mawasiliano na Teknolojia ya Habari ,<br>
-                                                                                Dodoma- Magufuli City<br>
-                                                                            </address>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
 
                                                                 <div class="col-12 mt-3">
-                                                                    <div class="row justify-content-center">
-                                                                        <div class="col-sm-12 col-md-8 text-center">
-                                                                            <h5><b>YAH: </b>{{ $challenge->yahusu }}</h5>
+                                                                    <div class="row justify-content-start">
+                                                                        <div class="col-sm-12 col-md-12">
+                                                                            <h5>Yahusu: {{ $challenge->yahusu }}</h5>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -73,15 +61,7 @@
                                                                 <div class="col-12">
                                                                     <div class="row justify-content-start">
                                                                         <div class="col-sm-12 col-md-12">
-                                                                            <p>
-                                                                                @php
-                                                                                    $text = $challenge->challenge;
-                                                                                    $texts = explode('-', $text);
-                                                                                @endphp
-                                                                                @foreach ($texts as $text)
-                                                                                    <p>{{ $challenge->challenge }}</p>
-                                                                                @endforeach
-                                                                            </p>
+                                                                            {!! $challenge->challenge !!}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -118,7 +98,8 @@
                                                                 <img src="{{ asset('assets/images/pdf.png') }}" class="card-img-top mx-auto w-25" alt="">
                                                             </div>
                                                         </div>
-                                                            <form action="{{ route('downloadPDF') }}" method="post" target="_blank">
+                                                            <form action="{{ route('downloadPDF') }}" method="post"
+                                                             target="_blank" enctype="multipart/form-data">
                                                                 @csrf
                                                                 <input type="hidden" value="{{ 'pdfs/'.$pdf->url }}" name="pdf">
                                                                 <button class="btn btn-primary my-3 btn-block" type="submit">download</button>
@@ -128,19 +109,20 @@
                                                     </div>
                                                     @endforeach
                                                 </div>
-                                                
+
                                             </div>
-                                          
+
                                             <div class="row justify-content-center">
                                                 <div class="col-sm-12 col-md-6">
                                                     <div>
-                                                        <form action="{{ route('mbunge.challenges.toExist', $challenge) }}" method="POST" enctype="multipart/form-data">
+                                                        <form action="{{ route('mbunge.challenges.toExist', $challenge) }}" method="POST"
+                                                         enctype="multipart/form-data">
                                                             @csrf
                                                             @method('put')
                                                             <h4>Tuma Barua</h4>
                                                             <div class="mt-2">
                                                                 <label for="">Ambatanisha pdf ya barua iliyo sainiwa</label>
-                                                                <input type="file" class="form-control" accept="application/pdf" name="pdfFile" required>
+                                                                <input type="file" class="form-control" name="pdfFile">
                                                         </div>
                                                             <div>
                                                                 <button type="submit" class="btn btn-primary btn-md mt-3">tuma</button>

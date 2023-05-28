@@ -14,7 +14,7 @@
 @section("content")
 <!-- Start right Content here -->
 <!-- ============================================================== -->
-<div class="row">
+<div class="row" id="app">
     <div class="col-12">
         <div class="card">
             <a href="#checkout-orodhaKata-collapse" class="text-dark" data-bs-toggle="collapse">
@@ -42,7 +42,7 @@
                                     </div>
                                     <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                                         <div class="d-flex justify-content-md-between justify-content-center items-center flex-wrap-reverse mb-3">
-                                            <h3 class="fs-4 me-3">Viongozi wa Tarafa</h3>
+                                            <h3 class="fs-4 me-3">Viongozi wa chama Tarafa</h3>
                                             <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziChamaModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajili Kiongozi Wa Chama </button>
                                         </div>
                                         <div>
@@ -50,7 +50,9 @@
                                                 @foreach( $division->leaders->where('side', 'chama') as $leader )
                                                     @if( $leader->pivot->isActive == true )
                                                     <div class="text-center">
-                                                        <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Badilisha" href="{{ route("super.leader.kata.badili", $leader->id ) }}"></a>
+                                                        <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Badilisha" href="{{ route("super.leader.kata.badili", $leader->id ) }}">
+                                                        </a>
                                                         <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
                                                         data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
                                                         data-bs-placement="top" title="Badilisha" href="#">
@@ -79,40 +81,52 @@
                                             </div>
                                         </div>
                                         <!-- model location here -->
-                                        <x-system.modal id="ongezaKiongoziChamaModal" aria="ongezaKiongoziTarafaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Tarafa Hapa">
+                                        <x-system.modal id="ongezaKiongoziChamaModal" aria="ongezaKiongoziTarafaLabel"
+                                        size="modal-fullscreen" title="Ongeza Kiongozi Chama Tarafa Hapa">
                                             <x-slot:content>
-                                                <form method="post" action="{{ route('super.leader.tarafa.ongeza') }}">
+                                                <button v-on:click="changeSides()"
+                                                class="btn btn-success btn-sm mb-lg-4" type="button">
+                                                     @{{ togglerBtnText }}
+                                                </button>
+
+                                                <form
+                                                :class="{'d-none': !formToggler}"
+                                                method="post"
+                                                action="{{ route('super.leader.tarafa.ongeza') }}">
                                                     @csrf
                                                     <input type="hidden" name="side" value="chama">
                                                     <div class="row">
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                                <input type="text" class="form-control" name="firstName" value="{{ old('firstName') }}">
+                                                                <input type="text" class="form-control" name="firstName"
+                                                                value="{{ old('firstName') }}">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="middleName">Jina La Kati</label>
-                                                                <input type="text" class="form-control" name="middleName" value="{{ old('middleName') }}">
+                                                                <input type="text" class="form-control" name="middleName"
+                                                                value="{{ old('middleName') }}">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="lastName">Jila La Mwisho</label>
-                                                                <input type="text" class="form-control" name="lastName" value="{{ old('lastName') }}">
+                                                                <input type="text" class="form-control" name="lastName"
+                                                                value="{{ old('lastName') }}">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="phone">Namba ya Simu</label>
-                                                                <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+                                                                <input type="text" class="form-control" name="phone"
+                                                                value="{{ old('phone') }}">
 
                                                                 <!-- data to simplify the validation process -->
                                                                 <input type="hidden" value="{{ $division->id }}" class="form-control" name="side_id">
                                                                 <input type="hidden" value="division_leader" class="form-control" name="table">
                                                                 <input type="hidden" value="division_id" class="form-control" name="side_column">
-
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
@@ -124,6 +138,48 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <button type="submit" name="submit" class="btn btn-primary btn-sm">Ongeza</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                                <form  method="post"
+                                                action="{{ route('super.leader.tarafa.ongeza') }}"
+                                                :class="{'d-none': formToggler}">
+                                                    @csrf
+
+                                                    <h4>Endapo Kiongozi Ameshasajiriwa Muongeze Wadhifa Hapa</h4>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <select class="form-control" name="leader_id" required>
+                                                                <option value="">choose leader</option>
+                                                                @foreach( \App\Models\Leader::select('id', 'firstName', 'lastName')
+                                                                ->where('side', 'chama')->orderBy('firstName')->get() as $leader )
+                                                                <option value="{{ $leader->id }}">{{ $leader->firstName }}  {{ $leader->lastName }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
+                                                            <select class="form-control" name="post_id">
+                                                                @foreach( \App\Models\Post::where('area', 'tarafa')
+                                                                ->where('side', 'chama')->get() as $post )
+                                                                    <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div>
+                                                            <!-- data to simplify the validation process -->
+                                                            <input type="hidden" value="{{ $division->id }}" class="form-control" name="side_id">
+                                                            <input type="hidden" value="division_leader" class="form-control" name="table">
+                                                            <input type="hidden" value="division_id" class="form-control" name="side_column">
+                                                            <input type="hidden" name="withLeader" value="true">
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-12">
@@ -147,7 +203,7 @@
                                     <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                                         <div class="d-flex justify-content-md-between justify-content-center items-center
                                          flex-wrap-reverse mb-3">
-                                            <h3 class="fs-4 me-3">Viongozi Wa Chama Tarafa</h3>
+                                            <h3 class="fs-4 me-3">Viongozi Wa Serikali Tarafa</h3>
                                             <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziSerikaliModal"
                                              class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajili Kiongozi Wa Serikali </button>
                                         </div>
@@ -189,7 +245,14 @@
                                         <x-system.modal id="ongezaKiongoziSerikaliModal" aria="ongezaKiongoziTarafaLabel"
                                          size="modal-fullscreen" title="Ongeza Kiongozi Wa Serikali Tarafa Hapa">
                                             <x-slot:content>
-                                                <form method="post" action="{{ route('super.leader.tarafa.ongeza') }}">
+                                                <button v-on:click="changeSides()"
+                                                class="btn btn-success btn-sm mb-lg-4" type="button" id="readyRegistered">
+                                                     @{{ togglerBtnText }}
+                                                </button>
+
+                                                <form method="post"
+                                                :class="{'d-none': formToggler}"
+                                                action="{{ route('super.leader.tarafa.ongeza') }}">
                                                     @csrf
                                                     <input type="hidden" name="side" value="serikali">
                                                     <div class="row">
@@ -226,7 +289,8 @@
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                                 <select class="form-control" name="post_id">
-                                                                    @foreach( \App\Models\Post::where('area', 'tarafa')->where('side', 'serikali')->get() as $post )
+                                                                    @foreach( \App\Models\Post::where('area', 'tarafa')
+                                                                    ->where('side', 'serikali')->get() as $post )
                                                                         <option {{ ( old('post_id') == $post->id) ? 'selected' : '' }} value="{{ $post->id }}">{{ $post->name }}</option>
                                                                     @endforeach
                                                                 </select>
@@ -235,6 +299,49 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                                <form  method="post"
+                                                action="{{ route('super.leader.tarafa.ongeza') }}"
+                                                :class="{'d-none': !formToggler}">
+                                                    @csrf
+                                                    <h4>Endapo Kiongozi Ameshasajiriwa Muongeze Wadhifa Hapa</h4>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <select class="form-control" name="leader_id" required>
+                                                                <option value="">choose leader</option>
+                                                                @foreach( \App\Models\Leader::select('id', 'firstName', 'lastName')
+                                                                ->where('side', 'serikali')->orderBy('firstName')->get() as $leader )
+                                                                <option value="{{ $leader->id }}">
+                                                                    {{ $leader->firstName }}  {{ $leader->lastName }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                                        <div class="mb-3 mb-4">
+                                                            <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
+                                                            <select class="form-control" name="post_id">
+                                                                @foreach( \App\Models\Post::where('area', 'tarafa')
+                                                                ->where('side', 'serikali')->get() as $post )
+                                                                <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div>
+                                                            <!-- data to simplify the validation process -->
+                                                            <input type="hidden" value="{{ $division->id }}" class="form-control" name="side_id">
+                                                            <input type="hidden" value="division_leader" class="form-control" name="table">
+                                                            <input type="hidden" value="division_id" class="form-control" name="side_column">
+                                                            <input type="hidden" name="withLeader" value="true">
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <button type="submit" name="submit" class="btn btn-primary btn-sm">Ongeza</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -365,4 +472,22 @@
 @section("extra_script")
 <x-system.table-script id="superOrodhaKataTable">
 </x-system.table-script>
+
+<script>
+    let app =  new Vue({
+        el: '#app',
+        data() {
+            return {
+                formToggler: true,
+                togglerBtnText: 'kwa aliyesajiriwa',
+            }
+        },
+        methods: {
+            changeSides: function(){
+                this.formToggler = !this.formToggler;
+                this.togglerBtnText = ( this.formToggler ? 'kwa aliyesajiriwa' : 'sajiri mpya');
+            }
+        },
+    });
+</script>
 @endsection

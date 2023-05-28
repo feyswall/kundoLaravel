@@ -8,6 +8,7 @@ use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
 class ChallengesController extends Controller
@@ -29,7 +30,8 @@ class ChallengesController extends Controller
         $challenges = Challenge::where('from', $from)
                         ->where('leader_id', $leader->id)->get();
         return view('interface.mbunge.changamoto.changamotoOrodha')
-            ->with('challenges', $challenges);
+            ->with('challenges', $challenges)
+            ->with('from', $from );
     }
 
     /**
@@ -50,21 +52,34 @@ class ChallengesController extends Controller
 
     public function preExistToExist(Challenge $challenge, Request $request)
     {
-
+        $myFileForPhp = $_FILES['pdfFile'];
+        // if($myFileForPhp['name']){
+        //     if($myFileForPhp['type'] != "application/pdf"){
+        //         return redirect()->back()->with([
+        //                 'status' => 'error',
+        //                 'message' => 'Ingiza PDF pekee'
+        //             ]);
+        //     }
+        // }
         $file = $request->file('pdfFile');
-
-        $rules = ['pdfFile' => 'sometimes|mimes:pdf|max:10000'];
-
-        $messages = ['mimes' => 'Tafadhali Weka Pdf Pekee'];
-
-        $request->validate($rules, $messages);
-
+        $rules = ['pdfFile' => 'required|mimes:pdf|max:100000'];
+        $messages = [
+            'pdfFile.mimes' => 'Ni lazima file liwe Katika Format ya PDF',
+            'pdfFile.required' => 'PDF ya barua inahitajika',
+        ];
+        $validate = Validator::make($request->all(), $rules, $messages);
+        if( $validate->fails() ){
+            return redirect()->back()->withErrors($validate->errors());
+        }
         if ($file) {
             $path = Storage::putFile('pdfs', $file);
             $fileNamesParticles = explode('/', $path);
             $fileName = end($fileNamesParticles);
         }else{
-            return redirect()->back()->with(['status' => 'error', 'message' => 'Kumetokea Tatizo Tfadhali Jaribu Tena.']);
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Kumetokea Tatizo Tafadhali Jaribu Tena.'
+            ]);
         }
 
         $updata = [
@@ -78,7 +93,8 @@ class ChallengesController extends Controller
             return redirect()->back()->with(['status' => 'error', 'message' => 'Hatukuweza Kuhifadhi form tafadhali jaribu tena.']);
         }
 
-        return redirect()->route('mbunge.challenges.fungua', $challenge);
+        return redirect()->route('mbunge.challenges.fungua', $challenge)
+        ->with(['status' => 'success', 'message' => 'Changamoto Imewasirishwa']);
     }
 
     /**
@@ -91,44 +107,40 @@ class ChallengesController extends Controller
     {
 
         $isImagePresent = false;
-        
         $path = null;
-
         $user = Auth::user();
-
         $mbunge = $user->leader;
-
         $data = $mbunge->posts->where('deep', 'mbunge')->first();
-
         if ( !$data ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'Hakikisha Umeingia Kama Mbunge']);
+            return redirect()->back()->with([
+                    'status' => 'error',
+                    'message' => 'Hakikisha Umeingia Kama Mbunge'
+                ]);
         }
-
         $file = $request->file('pdfFile');
-
         $rules = [
              'pdfFile' => 'sometimes|mimes:pdf|max:10000',
              'yahusu' => 'required|min:4'
              ];
-
         $messages = [
-            'mimes' => 'Tafadhali Weka Pdf Pekee',
+            'mimes' => 'Tafadhali Weka Pdf Pekee ..',
             'yahusu' => 'Tafadhali Jaza Yahusu'
         ];
-
         $request->validate($rules, $messages);
 
-        if ( $file ){ 
-            $path = Storage::putFile('pdfs', $file); 
+        if ( $file ){
+            $path = Storage::putFile('pdfs', $file);
             $fileNamesParticles = explode('/', $path );
             $isImagePresent = true;
             $fileName = end( $fileNamesParticles );
         }
 
-
         $state = $mbunge->states()->where('isActive', true)->first();
         if ( !$state ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'Hakikisha Umeingia Kama Mbunge']);
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Hakikisha Umeingia Kama Mbunge'
+            ]);
         }
         $changamoto = $request->input('changamoto');
 
@@ -154,13 +166,13 @@ class ChallengesController extends Controller
             return redirect()->back()->with(['status' => 'error', 'message' => 'hatukuweza kuhifadhi Taalifa. Jaribu Tena']);
         }
 
-        if ( isset($path) || $path ){ 
+        if ( isset($path) || $path ){
             if ($isImagePresent) {
                 $challenge->assets()->create([
                     'type' => 'pdf',
                     'url' => $fileName,
                     'user_id' => $user->id
-                ]);      
+                ]);
             }
          }
         return redirect()->route('mbunge.challenges.show.exist', $challenge);
@@ -172,10 +184,11 @@ class ChallengesController extends Controller
      * @param  \App\Models\Challenge  $challenge
      * @return \Illuminate\Contracts\View\View
      */
-    public function submitChallenge()
+    public function submitChallenge($from)
     {
         return view('interface.mbunge.changamoto.wasirishaChangamoto')
-            ->with('challenges');
+            ->with('challenges')
+            ->with('from', $from);
     }
 
 

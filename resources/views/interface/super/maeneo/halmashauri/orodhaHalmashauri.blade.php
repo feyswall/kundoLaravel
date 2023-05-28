@@ -230,7 +230,10 @@ use \Illuminate\Support\Facades\DB;
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                                 <select class="form-control" name="post_id">
-                                                                    @php $posts = \App\Models\Post::where('area', 'wilaya')->where('side', 'serikali')->get(); @endphp
+                                                                    @php
+                                                                        $posts = \App\Models\Post::where('area', 'wilaya')
+                                                                        ->where('side', 'serikali')->get();
+                                                                    @endphp
                                                                     @foreach( $posts as $post )
                                                                         <option value="{{ $post->id }}">{{ $post->name }}</option>
                                                                     @endforeach
@@ -305,8 +308,8 @@ use \Illuminate\Support\Facades\DB;
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <button data-bs-toggle="modal" data-bs-target="#orodhaHalmashauriModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Halmashauri</button>
-                    <a href="{{ route('super.areas.wilaya.orodha') }}" class="btn btn-primary btn-md mb-4">Rudi Wilayani</a>
+                    <button data-bs-toggle="modal" data-bs-target="#orodhaHalmashauriModal" class="btn btn-info btn-sm mb-4"><i class="fas fa-plus"> </i> Ongeza Halmashauri</button>
+                    <a href="{{ route('super.areas.wilaya.orodha') }}" class="btn btn-primary btn-sm mb-4">Rudi Mkoani</a>
                     <x-system.halmashauri-table :district="$district" :areas="$areas" :headers="['Jina la Halmashauri','Idadi ya Tarafa','Idadi Ya Kata', 'Idadi ya Matawi', '']" />
                     <!-- model location here -->
                     <x-system.modal id="orodhaHalmashauriModal" aria="orodhaHalmashauriLabel" size="modal-lg" title="Ongeza Halmashauri Hapa">

@@ -642,7 +642,7 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                 });
 
                 $('#ziaraId').on('keyup', function() {
-                    console.log('chansges are just been made in there')
+                    console.log('changes are just been made in there')
                 });
             }
         });

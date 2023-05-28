@@ -45,9 +45,9 @@
                             <div class="card-body">
                                 <div class="invoice-title">
                                     <div class="mb-4">
-                                        
+
                                     </div>
-                                    <div class="text-muted"> 
+                                    <div class="text-muted">
                                             <div class="row justify-content-center">
                                                 <div class="col-md-8 col-sm-12">
                                                     <h3 class="lead">Mkoa: <span class="font-italic">{{ $state->district->region->name }}</span></h3>
@@ -59,7 +59,7 @@
                                                     </span></h3>
                                                     <h3 class="lead">Simu ya Mbunge: <span class="font-italic">+{{ $challenge->leader->phone }}</span></h3>
                                                 </div>
-                                            </div>                            
+                                            </div>
                                         <div class="row justify-content-center">
                                             <div class="col-10">
                                                 <div class="row justify-content-center" >
@@ -72,23 +72,11 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-12">
-                                                                    <div class="row mt-3">
-                                                                        <div class="col-md-5 mt-4">
-                                                                            <address class="mini-text">
-                                                                                Eng. Kundo Andrea Mathew ,<br>
-                                                                                Naibu Waziri,<br>
-                                                                                Wizara Habari, Mawasiliano na Teknolojia ya Habari ,<br>
-                                                                                Dodoma- Magufuli City<br>
-                                                                            </address>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
 
                                                                 <div class="col-12 mt-3">
-                                                                    <div class="row justify-content-center">
-                                                                        <div class="col-sm-12 col-md-8 text-center">
-                                                                            <h5><b>YAH:</b> {{ $challenge->yahusu }}</h5>
+                                                                    <div class="row justify-content-start">
+                                                                        <div class="col-sm-12 col-md-12">
+                                                                            <h5>Yahusu: {{ $challenge->yahusu }}</h5>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -97,15 +85,7 @@
                                                                 <div class="col-12">
                                                                     <div class="row justify-content-start">
                                                                         <div class="col-sm-12 col-md-12">
-                                                                            <p>
-                                                                                @php
-                                                                                    $text = $challenge->challenge;
-                                                                                    $texts = explode('-', $text);
-                                                                                @endphp
-                                                                                @foreach ($texts as $text)
-                                                                                    <p>{{ $challenge->challenge }}</p>
-                                                                                @endforeach
-                                                                            </p>
+                                                                             {!! $challenge->challenge !!}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -160,9 +140,9 @@
                                                         $createdAt = Carbon\Carbon::parse($challenge->created_at);
                                                     @endphp
                                                     <h4 class="text-danger"><b>{{ $createdAt->format('M d Y') }}</b></h4><hr>
-                                                    <h5 
+                                                    <h5
                                                      class="text-danger mt-3">Imewasirishwa ...</h5>
-                                                    
+
                                                 @elseif( $challenge->status == 'onProgress')
                                                   <div class="row justify-content-center">
                                                         <div class="col-sm-12 col-md-8">

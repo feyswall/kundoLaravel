@@ -19,18 +19,10 @@ class PDFController extends Controller
         $changamoto = $request->input('changamoto');
         $firstName = $request->input('firstName');
         $lastName = $request->input('lastName');
-
-        $changamoto = explode('-', $changamoto );
-//        $data = [
-//            'title' => 'Welcome to ItSolutionStuff.com',
-//            'date' => date('m/d/Y'),
-//            'users' => $users
-//        ];
-//
-        $data = ['changamotos' => $changamoto, 'firstName' => $firstName, 'lastName' => $lastName ];
-
+        $anuani = $request->input('anuani');
+        $data = ['changamoto' => $changamoto, 'firstName' => $firstName, 'lastName' => $lastName ];
         $pdf = PDF::loadView('interface.mbunge.changamoto.changamotoPDF', $data);
-        return $pdf->stream("challenge_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf");
+        return $pdf->stream("challenge_Doc.pdf");
     }
 
 

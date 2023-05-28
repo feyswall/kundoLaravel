@@ -38,9 +38,24 @@ class DivisionLeadersController extends Controller
     public function store(ValidateDivisionLeaderRequest $request)
     {
         $obj = new LeadersController();
-        $leader = $obj->store( $request );
-        if ( !$leader ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'hatujaweza kumuweka kiongozi']);
+        $leader = null;
+        if( !($request->input('withLeader'))) {
+            $leader = $obj->store( $request );
+            if ( !$leader ){
+                return redirect()->back()->with([
+                    'status' => 'error',
+                    'message' => 'hatujaweza kumuweka kiongozi, Majina yameshasajiliwa katika mfumo']);
+            }
+        }else{
+            $leader = Leader::where('id', $request->input('leader_id'))->first();
+            $output = $obj->assignPowerToPresentLeader(
+                $request->input('leader_id'),
+                $request->input('table'),
+                $request->input('post_id'),
+                $request->input('side_id'),
+                $request->input('side_column')
+            );
+            if ($output['status'] == 'error') { return redirect()->back()->with($output); }
         }
         $obj->attachMany( $leader->divisions(), $request, $leader );
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);

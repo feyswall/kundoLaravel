@@ -40,10 +40,9 @@ class BranchLeadersController extends Controller
         $obj = new LeadersController();
         $leader = $obj->store( $request );
         if ( !$leader ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'hatujaweza kumuweka kiongozi']);
+            return redirect()->back()->with(['status' => 'error', 'message' => 'hatujaweza kumuweka kiongozi, Kiongozi ameshasajiriwa katika mfumo']);
         }
         $obj->attachMany( $leader->branches(), $request, $leader );
-
         return redirect()->back()
             ->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }

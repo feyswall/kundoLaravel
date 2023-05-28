@@ -42,7 +42,6 @@ class LeadersController extends Controller
 
     public function assignPowerToPresentLeader($leader_id, $table, $post_id, $side_id, $side_column)
     {
-        $leader = Leader::where('id', $leader_id)->first();
         $leaderHasPostQueryBuilder = DB::table($table)->select('*')
             ->where('leader_id', $leader_id)
             ->where('post_id', $post_id)
@@ -128,7 +127,6 @@ class LeadersController extends Controller
 
         if ( $validate->fails() ) {
             return null;
-//            return ['status' => 'error', 'message' => 'Email Imejirudia Katika Mfumo.'];
         }
 
         $user = \App\Models\User::create([
@@ -159,20 +157,18 @@ class LeadersController extends Controller
      * @param $ath, $formData, $leader
      * @return array
      */
-    public function attachMany($ath, $formData, $leader){
+    public function attachMany($ath, $formData, $leader ){
         $ath->attach($formData->side_id, [
             'isActive' => true,
             'post_id' => $formData->post_id,
-            'created_at' => now()
+            'created_at' => now(),
         ]);
 
         if ( !($ath->get()->contains($formData->side_id)) ){
 //            dd(  "again not found" );
             return ['response' => 'failure'];
         }
-
         $leader->posts()->attach( $formData->post_id, ['isActive' => true] );
-
         if ( !($leader->posts->contains($formData->post_id)) ) {
 //            dd( "error again" );
             $ath->detach( $formData->side_id );
