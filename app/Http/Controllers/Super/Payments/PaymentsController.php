@@ -24,14 +24,17 @@ class PaymentsController extends Controller
         }
         $apartment = Apartment::where('id', $request->apartment_id )->first();
         if ( !$apartment ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'apartment error please try again']);
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Tatizo limetokea tafadhali jaribu tena']);
         }
         $reminder = $request->received % $apartment->cost;
         if ( $reminder != 0 ){
             $tester = $request->received / $apartment->cost;
             $recommended = floor( $tester ) * $apartment->cost;
             $tryWith =  $recommended != 0 ? $recommended : $apartment->cost;
-            return redirect()->back()->with(['status' => 'error', 'message' => 'full month payments only, please try '.$tryWith.'/= Tsh']);
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Malipo yanatakiwa kuwa ni ya miezi kamili, mf. mwezi 1,2,3,.., Unaweza Kulipia '.$tryWith.'/= Tsh'
+            ]);
         }
         // checking if the month is paid or not
         $lastTenPayment = $apartment->payments()->latest('id')->limit(100)->get();
@@ -44,13 +47,14 @@ class PaymentsController extends Controller
             return redirect()->back()->with(['status' => 'error', 'message' => $data['message']]);
         }
 
-        $payment = $this->createPayment($apartment->cost, $request->received, $request->date,
-            $end_month, $month_count, $apartment
+        $payment = $this->createPayment(
+            $apartment->cost, $request->received, $request->date,
+            $end_month, $month_count, $apartment, $apartment->tenant->id
         );
         if ( !$payment ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'Unable to save the payment']);
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Malipo hayakuweza kuhifadhiwa']);
         }
-        return redirect()->back()->with(['status' => 'success', 'message' => 'payment was registered successfully']);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Umefanikiwa kuweka malipo']);
     }
 
 
@@ -65,14 +69,14 @@ class PaymentsController extends Controller
             if( $isIt || $orIsIt){
                 $trueStart = $start->format('M-Y-d');
                 $trueEnd = $end->format('M-Y-d');
-                return ['status' => 'error', 'message' => "Date from ".$trueStart." To ".$trueEnd." Are Already Been Paid"];
+                return ['status' => 'error', 'message' => "Tarehe Kuanzia ".$trueStart." To ".$trueEnd." Zimeshalipiwa katika Apartment hii."];
             }
         }
         return ['status' => 'success'];
     }
 
 
-    private function createPayment($cost, $received, $date, $endDate, $monthCount, $object) : Payment|null
+    private function createPayment($cost, $received, $date, $endDate, $monthCount, $object, $tenant_id)
     {
         $payment = new Payment();
             $payment->perMonth_payment = $cost;
@@ -80,6 +84,7 @@ class PaymentsController extends Controller
             $payment->start_month = $date;
             $payment->end_month = $endDate;
             $payment->month_count = $monthCount;
+            $payment->tenant_id = $tenant_id;
         return  $object->payments()->save( $payment );
     }
 }

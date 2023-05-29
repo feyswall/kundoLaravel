@@ -46,10 +46,10 @@ class ApartmentsController extends Controller
         }
         return redirect()->back()
             ->with('house', $house)
-            ->with(['status' => 'success', 'message' => 'Apartmenr Yenye Jina '.$apartment->name.' Imesajiriwa']);
+            ->with(['status' => 'success', 'message' => 'Apartment Yenye Jina '.$apartment->name.' Imesajiriwa']);
     }
 
-    public function unpaid(){
+    public function queryUnpaid(){
         $apartments = Apartment::whereHas('tenant', function ($query){
             $query->where('deleted_at', null);
         })
@@ -64,6 +64,13 @@ class ApartmentsController extends Controller
                 $unPaidApartments[] = $apartment;
             }
         }
+        return $unPaidApartments;
+    }
+
+
+
+    public function unpaid(){
+       $unPaidApartments = $this->queryUnpaid();
         return \view('interface.super.apartments.allUnpaidApartments')
             ->with('apartments', $unPaidApartments );
     }

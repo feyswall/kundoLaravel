@@ -49,6 +49,7 @@
                                 <th>Jina la nyumba</th>
                                 <th>Mahali ilipo</th>
                                 <th>Aina na Nyumba</th>
+                                <th>Idadi ya Apartments</th>
                                 <th>Tarehe:</th>
                                 <th></th>
                             </tr>
@@ -59,6 +60,9 @@
                                     <td>{{ $house->houseName }}</td>
                                     <td>{{ $house->location }}</td>
                                     <td>{{ $house->house_type->type_name }}</td>
+                                    <td>
+                                        <b>{{ $house->apartments->count() }}</b>
+                                    </td>
                                     <td>{{ \Carbon\Carbon::parse($house->created_at)->format("M-d-Y") }}</td>
                                     <td>
                                         <a href="{{ route('super.houses.showHouse', $house->id) }}"
@@ -119,7 +123,8 @@
                     </form>
                 </x-slot:content>
             </x-system.modal>
-            <x-system.modal id="createNewHouseType" aria="houseRegistration" size="modal-fullscreen" title="Register A New House Type">
+            <x-system.modal id="createNewHouseType" aria="houseRegistration" size="modal-fullscreen"
+            title="Sajiri aina ya nyumba hapa">
             <x-slot:content>
                 <form method="POST" action="{{ route('super.houseTypes.storeHouseType') }}">
                     @csrf

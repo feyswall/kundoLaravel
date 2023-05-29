@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Super;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
-use App\Models\Shop;
 use App\Models\Tenant;
-use App\Rules\ApartmentId;
 use App\Rules\PhoneNumber;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -15,13 +13,14 @@ class TenantsController extends Controller
 {
     public function  assignTenant(Request $request){
         $tenant = Tenant::onlyTrashed('id', $request->input('tenant_'))->first();
+        $obj = null;
         if ($request->input('apartment_id') !== null){
-            $obj = Apartment::wnere('id', $request->input('apartment_id'))->first();
-        }elseif ($request->input('shop_id') !== null) {
-            $obj = Shop::where('id', $request->input('shop_id'))->first();
+            $obj = Apartment::where('id', $request->input('apartment_id'))->first();
         }
-        $tenant = $obj->tenant->save( $tenant );
-        $tenant->restore();
+        $tenant->tenable_type = get_class($obj);
+        $tenant->tenable_id = $obj->id;
+        $tenant->save();
+         $tenant->restore();
         return redirect()->back()->with(['status' => 'success', 'message' => 'tenant was assigned apartment']);
     }
 

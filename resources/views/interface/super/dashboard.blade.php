@@ -73,20 +73,30 @@
                     </a>
                 </div>
             <!-- end col-->
-            {{-- <div class="col-md-6 col-xl-3">
+            @php
+                $allApartments = \App\Models\Apartment::all();
+                $apartment = new \App\Http\Controllers\Super\Apartment\ApartmentsController();
+                $unpaidApartments = $apartment->queryUnpaid();
+            @endphp
+            <div class="col-md-6 col-xl-3">
                 <div class="card">
                     <div class="card-body">
                         <div class="float-end mt-2">
                             <div id="customers-chart"> </div>
                         </div>
                         <div>
-                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">45</span></h4>
-                            <p class="text-muted mb-0">Waliofadhiliwa</p>
+                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">
+                                    {{ count($unpaidApartments) }}
+                                </span></h4>
+                            <p class="text-muted mb-0">Apartments zenye madeni</p>
                         </div>
-                        <p class="text-muted mt-3 mb-0"><span class="text-danger me-1"><i class="mdi mdi-arrow-down-bold me-1"></i>6.24%</span> ya mwaka uliopita</p>
+                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1">
+                             {{ count($allApartments) }}</span>
+                             Jumla ya Apartment Zote
+                        </p>
                     </div>
                 </div>
-            </div> --}}
+            </div>
             <!-- end col-->
             {{-- <div class="col-md-6 col-xl-3">
                 <div class="card">
@@ -148,7 +158,7 @@
                                         <ul>
                                             @foreach ($leader->posts as $post)
                                                 @if ( $post->pivot->isActive )
-                                                    <li>{{ $post->name }}</li>                                                    
+                                                    <li>{{ $post->name }}</li>
                                                 @endif
                                             @endforeach
                                         </ul>
@@ -224,13 +234,13 @@
                 "fnDrawCallback": function (oSettings) {
                         //   console.log(this.api().page.info())
                         },
-                lengthChange: !1, 
+                lengthChange: !1,
                 buttons: ['excel', 'pdf', {
                 text: 'send sms',
                 action: function ( e, dt, node, config ) {
                     $("#sendTextSms").modal('show');
                 }
-            }], 
+            }],
         });
 
             table.buttons ()

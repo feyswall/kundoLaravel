@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\GeneralSmsEvent;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SmsServicesControlller;
 use Illuminate\Support\Facades\Route;
@@ -131,6 +132,14 @@ Route::post('newDownload', [PDFController::class, 'newDownload'])->name("newDown
 Route::post('testPdf', [PDFController::class, 'testPdf'])->name("testPdf");
 
 Route::post('/download/pdf', [PDFController::class, 'downloadPdf'])->name('downloadPDF');
+
+Route::get('/smsMe', function(){
+    event(new GeneralSmsEvent(
+        [['id' => 1, 'phone' => '255628960877']],
+        function($response){ info(json_encode($response)); },
+        'hellow feyswall feeling great?', ''
+    ));
+});
 
 require __DIR__ . '/auth.php';
 

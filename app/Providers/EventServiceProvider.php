@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\GeneralSmsEvent;
 use App\Events\SendingSmsNotificationEvent;
+use App\Listeners\GeneralSmsListener;
 use App\Listeners\SendingSmsNotificationListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         SendingSmsNotificationEvent::class => [
             SendingSmsNotificationListener::class,
+        ],
+        GeneralSmsEvent::class => [
+            GeneralSmsListener::class,
         ],
     ];
 

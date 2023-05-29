@@ -22,6 +22,6 @@ class Tenant extends Model
 
     public function payments()
     {
-        return $this->morphTo( Payment::class, 'payable' );
+        return $this->hasMany( Payment::class );
     }
 }

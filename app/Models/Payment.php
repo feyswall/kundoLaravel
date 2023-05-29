@@ -16,4 +16,9 @@ class Payment extends Model
         return $this->morphTo();
     }
 
+    public function tenant()
+    {
+        return $this->belongsTo(  Tenant::class )->withTrashed();
+    }
+
 }

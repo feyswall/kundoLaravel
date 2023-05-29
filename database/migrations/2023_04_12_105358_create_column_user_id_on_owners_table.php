@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('owners', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained();
-        });
+        if (!(Schema::hasColumn('owners', 'user_id'))) {
+            Schema::table('owners', function (Blueprint $table) {
+                $table->foreignId('user_id');
+            });
+        }
     }
 
     /**
@@ -28,7 +30,9 @@ return new class extends Migration
         Schema::table('owners', function (Blueprint $table) {
 
                 $foreignKeys = $this->listTableForeignKeys('owners');
-                if(in_array('owners_user_id_foreign', $foreignKeys)) { $table->dropForeign(['user_id']) ;}
+                if(in_array('owners_user_id_foreign', $foreignKeys)) {
+                    $table->dropForeign(['user_id']) ;
+                }
 
                 if (Schema::hasColumn('owners', 'user_id')) {
                     $table->dropColumn('user_id');

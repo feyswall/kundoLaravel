@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sms;
 use Illuminate\Http\Request;
 
 class SmsNotificationsController extends Controller
@@ -44,12 +45,11 @@ class SmsNotificationsController extends Controller
         if ($out['status'] == 'success') {
             if ( isset($out['response']->successful) ){
                 // create sms object for later retrival
-                $smsRequestId = Sms::create([
+                Sms::create([
                     'request_id' => $out['response']->request_id,
                     'message' => $message,
                     'sms_amount' => count($receivers)
                 ]);
-                // fill the variables in relation
             }
         }
         return $out;

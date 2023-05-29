@@ -33,15 +33,15 @@
                                     @csrf
                                     <i class="fas fa-minus-circle text-danger">
 
-                                    </i><input type="submit" class="border-0 bg-white text-danger" 
+                                    </i><input type="submit" class="border-0 bg-white text-danger"
                                     value="remove tenant">
                                 </form>
                             @endif
                         </span>
                         <div class="mt-3">
                             @if( $apartment->tenant )
-                                <button data-bs-toggle="modal" data-bs-target="#createNewPayment" 
-                                class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i>Sajiri</button>
+                                <button data-bs-toggle="modal" data-bs-target="#createNewPayment"
+                                class="btn btn-info btn-sm mb-4"><i class="fas fa-plus"> </i>Lipa Kodi</button>
                             @endif
                         </div>
                         <h4 class="card-title mt-2">Orodha ya malipo ya Apartment</h4>
@@ -49,6 +49,8 @@
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Mpangaji</th>
+                                <th>Kodi @mwezi</th>
                                 <th>Kiasi Kilicholipwa</th>
                                 <th>Miezi</th>
                                 <th>Mwezi wa kuanza:</th>
@@ -59,7 +61,9 @@
                             @foreach( $apartment->payments as $key => $payment )
                                 <tr>
                                     <td>{{ $apartment->payments->count() - $key }}</td>
-                                    <td>{{ $payment->received_payment  }}</td>
+                                    <td>{{ $payment->tenant->name }}</td>
+                                    <td>Tsh {{ number_format($payment->perMonth_payment, 0, '.', ',') }}/=</td>
+                                    <td>Tsh {{ number_format($payment->received_payment, 0, '.', ',')  }}/=</td>
                                     <th>{{ $payment->month_count }}</th>
                                     <td>{{ \Carbon\Carbon::parse($payment->start_month)->format("M-d-Y") }}</td>
                                     <td>{{ \Carbon\Carbon::parse($payment->start_month)->addMonths( $payment->month_count)->format("M-d-Y") }}</td>
@@ -71,7 +75,7 @@
                 </div>
             </div>
         </div>
-        <x-system.modal id="createNewPayment" aria="apartmentRegistration" size="modal-lg" 
+        <x-system.modal id="createNewPayment" aria="apartmentRegistration" size="modal-lg"
         title="Sajiri Apartment Mpya">
             <x-slot:content>
                 <form method="POST" action="{{ route('super.payments.storePayment') }}">
@@ -101,7 +105,7 @@
                 </form>
             </x-slot:content>
         </x-system.modal>
-        <x-system.modal id="assignTenant" aria="apartmentTenantRegistration" size="modal-lg" 
+        <x-system.modal id="assignTenant" aria="apartmentTenantRegistration" size="modal-lg"
         title="Sajiri Mpangaji wa Apartment">
             <x-slot:content>
                 <form method="POST" action="{{ route('super.tenants.assignTenant') }}">

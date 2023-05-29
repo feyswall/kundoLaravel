@@ -13,6 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('payments');
+
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
 
@@ -24,6 +26,8 @@ return new class extends Migration
             $table->dateTime('start_month');
             $table->integer('month_count');
             $table->dateTime('end_month');
+
+            $table->foreignId('tenant_id');
 
             $table->timestamps();
         });
