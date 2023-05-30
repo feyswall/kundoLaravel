@@ -17,7 +17,6 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="">Jina la chombo: {{ $service->motor->identity_name }}</h3>
-
                         <h4 class="mt-3 text-danger"><b>Taarifa za Garage</b></h4>
                         <label class="form-label  font-size-24" id="machagulio-mkoa">
                             <h4>Jina: {{ $service->garage->name }}</h4>

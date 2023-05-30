@@ -23,8 +23,8 @@
                         <label class="form-label font-size-24" id="machagulio-wilaya"></label>
                         <table id="datatable-viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
-                            <td>#</td>
-                            <td>Jina Kutambulisha Chombo</td>
+                            <th>#</th>
+                            <th>Jina Kutambulisha Chombo</th>
                             <th>Maka wa Chombo</th>
                             <th>Kundi</th>
                             <th>Aina</th>
@@ -37,7 +37,7 @@
                                         <tr>
                                             <td>{{ $motors->count() - $key }}</td>
                                             <td>{{ $motor->identity_name }}</td>
-                                            <td>{{ $motor->year }}</td>
+                                            <td>{{ Carbon\Carbon::parse($motor->year)->format('m-D-Y') }}</td>
                                             <td>{{ $motor->motor_category->name }}</td>
                                             <td>{{ $motor->motor_type->name }}</td>
                                             <td>{{ $motor->motor_model->name }}</td>

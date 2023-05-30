@@ -21,7 +21,7 @@ class MotorServiceTypesController extends Controller
             'name' => 'required|unique:service_types,name',
             'cost' => 'required',
         ];
-        $request->validate($rules, ['name.unique' => 'Aina Hii ya ServicE tayari ipo kwenye mfumo']);
+        $request->validate($rules, ['name.unique' => 'Aina Hii ya Service tayari ipo kwenye mfumo']);
         $type = ServiceType::create([
             'name' => $request->name,
             'cost' => $request->cost,

@@ -20,7 +20,8 @@
                         <label class="form-label font-size-24" id="machagulio-wilaya"></label>
                         <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-10">
-                                <h5>Jina la chombo:  < {{ $motor->identity_name }} ></h5>
+                                <h5>Jina la chombo:  < <b>{{ $motor->identity_name }}</b> ></h5>
+                                <h5>Mmiliki wa sasa < <b>{{ $motor->owner->name  }}</b> ></h5>
                             </div>
                             <div class="col-sm-8 col-sm-10">
                                 <div class="mt-4">

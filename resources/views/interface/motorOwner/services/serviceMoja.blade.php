@@ -59,6 +59,7 @@
                                 @php
                                     $totalCost = 0;
                                     $expectedCost = 0;
+                                    $tofauti = 'hakuna';
                                     foreach($service->service_types as $type){
                                         $totalCost += ($type->pivot->cost * $type->pivot->itemCount);
                                         $expectedCost += ($type->pivot->prevCost * $type->pivot->itemCount);
