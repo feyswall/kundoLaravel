@@ -10,7 +10,7 @@
                     <input type="hidden" value="{{ 'ziara/'.$sial->letter_url }}" name="pdf">
                     <button  class="btn btn-dark float-end mt-lg-3 mt-sm-2" type="submit">pakua pdf ya barua</button>
                 </form>
-                     <a href="{{ route('super.sial.allList') }}"  class="btn btn-primary float-end mt-lg-3 mt-sm-2 mx-2">Orodha Barua Zote</a> 
+                     <a href="{{ route('super.sial.allList') }}"  class="btn btn-primary float-end mt-lg-3 mt-sm-2 mx-2">Orodha Barua Zote</a>
             </div>
         </div>
         <div class="card-body">
@@ -28,8 +28,8 @@
                                                 <div class="col-lg-12 col-md-7 col-sm-6">
                                                     <h5><b>Barua Kwenda  kwa</h5>
                                                     <div style="line-height: 5px;">
-                                                        @foreach( $sendTos as $sendTo )
-                                                            <p>{{ $sendTo->posts->first()->name }}</p>
+                                                        @foreach( $sendTos as $leader )
+                                                            <p>{{ $leader->posts->first()->name }} - <i>{{ ucfirst($leader->firstName) }} {{  ucfirst($leader->lastName) }}</i></p>
                                                             @endforeach
                                                     </div>
                                                     {{-- <img src="{{ asset('assets/images/bunge.png')}}" alt="" class="w-100 mx-auto"> --}}
@@ -71,7 +71,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

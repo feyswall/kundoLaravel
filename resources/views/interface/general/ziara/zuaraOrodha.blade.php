@@ -29,7 +29,7 @@
                         <thead>
                         <td>#</td>
                         <th>Kichwa</th>
-                        <th>Maelezo</th>
+                        <th>Ref:_ No.</th>
                         <th>Tarehe</th>
                         <th></th>
                         </thead>
@@ -38,8 +38,15 @@
                                 <tr>
                                     <td>{{ $sendTo->count() - $key }}</td>
                                     <td>{{ $sial->title }}</td>
-                                    <td>{{ $sial->note }}</td>
-                                    <td>{{  Carbon\Carbon::parse($sial->created_at)->format('M d Y') }} </td>
+                                    <td
+                                    class="@if($sial->inToManySend($user) )
+                                    @if($sial->inToManySend($user)->pivot->seen == 0)
+                                            text-danger
+                                    @endif
+                                    @endif"
+                                    >{{ $sial->letterNumber }}
+                                    </td>
+                                    <td>{{  Carbon\Carbon::parse($sial->created_at)->format('M d Y') }}</td>
                                     <td>
                                         <a href="{{ route("general.sial.show", $sial->id) }}" class="btn btn-success btn-sm">fungua</a>
                                     </td>
@@ -53,9 +60,9 @@
                         <thead>
                         <td>#</td>
                         <th>Kichwa</th>
-                        <th>Maelezo</th>
-                        <th></th>
+                        <th>Ref:_ No.</th>
                         <th>Tarehe</th>
+                        <th></th>
                         </thead>
                         <tbody>
                             @foreach( $copyTo as $key => $sial )
@@ -64,13 +71,13 @@
                                     <td>{{ $sial->title }}</td>
                                     <td>
                                         <p class="
-                                         @if($sial->inToMany($user) )
-                                            @if( !($sial->inToMany($user)->pivot->seen) )
+                                         @if($sial->inToManyCopy($user) )
+                                            @if($sial->inToManyCopy($user)->pivot->seen == 0)
                                                 text-danger
                                             @endif
                                         @endif
                                         ">
-                                            {{ $sial->note }}
+                                            {{ $sial->letterNumber }}
                                         </p>
                                     </td>
                                     <td>{{  Carbon\Carbon::parse($sial->created_at)->format('M d Y') }} </td>

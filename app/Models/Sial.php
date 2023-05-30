@@ -18,9 +18,21 @@ class Sial extends Model
         )->withTimestamps();
     }
 
-    public function inToMany(User $user)
+    public function inToManyCopy(User $user)
     {
-        $leader = $this->leaders()->where('leader_id', $user->leader->id)->first();
+        $leader = $this->leaders()
+            ->where('leader_id', $user->leader->id)
+            ->where('titled', 'copyTo')
+            ->first();
+        return $leader;
+    }
+
+    public function inToManySend(User $user)
+    {
+        $leader = $this->leaders()
+            ->where('leader_id', $user->leader->id)
+            ->where('titled', 'sendTo')
+            ->first();
         return $leader;
     }
 }

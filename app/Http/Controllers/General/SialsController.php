@@ -29,9 +29,14 @@ class SialsController extends Controller
     {
         $copyTo = Sial::select("*")
         ->whereHas('leaders', function ($query){
-            $query->where('leader_id', $this->authLeader->id );
+            $query->where('leader_id', $this->authLeader->id )
+            ->where('titled', 'copyTo');
             })->get();
-        $sendTo = Sial::where('receiver_id', $this->authLeader->id )->get();
+
+        $sendTo = Sial::select('*')
+            ->whereHas('leaders', function ($query) {
+                $query->where('leader_id', $this->authLeader->id);
+            })->get();
         return view('interface.general.ziara.zuaraOrodha')
             ->with('copyTo', $copyTo )
             ->with('sendTo', $sendTo);
@@ -63,47 +68,40 @@ class SialsController extends Controller
 
     public function show(Sial $sial)
     {
-        $this->authorize('view', $sial);
-
-        if (!$sial) {
-            return redirect()->back()->with(['status' => 'error', 'message' => 'barua Haikupatikana ziara']);
-        }
+        if( !$sial ){ return redirect()->back()->with(['status' => 'error', 'message' => 'barua Haikupatikana']); }
 
         $fetchArea = AreasController::discoverArea($sial->area_name, $sial->area_id);
 
-        if ($fetchArea && isset($fetchArea['status']) && $fetchArea['status'] == 'error') {
-            return redirect()->back()->with(['status' => 'error', 'message' => 'barua Haikupatikana eneo']);
-        }
+        if( $fetchArea && isset( $fetchArea['status']) && $fetchArea['status'] == 'error' ){ return redirect()->back()->with(['status' => 'error', 'message' => 'barua Haikupatikana']); }
 
         $areaObj = $fetchArea['data'];
 
-        $receiverObj = Leader::where('id',  $sial->receiver_id)
-        ->with('posts', function ($query) use ($sial) {
-            $query->where('post_id', $sial->receiver_post_id);
-        })->first();
+        $receiverObjs = [];
+        foreach( $sial->leaders()->where('titled', 'sendTo')->get() as $leader ) {
+            $postId = $leader->pivot->receiver_post_id;
+            $receiverObj = Leader::where('id', $leader->id)->with('posts', function ($query) use ($postId) {
+                $query->where('post_id', $postId);
+            })->first();
+            $leader->pivot->seen = 1;
+            $leader->pivot->save();
+            $receiverObjs[] = $receiverObj;
+        }
 
         $copyToLeaders = [];
-        foreach ($sial->leaders as $leader) {
+        foreach( $sial->leaders()->where('titled', 'copyTo')->get() as $leader ){
             $postId = $leader->pivot->receiver_post_id;
-            $copyTo = Leader::where('id', $leader->id)
-            ->with('posts', function ($query) use ($postId) {
+            $copyTo = Leader::where('id', $leader->id)->with('posts', function($query) use ($postId){
                 $query->where('post_id', $postId);
-            })
-            ->first();
+            })->first();
+            $leader->pivot->seen = 1;
+            $leader->pivot->save();
             $copyToLeaders[] = $copyTo;
         }
 
-        $copyToObj = DB::table('leader_sial')
-        ->where('sial_id', $sial->id)
-        ->where('leader_id', $this->authLeader->id )
-        ->update([
-            'seen' => true
-        ]);
-
         return view('interface.general.ziara.ziaraMoja')
-        ->with('sial', $sial)
-        ->with("sendTo", $receiverObj)
-        ->with('area', $areaObj)
+        ->with("sial", $sial)
+        ->with("sendTos", $receiverObjs)
+        ->with('area', $areaObj )
         ->with('copyTo', $copyToLeaders);
     }
 

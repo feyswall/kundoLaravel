@@ -35,7 +35,7 @@
                             <div id="total-revenue-chart"></div>
                         </div>
                         <div>
-                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">
+                            <h4 class="mb-1 mt-1"><span>
                                 @php $balanceFunct = \App\Http\Controllers\SmsServicesControlller::CheckBalance(); @endphp
                                 @if ( $balanceFunct['status'] )
                                     @if ( $balanceFunct['status'] == "success")
@@ -63,8 +63,8 @@
                             </div>
                             <div>
                                 @php $challengeCount = \App\Models\Challenge::where('status', 'new')->count(); @endphp
-                                <h4 class="mb-1 mt-1 @if( $challengeCount > 0)  text-danger @endif"> {{ $challengeCount  }}</h4>
-
+                                <h4 class="mb-1 mt-1 @if( $challengeCount > 0)  text-danger @endif">
+                                     {{ $challengeCount  }}</h4>
                                 <p class="text-muted mb-0">Changamoto</p>
                             </div>
                             <p class="text-muted mt-3 mb-0"><span class="text-danger me-1">{{ \App\Models\Challenge::count()  }}</span> Idadi ya Zilizohifadhiwa</p>
@@ -79,23 +79,25 @@
                 $unpaidApartments = $apartment->queryUnpaid();
             @endphp
             <div class="col-md-6 col-xl-3">
+               <a href="{{ route('super.apartment.unpaid') }}">
                 <div class="card">
-                    <div class="card-body">
-                        <div class="float-end mt-2">
-                            <div id="customers-chart"> </div>
+                        <div class="card-body">
+                            <div class="float-end mt-2">
+                                <div id="customers-chart"> </div>
+                            </div>
+                            <div>
+                                <h4 class="mb-1 mt-1"><span >
+                                        {{ count($unpaidApartments) }}
+                                    </span></h4>
+                                <p class="text-muted mb-0">Apartments zenye madeni</p>
+                            </div>
+                            <p class="text-muted mt-3 mb-0"><span class="text-success me-1">
+                                {{ count($allApartments) }}</span>
+                                Jumla ya Apartment Zote
+                            </p>
                         </div>
-                        <div>
-                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">
-                                    {{ count($unpaidApartments) }}
-                                </span></h4>
-                            <p class="text-muted mb-0">Apartments zenye madeni</p>
-                        </div>
-                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1">
-                             {{ count($allApartments) }}</span>
-                             Jumla ya Apartment Zote
-                        </p>
                     </div>
-                </div>
+                </a>
             </div>
             <!-- end col-->
             {{-- <div class="col-md-6 col-xl-3">

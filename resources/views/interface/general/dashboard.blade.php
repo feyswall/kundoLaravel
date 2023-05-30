@@ -19,14 +19,28 @@
             $desiredSials = [];
         @endphp
         @foreach ($sials as $sial)
-            @if($sial->inToMany($user) )
-                @if( !($sial->inToMany($user)->pivot->seen) )
-                    @php $desiredSials[] = $sial; @endphp
+            @if($sial->inToManyCopy($user) )
+                @if($sial->inToManyCopy($user)->pivot)
+                    @if( !($sial->inToManyCopy($user)->pivot->seen) )
+                        @php $desiredSials[] = $sial;
+                        @endphp
+                    @endif
+                @endif
+            @endif
+
+            @if($sial->inToManySend($user) )
+                @if($sial->inToManySend($user)->pivot)
+                    @if( !($sial->inToManySend($user)->pivot->seen) )
+                        @php $desiredSials[] = $sial;
+                        @endphp
+                    @endif
                 @endif
             @endif
         @endforeach
-        @php $desiredSialsCollect = collect( $desiredSials );  @endphp
-              
+        @php
+            $desiredSialsCollect = collect( $desiredSials );
+        @endphp
+
         <div class="container-fluid">
         <!-- start page title -->
         <div class="row">
@@ -43,36 +57,27 @@
             </div>
         </div>
         <!-- end page title -->
-        <!-- end page title -->
         <div class="row">
-            {{-- <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="float-end mt-2">
-                            <div id="customers-chart"> </div>
-                        </div>
-                        <div>
-                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">45</span></h4>
-                            <p class="text-muted mb-0">Waliofadhiliwa</p>
-                        </div>
-                        <p class="text-muted mt-3 mb-0"><span class="text-danger me-1"><i class="mdi mdi-arrow-down-bold me-1"></i>6.24%</span> ya mwaka uliopita</p>
-                    </div>
-                </div>
-            </div> --}}
-            <!-- end col-->
             <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="float-end mt-2">
-                            <div id="growth-chart"></div>
+                <a href="{{ route('general.sial.orodha')}}">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-end mt-2">
+                                <div id="growth-chart"></div>
+                            </div>
+                            <div>
+                                <h4 class="mb-1 mt-1"><span data-plugin="counterup">
+                                    {{ $desiredSialsCollect->count(); }}</span>
+                                </h4>
+                                <p class="text-muted mb-0">zisizosomwa</p>
+                            </div>
+                            <p class="text-muted mt-3 mb-0"><span class="text-success me-1">
+                                <i class="mdi mdi-arrow-up-bold me-1"></i>{{ App\Models\Sial::all()->count() }}</span>
+                                 Barua Zote
+                            </p>
                         </div>
-                        <div>
-                            <h4 class="mb-1 mt-1"><span data-plugin="counterup">{{ $desiredSialsCollect->count(); }}</span></h4>
-                            <p class="text-muted mb-0">Walioajiliwa</p>
-                        </div>
-                        <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i class="mdi mdi-arrow-up-bold me-1"></i>10.51%</span> ya mwaka uliopita</p>
                     </div>
-                </div>
+                </a>
             </div>
             <!-- end col-->
         </div>
