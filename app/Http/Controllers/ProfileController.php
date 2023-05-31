@@ -36,15 +36,13 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $rules = [
-            'name' => [
-                'required', 'string', 'max:50',
-            ],
-            'email' => [
-                'required', 'string', 'max:50', 'unique:users,email',
-            ],
-        ];
-
+        $rules = [];
+        if($request->user()->email == $request->input('email')){
+            $rules['email'] = [ 'required', 'string', 'max:50' ];
+        }else{
+            $rules['email'] = [ 'required', 'string', 'max:50', 'unique:users,email' ];
+        }
+        $rules['name'] = ['required', 'string', 'max:50' ];
         $messages = [
             "name.required" => "Jina lazima lijazwe",
             "name.string"  => "Jina lazima liwe na maneno pekee",
