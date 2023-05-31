@@ -366,6 +366,17 @@ Route::controller(\App\Http\Controllers\Super\LeadersController::class)
     });
 
 
+Route::controller(\App\Http\Controllers\Super\AssistantsController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/assistants')
+    ->as('super.assistants.')
+    ->group(function () {
+        Route::get('/list/all', 'index' )->name('index');
+        Route::get('/list/show/{id}', 'show' )->name('show');
+        Route::POST('/store', 'store' )->name('store');
+    });
+
+
 
 
 

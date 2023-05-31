@@ -20,22 +20,23 @@ class AssistanceRoleSeeder extends Seeder
     public function run()
     {
           // create your roles
-//          $super_role = Role::create([
-//            'name' => 'assistance',
-//            ]);
+         $super_role = Role::create([
+           'name' => 'assistance',
+           ]);
          // create permissions to assign at the roles
          $assistanceDefaultPermissions = [
             'index_assistance',
             'create_assistance',
             'show_assistance',
             'edit_assistance',
+            'store_assistance',
             'update_assistance',
             'destroy_assistance',
             'grob_assistance',
         ];
-//        foreach( $assistanceDefaultPermissions as $permission ){
-//            Permission::create(['name' => $permission]);
-//        }
+       foreach( $assistanceDefaultPermissions as $permission ){
+           Permission::create(['name' => $permission]);
+       }
         $user = User::create([
             'name' => 'Feyswal Assistance',
             'email' => 'fey2@gmail.com',

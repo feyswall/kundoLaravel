@@ -76,7 +76,6 @@
                     <ul class="sub-menu" aria-expanded="true">
                         <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-
                             <span>Usimamizi wa Viongozi</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
@@ -95,6 +94,7 @@
                         </ul>
                     </li>
                         <li><a href="{{ route('super.houseTypes.showAll') }}"><span>Aina ya Nyumba</span> </a></li>
+                        <li><a href="{{ route('super.assistants.index') }}"><span>Wasimamizi</span> </a></li>
                     </ul>
                 </li>
 

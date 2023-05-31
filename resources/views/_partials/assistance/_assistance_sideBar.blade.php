@@ -24,11 +24,9 @@
                     <a href="{{ route('dashboard') }}"> <span>Nyumbani</span> </a>
                 </li>
 
-                <li> <a href="{{ route('pdf.door.index') }}" class="">Tengeneza PDF</a></li>
-
-                <li> <a href="javascript: void(0);" class="has-arrow">Misaada</a>
+                <li> <a href="javascript: void(0);" class="has-arrow">Barua</a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li> <a href="{{ route('super.charity.index') }}">Orodha Ya Misaada</a></li>
+                        <li> <a href="{{ route('assistance.sial.allList') }}">Orodha</a></li>
                     </ul>
                 </li>
                 <hr>
