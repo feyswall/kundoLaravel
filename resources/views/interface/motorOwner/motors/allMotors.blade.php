@@ -32,7 +32,12 @@
                             <th></th>
                             </thead>
                             <tbody>
-                            @php $motors = \App\Models\Motor::all(); @endphp
+                            @php
+                                $user = Illuminate\Support\Facades\Auth::user();
+                                $owner = $user->owner;
+                                $motors = App\Models\Motor::where('owner_id', $owner->id)
+                                ->get();
+                            @endphp
                             @foreach( $motors as $key => $motor )
                                 <tr>
                                     <td>{{ $motors->count() - $key }}</td>

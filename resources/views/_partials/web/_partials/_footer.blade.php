@@ -17,8 +17,8 @@
                     <br>
                     Dar Es Salaam<br>
                     No Comment <br><br>
-                    <strong>Phone:</strong> +255 628 960 977<br>
-                    <strong>Email:</strong> g3nate@yahoo.com<br>
+                    <strong>Phone:</strong> +255 628 960 877<br>
+                    <strong>Email:</strong> g3net@yahoo.com<br>
                 </p>
             </div>
 
@@ -36,7 +36,6 @@
             <div class="col-lg-3 col-md-6 footer-links">
                 <h4>Our Services</h4>
                 <ul>
-                    <li><i class="bx bx-chevron-right"></i> <a href="#"></a></li>
                     <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
                     <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
                     <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
@@ -46,7 +45,7 @@
 
             <div class="col-lg-3 col-md-6 footer-links">
                 <h4>Our Social Networks</h4>
-                <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+                <p>You can also reach us through our social media</p>
                 <div class="social-links mt-3">
                     <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
                     <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>

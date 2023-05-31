@@ -11,7 +11,14 @@ class Motor extends Model
     use HasFactory;
 
 
-    protected $fillable = ['motor_type_id', 'identity_name', 'color', 'year', 'owner_id', 'motor_model_id', 'motor_category_id'];
+    protected $fillable = [
+        'motor_type_id',
+        'identity_name', 'color',
+        'year',
+        'owner_id',
+        'motor_model_id',
+        'motor_category_id'
+    ];
 
     public function owner()
     {

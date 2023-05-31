@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center mt-3">
-        
+
                         </div>
                     </div>
                 </div>
@@ -57,24 +57,24 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <div class="form-check">
+                                        {{-- <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="auth-remember-check">
                                             <label class="form-check-label" for="auth-remember-check">Remember me</label>
-                                        </div>
+                                        </div> --}}
                                         <div class="mt-3 text-end">
                                             <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Log In</button>
                                         </div>
-        
-                                        <div class="mt-4 text-center">
+
+                                        {{-- <div class="mt-4 text-center">
                                             <p class="mb-0">Don't have an account ? <a href="" class="fw-medium text-primary"> Signup now </a> </p>
-                                        </div>
+                                        </div> --}}
                                     </form>
                                     <div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-        
+
                     </div>
                 </div>
                 <!-- end row -->
@@ -94,7 +94,7 @@
 </html>
 
 {{-- <form> --}}
-      
+
     {{-- <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />

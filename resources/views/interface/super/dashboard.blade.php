@@ -207,19 +207,23 @@
                                 @endif
                         </div>
                     </form>
-                   <div class="row">
-                        <div class="m-auto">
-                            <div id="formLoader" style="display: none;" class="spinner-border" role="status">
-                                <span class="visually-hidden">Loading...</span>
+                   <div class="row justify-content-center">
+                        <div class="col-lg-4 col-md-5 col-sm-6">
+                            <div class="m-auto">
+                                <div id="formLoader" style="display: none;" class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                             </div>
                         </div>
                    </div>
-                   <div id="smsSuccess" style="display: none">
-                        <h1 class="text-success" style="margin-right: 50px;">Sms Zimetumwa!</h1>
-                        <div id="formLoader"  class="spinner-border" role="status">
-                                <span class="visually-hidden">Loading...</span>
+
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4 col-md-5 col-sm-6">
+                            <div id="smsSuccess" style="display: none;0">
+                                    <img src="{{ asset('assets/images/loader.gif') }}" alt="success gif">
+                            </div>
                         </div>
-                   </div>
+                    </div>
                 </x-slot:content>
             </x-system.modal>
     </div>
