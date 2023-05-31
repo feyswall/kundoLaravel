@@ -21,6 +21,36 @@
             font-family: 'Times New Roman',
         }
 
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Times New Roman';
+            margin: 0px;
+            padding: 0px;
+        }
+
+        h1 {
+            font-size: 1.4em;
+        }
+        h2 {
+            font-size: 1.3em;
+        }
+        h3 {
+            font-size: 1.2em;
+        }
+        h4 {
+            font-size: 1.12em;
+        }
+        h5 {
+            font-size: 1.09em;
+        }
+        h6 {
+            font-size: 1em;
+        }
+
         @page {
             size: letter;
             margin: 20mm;
@@ -73,12 +103,12 @@
     </div>
 
     <div style="text-align: center; margin: 0px auto;">
-        <h5 style="padding: 0px; margin: 0px;"><b>JAMHURI YA MUUNGANO WA TANZANIA</b></h5>
+        <h5 style="padding: 0px; margin: 0px; font-size: 1em;"><b>JAMHURI YA MUUNGANO WA TANZANIA</b></h5>
         <hr style="width: 50%; margin: 3px auto; border: 1px solid gray;">
-        <h6 style="padding: 0px; margin: 0px;"><?php echo strtoupper('Ofisi Ya Mbunge wa Jimbo la Bariadi'); ?></h6>
+        <h6 style="padding: 0px; margin: 0px;font-size: 1.06em;"><?php echo strtoupper('Ofisi Ya Mbunge wa Jimbo la Bariadi'); ?></h6>
     </div>
     <div>
-        <img src="{{ public_path('assets/images/bunge.png') }}" style="margin-left: 280px;margin-top: 5px;width: 120px;">
+        <img src="{{ public_path('assets/images/bunge.png') }}" style="margin-left: 280px;margin-top: 5px;width: 100px;">
     </div>
 
     <div style="display: block;">
