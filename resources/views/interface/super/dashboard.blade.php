@@ -216,11 +216,10 @@
                             </div>
                         </div>
                    </div>
-
                     <div class="row justify-content-center">
                         <div class="col-lg-4 col-md-5 col-sm-6">
                             <div id="smsSuccess" style="display: none;0">
-                                    <img src="{{ asset('assets/images/loader.gif') }}" alt="success gif">
+                                <img src="{{ asset('assets/images/loader.gif') }}" alt="success gif">
                             </div>
                         </div>
                     </div>

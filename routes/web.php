@@ -89,7 +89,7 @@ Route::get('/dashboard', function () {
         ->with('posts')->paginate(300);
     return view('dashboard')
         ->with("leaders", $leaders);
-})->middleware(['auth', 'verified', 'role:super|mbunge|general|motorOwner'])->name('dashboard');
+})->middleware(['auth', 'verified', 'role:super|mbunge|general|motorOwner|assistance'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/show', [ProfileController::class, 'show'])->name('profile.show');
@@ -150,3 +150,5 @@ require __DIR__ . '/mbungeRoute.php';
 require __DIR__ . "/general.php";
 
 require  __DIR__. "/motorOwner.php";
+
+require  __DIR__. "/assistance.php";

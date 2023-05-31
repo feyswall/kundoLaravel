@@ -31,3 +31,7 @@
 @hasrole("motorOwner")
     @include('interface.motorOwner.dashboard')
 @endhasrole
+
+@hasrole("assistance")
+    @include('interface.assistance.dashboard')
+@endhasrole
