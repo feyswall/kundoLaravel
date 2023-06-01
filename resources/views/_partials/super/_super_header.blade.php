@@ -28,6 +28,7 @@
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle header-profile-user" src="{{ asset("https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile-thumbnail.png") }}" alt="Header Avatar"> <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">{{ \Illuminate\Support\Facades\Auth::user()->name }}</span> <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i> </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
+                    <a class="dropdown-item" href="{{ route('super.receivers.index') }}"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">Sms Receivers</span></a>
                     <a class="dropdown-item" href="{{ route('profile.show') }}"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">View Profile</span></a>
                     <x-system.logout />
                 </div>
