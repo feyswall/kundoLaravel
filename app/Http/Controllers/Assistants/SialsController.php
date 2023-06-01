@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Assistants;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Super\AreasController;
 use Illuminate\Http\Request;
 
 use App\Models\LetterNumber;
@@ -30,7 +31,7 @@ class SialsController extends Controller
     public function index()
     {
         $sials = Sial::all();
-        return view('interface.assistance.ziara.orodhaZiara')
+        return view('interface.assistants.ziara.orodhaZiara')
         ->with('sials', $sials);
     }
 
@@ -41,7 +42,7 @@ class SialsController extends Controller
      */
     public function create()
     {
-        return  view('interface.assistance.ziara.ingizaZiara');
+        return  view('interface.assistants.ziara.ingizaZiara');
     }
 
     /**
@@ -84,7 +85,7 @@ class SialsController extends Controller
             'sendTo' => $sendToLeader
          ];
 
-        $pdf = PDF::loadView('interface.super.ziara.ziaraPdf', $datas);
+        $pdf = PDF::loadView('interface.assistants.ziara.ziaraPdf', $datas);
 
         $pdfFile = $pdf->stream("challenge_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf");
         $path = "ziara/ziara_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf";
@@ -129,7 +130,10 @@ class SialsController extends Controller
                         $query->where('post_id', $selectedPostId);
                     })
                         ->first();
-                    $ziara->leaders()->attach($copyToLeader->id , ['titled' => 'copyTo', 'receiver_post_id' => $selectedPostId]);
+                    $ziara->leaders()->attach($copyToLeader->id , [
+                        'titled' => 'copyTo',
+                        'receiver_post_id' => $selectedPostId
+                    ]);
                 }
                 return json_encode([
                     'status' => 'success',
@@ -208,7 +212,7 @@ class SialsController extends Controller
             'name' => $name,
          ];
 
-        $pdf = PDF::loadView('interface.super.ziara.ziaraPdf', $datas);
+        $pdf = PDF::loadView('interface.assistants.ziara.ziaraPdf', $datas);
 
         $pdfFile = $pdf->stream("challenge_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf");
         $path = "ziara/ziara_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf";
@@ -269,8 +273,7 @@ class SialsController extends Controller
                         $ziara->leaders()->attach($sendToLeader->id, ['titled' => 'sendTo', 'receiver_post_id' => $selectedPostId]);
                     }
                 }
-
-                return redirect()->route("super.sial.show", $ziara->id)->with([
+                return redirect()->route("assistants.sial.show", $ziara->id)->with([
                     'status' => 'success',
                     'message' => 'Barua Imetumwa',
                     'sialId' => $ziara->id,
@@ -316,7 +319,7 @@ class SialsController extends Controller
             })->first();
             $copyToLeaders[] = $copyTo;
          }
-        return view("interface.assistance.ziara.ziaraMoja")
+        return view("interface.assistants.ziara.ziaraMoja")
         ->with("sial", $sial)
         ->with("sendTos", $receiverObjs)
         ->with('area', $areaObj )

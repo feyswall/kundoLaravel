@@ -23,12 +23,13 @@
                 <li>
                     <a href="{{ route('dashboard') }}"> <span>Nyumbani</span> </a>
                 </li>
-
-                <li> <a href="javascript: void(0);" class="has-arrow">Barua</a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li> <a href="{{ route('assistance.sial.allList') }}">Orodha</a></li>
-                    </ul>
-                </li>
+                @can(['grob_sials'])
+                    <li> <a href="javascript: void(0);" class="has-arrow">Barua</a>
+                        <ul class="sub-menu" aria-expanded="true">
+                            <li> <a href="{{ route('assistants.sial.allList') }}">Orodha</a></li>
+                        </ul>
+                    </li>
+                @endcan
                 <hr>
 
             </ul>

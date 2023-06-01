@@ -374,6 +374,8 @@ Route::controller(\App\Http\Controllers\Super\AssistantsController::class)
         Route::get('/list/all', 'index' )->name('index');
         Route::get('/list/show/{id}', 'show' )->name('show');
         Route::POST('/store', 'store' )->name('store');
+        Route::post('/give/permission', 'givePermission')->name('givePermission');
+        Route::post('/remove/permission', 'removePermission')->name('removePermission');
     });
 
 

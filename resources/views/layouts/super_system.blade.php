@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('_partials.super._super_head');  
+    @include('_partials.super._super_head')
 
     @yield('extra_style')
 </head>
@@ -12,10 +12,10 @@
 <!-- Begin page -->
 <div id="layout-wrapper">
 
-@include('_partials.super._super_header');
+@include('_partials.super._super_header')
 
 <!-- ========== Left Sidebar Start ========== -->
-@include('_partials.super._super_sideBar');
+@include('_partials.super._super_sideBar')
 
 <!-- Left Sidebar End -->
     <!-- ============================================================== -->
@@ -31,7 +31,7 @@
         <!-- End Page-content -->
         <footer class="footer">
 
-            @include('_partials.super._super_footer');
+            @include('_partials.super._super_footer')
 
         </footer>
     </div>
@@ -68,7 +68,7 @@
 <script src="{{ asset('assets/libs/jszip/jszip.min.js') }}"></script>
 <script src="{{ asset('assets/libs/pdfmake/build/pdfmake.min.js') }}"></script>
 <script src="{{ asset('assets/libs/pdfmake/build/vfs_fonts.js') }}"></script>
-<script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script> 
+<script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('assets/libs/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
 
@@ -81,7 +81,7 @@
 
 @yield('extra_script')
 
-@include('_partials.super._super_script');
+@include('_partials.super._super_script')
 
 </body>
 

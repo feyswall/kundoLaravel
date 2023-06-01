@@ -11,7 +11,7 @@
 <html lang="en">
 
 <head>
-    @include('_partials.motorOwner._motorOwner_head');
+    @include('_partials.motorOwner._motorOwner_head')
 
     @yield('extra_style')
 </head>
@@ -21,10 +21,10 @@
 <!-- Begin page -->
 <div id="layout-wrapper">
 
-    @include('_partials.motorOwner._motorOwner_header');
+    @include('_partials.motorOwner._motorOwner_header')
 
     <!-- ========== Left Sidebar Start ========== -->
-    @include('_partials.motorOwner._motorOwner_sideBar');
+    @include('_partials.motorOwner._motorOwner_sideBar')
 
     <!-- Left Sidebar End -->
     <!-- ============================================================== -->
@@ -39,7 +39,7 @@
         </div>
         <!-- End Page-content -->
         <footer class="footer">
-            @include('_partials.motorOwner._motorOwner_footer');
+            @include('_partials.motorOwner._motorOwner_footer')
         </footer>
     </div>
     <!-- end main content-->
@@ -83,7 +83,7 @@
 
 <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
 
-@include('_partials.motorOwner._motorOwner_script');
+@include('_partials.motorOwner._motorOwner_script')
 
 @yield('extra_script')
 

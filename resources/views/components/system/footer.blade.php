@@ -5,7 +5,7 @@
             <script>
                 document.write(new Date().getFullYear())
             </script>
-            © KUNDO INFORMATION MANAGEMENT SYSTEM</div>
+            &copy; KUNDO INFORMATION MANAGEMENT SYSTEM</div>
         <div class="col-sm-6">
             <div class="text-sm-end d-none d-sm-block"> Designed by G3NET </div>
         </div>

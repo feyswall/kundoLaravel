@@ -9,7 +9,7 @@
 
 
 
-@extends("layouts.assistance_system")
+@extends("layouts.assistants_system")
 
 @section('extra_style')
 
@@ -19,7 +19,7 @@
     <!-- Start right Content here -->
     <div class="card">
         <div class="card-body">
-            <a  href="{{ route('assistance.sial.create') }}" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"></i> Tuma Barua</a>
+            <a  href="{{ route('assistants.sial.create') }}" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"></i> Tuma Barua</a>
         </div>
     </div>
 
@@ -30,7 +30,7 @@
                     <h2 class="">Taarifa Kuhusiana Na Barua Ulizotuma</h2>
                     <label class="form-label  font-size-24" id="machagulio-mkoa"></label>
                     <label class="form-label font-size-24" id="machagulio-wilaya"></label>
-                    <table id="assistanceSailTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <table id="assistantsSailTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <td>#</td>
                         <th>Kichwa</th>
@@ -46,7 +46,7 @@
                                 <td>{{ $sial->letterNumber }}</td>
                                <td>{{  Carbon\Carbon::parse($sial->created_at)->format('M d Y') }} </td>
                                <td>
-                                <a href="{{ route("assistance.sial.show", $sial->id) }}" class="btn btn-success btn-sm">fungua</a>
+                                <a href="{{ route("assistants.sial.show", $sial->id) }}" class="btn btn-success btn-sm">fungua</a>
                                </td>
                             </tr>
                         @endforeach
@@ -60,5 +60,5 @@
 
 
 @section("extra_script")
-    <x-system.table-script id="assistanceSailTable" />
+    <x-system.table-script id="assistantsSailTable" />
 @endsection

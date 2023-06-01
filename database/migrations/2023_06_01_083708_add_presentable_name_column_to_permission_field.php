@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('assistants', function (Blueprint $table) {
-            $table->id();
-            $table->string('fullName');
-            $table->string('gender');
-            $table->string('phone');
-            $table->foreignId('user_id');
-            $table->timestamps();
+        Schema::table('permissions', function (Blueprint $table) {
+            $table->string('presentable')->default('un-specified');
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assistants');
+        Schema::table('roles', function (Blueprint $table) {
+            $table->dropColumn('presentable');
+        });
     }
 };

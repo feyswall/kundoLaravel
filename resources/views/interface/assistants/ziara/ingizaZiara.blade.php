@@ -1,4 +1,4 @@
-@extends('layouts.assistance_system')
+@extends('layouts.assistants_system')
 
 @section('extra_style')
     <!-- include summernote css/js -->
@@ -52,7 +52,7 @@
                                 <div class="card">
                                     <div class="card-body">
 
-                                        <form method="post" action="{{ route('assistance.sial.jaza') }}"
+                                        <form method="post" action="{{ route('assistants.sial.jaza') }}"
                                               target="_blank" id="ziaraForm"
                                          enctype="multipart/form-data">
                                             @csrf

@@ -1,4 +1,4 @@
-@extends("layouts.assistance_system")
+@extends("layouts.assistants_system")
 
 @section("content")
     <div class="col-md-12 col-sm-12">
@@ -10,14 +10,14 @@
                     <input type="hidden" value="{{ 'ziara/'.$sial->letter_url }}" name="pdf">
                     <button  class="btn btn-dark float-end mt-lg-3 mt-sm-2" type="submit">pakua pdf ya barua</button>
                 </form>
-                     <a href="{{ route('assistance.sial.allList') }}"  class="btn btn-primary float-end mt-lg-3 mt-sm-2 mx-2">Orodha Barua Zote</a>
+                     <a href="{{ route('assistants.sial.allList') }}"  class="btn btn-primary float-end mt-lg-3 mt-sm-2 mx-2">Orodha Barua Zote</a>
             </div>
         </div>
         <div class="card-body">
             <div>
                 <div class="mb-4">
                 </div>
-                <div>
+            <div>
                     <div class="row justify-content-center">
                         <div class="col-10">
                             <div class="row justify-content-center" >

@@ -32,6 +32,8 @@ class DatabaseSeeder extends Seeder
 //        $this->call( MotorCategorySeeder::class );
 //        $this->call( MotorOwner::class );
 //        $this->call( CharityCategoriesSeeder::class );
-$this->call( AssistanceRoleSeeder::class );
+// $this->call(AssistanceRoleSeeder::class);
+$this->call(SialsTableSeeder::class );
+
     }
 }

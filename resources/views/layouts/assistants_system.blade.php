@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('_partials.assistance._assistance_head');
+    @include('_partials.assistance._assistance_head')
 
     @yield('extra_style')
 </head>
@@ -12,10 +12,10 @@
 <!-- Begin page -->
 <div id="layout-wrapper">
 
-@include('_partials.assistance._assistance_header');
+@include('_partials.assistance._assistance_header')
 
 <!-- ========== Left Sidebar Start ========== -->
-@include('_partials.assistance._assistance_sideBar');
+@include('_partials.assistance._assistance_sideBar')
 
 <!-- Left Sidebar End -->
     <!-- ============================================================== -->
@@ -31,7 +31,7 @@
         <!-- End Page-content -->
         <footer class="footer">
 
-            @include('_partials.assistance._assistance_footer');
+            @include('_partials.assistance._assistance_footer')
 
         </footer>
     </div>
@@ -42,10 +42,6 @@
 <!-- Right bar overlay-->
 <div class="rightbar-overlay"></div>
 
-
-
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
     integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
     crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -55,8 +51,6 @@
 
 <script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-
 
 <!-- Required datatable js -->
 <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
@@ -81,7 +75,7 @@
 
 @yield('extra_script')
 
-@include('_partials.assistance._assistance_script');
+@include('_partials.assistance._assistance_script')
 
 </body>
 

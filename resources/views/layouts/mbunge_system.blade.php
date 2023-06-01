@@ -12,7 +12,7 @@
 <html lang="en">
 
 <head>
-    @include('_partials.mbunge._mbunge_head');
+    @include('_partials.mbunge._mbunge_head')
 
     @yield('extra_style')
 </head>
@@ -22,10 +22,10 @@
 <!-- Begin page -->
 <div id="layout-wrapper">
 
-    @include('_partials.mbunge._mbunge_header');
+    @include('_partials.mbunge._mbunge_header')
 
     <!-- ========== Left Sidebar Start ========== -->
-    @include('_partials.mbunge._mbunge_sideBar');
+    @include('_partials.mbunge._mbunge_sideBar')
 
     <!-- Left Sidebar End -->
     <!-- ============================================================== -->
@@ -41,7 +41,7 @@
         <!-- End Page-content -->
         <footer class="footer">
 
-            @include('_partials.mbunge._mbunge_footer');
+            @include('_partials.mbunge._mbunge_footer')
 
         </footer>
     </div>
@@ -86,7 +86,7 @@
 
 <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
 
-@include('_partials.mbunge._mbunge_script');
+@include('_partials.mbunge._mbunge_script')
 
 @yield('extra_script')
 
