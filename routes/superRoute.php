@@ -18,6 +18,7 @@ use App\Http\Controllers\Super\Apartment\ApartmentsController;
 use App\Http\Controllers\Super\CharitiesController;
 use App\Http\Controllers\Super\House\HousesController;
 use App\Http\Controllers\Super\HouseTypesController;
+use App\Http\Controllers\Super\ReceiversController;
 use App\Http\Controllers\Super\TenantsController;
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\Super\Area\DistrictsController;
@@ -378,6 +379,16 @@ Route::controller(\App\Http\Controllers\Super\AssistantsController::class)
         Route::post('/remove/permission', 'removePermission')->name('removePermission');
     });
 
+
+
+Route::controller(ReceiversController::class)
+    ->middleware(['auth', 'role:super'])
+    ->prefix('/super/receivers')
+    ->as('super.receivers.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
+});
 
 
 
