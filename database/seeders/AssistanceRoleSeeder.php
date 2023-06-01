@@ -25,10 +25,6 @@ class AssistanceRoleSeeder extends Seeder
            ]);
          // create permissions to assign at the roles
          $assistanceDefaultPermissions = [
-            ['name' => 'index_assistance', 'presentable' => 'Ona Wasimamizi'],
-            ['name' => 'create_assistance', 'presentable' => 'Tengeneza Wasimamizi'],
-            ['name' => 'edit_assistance', 'presentable' => 'Badiri taarifa za Msimamizi'],
-            ['name' => 'destroy_assistance', 'presentable' => 'Futa Msimamizi'],
             ['name' => 'grob_assistance', 'presentable' => 'Yote Msimamizi'],
         ];
        foreach( $assistanceDefaultPermissions as $permission ){

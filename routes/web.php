@@ -133,6 +133,8 @@ Route::post('testPdf', [PDFController::class, 'testPdf'])->name("testPdf");
 
 Route::post('/download/pdf', [PDFController::class, 'downloadPdf'])->name('downloadPDF');
 
+Route::get('/testReceiver', [\App\Http\Controllers\DefaultReceiversController::class, 'receivers']);
+// just for test route
 Route::get('/smsMe', function(){
     event(new GeneralSmsEvent(
         [['id' => 1, 'phone' => '255628960877']],
