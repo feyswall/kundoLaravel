@@ -15,11 +15,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0">Receivers</h4>
+                    <h4 class="mb-0">Wapokea Taarifa</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);"></a></li>
-                            <li class="breadcrumb-item active">Receivers\page</li>
+                            <li class="breadcrumb-item active">Wapokea Taarifa</li>
                         </ol>
                     </div>
                 </div>
@@ -33,16 +33,16 @@
                     <div class="card-body">
                         <div>
                             <button data-bs-toggle="modal" data-bs-target="#smsReceiver" class="btn btn-info btn-md mb-4">
-                                <i class="fas fa-plus"> </i>sms receiver
+                                <i class="fas fa-plus"> </i> ongeza
                             </button>
                         </div>
-                        <h4 class="card-title">List Of all sms Receivers</h4>
+                        <h4 class="card-title">Orodha ya Watakaopokea Taafiza Za System</h4>
                         <table id="houses-table" class="table table-striped table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                             <tr>
-                                <th>Receiver's Name</th>
-                                <th>Receiver's Phone</th>
-                                <th>Date:</th>
+                                <th>Jina Kamili</th>
+                                <th>No: ya simu</th>
+                                <th>Tarehe:</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -61,7 +61,7 @@
             <!-- end col -->
         </div>
         <!-- end row -->
-        <x-system.modal id="smsReceiver" aria="smsReceivers" size="modal-lg" title="Register A New SMS Receivers">
+        <x-system.modal id="smsReceiver" aria="smsReceivers" size="modal-lg" title="Sajiri Mpokea Taarifa">
             <x-slot:content>
                 <form method="POST" action="{{ route('super.receivers.store') }}">
                     @csrf
@@ -69,19 +69,19 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="billing-name">Receiver's name</label>
+                                    <label class="form-label" for="billing-name">Jina Kamili</label>
                                     <input type="text" name="name" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="billing-name">Receiver's Phone</label>
+                                    <label class="form-label" for="billing-name">Namba Ya Simu</label>
                                     <input type="text" name="phone" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <button class="btn btn-sm btn-success" type="submit">submit</button>
+                                    <button class="btn btn-sm btn-success" type="submit">sajiri</button>
                                 </div>
                             </div>
                         </div>
