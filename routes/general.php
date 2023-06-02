@@ -8,7 +8,7 @@ Route::controller(\App\Http\Controllers\General\SialsController::class)
     ->as('general.sial.')
     ->group(function () {
         Route::get('/orodha', 'index')->name('orodha');
-        Route::get('/fungua/barua/{sial}', 'show')->name('show');
+        Route::get('/fungua/barua/{sial}', 'show')->name('show')->middleware('can:view-sial,sial');
     });
 
 
