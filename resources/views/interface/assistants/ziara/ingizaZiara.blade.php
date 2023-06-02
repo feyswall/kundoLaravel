@@ -364,7 +364,7 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                     form.submit();
                 },
                 ziaraChange() {
-                    if (this.selectedCopyToOption.length > 0 && this.selectedSendToOptions.length > 0) {
+                    if (true && this.selectedSendToOptions.length > 0) {
                         this.fichaTumaBtn = this.ziara.trim().length < 1;
                     } else {
                         this.fichaTumaBtn = true;

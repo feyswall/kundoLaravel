@@ -28,10 +28,13 @@ class GeneralSmsEvent
 
     public $about;
 
+    public $obj;
+
     public function __construct(
         $receivers,
         callable $callback,
         $message,
+        $obj,
         $about = ''
         )
     {
@@ -39,6 +42,7 @@ class GeneralSmsEvent
         $this->message = $message;
         $this->callback = $callback;
         $this->about = $about;
+        $this->obj = $obj;
     }
 
 

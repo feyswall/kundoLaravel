@@ -155,6 +155,9 @@ class Leader extends Model
         )->withTimestamps();
     }
 
-
+    public function mmses()
+    {
+        return $this->morphMany( Mms::class, 'mmsable' );
+    }
 
 }

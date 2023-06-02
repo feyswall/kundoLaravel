@@ -16,7 +16,7 @@
         <tr>
             <td>{{ $sms->request_id }}</td>
             <td>{{ $sms->message }}</td>
-            <td>{{ $sms->leaders()->count() }}</td>
+            <td>{{ $sms->sms_amount }}</td>
             <td>{{ $sms->created_at }}</td>
             <td>
                 <a href="{{ route('sms.orodha.group.moja', $sms->id) }}" class="btn btn-primary">fungua</a>

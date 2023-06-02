@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Receiver extends Model
+class Mms extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'phone'];
+    protected $fillable = ['request_id', 'message', 'sms_amount', 'about'];
 
-    public function mmses()
+    public function mmsable()
     {
-        return $this->morphMany( Mms::class, 'mmsable' );
+        return $this->morphTo();
     }
 
 }

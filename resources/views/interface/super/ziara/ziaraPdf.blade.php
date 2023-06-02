@@ -159,7 +159,7 @@
 
 <div>
     <div id="copyDiv" style="display: flex;">
-        <b>Nakala :- </b>
+        @if($copyTo) <b>Nakala :- </b> @endif
         <div>
             @foreach ($copyTo as $leader)
                 <p>{{ ucfirst($leader->posts->first()->name) }}</p>

@@ -285,8 +285,8 @@
             <div class="card">
                 <div class="card-body">
 
-                    <button data-bs-toggle="modal" data-bs-target="#orodhaTarafaModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Tarafa</button>
-                    <a href="{{ route('super.areas.halmashauri.orodha', $council->district->id) }}" class="btn btn-primary btn-md mb-4">Rudi Katika Halmashauri</a>
+                    <button data-bs-toggle="modal" data-bs-target="#orodhaTarafaModal" class="btn btn-info btn-sm mb-4"><i class="fas fa-plus"> </i> Ongeza Tarafa</button>
+                    <a href="{{ route('super.areas.halmashauri.orodha', $council->district->id) }}" class="btn btn-primary btn-sm mb-4">Rudi Wilayani</a>
                     <x-system.tarafa-table :areas="$areas">
                     </x-system.tarafa-table>
                 </div>

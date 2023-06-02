@@ -29,7 +29,7 @@ class GeneralSmsListener
     {
         $receivers = $event->receivers;
         $smsObj = new SmsNotificationsController();
-        $response  = $smsObj->smsNotify($receivers, $event->message, $event->about);
+        $response  = $smsObj->smsNotify($receivers, $event->message, $event->about, $event->obj);
         $callback = $event->callback;
         $callback($response);
         info("the event  is triggered and start to execute, waiting for the callback");

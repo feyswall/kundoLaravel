@@ -12,3 +12,9 @@ dodoma token
 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
 
 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
+
+
+
+all the messages shou
+ld be saved
+ to receivers at the because it's safer and easier to retrieve

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Mms;
 use App\Models\Sms;
 use Illuminate\Http\Request;
 
@@ -37,22 +38,24 @@ class SmsNotificationsController extends Controller
     }
 
 
-    public function smsNotify($receivers, $message, $about )
+    public function smsNotify($receivers, $message, $about, $obj)
     {
         $instance = SmsConfigController::getInstance();
         $this->setReceivers($receivers);
         $out = $instance->send($this->receivers, $message);
         if ($out['status'] == 'success') {
-            if ( isset($out['response']->successful) ){
-                // create sms object for later retrival
-                Sms::create([
-                    'request_id' => $out['response']->request_id,
-                    'message' => $message,
-                    'sms_amount' => count($receivers)
-                ]);
+            if (isset($out['response']->successful)){
+                // create sms object for later retrieve
+                $mms = new Mms();
+                $mms->request_id = $out['response']->request_id;
+                $mms->message = $message;
+                $mms->sms_amount = count($receivers);
+                $mms->about = $about;
+                $obj->mmses()->save($mms);
             }
         }
-        return $out;
+//        return $out;
+        return ['response' => 'success'];
     }
 
 }

@@ -7,7 +7,7 @@
  */
 ?>
 
-@extends("layouts.assistance_system")
+@extends("layouts.assistants_system")
 
 @section("content")
 
