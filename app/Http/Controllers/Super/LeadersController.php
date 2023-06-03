@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Super;
 
 use App\Http\Controllers\Controller;
 use App\Models\Leader;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -284,6 +286,22 @@ class LeadersController extends Controller
 //                }
 //            }
         return $onQueue;
+    }
+
+
+    public function currentLocationLeadersLogic(BelongsToMany $leaders)
+    {
+        return $leaders->with('posts', function($query){
+            $query->where(function ($query){
+                $query->where('side', 'chama');
+            })
+            ->where('area', 'tawi');
+        })
+        ->where(function ($query){
+            $query->where('side', 'chama')
+            ->orWhere('side', 'both');
+        })
+        ->get();
     }
 
     /**

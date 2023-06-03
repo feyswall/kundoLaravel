@@ -88,7 +88,11 @@
                                 $postValue = '';
                             @endphp
                             <div class="d-flex justify-start gap-4 flex-wrap">
-                                @foreach( $branch->leaders->where('side', 'chama') as $leader )
+                                @php
+                                    $leaderObj = new \App\Http\Controllers\Super\LeadersController();
+                                    $partLeaders = $leaderObj->currentLocationLeadersLogic($branch->leaders());
+                                @endphp
+                                @foreach( $partLeaders as $leader )
                                     @if( $leader->pivot->isActive == true )
                                         @php
                                             $postName = \App\Models\Post::find( $leader->pivot->post_id )->name;
