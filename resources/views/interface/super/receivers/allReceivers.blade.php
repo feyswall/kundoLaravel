@@ -43,6 +43,7 @@
                                 <th>Jina Kamili</th>
                                 <th>No: ya simu</th>
                                 <th>Tarehe:</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -50,7 +51,23 @@
                                     <tr>
                                         <td>{{ $receiver->name }}</td>
                                         <td>{{ $receiver->phone }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($receiver->created_at)->format("M-d-Y") }}</td>
+                                        <td>
+                                            {{ \Carbon\Carbon::parse($receiver->created_at)->format("M-d-Y") }}
+                                        </td>
+                                        <td>
+                                            <button type="button" form="deleteReceiver"
+                                            onclick="if(confirm(`Bonyeza OK kumtoa mpokeaji`)){
+                                                document.querySelector('#deleteReceiver').submit();
+                                            }"
+                                            class="btn btn-sm btn-danger">
+                                                futa
+                                            </button>
+                                            <form method="POST" id="deleteReceiver"
+                                             action="{{ route('super.receivers.delete', $receiver->id) }}">
+                                             @csrf
+                                             @method('delete')
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

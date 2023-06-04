@@ -193,16 +193,18 @@
                                             <!-- Force next columns to break to new line -->
                                                 <div class="w-100"></div>
                                                 <hr>
-                                                <h3><b>{{ $post->name }}</b></h3>
+                                                <h5><b>{{ $post->name }}</b></h5>
                                                 @php
                                                     $tracker = $post->name;
                                                       $counter = 1;
                                                 @endphp
                                                 <div class="col-md-3 col-sm-12 col-12 p-3">
                                                     <div class="text-center">
-                                                        <h4 class="fs-5 text-capitalize mb-1">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
+                                                        <h5 class="fs-5 text-capitalize mb-1">
+                                                            {{ $leader->firstName }} {{ $leader->lastName }}
+                                                        </h5>
                                                         <span class="d-block mb-2">{{ $leader->phone }}</span>
-                                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $post->name }}</small>
+                                                        {{-- <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $post->name }}</small> --}}
                                                         <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $counter }}</small>
                                                         <span class="d-block mb-2">
                                                         @php

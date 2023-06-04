@@ -388,6 +388,7 @@ Route::controller(ReceiversController::class)
     ->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/store', 'store')->name('store');
+        Route::delete('/delete/{id}', 'destroy')->name('delete');
 });
 
 

@@ -135,11 +135,16 @@ Route::post('/download/pdf', [PDFController::class, 'downloadPdf'])->name('downl
 
 // just for test route
 Route::get('/smsMe', function(){
-    event(new GeneralSmsEvent(
-        [['id' => 1, 'phone' => '255628960877']],
-        function($response){ info(json_encode($response)); },
-        'hellow feyswall feeling great?', ''
-    ));
+    $recevers = \App\Models\Receiver::all();
+    foreach( $recevers as $receiver ){
+        $customeToPass = ['id' => $receiver->id, 'phone' => $receiver->phone ];
+        event(new GeneralSmsEvent(
+            [$customeToPass],
+            function($response){ info(json_encode($response)); },
+            'hellow feyswall feeling great?',
+            $receiver
+        ));
+    }
 });
 
 require __DIR__ . '/auth.php';

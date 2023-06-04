@@ -17,5 +17,4 @@ Route::controller(\App\Http\Controllers\Mbunge\ChallengesController::class)
         Route::put('/tuma/{challenge}', 'preExistToExist')->name('.toExist');
     });
 
-
 ?>

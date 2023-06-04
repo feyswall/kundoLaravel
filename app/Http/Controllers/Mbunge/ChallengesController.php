@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Mbunge;
 
+use App\Events\GeneralSmsEvent;
 use App\Models\Challenge;
 use App\Http\Controllers\Controller;
+use App\Models\Receiver;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,18 +83,31 @@ class ChallengesController extends Controller
                 'message' => 'Kumetokea Tatizo Tafadhali Jaribu Tena.'
             ]);
         }
-
         $updata = [
             'status' => 'new',
             'form_url' => $fileName,
             ];
-
         $challenge->update( $updata );
-
-        if ( !($challenge->form_url) ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'Hatukuweza Kuhifadhi form tafadhali jaribu tena.']);
+        if (!($challenge->form_url)){
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Hatukuweza Kuhifadhi form tafadhali jaribu tena.'
+            ]);
         }
-
+        $receivers = Receiver::all();
+        foreach( $receivers as $receiver ){
+            $customeToPass = ['id' => $receiver->id, 'phone' => $receiver->phone ];
+            $mess = "Barua Kutoa Kwa Mbunge \n";
+            $mess .= "YAHUSU: ".$challenge->yahusu." \n";
+            $mess .= "Bonyeza Link Kusoma Zaidi \n";
+            $mess .= " ".route('super.challenge.fungua', $challenge->id);
+            event(new GeneralSmsEvent(
+                [$customeToPass],
+                function($response){ info(json_encode($response)); },
+                $mess,
+                $receiver
+            ));
+        }
         return redirect()->route('mbunge.challenges.fungua', $challenge)
         ->with(['status' => 'success', 'message' => 'Changamoto Imewasirishwa']);
     }
@@ -105,12 +120,11 @@ class ChallengesController extends Controller
      */
     public function store(Request $request)
     {
-
         $isImagePresent = false;
         $path = null;
         $user = Auth::user();
         $mbunge = $user->leader;
-        $data = $mbunge->posts->where('deep', 'mbunge')->first();
+        $data = $mbunge->posts->whereIn('deep', ['mbunge', 'mbunge_viti_maalum'])->first();
         if ( !$data ){
             return redirect()->back()->with([
                     'status' => 'error',
@@ -127,14 +141,12 @@ class ChallengesController extends Controller
             'yahusu' => 'Tafadhali Jaza Yahusu'
         ];
         $request->validate($rules, $messages);
-
         if ( $file ){
             $path = Storage::putFile('pdfs', $file);
             $fileNamesParticles = explode('/', $path );
             $isImagePresent = true;
             $fileName = end( $fileNamesParticles );
         }
-
         $state = $mbunge->states()->where('isActive', true)->first();
         if ( !$state ){
             return redirect()->back()->with([
@@ -143,7 +155,6 @@ class ChallengesController extends Controller
             ]);
         }
         $changamoto = $request->input('changamoto');
-
         $challenge = Challenge::create([
             'status' => 'preExist',
             'yahusu' => $request->input('yahusu'),

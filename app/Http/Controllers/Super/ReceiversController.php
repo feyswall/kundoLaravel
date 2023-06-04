@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Super;
 
 
+use App\Events\GeneralSmsEvent;
 use App\Events\SendingSmsNotificationEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Receiver;
@@ -31,17 +32,29 @@ class ReceiversController extends Controller
         if ( $validate->fails() ){
             return redirect()->back()->withErrors($validate->errors());
         }
+        $phone = preg_replace("/^0/", "255", $request->input('phone'));
+        $phone = preg_replace("/\s/", "", $phone );
         $receiver = Receiver::create([
             'name' => $request->input('name'),
-            'phone' => $request->input('phone')
+            'phone' => $phone
         ]);
         if ( !$receiver ){
             return redirect()->back()->with(['status' => 'error', 'message' => 'Unable to register a receiver. Try again later']);
         }
-        $message = "You are now one of the people who will be receiving text message from
-        family assets system, Please welcome";
-        event(new SendingSmsNotificationEvent([$receiver], function($data){}, $message, 'registerReceiver'));
+        $message = "Habari ".ucwords($request->input('name'))." \n";
+        $message .= "Sasa umekuwa Miongoni mwa watu watakokuwa wakijuzwa yale yanayokuwa yakiendelea kwenye KIMS SYSTEM";
+        event(new GeneralSmsEvent(
+            [ ['id' => $receiver->id , 'phone' => $phone] ],
+            function($response){ info(json_encode($response)); },
+            $message,
+            $receiver
+        ));
         return redirect()->back()->with(['status' => 'success', 'message' => 'Receiver created successfully']);
     }
 
+    public function destroy($id){
+        $receiver = Receiver::find($id);
+        $receiver->delete();
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Mpoaji Ametolewa']);
+    }
 }

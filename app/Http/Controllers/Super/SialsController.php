@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Super;
 
+use App\Events\GeneralSmsEvent;
 use App\Models\LetterNumber;
 use App\Models\Sial;
 use App\Http\Controllers\Controller;
@@ -145,29 +146,30 @@ class SialsController extends Controller
     public function store(Request $request){
         $areaToBeSend = json_decode($request->input('area'));
         $selectedCopyToLeaders = [];
-        foreach($request->copyTo as $requestCopyTo ){
-            $selected = explode(',', $requestCopyTo);
-            $selectedLeaderId = $selected[0];
-            $selectedPostId = $selected[1];
-            $copyToLeader = Leader::where('id', $selectedLeaderId)
-                ->with('posts', function ($query) use ($selectedPostId) {
-                    $query->where('post_id', $selectedPostId)->first();
-                })
-                ->first();
-            $selectedCopyToLeaders[] = $copyToLeader;
+        if ( $request->copyTo ){
+            foreach($request->copyTo as $requestCopyTo ){
+                $selected = explode(',', $requestCopyTo);
+                $selectedLeaderId = $selected[0];
+                $selectedPostId = $selected[1];
+                $copyToLeader = Leader::where('id', $selectedLeaderId)
+                    ->with('posts', function ($query) use ($selectedPostId) {
+                        $query->where('post_id', $selectedPostId)->first();
+                    })
+                    ->first();
+                $selectedCopyToLeaders[] = $copyToLeader;
+            }
         }
-
         $selectedSendToLeaders = [];
         foreach($request->sendTo as $requestSendTo ){
             $selected = explode(',', $requestSendTo);
             $selectedLeaderId = $selected[0];
             $selectedPostId = $selected[1];
-            $copyToLeader = Leader::where('id', $selectedLeaderId)
+            $sendToLeader = Leader::where('id', $selectedLeaderId)
                 ->with('posts', function ($query) use ($selectedPostId) {
                     $query->where('post_id', $selectedPostId)->first();
                 })
                 ->first();
-            $selectedSendToLeaders[] = $copyToLeader;
+            $selectedSendToLeaders[] = $sendToLeader;
         }
 
         $number = 1;
@@ -188,16 +190,13 @@ class SialsController extends Controller
                 'sendTo' => $selectedSendToLeaders,
                 'name' => $name,
             ];
-
             $pdf = PDF::loadView('interface.super.ziara.ziaraPdf', $datas);
             return $pdf->stream("challenge_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf");
         }
-
         LetterNumber::create([
             'number' => 'SMY-BRD/EKAM40/' . $year . '-0' . $number,
             'numberCount' => $number,
         ]);
-
         $datas = [
             'sials' => $request->input('content'),
             'title' => $request->input('title'),
@@ -205,32 +204,23 @@ class SialsController extends Controller
             'sendTo' => $selectedSendToLeaders,
             'name' => $name,
          ];
-
         $pdf = PDF::loadView('interface.super.ziara.ziaraPdf', $datas);
-
         $pdfFile = $pdf->stream("challenge_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf");
         $path = "ziara/ziara_No_".str_replace(['\s', '.', '/', '-', ':'], '_', now() ).".pdf";
         Storage::put($path, $pdfFile );
-
         $rules = [
             'title' => 'required|min:4'
         ];
-
         $messages = [
             'title' => 'Tafadhali Jaza Yahusu'
         ];
-
         // $request->validate($rules, $messages);
-
         $vals = [
             'status' => 'fail',
             'message' => 'tatizo Halikufahamika Tafadhali Jaribu Tena'
         ];
-
         $image_path_particles = explode('/', $path);
-
         $image_name = end( $image_path_particles );
-
         if (Storage::exists("$path")) {
             $sialObjectData = [
                 'letter_url' => $image_name,
@@ -254,7 +244,6 @@ class SialsController extends Controller
                         $ziara->leaders()->attach($copyToLeader->id, ['titled' => 'copyTo', 'receiver_post_id' => $selectedPostId]);
                     }
                 }
-
                 foreach($selectedSendToLeaders as $requestSendTo ){
                     $selectedLeaderId = $requestSendTo->id;
                     $selectedPostId = $requestSendTo->posts->first()->id;
@@ -266,6 +255,29 @@ class SialsController extends Controller
                     if ( $sendToLeader ) {
                         $ziara->leaders()->attach($sendToLeader->id, ['titled' => 'sendTo', 'receiver_post_id' => $selectedPostId]);
                     }
+                }
+
+
+                $message = "KIMS Barua \n";
+                $message .= "yah: ".$request->input('title')." \n";
+                $message .= "Bonyeza Link kusoma zaidi \n";
+                $message .= "".route('general.sial.show', $ziara->id)."\n";
+                foreach($selectedCopyToLeaders as $copyToLeader ){
+                    $message .= "Umepokea Nakala";
+                    event(new GeneralSmsEvent(
+                        [ ['id' => $copyToLeader->id , 'phone' => $copyToLeader->phone] ],
+                        function($response){ info(json_encode($response)); },
+                        $message,
+                        $copyToLeader
+                    ));
+                }
+                foreach($selectedSendToLeaders as $sendToLeader ){
+                    event(new GeneralSmsEvent(
+                        [ ['id' => $sendToLeader->id , 'phone' => $sendToLeader->phone] ],
+                        function($response){ info(json_encode($response)); },
+                        $message,
+                        $sendToLeader
+                    ));
                 }
 
                 return redirect()->route("super.sial.show", $ziara->id)->with([
