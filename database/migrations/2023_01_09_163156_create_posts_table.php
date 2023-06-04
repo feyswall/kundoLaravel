@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('numberCount')->default(1);
 
             $table->string('area');
+            $table->string('side')->default('chama');
             $table->timestamps();
         });
     }

@@ -23,7 +23,10 @@ class SialsTableSeeder extends Seeder
         ['name' => 'grob_sials', 'presentable' => 'Yote Barua'],
             ];
             foreach( $assistanceDefaultPermissions as $permission ){
-                Permission::create(['name' => $permission['name'], 'presentable' => $permission['presentable']]);
+                $permissionExists = Permission::where('name', $permission['name'])->exists();
+                if ( !$permissionExists ){
+                    Permission::create(['name' => $permission['name'], 'presentable' => $permission['presentable']]);
+                }
             }
     }
 }

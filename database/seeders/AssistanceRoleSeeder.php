@@ -28,7 +28,10 @@ class AssistanceRoleSeeder extends Seeder
             ['name' => 'grob_assistance', 'presentable' => 'Yote Msimamizi'],
         ];
        foreach( $assistanceDefaultPermissions as $permission ){
-           Permission::create(['name' => $permission]);
+           Permission::create([
+            'name' => $permission['name'],
+             'presentable' => $permission['presentable'
+             ]]);
        }
         $user = User::create([
             'name' => 'Feyswal Assistance',

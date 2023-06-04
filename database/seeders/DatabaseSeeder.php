@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
 //        $this->call( PermissionSeeder::class );
-        // $this->call( UserSeeder::class );
+//         $this->call( UserSeeder::class );
 //        $this->call( AreasTableSeeder::class );
 //        $this->call( RegionTableSeeder::class );
 //        $this->call( PostsTableSeeder::class );
@@ -31,8 +31,8 @@ class DatabaseSeeder extends Seeder
 //        $this->call(groupPostTableSeeder::class);
 //        $this->call( MotorCategorySeeder::class );
 //        $this->call( MotorOwner::class );
-//        $this->call( CharityCategoriesSeeder::class );
-// $this->call(AssistanceRoleSeeder::class);
+// $this->call( CharityCategoriesSeeder::class );
+//  $this->call(AssistanceRoleSeeder::class);
 $this->call(SialsTableSeeder::class );
 
     }
