@@ -18,23 +18,21 @@
                     <div class="card-body">
                         <h3 class="">Jina la chombo: {{ $service->motor->identity_name }}</h3>
                         <h4 class="mt-3 text-danger"><b>Taarifa za Garage</b></h4>
-                        <label class="form-label  font-size-24" id="machagulio-mkoa">
-                            <h4>Jina: {{ $service->garage->name }}</h4>
-                            <h4>Namba ya simu: {{ $service->garage->phone }}</h4>
-                            <h4>Barua pepe: {{ $service->garage->email }}</h4>
-                        </label>
+                            <h4>Jina: <b>{{ $service->garage->name }}</b></h4>
+                            <h4>Namba ya simu: <b>{{ $service->garage->phone }}</b></h4>
+                            <h4>Barua pepe: <b>{{ $service->garage->email }}</b></h4>
                         <label class="form-label font-size-24" id="machagulio-wilaya"></label>
 
 
                         <div class="mt-3">
                             <h4 class="text-danger"><b>services Zilizofanyika</b></h4>
-                            <table id="datatable-serviceGarage" class="table table-responsive table-bordered">
+                            <table id="datatable-serviceGarage" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Aina ya service</th>
-                                    <th scope="col">cost(Asili) Tsh</th>
-                                    <th scope="col">cost(jazwa) Tsh</th>
+                                    <th>#</th>
+                                    <th>Aina ya service</th>
+                                    <th>cost(Asili) Tsh</th>
+                                    <th>cost(jazwa) Tsh</th>
                                     <th>tofauti Tsh</th>
                                     <th>Idadi</th>
                                     <th>Tar</th>

@@ -13,15 +13,6 @@
                 <td>{{ $council->divisions()->count() }}</td>
                 <td>{{ $council->wards->count() }}</td>
                 <td>{{ $council->branches->count() }}</td>
-                {{--<td>--}}
-                    {{--@php--}}
-                        {{--$counter = 0;--}}
-                        {{--foreach ( $district->councils() as $council ){--}}
-                            {{--$number = $council->divisions()->count();--}}
-                        {{--}--}}
-                    {{--echo $counter;--}}
-                    {{--@endphp--}}
-                {{--</td>--}}
                 <td>
                     <a href="{{ route("super.areas.tarafa.orodha", $council->id) }}" class="btn btn-primary">fungua</a>
                 </td>

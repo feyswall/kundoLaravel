@@ -17,7 +17,7 @@ class ApartmentsController extends Controller
     private $today;
 
     public function __construct(){
-        $this->today = Carbon::now()->addDays(10);
+        $this->today = Carbon::now();
     }
 
     public function  show($id)
@@ -95,7 +95,6 @@ class ApartmentsController extends Controller
         }
         return ['status' => false ];
     }
-
 
     public function houseRentInspector()
     {
