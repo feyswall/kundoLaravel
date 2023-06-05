@@ -20,7 +20,9 @@
                     <h2 class="">Taarifa Ya Changamoto Ulizowahi Kuwakilisha</h2>
                     <label class="form-label  font-size-24" id="machagulio-mkoa"></label>
                     <label class="form-label font-size-24" id="machagulio-wilaya"></label>
-                    <table id="datatable-viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <table id="datatable-viongoziWilayaTable"
+                    class="table table-striped table-bordered dt-responsive nowrap"
+                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                         <th>#</th>
                         <th>Yahusu</th>
@@ -42,6 +44,7 @@
                                     <td>{{ substr( $challenge->yahusu, 0, 30); }}
                                          @if ( strlen($challenge->yahusu) > 30 )... @endif
                                     </td>
+                                    <td>{{ $challenge->from }}</td>
                                     <td>{{ $challenge->created_at }}</td>
                                     <td>
                                         <span class="text-danger">
