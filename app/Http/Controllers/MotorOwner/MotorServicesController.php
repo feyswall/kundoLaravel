@@ -76,7 +76,7 @@ class MotorServicesController extends Controller
             'owner_id' => $owner->id,
             'garage_id' => $request->garage,
         ]);
-        $message .= route('motorOwner.service.moja', $service->id );
+        $message .= route('super.service.moja', $service->id );
 
         foreach( $request->serviceType as $key => $type ){
             $typeObj = ServiceType::find($type);
