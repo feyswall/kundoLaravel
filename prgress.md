@@ -9,9 +9,7 @@ are not yet in consideration, So make sure you solve this at the end
 
 dodoma token
 ==============
-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
-
-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
+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
 
 
 
