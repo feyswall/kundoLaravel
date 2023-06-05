@@ -91,7 +91,7 @@
                                                                 </div>
 
                                                                 <div class="row justify-content-center mt-n3">
-                                                                    <div class="col-sm-8 col-md-8 text-center">
+                                                                    <div class="col-sm-12 col-md-8 text-center">
                                                                         *Wako mtiifu katika ujenzi wa mawasiliano Bora katika Taifa
                                                                     </div>
                                                                 </div>

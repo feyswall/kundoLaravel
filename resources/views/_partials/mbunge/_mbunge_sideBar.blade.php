@@ -21,7 +21,7 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li>
-                    <a href="{{ route('dashboard') }}"><span>Dashboard</span> </a>
+                    <a href="{{ route('dashboard') }}"><span>Nyumbani</span> </a>
                 </li>
                 <li class="mm-active">
                     <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">

@@ -27,7 +27,10 @@ class ChallengesController extends Controller
         }
         $leader = \Illuminate\Support\Facades\Auth::user()->leader;
         if (!$leader ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'Kujua Changamoto Yakupasa uwe kiongozi.']);
+            return redirect()->back()->with([
+                'status' => 'error',
+            'message' => 'Kujua Changamoto Yakupasa uwe kiongozi.'
+        ]);
         }
         $challenges = Challenge::where('from', $from)
                         ->where('leader_id', $leader->id)->get();

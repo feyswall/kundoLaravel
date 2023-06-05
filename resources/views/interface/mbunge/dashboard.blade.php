@@ -30,16 +30,18 @@
                         <th></th>
                         </thead>
                         <tbody>
-                            @php $challenges = App\Models\Challenge::all(); @endphp
+                            @php
+                                 $leader = \Illuminate\Support\Facades\Auth::user()->leader;
+                                 $challenges = App\Models\Challenge::where('leader_id', $leader->id)->get();
+                            @endphp
                             @foreach( $challenges as $key => $challenge )
                                 <tr>
                                     <td>
                                         {{ $challenges->count() - $key }}
                                     </td>
-                                    <td>{{ substr( $challenge->yahusu, 0, 60); }}
-                                         @if ( strlen($challenge->yahusu) > 60 )  ... @endif
+                                    <td>{{ substr( $challenge->yahusu, 0, 30); }}
+                                         @if ( strlen($challenge->yahusu) > 30 )... @endif
                                     </td>
-                                    <td>{{ $challenge->from }}</td>
                                     <td>{{ $challenge->created_at }}</td>
                                     <td>
                                         <span class="text-danger">
@@ -56,7 +58,8 @@
                                     </td>
                                     @if ( $challenge->status != 'preExist')
                                         <td style="display: flex;">
-                                            <a href="{{ route('mbunge.challenges.fungua', $challenge->id) }}" class="btn btn-success btn-sm">Fungua</a href="">
+                                            <a href="{{ route('mbunge.challenges.fungua', $challenge->id) }}"
+                                                class="btn btn-success btn-sm float-left">Fungua</a href="">
                                             <a href="" class="btn btn-danger btn-sm">futa</a>
                                         </td>
                                     @else
