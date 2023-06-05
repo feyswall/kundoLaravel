@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Super;
 
 use App\Events\GeneralSmsEvent;
+use App\Events\SendingSmsNotificationEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Super\Apartment\ApartmentsController;
 use App\Models\Receiver;
@@ -30,21 +31,19 @@ class AutoMmsSenderController extends Controller
         $receivers = Receiver::all();
         $apartment = new ApartmentsController();
         $apartmentString = $apartment->smsStringBuilder();
-        if ( $apartmentString AND !($this->didWeSendToday('apartmentRent'))){
+        if ( $apartmentString AND !($this->didWeSendToday('apartmentRentCheck'))){
             foreach( $receivers as $receiver ){
                 $customeToPass = ['id' => $receiver->id, 'phone' => $receiver->phone ];
-//                event(new GeneralSmsEvent(
-//                    [$customeToPass],
-//                    function($response){ info(json_encode($response)); },
-//                    $apartmentString,
-//                    $receiver
-//                ));
+                event(new GeneralSmsEvent(
+                    [$customeToPass],
+                    function($response){ info(json_encode($response)); },
+                    $apartmentString,
+                    $receiver,
+                    'apartmentRentCheck'
+                ));
                 info('task execute');
             }
-            event(new SendingSmsNotificationEvent($receivers, function ($data){
-                info("The full callback function ". json_encode($data));
-            }), $apartmentString, 'apartmentRent');
-        }elseif($this->didWeSendToday('apartmentRent')){
+        }elseif($this->didWeSendToday('apartmentRentCheck')){
             info("Today already sent apartment rents");
         }
         else{

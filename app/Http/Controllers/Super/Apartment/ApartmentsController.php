@@ -14,6 +14,12 @@ use Illuminate\View\View;
 
 class ApartmentsController extends Controller
 {
+    private $today;
+
+    public function __construct(){
+        $this->today = Carbon::now()->addDays(10);
+    }
+
     public function  show($id)
     {
         $tenants = Tenant::onlyTrashed()->get();
@@ -76,7 +82,7 @@ class ApartmentsController extends Controller
 
     public function isApartmentPaid(Apartment $apartment)
     {
-        $today = Carbon::now();
+        $today = $this->today;
         // getting each payment
         foreach ( $apartment->payments as $payment ){
             // checking if this month is paid
@@ -88,7 +94,8 @@ class ApartmentsController extends Controller
             }
         }
         return ['status' => false ];
-        }
+    }
+
 
     public function houseRentInspector()
     {
@@ -109,7 +116,7 @@ class ApartmentsController extends Controller
                     $obj['payment'] = $anyOneGreater['payment'];
                 }else {
                      if (true) {
-                         $today = Carbon::now();
+                         $today = $this->today;
                          // checking the remaining time
                          $paidEnd = Carbon::parse($obj['payment']->end_month);
                          $months = $today->diffInMonths($paidEnd);
@@ -117,7 +124,7 @@ class ApartmentsController extends Controller
                          if (true) {
                              $days = $today->diffInDays($paidEnd);
                              $consideredDays = [30, 7];
-                             if (in_array($days, $consideredDays)) {
+                             if ( in_array($days, $consideredDays) ) {
                                  $unPaidApartments[] = [
                                      'apartment' => $apartment,
                                      'finalPayment' => $obj['payment'],
@@ -165,7 +172,7 @@ class ApartmentsController extends Controller
                         $lastLoopHouse = $house;
                         $message .= " ".$house['apartment']->house->houseName."-". $house['apartment']->name." \n";
                     }
-                    $message .=  " Zimebaki siku ".$lastLoopHouse['days']."  kuisha kodi, ";
+                    $message .=  "Zimebaki siku ".$lastLoopHouse['days']."  kuisha kodi, ";
                     }else{
                         $message .= "Apartments: \n";
                         foreach ( $houses as $key => $house ){

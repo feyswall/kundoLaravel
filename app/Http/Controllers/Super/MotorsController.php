@@ -87,7 +87,7 @@ class MotorsController extends Controller
             $userObj = new UsersController();
             $userRequestData = [];
             $userRequestData['name'] = $request->input('owner_name');
-            $nameString = str_replace('\s', '', $request->input('owner_name'));
+            $nameString = str_replace(' ', '', $request->input('owner_name'));
             $userRequestData['email'] = strtolower( $nameString.".motor@kims.com" );
             $userRequestData['password'] = strtolower( $nameString );
             $userFunct = $userObj->createApi($userRequestData);

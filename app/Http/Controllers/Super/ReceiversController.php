@@ -20,13 +20,24 @@ class ReceiversController extends Controller
             ->with('receivers', $receivers);
     }
 
+    public static function myReceivers()
+    {
+        $receivers = Receiver::all();
+        $goWith = [];
+        foreach( $receivers as $receiver ){
+            $customeToPass = ['id' => $receiver->id, 'phone' => $receiver->phone, 'rec' => $receiver ];
+            $goWith[] = $customeToPass;
+        }
+        return $goWith;
+    }
+
     public function store( Request $request ){
         $rules = [
             'name' => 'required',
             'phone' => ['required', new PhoneNumber()],
         ];
         $messages = [
-            'name:unique' => 'The name already exist in receivers list',
+            'name:unique' => 'Jina Lilishasajiriwa na kufutwa',
         ];
         $validate = Validator::make($request->all(), $rules );
         if ( $validate->fails() ){
