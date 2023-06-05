@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 01, 2023 at 04:20 PM
+-- Generation Time: Jun 05, 2023 at 09:25 AM
 -- Server version: 10.5.19-MariaDB-cll-lve
 -- PHP Version: 7.2.34
 
@@ -94,6 +94,13 @@ CREATE TABLE `assistants` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `assistants`
+--
+
+INSERT INTO `assistants` (`id`, `fullName`, `gender`, `phone`, `user_id`, `created_at`, `updated_at`) VALUES
+(1, 'Feyswal Assistance', 'male', '255628960877', 730, '2023-06-05 08:48:08', '2023-06-05 08:48:08');
 
 -- --------------------------------------------------------
 
@@ -715,6 +722,15 @@ CREATE TABLE `charity_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `charity_categories`
+--
+
+INSERT INTO `charity_categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Afya', '2023-06-05 08:48:08', '2023-06-05 08:48:08'),
+(2, 'Elimu', '2023-06-05 08:48:08', '2023-06-05 08:48:08'),
+(3, 'Usafirishaji', '2023-06-05 08:48:08', '2023-06-05 08:48:08');
 
 -- --------------------------------------------------------
 
@@ -3186,7 +3202,35 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (93, '2023_05_22_093411_create_letter_numbers_table', 8),
 (94, '2023_05_22_105048_add_letter_number_on_sials_table', 8),
 (95, '2023_05_31_114708_create_assistants_table', 9),
-(96, '2023_06_01_083708_add_presentable_name_column_to_permission_field', 9);
+(96, '2023_06_01_083708_add_presentable_name_column_to_permission_field', 9),
+(97, '2023_06_01_193309_create_receivers_table', 10),
+(98, '2023_06_02_135511_create_mms_table', 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mms`
+--
+
+CREATE TABLE `mms` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `request_id` varchar(255) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `sms_amount` varchar(255) NOT NULL,
+  `about` varchar(255) DEFAULT NULL,
+  `mmsable_type` varchar(255) NOT NULL,
+  `mmsable_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `mms`
+--
+
+INSERT INTO `mms` (`id`, `request_id`, `message`, `sms_amount`, `about`, `mmsable_type`, `mmsable_id`, `created_at`, `updated_at`) VALUES
+(1, '75957884', 'Habari Vicent Alphonce Mkota \nSasa umekuwa Miongoni mwa watu watakokuwa wakijuzwa yale yanayokuwa yakiendelea kwenye KIMS SYSTEM', '1', '', 'App\\Models\\Receiver', 1, '2023-06-05 09:00:46', '2023-06-05 09:00:46'),
+(2, '75969482', 'Habari Eng: Kundo Mathew \nSasa umekuwa Miongoni mwa watu watakokuwa wakijuzwa yale yanayokuwa yakiendelea kwenye KIMS SYSTEM', '1', '', 'App\\Models\\Receiver', 2, '2023-06-05 11:54:50', '2023-06-05 11:54:50');
 
 -- --------------------------------------------------------
 
@@ -3945,7 +3989,8 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (3, 'App\\Models\\User', 725),
 (3, 'App\\Models\\User', 726),
 (3, 'App\\Models\\User', 727),
-(3, 'App\\Models\\User', 728);
+(3, 'App\\Models\\User', 728),
+(5, 'App\\Models\\User', 730);
 
 -- --------------------------------------------------------
 
@@ -4107,7 +4152,8 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (5, 'update_users', 'web', '2023-01-27 09:58:01', '2023-01-27 09:58:01', 'un-specified'),
 (6, 'destroy_users', 'web', '2023-01-27 09:58:01', '2023-01-27 09:58:01', 'un-specified'),
 (7, 'grob_users', 'web', '2023-01-27 09:58:01', '2023-01-27 09:58:01', 'un-specified'),
-(8, 'grob_sials', 'web', '2023-06-01 19:19:22', '2023-06-01 19:19:22', 'Yote Barua');
+(8, 'grob_sials', 'web', '2023-06-01 19:19:22', '2023-06-01 19:19:22', 'Yote Barua'),
+(9, 'grob_assistance', 'web', '2023-06-05 08:48:08', '2023-06-05 08:48:08', 'Yote Msimamizi');
 
 -- --------------------------------------------------------
 
@@ -4222,6 +4268,29 @@ INSERT INTO `posts` (`id`, `name`, `deep`, `area`, `created_at`, `updated_at`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `receivers`
+--
+
+CREATE TABLE `receivers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `receivers`
+--
+
+INSERT INTO `receivers` (`id`, `name`, `phone`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'vicent alphonce mkota', '255628960877', NULL, '2023-06-05 09:00:45', '2023-06-05 09:00:45'),
+(2, 'Eng: Kundo Mathew', '255767332093', NULL, '2023-06-05 11:54:49', '2023-06-05 11:54:49');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `regions`
 --
 
@@ -4261,7 +4330,8 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 (1, 'super', 'web', '2023-01-27 09:58:01', '2023-01-27 09:58:01'),
 (2, 'mbunge', 'web', '2023-01-27 09:58:01', '2023-01-27 09:58:01'),
 (3, 'general', 'web', '2023-03-12 17:49:25', '2023-03-12 17:49:25'),
-(4, 'motorOwner', 'web', '2023-03-26 17:00:59', '2023-03-26 17:00:59');
+(4, 'motorOwner', 'web', '2023-03-26 17:00:59', '2023-03-26 17:00:59'),
+(5, 'assistance', 'web', '2023-06-05 08:48:08', '2023-06-05 08:48:08');
 
 -- --------------------------------------------------------
 
@@ -5224,7 +5294,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 (726, 'Juma itango', 'jumaitango.general@kims.com', NULL, '$2y$10$PCQ8EWgS2IGJMAJ0iPF4LucdxHHggD1x8Ls4qFK2dQCXHA2Xw3yc.', NULL, '2023-03-12 17:50:20', '2023-03-12 17:50:20'),
 (727, 'Kija Masunga', 'kijamasunga.general@kims.com', NULL, '$2y$10$xLhPkEnESPwjEdVuVsdg2.6pxEUV/j.u7UwPwuh6pnJdx9YnLCAOy', NULL, '2023-03-12 17:50:20', '2023-03-12 17:50:20'),
 (728, 'Mayunga Mazungu', 'mayungamazungu.general@kims.com', NULL, '$2y$10$awWAGImpiWEA.kAeg2vvFeESB9kwDyqio.5NM.buneAmQTFJXA/4m', NULL, '2023-03-12 17:50:20', '2023-03-12 17:50:20'),
-(729, 'mgaleally', 'mgaleally.mbunge@kims.com', NULL, '$2y$10$g/AtCpLb1VuuLH8rl2mLfO58LsY6zP92aN4n4CZ.PHRFpEEEF1JUG', NULL, '2023-05-28 19:43:52', '2023-05-28 19:43:52');
+(729, 'mgaleally', 'mgaleally.mbunge@kims.com', NULL, '$2y$10$g/AtCpLb1VuuLH8rl2mLfO58LsY6zP92aN4n4CZ.PHRFpEEEF1JUG', NULL, '2023-05-28 19:43:52', '2023-05-28 19:43:52'),
+(730, 'Feyswal Assistance', 'fey2@gmail.com', NULL, '$2y$10$oY9u3IjzK6QGHaDXLxj6PO29hd/IjF02yWFojta6mQH48.nhJOMSC', NULL, '2023-06-05 08:48:08', '2023-06-05 08:48:08');
 
 -- --------------------------------------------------------
 
@@ -5524,6 +5595,13 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `mms`
+--
+ALTER TABLE `mms`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `mms_mmsable_type_mmsable_id_index` (`mmsable_type`,`mmsable_id`);
+
+--
 -- Indexes for table `model_has_permissions`
 --
 ALTER TABLE `model_has_permissions`
@@ -5612,6 +5690,12 @@ ALTER TABLE `personal_access_tokens`
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `receivers`
+--
+ALTER TABLE `receivers`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -5748,7 +5832,7 @@ ALTER TABLE `assets`
 -- AUTO_INCREMENT for table `assistants`
 --
 ALTER TABLE `assistants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `branches`
@@ -5778,7 +5862,7 @@ ALTER TABLE `charities`
 -- AUTO_INCREMENT for table `charity_categories`
 --
 ALTER TABLE `charity_categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `councils`
@@ -5928,7 +6012,13 @@ ALTER TABLE `letter_numbers`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+
+--
+-- AUTO_INCREMENT for table `mms`
+--
+ALTER TABLE `mms`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `motors`
@@ -5976,7 +6066,7 @@ ALTER TABLE `pdf_doors`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -5991,6 +6081,12 @@ ALTER TABLE `posts`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
+-- AUTO_INCREMENT for table `receivers`
+--
+ALTER TABLE `receivers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `regions`
 --
 ALTER TABLE `regions`
@@ -6000,7 +6096,7 @@ ALTER TABLE `regions`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -6072,7 +6168,7 @@ ALTER TABLE `trunks`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=730;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=731;
 
 --
 -- AUTO_INCREMENT for table `wards`

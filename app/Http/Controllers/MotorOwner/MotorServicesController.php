@@ -62,10 +62,13 @@ class MotorServicesController extends Controller
             $systemTotal += ($count * $typeObj->cost);
         }
         $lastTimeService = Service::latest()->first();
-        $lastTimeDate = Carbon::parse($lastTimeService->created_at)->format('M-d-Y');
+        $lastTimeDate = null;
+        if ( $lastTimeService ){
+            $lastTimeDate = Carbon::parse($lastTimeService->created_at)->format('M-d-Y');
+        }
         $message .= "Jumla ".number_format($userTotal, 0, '.', ',')."/=\n";
         $message .= "Jumla(System) ".number_format($systemTotal, 0, '.', ',')."/=\n";
-        $message .= "Service ya mwisho ilikuwa Tar. ".$lastTimeDate."\n";
+        $message .= $lastTimeDate ? "Service ya mwisho ilikuwa Tar. ".$lastTimeDate."\n" : '';
         $message .= "Fungua\n";
 
         $service = Service::create([
