@@ -61,7 +61,6 @@
             </div> <!-- end col -->
         </div> <!-- end row -->
     </div>
-
 @endsection
 
 @section("extra_script")
