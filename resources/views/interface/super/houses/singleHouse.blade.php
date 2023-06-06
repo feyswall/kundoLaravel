@@ -42,7 +42,8 @@
                                     <td>{{ number_format( floatval($apartment->cost), 0, '.', ',') }} Tsh</td>
                                     <td>{{ \Carbon\Carbon::parse($house->created_at)->format("M-d-Y") }}</td>
                                     <td>
-                                        <a href="{{ route('super.apartment.showApartment', $apartment->id) }}" class="btn btn-success btn-sm">open</a>
+                                        <a href="{{ route('super.apartment.showApartment', $apartment->id) }}"
+                                             class="btn btn-success btn-sm">fungua</a>
                                     </td>
                                 </tr>
                             @endforeach

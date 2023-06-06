@@ -90,8 +90,27 @@
                             </div>
                             <div class="col-lg-8 col-sm-12">
                                 <div class="mb-3 mb-4">
-                                    <label class="form-label" for="billing-name">Mwezi wa kuanza</label>
-                                    <input type="date" name="date" class="form-control">
+                                    @php
+                                        $start_date = null;
+                                        // selecting the last payments of the apartment
+                                        $payment = $apartment->payments()->latest()->first();
+                                        if ($payment) {
+                                            $last_payment_tenant_id = $payment->tenant_id;
+                                            // current apartment tenant
+                                            $current_tenant = $apartment->tenant;
+                                            if ($current_tenant) {
+                                                if($current_tenant->id == $last_payment_tenant_id){
+                                                    $start_date = $payment->end_month;
+                                                    $formated_start = Carbon\Carbon::parse($start_date)->addDays(1)->format('Y-m-d');
+                                                }
+                                            }
+                                        }
+                                    @endphp
+                                    <label class="form-label" for="billing-name">Tarehe ya kuanza</label>
+                                    <input type="date" name="date"
+                                        value="{{ $formated_start  ?? $formated_start }}"
+                                        @if ($formated_start) readonly @endif
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-8 col-sm-12">
