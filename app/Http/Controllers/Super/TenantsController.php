@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class TenantsController extends Controller
 {
     public function  assignTenant(Request $request){
-        $tenant = Tenant::onlyTrashed('id', $request->input('tenant_'))->first();
+        $tenant = Tenant::where('id', $request->input('tenant_id'))->onlyTrashed()->first();
         $obj = null;
         if ($request->input('apartment_id') !== null){
             $obj = Apartment::where('id', $request->input('apartment_id'))->first();

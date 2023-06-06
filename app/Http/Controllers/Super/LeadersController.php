@@ -58,13 +58,13 @@ class LeadersController extends Controller
         $class = "App\Models\Post";
         $post = $class::where('id', $post_id)->first();
         $allowed = $post->numberCount;
-        $leaderWardQueryBuilder = DB::table($table)
+        $leaderSideQueryBuilder = DB::table($table)
             ->select('*')
             ->where('post_id', $post->id)
             ->where('isActive', true )
             ->where($side_column, $side_id);
-        if ($leaderWardQueryBuilder->exists()){
-            if ( $leaderWardQueryBuilder->count() >= $allowed ){
+        if ($leaderSideQueryBuilder->exists()){
+            if ( $leaderSideQueryBuilder->count() >= $allowed ){
                 return ([
                     'status' => 'error',
                     'message' => 'Kiongozi mwenye wadhifa wa '.$post->name.' Hawaruhusiwi kuzidi '.$allowed,
@@ -79,7 +79,6 @@ class LeadersController extends Controller
         $table = $request->input('table');
         $column_id = $request->input('column_id');
         $column_value = $request->input('column_value');
-
         $leader = Leader::where('id', $request->input('leader_id'))->first();
         $this->detachLeaderFrom($leader, $request->input('post_id'),$table, $column_id, $column_value);
         $this->deactivateALeader($leader, $request->input('post_id') );
@@ -88,21 +87,20 @@ class LeadersController extends Controller
 
     private function detachLeaderFrom(Leader $leader, $post_id, $table,$column_id, $column_value)
     {
-        $pivit = $leader->$table()->where('post_id', $post_id)
+        $leader->$table()->where('post_id', $post_id)
             ->where('isActive', true)
             ->where($column_id, $column_value)
-            ->first()->pivot;
-        $pivit->isActive = false;
-        $pivit->save();
+            ->update(['isActive' => false]);
+        $leader->save();
     }
 
     private function deactivateALeader(Leader $leader, $post_id)
     {
-        $pivoted = $leader->posts()->where('post_id', $post_id)
+        $leader->posts()
+            ->where('post_id', $post_id)
             ->where('isActive',  true)
-            ->first()->pivot;
-        $pivoted->isActive = false;
-        $pivoted->save();
+            ->update(['isActive' => false]);
+        $leader->save();
     }
 
 
@@ -165,14 +163,11 @@ class LeadersController extends Controller
             'post_id' => $formData->post_id,
             'created_at' => now(),
         ]);
-
         if ( !($ath->get()->contains($formData->side_id)) ){
-//            dd(  "again not found" );
             return ['response' => 'failure'];
         }
         $leader->posts()->attach( $formData->post_id, ['isActive' => true] );
         if ( !($leader->posts->contains($formData->post_id)) ) {
-//            dd( "error again" );
             $ath->detach( $formData->side_id );
                 return ['response' => 'failure'];
         }

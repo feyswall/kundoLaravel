@@ -100,16 +100,16 @@
                                             $current_tenant = $apartment->tenant;
                                             if ($current_tenant) {
                                                 if($current_tenant->id == $last_payment_tenant_id){
-                                                    $start_date = $payment->end_month;
-                                                    $formated_start = Carbon\Carbon::parse($start_date)->addDays(1)->format('Y-m-d');
+                                                    $start_date = Carbon\Carbon::parse($payment->end_month)
+                                                        ->addDays(1)->format('Y-m-d');
                                                 }
                                             }
                                         }
                                     @endphp
                                     <label class="form-label" for="billing-name">Tarehe ya kuanza</label>
                                     <input type="date" name="date"
-                                        value="{{ $formated_start  ?? $formated_start }}"
-                                        @if ($formated_start) readonly @endif
+                                        value="{{ $start_date  ?? $start_date }}"
+                                        @if ($start_date) readonly @endif
                                         class="form-control">
                                 </div>
                             </div>
