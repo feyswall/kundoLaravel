@@ -237,7 +237,8 @@
                             <div class="d-flex justify-start gap-4 flex-wrap">
                                 @php
                                     $serBranchLeaders = $branch->leaders()->where('isActive', true)->get();
-                                    $serikaliPostsWithLeaderCollection = \App\Http\Controllers\Super\PostsController::postWithLeaders($serBranchLeaders, 'serikali', 'tawi');
+                                    $serikaliPostsWithLeaderCollection = \App\Http\Controllers\Super\PostsController::postWithLeaders(
+                                    $serBranchLeaders, 'serikali', 'tawi');
                                 @endphp
 
                                 @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)
@@ -306,7 +307,6 @@
                                     :class="{'d-none': !formToggler}"
                                     action="{{ route('super.leader.tawi.ongeza') }}">
                                     @csrf
-                                    <input type="hidden" value="serikali" name="side">
                                     <div class="row">
                                         <x-system.leader-basic-inputs></x-system.leader-basic-inputs>
                                         <div>
@@ -314,6 +314,8 @@
                                             <input type="hidden" value="{{ $branch->id }}" class="form-control" name="side_id">
                                             <input type="hidden" value="branch_leader" class="form-control" name="table">
                                             <input type="hidden" value="branch_id" class="form-control" name="side_column">
+                                            <input type="hidden" value="serikali" name="side">
+
                                         </div>
                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                             <div class="mb-3 mb-4">
@@ -361,7 +363,7 @@
                                             <div class="mb-3 mb-4">
                                                 <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                 <select class="form-control" name="post_id">
-                                                    @foreach( \App\Models\Post::where('area', 'halmashauri')->where('side', 'serikali ')->get() as $post )
+                                                    @foreach( \App\Models\Post::where('area', 'tawi')->where('side', 'serikali ')->get() as $post )
                                                         <option {{ (old('post_id') == $post->id) ? 'selected' : '' }} value="{{ $post->id }}">{{ $post->name }}</option>
                                                     @endforeach
                                                 </select>
