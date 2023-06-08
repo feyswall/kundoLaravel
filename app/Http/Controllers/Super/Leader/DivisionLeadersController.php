@@ -57,7 +57,11 @@ class DivisionLeadersController extends Controller
             );
             if ($output['status'] == 'error') { return redirect()->back()->with($output); }
         }
-        $obj->attachMany( $leader->divisions(), $request, $leader );
+        $output = $obj->attachMany( $leader->divisions(), $request, $leader );
+            if ( $output['response'] == 'failure'){
+                return redirect()->back()
+                    ->with(['status' => 'error', 'message' => 'Hatukuweza kumpa wadhifa, tafadhali jaribu tena']);
+            }
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 

@@ -38,12 +38,28 @@ class CouncilLeadersController extends Controller
     public function store(ValidateCouncilLeaderRequest $request)
     {
         $obj = new LeadersController();
-        $leader = $obj->store( $request );
-        if ( !$leader ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'hatujaweza kumuweka kiongozi']);
+        $leader = null;
+        if( !($request->input('withLeader'))) {
+            $leader = $obj->store($request);
+            if (!$leader) {
+                return redirect()->back()->with(['status' => 'error', 'message' => 'hatujaweza kumuweka kiongozi']);
+            }
+        }else {
+            $leader = Leader::where('id', $request->input('leader_id'))->first();
+            $output = $obj->assignPowerToPresentLeader(
+                $request->input('leader_id'),
+                $request->input('table'),
+                $request->input('post_id'),
+                $request->input('side_id'),
+                $request->input('side_column')
+            );
+            if ($output['status'] == 'error') { return redirect()->back()->with($output); }
         }
-        $obj->attachMany( $leader->councils(), $request, $leader );
-
+        $output = $obj->attachMany( $leader->councils(), $request, $leader );
+        if ( $output['response'] == 'failure'){
+            return redirect()->back()
+                ->with(['status' => 'error', 'message' => 'Hatukuweza kumpa wadhifa, tafadhali jaribu tena']);
+        }
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Amesajiriwa']);
     }
 

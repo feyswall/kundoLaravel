@@ -38,9 +38,22 @@ class DistrictLeadersController extends Controller
     public function store(ValidateDistrictLeaderRequest $request)
     {
         $obj = new LeadersController();
-        $leader = $obj->store( $request );
-        if ( !$leader ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'hatujaweza kumuweka kiongozi']);
+        $leader = null;
+        if( !($request->input('withLeader'))) {
+            $leader = $obj->store($request);
+            if (!$leader) {
+                return redirect()->back()->with(['status' => 'error', 'message' => 'hatujaweza kumuweka kiongozi']);
+            }
+        }else{
+            $leader = Leader::where('id', $request->input('leader_id'))->first();
+            $output = $obj->assignPowerToPresentLeader(
+                $request->input('leader_id'),
+                $request->input('table'),
+                $request->input('post_id'),
+                $request->input('side_id'),
+                $request->input('side_column')
+            );
+            if ($output['status'] == 'error') { return redirect()->back()->with($output); }
         }
         $responce = $obj->attachMany( $leader->districts(), $request, $leader );
         if ( $responce['response'] == 'failure'){

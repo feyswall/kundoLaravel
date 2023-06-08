@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use function Webmozart\Assert\Tests\StaticAnalysis\true;
 
 class PostsController extends Controller
 {
@@ -26,9 +27,10 @@ class PostsController extends Controller
                 ->pluck('id');
             $leaderWithPosts = $leader->posts()
                 ->whereIn('post_id', $wardPostsId)
+                ->where('isActive', true )
                 ->get();
             foreach ($leaderWithPosts as $post) {
-                $postsWithLeaderCollection[$post->name][] = $leader;
+                $postsWithLeaderCollection[$post->id][] = $leader;
             }
         }
         return $postsWithLeaderCollection;

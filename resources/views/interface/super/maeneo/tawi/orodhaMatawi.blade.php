@@ -55,8 +55,9 @@
                                                 @endphp
 
                                                 @foreach($chamaPostsWithLeaderCollection as $key => $leaderColl)
-                                                   @foreach($leaderColl as $ldr)
-                                                            <div class="text-start">
+                                                    @php $ps = \App\Models\Post::find($key); @endphp
+                                                   @foreach($leaderColl as $id => $ldr)
+                                                        <div class="text-start">
                                                             <a class="fas fa-edit"  data-bs-toggle="modal"
                                                                data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}"
                                                                data-bs-placement="top" title="Badilisha" href="#">
@@ -77,14 +78,16 @@
                                                                         <input type="hidden" name="column_value" value="{{ $ward->id }}">
 
                                                                         <input name='leader_id' value="{{ $ldr->id }}" type="hidden">
-                                                                        <input name="post_id" value="{{ $ldr->pivot->post_id }}"
+                                                                        <input name="post_id" value="{{ $ps->id }}"
                                                                                type="hidden">
                                                                         <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
                                                                     </form>
                                                                 </x-slot:content>
                                                             </x-system.modal>
                                                             <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
-                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $key }}</small>
+                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ps->name }}</small>
+                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ldr->phone }}</small>
+
                                                         </div>
                                                        @endforeach
                                                     <div class="row w-100"></div>
@@ -116,41 +119,19 @@
                                                     @csrf
                                                     <input type="hidden" name="side" value="chama">
                                                     <div class="row">
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                                <input type="text" class="form-control" name="firstName" placeholder="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="middleName">Jina La Kati</label>
-                                                                <input type="text" class="form-control" name="middleName" placeholder="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="lastName">Jina La Mwisho</label>
-                                                                <input type="text" class="form-control" name="lastName" placeholder="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="phone">Namba ya Simu</label>
-                                                                <input type="text" class="form-control" name="phone" placeholder="">
-
-                                                                <!-- data to simplify the validation process -->
-                                                                <input type="hidden" value="{{ $ward->id }}" class="form-control" name="side_id">
-                                                                <input type="hidden" value="leader_ward" class="form-control" name="table">
-                                                                <input type="hidden" value="ward_id" class="form-control" name="side_column">
-                                                            </div>
+                                                        <x-system.leader-basic-inputs></x-system.leader-basic-inputs>
+                                                            <!-- data to simplify the validation process -->
+                                                        <div>
+                                                            <input type="hidden" value="{{ $ward->id }}" class="form-control" name="side_id">
+                                                            <input type="hidden" value="leader_ward" class="form-control" name="table">
+                                                            <input type="hidden" value="ward_id" class="form-control" name="side_column">
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                                 <select class="form-control" name="post_id">
                                                                     @foreach( \App\Models\Post::where('area', 'kata')->where('side', 'chama')->get() as $post )
-                                                                    <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                                        <option value="{{ $post->id }}">{{ $post->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -158,7 +139,6 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <button form="submitForm" type="submit" name="submit" class="btn btn-primary btn-sm">Ongeza</button>
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -220,7 +200,6 @@
                                             <h3 class="fs-4 me-3">Viongozi Wa Serikali Kata</h3>
                                             <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziSerikaliModal"
                                             class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajili Kiongozi Wa Serikali</button>
-
                                         </div>
 
                                         <div>
@@ -231,7 +210,8 @@
                                                 @endphp
 
                                                 @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)
-                                                    @foreach($leaderColl as $ldr)
+                                                    @php $ps = \App\Models\Post::find($key); @endphp
+                                                @foreach($leaderColl as $id => $ldr)
                                                     <div class="text-start">
                                                             <a class="fas fa-edit"  data-bs-toggle="modal"
                                                                data-bs-target="#badiriTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
@@ -251,7 +231,7 @@
                                                                         <input type="hidden" name="column_value" value="{{ $ward->id }}">
 
                                                                         <input name='leader_id' value="{{ $ldr->id }}" type="hidden">
-                                                                        <input name="post_id" value="{{ $ldr->pivot->post_id }}" type="hidden">
+                                                                        <input name="post_id" value="{{ $ps->id }}" type="hidden">
                                                                         <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
                                                                     </form>
                                                                 </x-slot:content>
@@ -259,7 +239,12 @@
                                                             <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
                                                             <small style="background: #f5f6f8;"
                                                                    class="rounded text-black text-capitalize fw-bold px-2 py-2">
-                                                                {{ $key }}</small>
+                                                                {{ $ps->name }}
+                                                            </small>
+                                                            <small style="background: #f5f6f8;"
+                                                                    class="rounded text-black text-capitalize fw-bold px-2 py-2">
+                                                                {{ $ldr->phone }}
+                                                            </small>
                                                         </div>
                                                     @endforeach
                                                         <div class="row w-100"></div>
@@ -290,35 +275,12 @@
                                                     @csrf
                                                     <input type="hidden" name="side" value="serikali">
                                                     <div class="row">
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                                <input type="text" class="form-control" name="firstName" placeholder="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="middleName">Jina La Kati</label>
-                                                                <input type="text" class="form-control" name="middleName" placeholder="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="lastName">Jina La Mwisho</label>
-                                                                <input type="text" class="form-control" name="lastName" placeholder="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="phone">Namba ya Simu</label>
-                                                                <input type="text" class="form-control" name="phone" placeholder="">
-
-                                                                <!-- data to simplify the validation process -->
-                                                                <input type="hidden" value="{{ $ward->id }}" class="form-control" name="side_id">
-                                                                <input type="hidden" value="leader_ward" class="form-control" name="table">
-                                                                <input type="hidden" value="ward_id" class="form-control" name="side_column">
-
-                                                            </div>
+                                                        <x-system.leader-basic-inputs></x-system.leader-basic-inputs>
+                                                        <div>
+                                                            <!-- data to simplify the validation process -->
+                                                            <input type="hidden" value="{{ $ward->id }}" class="form-control" name="side_id">
+                                                            <input type="hidden" value="leader_ward" class="form-control" name="table">
+                                                            <input type="hidden" value="ward_id" class="form-control" name="side_column">
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
@@ -440,10 +402,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-
                     <button data-bs-toggle="modal" data-bs-target="#orodhaTawiModal" class="btn btn-info btn-sm mb-4"><i class="fas fa-plus"> </i> Ongeza Tawi</button>
                     <a href="{{ route('super.areas.kata.orodha', $ward->division->id) }}" class="btn btn-primary btn-sm mb-4">Rudi Kwenye Tarafa</a>
-
                     <x-system.tawi-table :areas="$areas">
                     </x-system.tawi-table>
                 </div>

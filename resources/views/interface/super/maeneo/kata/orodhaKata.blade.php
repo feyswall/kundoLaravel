@@ -20,7 +20,8 @@
             <a href="#checkout-orodhaKata-collapse" class="text-dark" data-bs-toggle="collapse">
                 <div class="p-4">
                     <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i> </div>
+                        <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2">
+                        </i> </div>
                         <div class="flex-grow-1 overflow-hidden">
                             <h5 class="font-size-16 mb-1">Taarifa za Tarafa</h5>
                         </div>
@@ -47,37 +48,48 @@
                                         </div>
                                         <div>
                                             <div class="d-flex justify-start gap-4 flex-wrap">
-                                                @foreach( $division->leaders->where('side', 'chama') as $leader )
-                                                    @if( $leader->pivot->isActive == true )
-                                                    <div class="text-center">
-                                                        <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            title="Badilisha" href="{{ route("super.leader.kata.badili", $leader->id ) }}">
-                                                        </a>
-                                                        <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
-                                                        data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
-                                                        data-bs-placement="top" title="Badilisha" href="#">
-                                                        </a>
-                                                        <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="futaKiongoziKataLabel"
-                                                            size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
-                                                            <x-slot:content>
-                                                                <form action="{{ route('super.leader.unpower')}}" method="POST">
-                                                                    @csrf
-                                                                    @method('put')
-                                                                    <input type="hidden" name="table" value="divisions">
-                                                                    <input type="hidden" name="column_id" value="division_id">
-                                                                    <input type="hidden" name="column_value" value="{{ $division->id }}">
+                                                @php
+                                                $districtLeaders = $division->leaders()->where('isActive', true)->get();
+                                                $chamaPostsWithLeaderCollection =
+                                                \App\Http\Controllers\Super\PostsController::postWithLeaders(
+                                                $districtLeaders, 'chama', 'tarafa');
+                                            @endphp
 
-                                                                    <input name='leader_id' value="{{ $leader->id }}" type="hidden">
-                                                                    <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
-                                                                    <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
-                                                                </form>
-                                                            </x-slot:content>
-                                                        </x-system.modal>
-                                                        <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
-                                                    </div>
-                                                    @endif
+                                                @foreach($chamaPostsWithLeaderCollection as $key => $leaderColl)
+                                                    @php $ps = \App\Models\Post::find($key); @endphp
+                                                    @foreach($leaderColl as $id => $ldr)
+                                                        <div class="text-center">
+                                                            <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Badilisha" href="{{ route("super.leader.kata.badili", $ldr->id ) }}">
+                                                            </a>
+                                                            <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                                            data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $ldr->id }}"
+                                                            data-bs-placement="top" title="Badilisha" href="#">
+                                                            </a>
+                                                            <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $ldr->id }}" aria="futaKiongoziKataLabel"
+                                                                size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                                                <x-slot:content>
+                                                                    <form action="{{ route('super.leader.unpower')}}" method="POST">
+                                                                        @csrf
+                                                                        @method('put')
+                                                                        <input type="hidden" name="table" value="divisions">
+                                                                        <input type="hidden" name="column_id" value="division_id">
+                                                                        <input type="hidden" name="column_value" value="{{ $division->id }}">
+
+                                                                        <input name='leader_id' value="{{ $ldr->id }}" type="hidden">
+                                                                        <input name="post_id" value="{{ $ps->id }}" type="hidden">
+                                                                        <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
+                                                                    </form>
+                                                                </x-slot:content>
+                                                            </x-system.modal>
+                                                            <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
+                                                            <small style="background: #f5f6f8;"
+                                                            class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ps->name }}</small>
+                                                        </div>
+                                                    @endforeach
+                                                    <div class="row w-100"></div>
                                                 @endforeach
+                                                <hr>
                                             </div>
                                         </div>
                                         <!-- model location here -->
@@ -151,7 +163,6 @@
                                                 action="{{ route('super.leader.tarafa.ongeza') }}"
                                                 :class="{'d-none': formToggler}">
                                                     @csrf
-
                                                     <h4>Endapo Kiongozi Ameshasajiriwa Muongeze Wadhifa Hapa</h4>
                                                     <div class="col-sm-12 col-md-4 col-lg-3">
                                                         <div class="mb-3 mb-4">
@@ -209,16 +220,24 @@
                                         </div>
                                         <div>
                                             <div class="d-flex justify-start gap-4 flex-wrap">
-                                                @foreach( $division->leaders->where('side', 'serikali') as $leader )
-                                                    @if( $leader->pivot->isActive == true )
-                                                        <div class="text-center">
+                                                @php
+                                                    $divisionLeaders = $division->leaders()->where('isActive', true)->get();
+                                                    $serikaliPostsWithLeaderCollection =
+                                                    \App\Http\Controllers\Super\PostsController::postWithLeaders(
+                                                    $divisionLeaders, 'serikali', 'tarafa');
+                                                @endphp
+
+                                                @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)
+                                                    @php $ps = \App\Models\Post::find($key); @endphp
+                                                    @foreach($leaderColl as $id => $ldr)
+                                                        <div class="text-start">
                                                             <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                             title="Badilisha" href="{{ route("super.leader.kata.badili", $leader->id ) }}"></a>
+                                                             title="Badilisha" href="{{ route("super.leader.kata.badili", $ldr->id ) }}"></a>
                                                             <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
-                                                            data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}"
+                                                            data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
                                                             data-bs-placement="top" title="Badilisha" href="#">
                                                             </a>
-                                                            <x-system.modal id="futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}" aria="futaKiongoziKataLabel"
+                                                            <x-system.modal id="futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}" aria="futaKiongoziKataLabel"
                                                                 size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
                                                                 <x-slot:content>
                                                                     <form action="{{ route('super.leader.unpower')}}" method="POST">
@@ -228,17 +247,21 @@
                                                                         <input type="hidden" name="column_id" value="division_id">
                                                                         <input type="hidden" name="column_value" value="{{ $division->id }}">
 
-                                                                        <input name='leader_id' value="{{ $leader->id }}" type="hidden">
-                                                                        <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
+                                                                        <input name='leader_id' value="{{ $ldr->id }}" type="hidden">
+                                                                        <input name="post_id" value="{{ $ps->id }}" type="hidden">
                                                                         <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
                                                                     </form>
                                                                 </x-slot:content>
                                                             </x-system.modal>
-                                                            <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small>
+                                                            <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
+                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">
+                                                                {{  $ps->name }}
+                                                            </small>
                                                         </div>
-                                                    @endif
+                                                    @endforeach
+                                                    <div class="row w-100"></div>
                                                 @endforeach
+                                                <hr>
                                             </div>
                                         </div>
                                         <!-- model location here -->
@@ -314,7 +337,7 @@
                                                             <select class="form-control" name="leader_id" required>
                                                                 <option value="">choose leader</option>
                                                                 @foreach( \App\Models\Leader::select('id', 'firstName', 'lastName')
-                                                                ->where('side', 'serikali')->orderBy('firstName')->get() as $leader )
+                                                                    ->orderBy('firstName')->get() as $leader )
                                                                 <option value="{{ $leader->id }}">
                                                                     {{ $leader->firstName }}  {{ $leader->lastName }}
                                                                 </option>

@@ -15,49 +15,50 @@
 <!-- Start right Content here -->
 <!-- ============================================================== -->
 
-<div class="container-fluid">
-    <!-- start page title -->
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box d-flex align-items-center justify-content-between">
-                <h2 class="mb-0">Taarifa Za Tawi</h2>
-                <div class="page-title-right">
-                    <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Maeneo</a></li>
-                        <li class="breadcrumb-item active">Tawi</li>
-                    </ol>
-                </div>
+<div id="app">
+    <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
+                    <h2 class="mb-0">Taarifa Za Tawi</h2>
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Maeneo</a></li>
+                            <li class="breadcrumb-item active">Tawi</li>
+                        </ol>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
-    <!-- end page title -->
+        <!-- end page title -->
 
-    <x-system.collapse id="kamatiZaChamaTarafa" title="kamati Za Chama Ngazi ya Tawi">
-        <x-slot:content>
-            @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tawi")->where('side', 'chama')->get() as $group)
-                <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
-                    <x-slot:content>
-                        <x-system.groups-info :group="$group" :table="$branch" />
-                    </x-slot:content>
-                </x-system.collapse>
-            @endforeach
-        </x-slot:content>
-    </x-system.collapse>
+        <x-system.collapse id="kamatiZaChamaTarafa" title="kamati Za Chama Ngazi ya Tawi">
+            <x-slot:content>
+                @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tawi")->where('side', 'chama')->get() as $group)
+                    <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+                        <x-slot:content>
+                            <x-system.groups-info :group="$group" :table="$branch" />
+                        </x-slot:content>
+                    </x-system.collapse>
+                @endforeach
+            </x-slot:content>
+        </x-system.collapse>
 
-    <x-system.collapse id="kamatiZaSerikaliTarafa" title="kamati Za Serikali Ngazi ya Tawi">
-        <x-slot:content>
-            @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tawi")->where('side', 'serikali')->get() as $group)
-                <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
-                    <x-slot:content>
-                        <x-system.groups-info :group="$group" :table="$branch" />
-                    </x-slot:content>
-                </x-system.collapse>
-            @endforeach
-        </x-slot:content>
-    </x-system.collapse>
+        <x-system.collapse id="kamatiZaSerikaliTarafa" title="kamati Za Serikali Ngazi ya Tawi">
+            <x-slot:content>
+                @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tawi")->where('side', 'serikali')->get() as $group)
+                    <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+                        <x-slot:content>
+                            <x-system.groups-info :group="$group" :table="$branch" />
+                        </x-slot:content>
+                    </x-system.collapse>
+                @endforeach
+            </x-slot:content>
+        </x-system.collapse>
 
-    <div class="col-12">
+        <div class="col-12">
             <div class="card px-md-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-md-start justify-content-center flex-wrap my-2">
@@ -77,119 +78,91 @@
                             </div>
                         </div>
                         <div>
-                            @php
-                            $mwenyekiti = \App\Models\Post::where('deep', 'mwenyekiti_tawi')->first();
-                            $katibu = \App\Models\Post::where('deep', 'katibu_tawi')->first();
-                            $mwenezi = \App\Models\Post::where('deep', 'mwenezi_tawi')->first();
-                            $mjumbe = \App\Models\Post::where('deep', 'mjumbe_tawi')->first();
-                            @endphp
-
-                            @php
-                                $postValue = '';
-                            @endphp
                             <div class="d-flex justify-start gap-4 flex-wrap">
                                 @php
-                                    $leaderObj = new \App\Http\Controllers\Super\LeadersController();
-                                    $partLeaders = $leaderObj->currentLocationLeadersLogic($branch->leaders());
+                                    $serBranchLeaders = $branch->leaders()->where('isActive', true)->get();
+                                    $serikaliPostsWithLeaderCollection = \App\Http\Controllers\Super\PostsController::postWithLeaders(
+                                    $serBranchLeaders, 'chama', 'tawi');
                                 @endphp
-                                @foreach( $partLeaders as $leader )
-                                    @if( $leader->pivot->isActive == true )
-                                        @php
-                                            $postName = \App\Models\Post::find( $leader->pivot->post_id )->name;
-                                        @endphp
-                                    <div class="text-center">
-                                        <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
-                                        <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
-                                            data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
-                                            data-bs-placement="top" title="Badilisha" href="#">
-                                        </a>
-                                        <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="futaKiongoziKataLabel" size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
-                                            <x-slot:content>
-                                                <form action="{{ route('super.leader.unpower')}}" method="POST">
-                                                    @csrf
-                                                    @method('put')
-                                                    <input name='leader_id' value="{{ $leader->id }}" type="hidden">
-                                                    <input type="hidden" name="branch_id" value="{{ $branch->id }}">
-                                                    <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
-                                                    <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
-                                                </form>
-                                            </x-slot:content>
-                                        </x-system.modal>
-                                        <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $postName }}</small><br>
-                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
-                                    </div>
-                                        @if( $postValue == $postName )
-                                        @else
-                                            @php $postValue = $postName; @endphp
-                                            <div class="row w-100"></div>
-                                        @endif
-                                    @endif
+
+                                @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)
+                                    @php $ps = \App\Models\Post::find($key); @endphp
+                                    @foreach($leaderColl as $id => $ldr)
+                                        <div class="text-start">
+                                            <a class="fas fa-edit"  data-bs-toggle="modal"
+                                               data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}"
+                                               data-bs-placement="top" title="Badilisha" href="#">
+                                            </a>
+                                            <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                               data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $ldr->id }}"
+                                               data-bs-placement="top" title="Badilisha" href="#">
+                                            </a>
+                                            <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $ldr->id }}"
+                                                            aria="futaKiongoziKataLabel" size="modal-sm"
+                                                            title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                                <x-slot:content>
+                                                   <x-system.unpower-form
+                                                        :route="route('super.leader.unpower')"
+                                                        table="branches"
+                                                        column_id="branch_id"
+                                                        :column_value="$branch->id"
+                                                        :leader_id="$ldr->id"
+                                                        :post_id="$ps->id"
+                                                        >
+                                                    </x-system.unpower-form>
+                                                </x-slot:content>
+                                            </x-system.modal>
+                                            <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
+                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ps->name }}</small><br>
+                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ldr->phone }}</small>
+                                        </div>
+                                    @endforeach
+                                    <div class="row w-100"></div>
                                 @endforeach
                             </div>
                         </div>
 
-
-                        @foreach ($branch->leaders as $leader)
-                         @if( $leader->pivot->isActive == true )
-                                <x-system.modal id="badiriTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama Ngazi Ya Kata Hapa">
+                        @foreach ($serikaliPostsWithLeaderCollection as $leaderColl)
+                            @foreach( $leaderColl as $id => $ldr )
+                                <x-system.modal id="badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}"
+                                                aria="ongezaKiongoziKataLabel" size="modal-fullscreen"
+                                                title="Ongeza Kiongozi Wa Chama Ngazi Ya Kata Hapa">
                                     <x-slot:content>
-                                            <x-system.edit-leader :leader="$leader" :route="route('super.leader.tawi.sasisha', $leader->id)" />
+                                        <x-system.edit-leader :leader="$ldr"
+                                                              :route="route('super.leader.tawi.sasisha', $ldr->id)" />
                                     </x-slot:content>
                                 </x-system.modal>
-
-
-                        @endif
                         @endforeach
+                    @endforeach
 
-
-                        <!-- model location here -->
-                        <x-system.modal id="ongezaKiongoziChamaModal" aria="orodhaTawiLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama Ngazi Ya Tawi Hapa">
+                    <!-- model location here -->
+                        <x-system.modal id="ongezaKiongoziChamaModal" aria="orodhaTawiLabel"
+                                        size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama Ngazi Ya Tawi Hapa">
                             <x-slot:content>
-                                <form method="post" action="{{ route('super.leader.tawi.ongeza') }}">
+
+                            <button v-on:click="changeSides()"
+                                    class="btn btn-success btn-sm mb-lg-4" type="button" id="readyRegistered">
+                                @{{ togglerBtnText }}
+                            </button>
+
+                                <form method="post" action="{{ route('super.leader.tawi.ongeza') }}"
+                                     :class="{'d-none': formToggler}">
                                     @csrf
                                     <input type="hidden" value="chama" name="side">
                                     <div class="row">
-                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                            <div class="mb-3 mb-4">
-                                                <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                <input type="text" class="form-control" name="firstName"
-                                                placeholder="">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                            <div class="mb-3 mb-4">
-                                                <label class="form-label" for="middleName">Jina La Kati</label>
-                                                <input type="text" class="form-control" name="middleName"
-                                                placeholder="">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                            <div class="mb-3 mb-4">
-                                                <label class="form-label" for="lastName">Jina La Mwisho</label>
-                                                <input type="text" class="form-control" name="lastName"
-                                                placeholder="">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                            <div class="mb-3 mb-4">
-                                                <label class="form-label" for="phone">Namba ya Simu</label>
-                                                <input type="text" class="form-control" name="phone"
-                                                placeholder="">
-
-                                                <!-- data to simplify the validation process -->
-                                                <input type="hidden" value="{{ $branch->id }}" class="form-control" name="side_id">
-                                                <input type="hidden" value="branch_leader" class="form-control" name="table">
-                                                <input type="hidden" value="branch_id" class="form-control" name="side_column">
-
-                                            </div>
+                                        <x-system.leader-basic-inputs></x-system.leader-basic-inputs>
+                                        <div>
+                                            <!-- data to simplify the validation process -->
+                                            <input type="hidden" value="{{ $branch->id }}" class="form-control" name="side_id">
+                                            <input type="hidden" value="branch_leader" class="form-control" name="table">
+                                            <input type="hidden" value="branch_id" class="form-control" name="side_column">
                                         </div>
                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                             <div class="mb-3 mb-4">
                                                 <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
                                                 <select class="form-control" name="post_id">
                                                     @foreach( \App\Models\Post::where('area', 'tawi')->where('side', 'chama')->get() as $post )
-                                                    <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                        <option value="{{ $post->id }}">{{ $post->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -201,6 +174,50 @@
                                         </div>
                                     </div>
                                 </form>
+
+                                <form  method="post"
+                                        action="{{ route('super.leader.tawi.ongeza') }}"
+                                        :class="{'d-none': !formToggler}">
+                                    @csrf
+                                    <h4>Endapo Kiongozi Ameshasajiriwa Muongeze Wadhifa Hapa</h4>
+                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                        <div class="mb-3 mb-4">
+                                            <select class="form-control" name="leader_id" required>
+                                                <option value="">choose leader</option>
+                                                @foreach( \App\Models\Leader::select('id', 'firstName', 'lastName')->orderBy('firstName')->get() as $ldr )
+                                                    <option value="{{ $ldr->id }}">{{ $ldr->firstName }}  {{ $ldr->lastName }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div>
+                                            <!-- data to simplify the validation process -->
+                                            <input type="hidden" value="{{ $branch->id }}" class="form-control" name="side_id">
+                                            <input type="hidden" value="branch_leader" class="form-control" name="table">
+                                            <input type="hidden" value="branch_id" class="form-control" name="side_column">
+                                            <input type="hidden" name="withLeader" value="true">
+                                            <input type="hidden" value="chama" name="side">
+                                        </div>
+                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
+                                                <select class="form-control" name="post_id">
+                                                    @foreach( \App\Models\Post::where('area', 'tawi')->where('side', 'chama')->get() as $post )
+                                                        <option value="{{ $post->id }}">{{ $post->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <button type="submit" name="submit" class="btn btn-primary btn-sm">Ongeza</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
                             </x-slot:content>
                         </x-system.modal>
                     </div>
@@ -211,93 +228,92 @@
                             <h3 class="fs-4 me-3">Viongozi Wa Serikali Ngazi Ya Tawi</h3>
                             <div class="d-flex items-center justify-content-center gap-2">
                                 <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziSerikaliModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri </button>
-                                <a href="{{ route("super.areas.tawi.orodha", $branch->ward->id) }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Kata</a>
+                                <a href="{{ route("super.areas.tawi.orodha", $branch->ward->id) }}"
+                                    class="btn btn-primary btn-md mb-4">Rudi Kwenye Kata</a>
                             </div>
                         </div>
                         <div>
 
                             <div class="d-flex justify-start gap-4 flex-wrap">
-                                @foreach( $branch->leaders->where('side', 'serikali') as $leader )
-                                    @if( $leader->pivot->isActive == true )
-                                        <div class="text-center">
-                                            <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
-                                            <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
-                                            data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}"
-                                            data-bs-placement="top" title="Badilisha" href="#">
-                                            </a>
-                                        <x-system.modal id="futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}" aria="futaKiongoziKataLabel" size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
-                                            <x-slot:content>
-                                                <form action="{{ route('super.leader.unpower')}}" method="POST">
-                                                    @csrf
-                                                    @method('put')
-                                                    <input type="hidden" name="table" value="branches">
-                                                    <input type="hidden" name="column_id" value="branch_id">
-                                                    <input type="hidden" name="column_value" value="{{ $branch->id }}">
+                                @php
+                                    $serBranchLeaders = $branch->leaders()->where('isActive', true)->get();
+                                    $serikaliPostsWithLeaderCollection = \App\Http\Controllers\Super\PostsController::postWithLeaders($serBranchLeaders, 'serikali', 'tawi');
+                                @endphp
 
-                                                    <input name='leader_id' value="{{ $leader->id }}" type="hidden">
-                                                    <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
-                                                    <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
-                                                </form>
-                                            </x-slot:content>
-                                        </x-system.modal>
-                                            <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small><br>
-                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
+                                @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)
+                                    @php $ps = \App\Models\Post::find($key); @endphp
+                                    @foreach($leaderColl as $id => $ldr)
+                                        <div class="text-start">
+                                            <a class="fas fa-edit"  data-bs-toggle="modal"
+                                                data-bs-target="#badiriTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
+                                                data-bs-placement="top" title="Badilisha" href="#">
+                                            </a>
+                                            <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                               data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
+                                               data-bs-placement="top" title="Badilisha" href="#">
+                                            </a>
+                                            <x-system.modal id="futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
+                                                aria="futaKiongoziKataLabel" size="modal-sm"
+                                                title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                                <x-slot:content>
+                                                    <x-system.unpower-form
+                                                        :route="route('super.leader.unpower')"
+                                                        table="branches"
+                                                        column_id="branch_id"
+                                                        :column_value="$branch->id"
+                                                        :leader_id="$ldr->id"
+                                                        :post_id="$ps->id"
+                                                        >
+                                                    </x-system.unpower-form>
+                                                </x-slot:content>
+                                            </x-system.modal>
+                                            <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
+                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ps->name }}</small><br>
+                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ldr->phone }}</small>
                                         </div>
-                                    @endif
+                                    @endforeach
+                                    <div class="row w-100"></div>
                                 @endforeach
                             </div>
                         </div>
 
 
-                        @foreach ($branch->leaders->where('side', 'serikali') as $leader)
-                            <x-system.modal id="badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}"
-                                aria="ongezaKiongoziKataLabel" size="modal-fullscreen"
-                                title="Ongeza Kiongozi Wa Serikali Kata Hapa">
-                                <x-slot:content>
-                                    <x-system.edit-leader :leader="$leader"
-                                    :route="route('super.leader.tawi.sasisha', $leader->id)" />
-                                </x-slot:content>
-                            </x-system.modal>
+                        @foreach ($serikaliPostsWithLeaderCollection as $key => $leaderColl)
+                            @foreach($leaderColl as $id => $ldr)
+                                <x-system.modal id="badiriTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
+                                                aria="ongezaKiongoziKataLabel" size="modal-fullscreen"
+                                                title="Ongeza Kiongozi Wa Serikali Kata Hapa">
+                                    <x-slot:content>
+                                        <x-system.edit-leader :leader="$ldr"
+                                            :route="route('super.leader.tawi.sasisha', $ldr->id)" />
+                                    </x-slot:content>
+                                </x-system.modal>
+                            @endforeach
                         @endforeach
 
 
-                    <!-- model location here -->
-                        <x-system.modal id="ongezaKiongoziSerikaliModal" aria="orodhaTawiLabel" size="modal-fullscreen" title="Ongeza Tawi Hapa">
+                        <!-- model location here -->
+                        <x-system.modal id="ongezaKiongoziSerikaliModal" aria="orodhaTawiLabel"
+                                        size="modal-fullscreen" title="Ongeza Tawi Hapa">
                             <x-slot:content>
-                                <form method="post" action="{{ route('super.leader.tawi.ongeza') }}">
+                                <button v-on:click="changeSides()"
+                                        class="btn btn-success btn-sm mb-lg-4" type="button" id="readyRegistered">
+                                    @{{ togglerBtnText }}
+                                </button>
+
+                                <form
+                                    method="post"
+                                    :class="{'d-none': !formToggler}"
+                                    action="{{ route('super.leader.tawi.ongeza') }}">
                                     @csrf
                                     <input type="hidden" value="serikali" name="side">
                                     <div class="row">
-                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                            <div class="mb-3 mb-4">
-                                                <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                <input type="text" class="form-control" name="firstName" placeholder="">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                            <div class="mb-3 mb-4">
-                                                <label class="form-label" for="middleName">Jina La Kati</label>
-                                                <input type="text" class="form-control" name="middleName" placeholder="">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                            <div class="mb-3 mb-4">
-                                                <label class="form-label" for="lastName">Jina La Mwisho</label>
-                                                <input type="text" class="form-control" name="lastName" placeholder="">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                            <div class="mb-3 mb-4">
-                                                <label class="form-label" for="phone">Namba ya Simu</label>
-                                                <input type="text" class="form-control" name="phone" placeholder="">
-
-                                                <!-- data to simplify the validation process -->
-                                                <input type="hidden" value="{{ $branch->id }}" class="form-control" name="side_id">
-                                                <input type="hidden" value="branch_leader" class="form-control" name="table">
-                                                <input type="hidden" value="branch_id" class="form-control" name="side_column">
-
-                                            </div>
+                                        <x-system.leader-basic-inputs></x-system.leader-basic-inputs>
+                                        <div>
+                                            <!-- data to simplify the validation process -->
+                                            <input type="hidden" value="{{ $branch->id }}" class="form-control" name="side_id">
+                                            <input type="hidden" value="branch_leader" class="form-control" name="table">
+                                            <input type="hidden" value="branch_id" class="form-control" name="side_column">
                                         </div>
                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                             <div class="mb-3 mb-4">
@@ -316,6 +332,49 @@
                                         </div>
                                     </div>
                                 </form>
+
+                                <form  method="post"
+                                       action="{{ route('super.leader.tawi.ongeza') }}"
+                                       :class="{'d-none': formToggler}">
+                                    @csrf
+                                    <h4>Endapo Kiongozi Ameshasajiriwa Muongeze Wadhifa Hapa</h4>
+                                    <div class="col-sm-12 col-md-4 col-lg-3">
+                                        <div class="mb-3 mb-4">
+                                            <select class="form-control" name="leader_id" required>
+                                                <option value="">choose leader</option>
+                                                @foreach( \App\Models\Leader::select('id', 'firstName', 'lastName')->orderBy('firstName')->get() as $ldr )
+                                                    <option value="{{ $ldr->id }}">{{ $ldr->firstName }}  {{ $ldr->lastName }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div>
+                                            <!-- data to simplify the validation process -->
+                                            <input type="hidden" value="{{ $branch->id }}" class="form-control" name="side_id">
+                                            <input type="hidden" value="branch_leader" class="form-control" name="table">
+                                            <input type="hidden" value="branch_id" class="form-control" name="side_column">
+                                            <input type="hidden" name="withLeader" value="true">
+                                            <input type="hidden" value="serikali" name="side">
+                                        </div>
+                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
+                                                <select class="form-control" name="post_id">
+                                                    @foreach( \App\Models\Post::where('area', 'halmashauri')->where('side', 'serikali ')->get() as $post )
+                                                        <option {{ (old('post_id') == $post->id) ? 'selected' : '' }} value="{{ $post->id }}">{{ $post->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <button type="submit" name="submit" class="btn btn-primary btn-sm">Ongeza</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </x-slot:content>
                         </x-system.modal>
                     </div>
@@ -323,10 +382,9 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
+    </div> <!-- container-fluid -->
 
-</div> <!-- container-fluid -->
-
-<div class="row">
+    <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
@@ -338,71 +396,93 @@
                     <!-- model location here -->
                     <x-system.modal id="ongezaShinaModal" aria="ongezaShinaLabel" size="modal-lg" title="Ongeza Shina Hapa Tarafa Hapa">
                         <x-slot:content>
-                                <form method="post" action="{{ route('super.areas.shina.ongeza') }}">
-                                    @csrf
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="mb-3 mb-4">
-                                                    <label class="form-label" for="billing-name">Jina La Mkoa</label>
-                                                    <input type="text" readonly class="form-control" value="Simiyu">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="mb-3 mb-4">
-                                                    <label class="form-label" for="billing-name">Jina La Wilaya</label>
-                                                    <input type="text" class="form-control" readonly value="{{ $branch->ward->division->council->district->name }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="mb-3 mb-4">
-                                                    <label class="form-label" for="billing-name">Jina La Halmashauri</label>
-                                                    <input type="text" class="form-control" readonly value="{{ $branch->ward->division->council->name }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="mb-3 mb-4">
-                                                    <label class="form-label" for="billing-name">Jina La Tarafa</label>
-                                                    <input type="text" class="form-control" readonly value="{{ $branch->ward->division->name }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="mb-3 mb-4">
-                                                    <label class="form-label" for="billing-name">Jina La Kata</label>
-                                                    <input type="text" class="form-control" readonly value="{{ $branch->ward->name }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="mb-3 mb-4">
-                                                    <label class="form-label" for="billing-name">Jina La Tawi</label>
-                                                    <input type="text" class="form-control" readonly value="{{ $branch->name }}">
-                                                    <input type="hidden" name="branch_id" class="form-control" readonly value="{{ $branch->id }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <div class="mb-3 mb-4">
-                                                    <label class="form-label" for="billing-name">Jina La Shina</label>
-                                                    <input type="text" name="shina" class="form-control" placeholder="" required>
-                                                </div>
-                                                @error("shina")
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
+                            <form method="post" action="{{ route('super.areas.shina.ongeza') }}">
+                                @csrf
+                                <div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="billing-name">Jina La Mkoa</label>
+                                                <input type="text" readonly class="form-control" value="Simiyu">
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                                        <div class="col-lg-12">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="billing-name">Jina La Wilaya</label>
+                                                <input type="text" class="form-control" readonly value="{{ $branch->ward->division->council->district->name }}">
                                             </div>
                                         </div>
-                                </form>
+                                        <div class="col-lg-12">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="billing-name">Jina La Halmashauri</label>
+                                                <input type="text" class="form-control" readonly value="{{ $branch->ward->division->council->name }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="billing-name">Jina La Tarafa</label>
+                                                <input type="text" class="form-control" readonly value="{{ $branch->ward->division->name }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="billing-name">Jina La Kata</label>
+                                                <input type="text" class="form-control" readonly value="{{ $branch->ward->name }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="billing-name">Jina La Tawi</label>
+                                                <input type="text" class="form-control" readonly value="{{ $branch->name }}">
+                                                <input type="hidden" name="branch_id" class="form-control" readonly value="{{ $branch->id }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="mb-3 mb-4">
+                                                <label class="form-label" for="billing-name">Jina La Shina</label>
+                                                <input type="text" name="shina" class="form-control" placeholder="" required>
+                                            </div>
+                                            @error("shina")
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="submit" name="submit" class="btn btn-primary btn-md">Ongeza</button>
+                                        </div>
+                                    </div>
+                            </form>
                         </x-slot:content>
                     </x-system.modal>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- end main content-->
+</div>
+
 @endsection
-<x-system.table-script id="superOrodhaShinaTable"></x-system.table-script>
+
+
+@section("extra_script")
+    <x-system.table-script id="superOrodhaShinaTable"></x-system.table-script>
+    <script>
+        let app =  new Vue({
+            el: '#app',
+            data() {
+                return {
+                    formToggler: true,
+                    togglerBtnText: 'kwa aliyesajiriwa',
+                }
+            },
+            methods: {
+                changeSides: function(){
+                    this.formToggler = !this.formToggler;
+                    this.togglerBtnText = ( this.formToggler ? 'kwa aliyesajiriwa' : 'sajiri mpya');
+                }
+            },
+        });
+    </script>
+@endsection

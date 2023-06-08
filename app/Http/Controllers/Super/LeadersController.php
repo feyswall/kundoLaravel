@@ -80,12 +80,12 @@ class LeadersController extends Controller
         $column_id = $request->input('column_id');
         $column_value = $request->input('column_value');
         $leader = Leader::where('id', $request->input('leader_id'))->first();
-        $this->detachLeaderFrom($leader, $request->input('post_id'),$table, $column_id, $column_value);
-        $this->deactivateALeader($leader, $request->input('post_id') );
+        $this->detachLeaderFromArea($leader, $request->input('post_id'),$table, $column_id, $column_value);
+        $this->deactivateALeaderPosts($leader, $request->input('post_id') );
         return redirect()->back()->with(['status' => 'success', 'message' => 'Kiongozi Ametolewa Madarakani']);
     }
 
-    private function detachLeaderFrom(Leader $leader, $post_id, $table,$column_id, $column_value)
+    private function detachLeaderFromArea(Leader $leader, $post_id, $table,$column_id, $column_value)
     {
         $leader->$table()->where('post_id', $post_id)
             ->where('isActive', true)
@@ -94,7 +94,7 @@ class LeadersController extends Controller
         $leader->save();
     }
 
-    private function deactivateALeader(Leader $leader, $post_id)
+    private function deactivateALeaderPosts(Leader $leader, $post_id)
     {
         $leader->posts()
             ->where('post_id', $post_id)
