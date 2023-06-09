@@ -25,7 +25,6 @@ class GroupsController extends Controller
         return view("interface.super.vikundi.orodhaMakundi")
         ->with("groups", $groups)
             ->with('side', $side);
-
     }
 
 
@@ -58,7 +57,7 @@ class GroupsController extends Controller
         $group->name = $request->group;
         $group->save();
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Kamati Umebadirishwa.']);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Kamati Imebadirishwa.']);
     }
 
 
@@ -80,7 +79,7 @@ class GroupsController extends Controller
             'deep' => $deep.'_gp',
             'side' => $request->side,
         ]);
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Kamati Umetengenezwa.']);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Kamati Imetengenezwa.']);
     }
 
 

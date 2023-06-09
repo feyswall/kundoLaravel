@@ -51,9 +51,8 @@
                         </div>
                         <div>
                             <div class="d-flex justify-start gap-4 flex-wrap">
-                                @foreach( $state->leaders as $leader )
-                                @if( $leader->pivot->isActive == true )
-
+                                @foreach( $state->leaders()->where('isActive', true)->get() as $leader )
+                                @if( true )
                                 <div class="text-center">
                                     <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top" title="Badilisha" href=""></a>
                                     <a class="fas fa-trash text-danger"  data-bs-toggle="modal"

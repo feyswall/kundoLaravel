@@ -8,7 +8,6 @@
 ?>
 
 
-
 @extends("layouts.super_system")
 
 @section('extra_style')
@@ -19,7 +18,9 @@
     <!-- Start right Content here -->
     <div class="card">
         <div class="card-body">
-            <button  data-bs-toggle="modal" data-bs-target="#ongezaKamatiModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i>Ongeza Kamati</button>
+            <button  data-bs-toggle="modal" data-bs-target="#ongezaKamatiModal"
+                     class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i>Ongeza Kamati
+            </button>
         </div>
     </div>
     <!-- ============================================================== -->

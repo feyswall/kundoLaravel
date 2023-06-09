@@ -12,7 +12,6 @@
                     @php
                         $bool_contains = $table;
                          $leaders_id = $bool_contains->leaders->pluck('id');
-
                         $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
                     @endphp
                 @elseif( $group->deep == "Wajumbe_wa_Mkutano_Mkuu_wa_CCM_Wilaya_Wapiga_Kura_gp")
@@ -26,11 +25,12 @@
                         @php $mjumbe++; @endphp
                         @endif
                 @else
-{{--                    <h1>{{ ($ranks[$post->area] < $ranks[$group->basedOn]) ? "kamanda" : "hapana" }}</h1>--}}
                     @if ( $post->area == 'mkoa')
                         @php
                             if ( method_exists($table, "regions") ){
-                                $bool_contains = $table->regions()->with('leaders')->get();
+                                $bool_contains = $table->regions()->with('leaders', function ($query){
+                                            $query->where('isActive', true);
+                                          })->get();
                                  foreach( $bool_contains as $obj ){
                                         $leaders_id = $obj->leaders->pluck('id');
                                         $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
@@ -46,7 +46,9 @@
                     @if ( $post->area == 'wilaya')
                         @php
                             if ( method_exists($table, "districts") ){
-                                   $bool_contains = $table->districts()->get();
+                                   $bool_contains = $table->districts()->with('leaders', function ($query){
+                                            $query->where('isActive', true);
+                                          })->get();
                                    foreach( $bool_contains as $obj ){
                                             $leaders_id = $obj->leaders->pluck('id');
                                             $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
@@ -63,7 +65,9 @@
                     @if ( $post->area == 'halmashauri')
                         @php
                             if ( method_exists($table, "councils") ){
-                                      $bool_contains = $table->councils()->with('leaders')->get();
+                                      $bool_contains = $table->councils()->with('leaders', function ($query){
+                                            $query->where('isActive', true);
+                                          })->get();
                                        foreach( $bool_contains as $obj ){
                                             $leaders_id = $obj->leaders->pluck('id');
                                             $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
@@ -79,7 +83,9 @@
                     @if ( $post->area == 'tarafa')
                         @php
                             if ( method_exists($table, "divisions") ){
-                                          $bool_contains = $table->divisions()->with('leaders')->get();
+                                          $bool_contains = $table->divisions()->with('leaders', function ($query){
+                                            $query->where('isActive', true);
+                                          })->get();
                                           foreach( $bool_contains as $obj ){
                                             $leaders_id = $obj->leaders->pluck('id');
                                             $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
@@ -95,7 +101,9 @@
                     @if ( $post->area == 'kata')
                         @php
                             if ( method_exists($table, "wards") ){
-                                   $bool_contains = $table->wards()->with('leaders')->get();
+                                   $bool_contains = $table->wards()->with('leaders', function ($query){
+                                            $query->where('isActive', true);
+                                          })->get();
                                            foreach( $bool_contains as $obj ){
                                                 $leaders_id = $obj->leaders->pluck('id');
                                                 $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
@@ -112,7 +120,9 @@
                         @php
 
                             if ( method_exists($table, "branches") ){
-                                          $bool_contains = $table->branches()->with('leaders')->get();
+                                          $bool_contains = $table->branches()->with('leaders', function ($query){
+                                            $query->where('isActive', true);
+                                          })->get();
                                            foreach( $bool_contains as $obj ){
                                                 $leaders_id = $obj->leaders->pluck('id');
                                                 $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
@@ -128,7 +138,9 @@
                     @if ( $post->area == 'shina')
                         @php
                             if ( method_exists($table, "trunks") ){
-                                          $bool_contains = $table->trunks()->with('leaders')->get();
+                                          $bool_contains = $table->trunks()->with('leaders', function ($query){
+                                            $query->where('isActive', true);
+                                          })->get();
                                            foreach( $bool_contains as $obj ){
                                                 $leaders_id = $obj->leaders->pluck('id');
                                                 $all_leaders[] = \App\Http\Controllers\Super\LeadersController::filterLeaders($leaders_id, $post);
@@ -153,11 +165,8 @@
                     <div class="container">
                         <div class="row">
                   @foreach( $all_leaders as $leadersCollection )
-
                       @foreach($leadersCollection as $key => $leaders)
-
                               @foreach($leaders as  $bey => $leader)
-
                                   @if( $tracker == $post->name && is_object($leader) )
                                       @php
                                           $counter++ ;
@@ -166,23 +175,22 @@
                                                 <div class="text-center">
                                                     <h4 class="fs-5 text-capitalize mb-1">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
                                                     <span class="d-block mb-2">{{ $leader->phone }}</span>
-                                                    <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $post->name }}</small>
                                                     <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $counter }}</small>
                                                     <span class="d-block mb-2">
                                                         @php
                                                         $area = $post->area;
-                                                        if ( $area == 'tawi'){
-                                                            echo $leader->branches()->where('isActive', true)->first()->name;
-                                                        }elseif ( $area == 'kata'){
-                                                            echo $leader->wards()->where('isActive', true)->first()->name;
-                                                        }elseif ( $area == 'tarafa'){
-                                                            echo $leader->divisions()->where('isActive', true)->first()->name;
-                                                        }elseif ( $area == 'halmashauri'){
-                                                            echo $leader->councils()->where('isActive', true)->first()->name;
-                                                        }elseif ( $area == 'wilaya'){
-                                                            echo $leader->districts()->where('isActive', true)->first()->name;
-                                                        }elseif ( $area == 'mkoa'){
-                                                            echo $leader->regions()->where('isActive', true)->first()->name;
+                                                        if ($area == 'tawi'){
+                                                            echo "Tawi/".$leader->branches()->where('isActive', true)->first()->name;
+                                                        }elseif ($area == 'kata'){
+                                                            echo "Kata/".$leader->wards()->where('isActive', true)->first()->name;
+                                                        }elseif ($area == 'tarafa'){
+                                                            echo "Tarafa/".$leader->divisions()->where('isActive', true)->first()->name;
+                                                        }elseif ($area == 'halmashauri'){
+                                                            echo "Halmashauri/".$leader->councils()->where('isActive', true)->first()->name;
+                                                        }elseif ($area == 'wilaya'){
+                                                            echo "Wilaya/".$leader->districts()->where('isActive', true)->first()->name;
+                                                        }elseif ($area == 'mkoa'){
+                                                            echo "Mkoa/".$leader->regions()->where('isActive', true)->first()->name;
                                                         }
                                                         @endphp
                                                     </span>
@@ -210,17 +218,17 @@
                                                         @php
                                                             $area = $post->area;
                                                             if ( $area == 'tawi'){
-                                                                echo $leader->branches()->where('isActive', true)->first()->name;
+                                                                echo "Tawi/".$leader->branches()->where('isActive', true)->first()->name;
                                                             }elseif ( $area == 'kata'){
-                                                                echo $leader->wards()->where('isActive', true)->first()->name;
+                                                                echo "Kata/".$leader->wards()->where('isActive', true)->first()->name;
                                                             }elseif ( $area == 'tarafa'){
-                                                                echo $leader->divisions()->where('isActive', true)->first()->name;
+                                                                echo "Tarafa/".$leader->divisions()->where('isActive', true)->first()->name;
                                                             }elseif ( $area == 'halmashauri'){
-                                                                echo $leader->councils()->where('isActive', true)->first()->name;
+                                                                echo "Halmashauri/".$leader->councils()->where('isActive', true)->first()->name;
                                                             }elseif ( $area == 'wilaya'){
-                                                                echo $leader->districts()->where('isActive', true)->first()->name;
+                                                                echo "Wilaya/".$leader->districts()->where('isActive', true)->first()->name;
                                                             }elseif ( $area == 'mkoa'){
-                                                                echo $leader->regions()->where('isActive', true)->first()->name;
+                                                                echo "Mkoa/".$leader->regions()->where('isActive', true)->first()->name;
                                                             }
                                                         @endphp
                                                     </span>
