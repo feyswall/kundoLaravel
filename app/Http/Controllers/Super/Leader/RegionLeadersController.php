@@ -82,8 +82,10 @@ class RegionLeadersController extends Controller
     public function update(Request $request, Leader $leader)
     {
            $leaderObject = new LeadersController;
-           $leaderObject->update($request,$leader);
-          
+           $output = $leaderObject->update($request,$leader);
+           if ($output['status'] == 'error'){
+               return redirect()->back()->with(['status' => "error", "message" => $output['message']]);
+           }
            return redirect()->back()->with(['status' => "success", "message" => "Taarifa zimesasishwa!"]);
     }
 

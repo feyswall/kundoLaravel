@@ -52,7 +52,8 @@ use \Illuminate\Support\Facades\DB;
                                                 <div>
                                                     <div class="d-flex justify-start gap-4 flex-wrap">
                                                         @php
-                                                            $districtLeaders = $district->leaders()->where('isActive', true)->get();
+                                                            $districtLeaders = $district->leaders()->where('isActive', true)
+                                                            ->get();
                                                             $chamaPostsWithLeaderCollection =
                                                             \App\Http\Controllers\Super\PostsController::postWithLeaders(
                                                             $districtLeaders, 'chama', 'wilaya');
@@ -62,8 +63,9 @@ use \Illuminate\Support\Facades\DB;
                                                             @php $ps = \App\Models\Post::find($key); @endphp
                                                             @foreach($leaderColl as $id => $ldr)
                                                                 <div class="text-start">
-                                                                    <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                       title="Badilisha" href="{{ route("super.leader.wilaya.badili", $ldr->id ) }}">
+                                                                    <a class="fas fa-edit"  data-bs-toggle="modal"
+                                                                       data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}"
+                                                                       data-bs-placement="top" title="Badilisha" href="#">
                                                                     </a>
                                                                     <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
                                                                        data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $ldr->id }}"
@@ -87,8 +89,9 @@ use \Illuminate\Support\Facades\DB;
                                                                     </x-system.modal>
                                                                     <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
                                                                     <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">
-                                                                        {{ $ps->name }}
-                                                                    </small>
+                                                                        {{ $ps->name }}</small><br>
+                                                                    <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">
+                                                                        +{{ $ldr->phone }}</small>
                                                                 </div>
                                                             @endforeach
                                                             <div class="row w-100"></div>
@@ -96,6 +99,17 @@ use \Illuminate\Support\Facades\DB;
                                                         <hr>
                                                     </div>
                                                 </div>
+                                                @foreach ($chamaPostsWithLeaderCollection as $leaderColl)
+                                                    @foreach( $leaderColl as $ldr )
+                                                        <x-system.modal id="badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}"
+                                                                        aria="ongezaKiongoziKataLabel" size="modal-fullscreen"
+                                                                        title="Ongeza Kiongozi Wa Wilaya Hapa">
+                                                            <x-slot:content>
+                                                                <x-system.edit-leader :leader="$ldr" :route="route('super.leader.wilaya.sasisha', $ldr->id )" />
+                                                            </x-slot:content>
+                                                        </x-system.modal>
+                                                    @endforeach
+                                                @endforeach
                                                 <!-- model location here -->
                                                 <x-system.modal id="ongezaKiongoziChamaModal" aria="ongezaKiongoziWilayaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama  Hapa">
                                                     <x-slot:content>

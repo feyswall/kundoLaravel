@@ -100,7 +100,6 @@ class BranchLeadersController extends Controller
     {
         $leaderObject = new LeadersController;
         $leaderObject->update($request, $leader);
-
         return redirect()->back()->with(['status' => "success", "message" => "Taarifa Zimebadirishwa."]);
     }
 

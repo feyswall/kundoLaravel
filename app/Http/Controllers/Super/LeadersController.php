@@ -240,23 +240,22 @@ class LeadersController extends Controller
         ];
 
         $validate = Validator::make($request->all() ,$rules, $messages );
-
         if( $validate->fails() ){
-            return ['status' => 'error','name' => 'validation', 'error' => $validate->errors()];
+            return ['status' => 'error','name' => 'validation',
+                'error' => $validate->errors(),
+                'message' => 'Kuna tatizo kwenye uandishi, tafadhali kagua na ujaribu tena'];
         }
-
         if( !( preg_match("/^255[0-9]{9}$/", $request->phone ) ) ){
-            return ['status' => 'error','name' => 'validation', 'error' => ['phone' => 'Namba ya simu si sahihi yabididi kuandikwa "255628960877"'] ];
+            return ['status' => 'error','name' => 'validation',
+                'message' => 'Namba ya simu si sahihi yabidi kuandikwa "255628960877"',
+                'error' => ['phone' => 'Namba ya simu si sahihi yabidi kuandikwa "255628960877"'] ];
         }
         $leader->firstName = $request->firstName;
         $leader->middleName = $request->middleName;
         $leader->lastName = $request->lastName;
         $leader->phone = $request->phone;
-
         $leader->save();
-
        return ['status' => 'success', 'leader' => $leader];
-
     }
 
 

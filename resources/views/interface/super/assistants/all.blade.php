@@ -58,7 +58,7 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('super.assistants.show', $assistants->id) }}"
-                                            class="btn btn-success btn-sm">open</a>
+                                            class="btn btn-success btn-sm">fungua</a>
                                     </td>
                                 </tr>
                             @endforeach

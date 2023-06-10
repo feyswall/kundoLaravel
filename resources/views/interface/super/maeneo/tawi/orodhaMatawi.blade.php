@@ -87,7 +87,6 @@
                                                             <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
                                                             <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ps->name }}</small>
                                                             <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ldr->phone }}</small>
-
                                                         </div>
                                                        @endforeach
                                                     <div class="row w-100"></div>
@@ -96,13 +95,15 @@
                                             </div>
                                         </div>
                                         @foreach ($chamaPostsWithLeaderCollection as $leaderColl)
-                                        @foreach( $leaderColl as $ldr )
-                                                    <x-system.modal id="badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
-                                                        <x-slot:content>
-                                                            <x-system.edit-leader :leader="$ldr" :route="route('super.leader.kata.sasisha', $ldr->id)" />
-                                                        </x-slot:content>
-                                                    </x-system.modal>
-                                                @endforeach
+                                            @foreach( $leaderColl as $ldr )
+                                                <x-system.modal id="badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}"
+                                                    aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
+                                                    <x-slot:content>
+                                                        <x-system.edit-leader :leader="$ldr"
+                                                         :route="route('super.leader.kata.sasisha', $ldr->id)" />
+                                                    </x-slot:content>
+                                                </x-system.modal>
+                                            @endforeach
                                         @endforeach
                                         <!-- model location here -->
                                         <x-system.modal id="ongezaKiongoziChamaModal" aria="ongezaKiongoziKataLabel"
