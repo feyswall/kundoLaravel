@@ -232,7 +232,8 @@
                                                     @foreach($leaderColl as $id => $ldr)
                                                         <div class="text-start">
                                                             <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                             title="Badilisha" href="{{ route("super.leader.kata.badili", $ldr->id ) }}"></a>
+                                                             title="Badilisha" href="{{ route("super.leader.kata.badili", $ldr->id ) }}">
+                                                            </a>
                                                             <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
                                                             data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
                                                             data-bs-placement="top" title="Badilisha" href="#">

@@ -26,7 +26,8 @@ use \Illuminate\Support\Facades\DB;
                                 <div class="flex-grow-1 overflow-hidden">
                                     <h5 class="font-size-16 mb-1">Taarifa Kuhusiana Na Wilaya</h5>
                                 </div>
-                                <div class="flex-shrink-0"> <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>
+                                <div class="flex-shrink-0"><i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i>
+                                </div>
                             </div>
                         </div>
                     </a>

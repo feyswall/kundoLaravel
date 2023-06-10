@@ -55,7 +55,7 @@ class CouncilLeadersController extends Controller
             );
             if ($output['status'] == 'error') { return redirect()->back()->with($output); }
         }
-        $output = $obj->attachMany( $leader->councils(), $request, $leader );
+        $output = $obj->attachMany($leader->councils(), $request, $leader);
         if ( $output['response'] == 'failure'){
             return redirect()->back()
                 ->with(['status' => 'error', 'message' => 'Hatukuweza kumpa wadhifa, tafadhali jaribu tena']);
