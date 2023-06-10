@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('sials');
-        Schema::create('sials', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->string('letter_url')->nullable();
-            $table->longText('note')->nullable();
-            $table->timestamps();
+        Schema::table('sials', function (Blueprint $table) {
+            $table->morphs('sendable');
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sials');
+        Schema::table('sials', function (Blueprint $table) {
+            //
+        });
     }
 };

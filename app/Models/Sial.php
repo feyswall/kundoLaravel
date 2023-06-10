@@ -35,4 +35,9 @@ class Sial extends Model
             ->first();
         return $leader;
     }
+
+    public function sendable()
+    {
+        return $this->morphTo();
+    }
 }

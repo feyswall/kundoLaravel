@@ -15,12 +15,15 @@ use App\Models\Post;
 use App\Models\Region;
 use App\Models\Ward;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 use Illuminate\Http\Request;
 
 class SialsController extends Controller
 {
+    protected $auth_user;
+
     /**
      * Display a listing of the resource.
      *
@@ -142,6 +145,7 @@ class SialsController extends Controller
             return json_encode( $vals );
         }
     }
+
 
     public function store(Request $request){
         $areaToBeSend = json_decode($request->input('area'));

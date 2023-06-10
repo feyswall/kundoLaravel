@@ -54,8 +54,7 @@ class User extends Authenticatable
         return $this->hasOne( Leader::class );
     }
 
-
-        /**
+    /**
      * @param null
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -71,5 +70,10 @@ class User extends Authenticatable
     public function assistant()
     {
         return $this->hasOne( assistant::class );
+    }
+
+    public function sials()
+    {
+        return $this->hasMany( Sial::class, 'sendable' );
     }
 }
