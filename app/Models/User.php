@@ -74,6 +74,11 @@ class User extends Authenticatable
 
     public function sials()
     {
-        return $this->hasMany( Sial::class, 'sendable' );
+        return $this->morphMany( Sial::class, 'sendable' );
+    }
+
+    public function payments()
+    {
+        return $this->morphMany( Payment::class, 'sendable');
     }
 }

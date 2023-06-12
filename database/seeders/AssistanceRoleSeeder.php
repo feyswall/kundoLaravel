@@ -26,13 +26,17 @@ class AssistanceRoleSeeder extends Seeder
          // create permissions to assign at the roles
          $assistanceDefaultPermissions = [
             ['name' => 'grob_assistance', 'presentable' => 'Yote Msimamizi'],
+            ['name' => 'grob_house_apartments', 'presentable' => 'Yote Katika Nyumba'],
         ];
        foreach( $assistanceDefaultPermissions as $permission ){
+        $permission_exists = Permission::where('name', $permission['name'])->exists();
+        if( $permission_exists ){ continue; }
            Permission::create([
             'name' => $permission['name'],
              'presentable' => $permission['presentable'
              ]]);
-       }
+        }
+
         $user = User::create([
             'name' => 'Feyswal Assistance',
             'email' => 'fey2@gmail.com',

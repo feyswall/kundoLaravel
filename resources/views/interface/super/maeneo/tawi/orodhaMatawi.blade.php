@@ -85,8 +85,8 @@
                                                                 </x-slot:content>
                                                             </x-system.modal>
                                                             <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
-                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ps->name }}</small>
-                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ldr->phone }}</small>
+                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ps->name }}</small><br>
+                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">+{{ $ldr->phone }}</small>
                                                         </div>
                                                        @endforeach
                                                     <div class="row w-100"></div>

@@ -17,13 +17,14 @@
         @php
             $sials = App\Models\Sial::all();
             $desiredSials = [];
+            $myLettersCount = 0;
         @endphp
         @foreach ($sials as $sial)
             @if($sial->inToManyCopy($user) )
                 @if($sial->inToManyCopy($user)->pivot)
                     @if( !($sial->inToManyCopy($user)->pivot->seen) )
-                        @php $desiredSials[] = $sial;
-                        @endphp
+                        @php $desiredSials[] = $sial; @endphp
+                        @php $myLettersCount++; @endphp
                     @endif
                 @endif
             @endif
@@ -31,8 +32,8 @@
             @if($sial->inToManySend($user) )
                 @if($sial->inToManySend($user)->pivot)
                     @if( !($sial->inToManySend($user)->pivot->seen) )
-                        @php $desiredSials[] = $sial;
-                        @endphp
+                        @php $desiredSials[] = $sial; @endphp
+                        @php $myLettersCount++; @endphp
                     @endif
                 @endif
             @endif
@@ -72,7 +73,7 @@
                                 <p class="text-muted mb-0">zisizosomwa</p>
                             </div>
                             <p class="text-muted mt-3 mb-0"><span class="text-success me-1">
-                                <i class="mdi mdi-arrow-up-bold me-1"></i>{{ App\Models\Sial::all()->count() }}</span>
+                                <i class="mdi mdi-arrow-up-bold me-1"></i>{{ $myLettersCount }}</span>
                                  Barua Zote
                             </p>
                         </div>

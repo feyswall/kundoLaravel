@@ -9,4 +9,6 @@
   @include('profile.general-profile')
 @elseif ( $user->hasRole('motorOwner'))
     @include('profile.motorOwner-profile')
+@elseif ( $user->hasRole('assistance') )
+    @include('profile.assistant-profile')
 @endif

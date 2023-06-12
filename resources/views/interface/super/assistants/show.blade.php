@@ -89,7 +89,7 @@
                         </div>
                         <div class="col-lg-8 col-sm-12">
                             <div class="mb-3 mb-4">
-                                <button class="btn btn-sm btn-success" type="submit">hifadhi</button>
+                                <button class="btn btn-sm btn-success" type="submit">weka</button>
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                         </div>
                         <div class="col-lg-8 col-sm-12">
                             <div class="mb-3 mb-4">
-                                <button class="btn btn-sm btn-success" type="submit">hifadhi</button>
+                                <button class="btn btn-sm btn-danger" type="submit">ondoa</button>
                             </div>
                         </div>
                     </div>

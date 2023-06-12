@@ -148,6 +148,7 @@ class SialsController extends Controller
 
 
     public function store(Request $request){
+        $authUser = Auth::user();
         $areaToBeSend = json_decode($request->input('area'));
         $selectedCopyToLeaders = [];
         if ( $request->copyTo ){
@@ -234,7 +235,17 @@ class SialsController extends Controller
                 'area_id' =>  $areaToBeSend->id,
                 'letterNumber' => $name,
             ];
-            $ziara = Sial::create($sialObjectData);
+
+            $ziara = new Sial();
+            $ziara->letter_url = $image_name;
+            $ziara->note = $request->input('content');
+            $ziara->title = $request->input('title');
+            $ziara->area_name = $areaToBeSend->area;
+            $ziara->area_id =  $areaToBeSend->id;
+            $ziara->letterNumber = $name;
+
+            $authUser->sials()->save($ziara);
+
             if ( $ziara ){
                 foreach($selectedCopyToLeaders as $requestCopyTo ){
                     $selectedLeaderId = $requestCopyTo->id;

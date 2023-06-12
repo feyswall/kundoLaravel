@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('permissions', function (Blueprint $table) {
-            $table->string('presentable')->default('un-specified');
+        Schema::table('payments', function (Blueprint $table) {
+            $table->morphs('sendable');
         });
     }
 
@@ -25,10 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('permissions', function (Blueprint $table) {
-            if (Schema::hasColumn('permissions', 'presentable')) {
-                $table->dropColumn('presentable');
-            }
+        Schema::table('payments', function (Blueprint $table) {
+            //
         });
     }
 };

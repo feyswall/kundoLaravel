@@ -10,8 +10,20 @@
 @extends("layouts.assistants_system")
 
 @section("content")
-
-    <!-- container-fluid -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="p-5 text-center">
+                    <h3 class="text-center">
+                        <b>Karibu Katika Uwanjwa Wa Msaidizi</b>
+                    </h3>
+                    <p>Hautaweza kufanya chochote hadi utakaporuhusiwa na Administrator</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('extra_script')

@@ -26,13 +26,5 @@ class UserSeeder extends Seeder
            'password' => Hash::make('password'),
        ]);
        $user->assignRole('super');
-
-        // $mbunge = User::create([
-        //     'name' => "Juma Pesambili",
-        //     'email' => 'mbunge@gmail.com',
-        //     'password' => Hash::make('password'),
-        //     'leader_id' => 515,
-        // ]);
-        // $mbunge->assignRole('mbunge');
     }
 }

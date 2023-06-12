@@ -30,6 +30,14 @@
                         </ul>
                     </li>
                 @endcan
+
+                @can(['grob_house_apartments'])
+                <li> <a href="javascript: void(0);" class="has-arrow">Nyumba</a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{ route('assistants.houses.allHouses') }}"><span>Orodha ya Nyumba</span> </a></li>
+                    </ul>
+                </li>
+                @endcan
                 <hr>
 
             </ul>

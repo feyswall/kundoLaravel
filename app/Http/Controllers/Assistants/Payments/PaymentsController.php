@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Super\Payments;
+namespace App\Http\Controllers\Assistants\Payments;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
@@ -25,7 +25,8 @@ class PaymentsController extends Controller
         }
         $apartment = Apartment::where('id', $request->apartment_id )->first();
         if ( !$apartment ){
-            return redirect()->back()->with(['status' => 'error', 'message' => 'Tatizo limetokea tafadhali jaribu tena']);
+            return redirect()->back()->with(
+                ['status' => 'error', 'message' => 'Tatizo limetokea tafadhali jaribu tena']);
         }
         $reminder = $request->received % $apartment->cost;
         if ( $reminder != 0 ){
@@ -84,8 +85,9 @@ class PaymentsController extends Controller
             $payment->start_month = $date;
             $payment->end_month = $endDate;
             $payment->month_count = $monthCount;
+            $payment->tenant_id = $tenant_id;
             $payment->sendable_type = $authUser::class;
             $payment->sendable_id = $authUser->id;
-        return $object->payments()->save( $payment );
+        return  $object->payments()->save( $payment );
     }
 }

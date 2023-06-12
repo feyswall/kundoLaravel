@@ -115,30 +115,25 @@ class LeadersController extends Controller
                 'name' => 'general',
             ]);
         }
-
         $firstAndLastName = strtolower($formData->firstName)."".strtolower($formData->lastName);
         $email = $firstAndLastName.".general@kims.com";
-
         $rules = [
             'email' => 'unique:users,email',
         ];
-
         $validate = Validator::make( ['email' => $email], $rules );
-
         if ( $validate->fails() ) {
             return null;
         }
-
         $user = \App\Models\User::create([
             'name' => $firstAndLastName,
             'email' => $email,
             'password' => Hash::make($firstAndLastName),
         ]);
-
         if ( !$user ){
             return null;
         }
-
+        // assign a role to a user
+        $user->assignRole('general');
         $phone = preg_replace("/^0/", "255", $formData->phone);
         $phone = preg_replace("/\s/", "", $phone );
         $leader = Leader::create([

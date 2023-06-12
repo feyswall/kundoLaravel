@@ -19,7 +19,10 @@
     <!-- Start right Content here -->
     <div class="card">
         <div class="card-body">
-            <a  href="{{ route('super.sial.create') }}" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"></i> Tuma Barua</a>
+            <a  href="{{ route('super.sial.create') }}" class="btn btn-info btn-sm mb-4">
+                <i class="fas fa-plus"></i>
+                Tuma Barua
+            </a>
         </div>
     </div>
 
@@ -32,11 +35,12 @@
                     <label class="form-label font-size-24" id="machagulio-wilaya"></label>
                     <table id="superSailTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
-                        <td>#</td>
-                        <th>Kichwa</th>
-                        <th>Rf: No_</th>
-                        <th>Tarehe</th>
-                        <th></th>
+                            <td>#</td>
+                            <th>Kichwa</th>
+                            <th>Rf: No_</th>
+                            <th>Muandishi</th>
+                            <th>Tarehe</th>
+                            <th></th>
                         </thead>
                         <tbody>
                         @foreach( $sials as $key => $sial )
@@ -44,6 +48,7 @@
                                 <td>{{ $sials->count() - $key }}</td>
                                 <td>{{ $sial->title }}</td>
                                 <td>{{ $sial->letterNumber }}</td>
+                                <td>{{ $sial->sendable_type == 'App\Models\User' ? $sial->sendable()->first()->name : '' }}</td>
                                <td>{{  Carbon\Carbon::parse($sial->created_at)->format('M d Y') }} </td>
                                <td>
                                 <a href="{{ route("super.sial.show", $sial->id) }}" class="btn btn-success btn-sm">fungua</a>  

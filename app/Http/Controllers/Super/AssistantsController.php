@@ -106,7 +106,7 @@ class AssistantsController extends Controller
         foreach ($request->input('permit') as $permit){
             $user->givePermissionTo($permit);
         }
-        if ( $assistant->user->hasPermissionTo('grob_sials')){
+        if ( $assistant->user->hasPermissionTo($permit)){
             return redirect()->back()->with(['status' => 'success', 'message' => 'Amepewa Ruksa']);
         }
         return redirect()->back()->with(['status' => 'error', 'message' => 'Imeshindikana tafadhali jaribu tena']);

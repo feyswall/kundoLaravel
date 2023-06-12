@@ -7,7 +7,7 @@
  */
 ?>
 
-@extends("layouts.super_system")
+@extends("layouts.assistants_system")
 
 @section("content")
     <div class="container-fluid">
@@ -27,7 +27,7 @@
                                     <i class="fas fa-plus"> </i>Weka Mpangaji</a>
                             @else
                                 <form method="post"
-                                 action="{{ route('super.tenants.deleteTenant', $apartment->tenant->id ) }}"
+                                 action="{{ route('assistants.tenants.deleteTenant', $apartment->tenant->id ) }}"
                                   class="m-3">
                                     @method('delete')
                                     @csrf
@@ -53,7 +53,6 @@
                                 <th>Kodi @mwezi</th>
                                 <th>Kiasi Kilicholipwa</th>
                                 <th>Miezi</th>
-                                <th>Mjazaji</th>
                                 <th>Mwezi wa kuanza:</th>
                                 <th>Mwezi wa kuisha:</th>
                             </tr>
@@ -66,7 +65,6 @@
                                     <td>Tsh {{ number_format($payment->perMonth_payment, 0, '.', ',') }}/=</td>
                                     <td>Tsh {{ number_format($payment->received_payment, 0, '.', ',')  }}/=</td>
                                     <th>{{ $payment->month_count }}</th>
-                                    <th>{{ $payment->sendable_type == "App\Models\User" ? $payment->sendable()->first()->name : ''}}</th>
                                     <td>{{ \Carbon\Carbon::parse($payment->start_month)->format("M-d-Y") }}</td>
                                     <td>{{ \Carbon\Carbon::parse($payment->start_month)->addMonths( $payment->month_count)->format("M-d-Y") }}</td>
                                 </tr>
@@ -80,7 +78,7 @@
         <x-system.modal id="createNewPayment" aria="apartmentRegistration" size="modal-lg"
         title="Sajiri Apartment Mpya">
             <x-slot:content>
-                <form method="POST" action="{{ route('super.payments.storePayment') }}">
+                <form method="POST" action="{{ route('assistants.payments.storePayment') }}">
                     @csrf
                     <div>
                         <div class="row justify-content-center">
@@ -129,7 +127,7 @@
         <x-system.modal id="assignTenant" aria="apartmentTenantRegistration" size="modal-lg"
         title="Sajiri Mpangaji wa Apartment">
             <x-slot:content>
-                <form method="POST" action="{{ route('super.tenants.assignTenant') }}">
+                <form method="POST" action="{{ route('assistants.tenants.assignTenant') }}">
                     @csrf
                     <div>
                         <div class="row justify-content-center">
@@ -165,7 +163,7 @@
         <x-system.modal id="registerNewTenant" aria="apartmentTenantRegistration"
          size="modal-fullscreen" title="Form ya kusajiri mpangaji mpya kwenye mfumo">
             <x-slot:content>
-                <form method="POST" action="{{ route('super.tenants.storeTenant') }}">
+                <form method="POST" action="{{ route('assistants.tenants.storeTenant') }}">
                     @csrf
                     <div>
                         <div class="row justify-content-center">
