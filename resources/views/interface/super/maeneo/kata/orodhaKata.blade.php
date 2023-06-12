@@ -302,12 +302,13 @@
                                                             <div class="mb-3 mb-4">
                                                                 <label class="form-label" for="phone">Namba ya Simu</label>
                                                                 <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
-
-                                                                <!-- data to simplify the validation process -->
-                                                                <input type="hidden" value="{{ $division->id }}" class="form-control" name="side_id">
-                                                                <input type="hidden" value="division_leader" class="form-control" name="table">
-                                                                <input type="hidden" value="division_id" class="form-control" name="side_column">
                                                             </div>
+                                                        </div>
+                                                        <div>
+                                                             <!-- data to simplify the validation process -->
+                                                             <input type="hidden" value="{{ $division->id }}" class="form-control" name="side_id">
+                                                             <input type="hidden" value="division_leader" class="form-control" name="table">
+                                                             <input type="hidden" value="division_id" class="form-control" name="side_column">
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
