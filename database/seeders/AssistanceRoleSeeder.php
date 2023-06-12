@@ -37,11 +37,11 @@ class AssistanceRoleSeeder extends Seeder
              ]]);
         }
 
-        $user = User::create([
-            'name' => 'Feyswal Assistance',
-            'email' => 'fey2@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
+        // $user = User::create([
+        //     'name' => 'Feyswal Assistance',
+        //     'email' => 'fey2@gmail.com',
+        //     'password' => Hash::make('password'),
+        // ]);
         $assistance = Assistant::create([
             'fullName' => $user->name,
             'phone' => '255628960877',
