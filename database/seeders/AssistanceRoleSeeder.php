@@ -48,6 +48,6 @@ class AssistanceRoleSeeder extends Seeder
             'gender' => 'male',
             'user_id' => $user->id,
         ]);
-        $user->assignRole('assistance');
+        $assistance->assignRole('assistance');
     }
 }
