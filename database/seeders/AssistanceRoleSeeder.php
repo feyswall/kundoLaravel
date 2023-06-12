@@ -20,9 +20,9 @@ class AssistanceRoleSeeder extends Seeder
     public function run()
     {
           // create your roles
-        //  $super_role = Role::create([
-        //    'name' => 'assistance',
-        //    ]);
+         $super_role = Role::create([
+           'name' => 'assistance',
+           ]);
          // create permissions to assign at the roles
          $assistanceDefaultPermissions = [
             ['name' => 'grob_assistance', 'presentable' => 'Yote Msimamizi'],
@@ -37,17 +37,17 @@ class AssistanceRoleSeeder extends Seeder
              ]]);
         }
 
-        // $user = User::create([
-        //     'name' => 'Feyswal Assistance',
-        //     'email' => 'fey2@gmail.com',
-        //     'password' => Hash::make('password'),
-        // ]);
+        $user = User::create([
+            'name' => 'Feyswal Assistance',
+            'email' => 'fey2@gmail.com',
+            'password' => Hash::make('password'),
+        ]);
         $assistance = Assistant::create([
             'fullName' => $user->name,
             'phone' => '255628960877',
             'gender' => 'male',
             'user_id' => $user->id,
         ]);
-        $assistance->assignRole('assistance');
+        $user->assignRole('assistance');
     }
 }
