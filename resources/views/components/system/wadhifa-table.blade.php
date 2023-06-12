@@ -5,7 +5,7 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>Jina la Tawi</th>
+            <th>Jina</th>
             <th>Ngazi ya:</th>
             {{--<th>Kamati Zao</th>--}}
             <th>Idadi</th>
