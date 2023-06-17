@@ -86,7 +86,8 @@ Route::get('/reverse_account', function () {
 Route::get('/dashboard', function () {
     /** selecting all leaders from our database */
     $leaders = Leader::where("id", ">",  0)
-        ->with('posts')->paginate(300);
+        ->with('posts')->get();
+        $leaders = $leaders->makeHidden('created_at', 'updated_at');
     return view('dashboard')
         ->with("leaders", $leaders);
 })->middleware(['auth', 'verified', 'role:super|mbunge|general|motorOwner|assistance'])->name('dashboard');
