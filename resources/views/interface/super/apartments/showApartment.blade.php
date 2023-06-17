@@ -34,7 +34,7 @@
                                     <i class="fas fa-minus-circle text-danger">
 
                                     </i><input type="submit" class="border-0 bg-white text-danger"
-                                    value="remove tenant">
+                                    value="ondoa mpangaji">
                                 </form>
                             @endif
                         </span>
@@ -49,7 +49,7 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Mpangaji</th>
+                                <th>Mjazaji</th>
                                 <th>Kodi @mwezi</th>
                                 <th>Kiasi Kilicholipwa</th>
                                 <th>Miezi</th>
@@ -62,7 +62,7 @@
                             @foreach( $apartment->payments as $key => $payment )
                                 <tr>
                                     <td>{{ $apartment->payments->count() - $key }}</td>
-                                    <td>{{ $payment->tenant->name }}</td>
+                                    <td>{{ $payment->sendable->name }}</td>
                                     <td>Tsh {{ number_format($payment->perMonth_payment, 0, '.', ',') }}/=</td>
                                     <td>Tsh {{ number_format($payment->received_payment, 0, '.', ',')  }}/=</td>
                                     <th>{{ $payment->month_count }}</th>
