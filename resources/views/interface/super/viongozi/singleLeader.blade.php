@@ -192,6 +192,33 @@
                                 @endphp
                             @endif
 
+
+                            @if ($post->area == 'jimbo')
+                                @php
+                                    $relation_table = 'leader_state';
+                                    $side_column = 'state_id';
+                                    $area_type = 'App\Models\State';
+                                    $area_string = 'jimbo la ';
+
+                                    $area =  App\Http\Controllers\Super\AreasController::search_for_area(
+                                        $relation_table,
+                                        $side_column,
+                                        $side_value,
+                                        $leader_id,
+                                        $area_type
+                                    );
+                                    $district = $area->district;
+                                    $region = $area->region;
+                                    $area_stack = 'mkoa - '.$region->name.' | ';
+                                    $area_stack .= 'wilaya - '.$district->name.' | ';
+                                    if($area){
+                                        echo "<p>".$area_stack."</p>";
+                                        echo $area_string.' <b>'.$area->name.'</b>';
+                                    }
+                                @endphp
+                            @endif
+
+
                             @if ($post->area == 'mkoa')
                                 @php
                                     $relation_table = 'leader_region';

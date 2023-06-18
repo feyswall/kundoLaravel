@@ -341,4 +341,31 @@ class LeadersController extends Controller
     {
         //
     }
+
+    public function searchLeaders()
+    {
+        return view('interface.super.viongozi.tafuta');
+    }
+
+    public function areaChangeApi(Request $request)
+    {
+        $area = $request->area;
+        if ($area == 'shina'){
+            $finalArea = Trunk::all();
+        }elseif($area == 'tawi'){
+            $finalArea = Branch::all();
+        }elseif($area == 'kata'){
+
+        }elseif($area == 'tarafa'){
+
+        }elseif($area == 'halmashauri'){
+
+        }elseif($area == 'wilaya'){
+
+        }elseif($area == 'mkoa'){
+
+        }
+        dd( $request->all() );
+        return json_encode(['man', 'to', 'manAtLeast']);
+    }
 }

@@ -115,3 +115,10 @@ Route::controller(\App\Http\Controllers\GaragesController::class)
         Route::get('/orodha/{id}', 'garageChangedApi')->name('.orodha');
     });
 
+
+Route::controller(\App\Http\Controllers\Super\LeadersController::class)
+    ->prefix('/area')
+    ->as('area.leader')
+    ->group(function () {
+        Route::post('/leader/search', 'areaChangeApi')->name('.orodha');
+    });
