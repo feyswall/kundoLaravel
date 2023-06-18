@@ -42,6 +42,21 @@ class LeadersController extends Controller
         //
     }
 
+    public function viewleader($id)
+    {
+        $leader = Leader::where('id', $id)->first();
+        $leader_posts = DB::table('leader_post')
+        ->where('leader_id', $leader->id)
+        ->where('isActive', true)
+        ->pluck('id');
+        $posts = DB::table('posts')->whereIn('id', $leader_posts)
+        ->get();
+        return view('interface.super.viongozi.singleLeader')
+        ->with('leader', $leader)
+        ->with('posts', $posts);
+
+    }
+
     public function assignPowerToPresentLeader($leader_id, $table, $post_id, $side_id, $side_column)
     {
         $leaderHasPostQueryBuilder = DB::table($table)->select('*')
