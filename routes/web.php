@@ -86,14 +86,15 @@ Route::get('/reverse_account', function () {
 Route::get('/dashboard', function () {
     /** selecting all leaders from our database */
     $leaders = Leader::where("id", ">",  0)
+        ->has('posts')
         ->with('posts', function($query){
-            $query->with('groups', function($query){
+            $query->where('isActive', true)
+                ->with('groups', function($query){
                 $query->select('name')->where('prev', 1);
             });
         })
-        ->has('posts')
         ->get();
-        $leaders = $leaders->makeHidden(['created_at', 'updated_at', 'post.created_at', 'post.update_at', 'posts.deep']);
+        $leaders = $leaders->makeHidden(['created_at', 'updated_at', 'post.created_at', 'post.update_at']);
     return view('dashboard')
         ->with("leaders", $leaders);
 })->middleware(['auth', 'verified', 'role:super|mbunge|general|motorOwner|assistance'])->name('dashboard');
