@@ -70,8 +70,6 @@ class SmsServicesControlller extends Controller
         return $response;
     }
 
-
-
     /**
      * Sending sms in here
      * @param Request $requesr

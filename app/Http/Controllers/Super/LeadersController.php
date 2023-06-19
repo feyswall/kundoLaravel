@@ -42,6 +42,11 @@ class LeadersController extends Controller
         //
     }
 
+    public function sendingSms()
+    {
+
+    }
+
     public function assignPowerToPresentLeader($leader_id, $table, $post_id, $side_id, $side_column)
     {
         $leaderHasPostQueryBuilder = DB::table($table)->select('*')

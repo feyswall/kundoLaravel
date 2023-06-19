@@ -108,38 +108,12 @@
                                                     @csrf
                                                     <input type="hidden" name="side" value="chama">
                                                     <div class="row">
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                                <input type="text" class="form-control" name="firstName"
-                                                                value="{{ old('firstName') }}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="middleName">Jina La Kati</label>
-                                                                <input type="text" class="form-control" name="middleName"
-                                                                value="{{ old('middleName') }}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="lastName">Jila La Mwisho</label>
-                                                                <input type="text" class="form-control" name="lastName"
-                                                                value="{{ old('lastName') }}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="phone">Namba ya Simu</label>
-                                                                <input type="text" class="form-control" name="phone"
-                                                                value="{{ old('phone') }}">
-
-                                                                <!-- data to simplify the validation process -->
-                                                                <input type="hidden" value="{{ $division->id }}" class="form-control" name="side_id">
-                                                                <input type="hidden" value="division_leader" class="form-control" name="table">
-                                                                <input type="hidden" value="division_id" class="form-control" name="side_column">
-                                                            </div>
+                                                        <x-system.leader-basic-inputs></x-system.leader-basic-inputs>
+                                                        <div>
+                                                            <!-- data to simplify the validation process -->
+                                                            <input type="hidden" value="{{ $division->id }}" class="form-control" name="side_id">
+                                                            <input type="hidden" value="division_leader" class="form-control" name="table">
+                                                            <input type="hidden" value="division_id" class="form-control" name="side_column">
                                                         </div>
                                                         <div class="col-sm-12 col-md-4 col-lg-3">
                                                             <div class="mb-3 mb-4">
@@ -229,7 +203,7 @@
 
                                                 @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)
                                                     @php $ps = \App\Models\Post::find($key); @endphp
-                                                    @foreach($leaderColl as $id => $ldr)
+                                                    @foreach($leaderColl as $id => $ldr) 
                                                         <div class="text-start">
                                                             <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top"
                                                              title="Badilisha" href="{{ route("super.leader.kata.badili", $ldr->id ) }}">
@@ -280,30 +254,7 @@
                                                     @csrf
                                                     <input type="hidden" name="side" value="serikali">
                                                     <div class="row">
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="firstName">Jina La Kwanza</label>
-                                                                <input type="text" class="form-control" name="firstName" value="{{ old('firstName') }}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="middleName">Jina La Kati</label>
-                                                                <input type="text" class="form-control" name="middleName" value="{{ old('middleName') }}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="lastName">Jila La Mwisho</label>
-                                                                <input type="text" class="form-control" name="lastName" value="{{ old('lastName') }}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-4 col-lg-3">
-                                                            <div class="mb-3 mb-4">
-                                                                <label class="form-label" for="phone">Namba ya Simu</label>
-                                                                <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
-                                                            </div>
-                                                        </div>
+                                                        <x-system.leader-basic-inputs></x-system.leader-basic-inputs>
                                                         <div>
                                                              <!-- data to simplify the validation process -->
                                                              <input type="hidden" value="{{ $division->id }}" class="form-control" name="side_id">
