@@ -77,6 +77,7 @@
                                                      class="form-control postToSend select2">
                                                         <option v-for="(post, index) in postsList"
                                                             :key="index"
+                                                            selected
                                                             v-bind:value="post.id">
                                                             @{{ post.name }}
                                                         </option>
@@ -121,34 +122,60 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                 postSelected: '',
                 postsList: [],
                 areaSelected: '',
-                areasList: ['mkoa', 'wilaya', 'halmashauri', 'tarafa', 'kata', 'tawi', 'shina', 'jimbo']
+                areasList: ['mkoa', 'wilaya', 'halmashauri', 'tarafa', 'kata', 'tawi', 'shina', 'jimbo'],
+                leadersList: []
             },
             methods: {
                 areaSelectedChange() {
                     let obj = this;
                     this.postsList = [];
-                    axios.post(`/api/area/leader/search`, {'area': obj.areaSelected})
+                    axios.post(`/api/area/posts/search`, {'area': obj.areaSelected})
                         .then(function(response) {
-                            dd( response );
-                            // let responseData = Array;
-                            // if (response.data) {
-                            //     responseData = response.data;
-                            //     if (responseData.status === 'success') {
-                            //         if (Array.isArray(responseData.response)) {
-                            //             obj.leaders = responseData.leaders;
-                            //             obj.districts = responseData.response;
-                            //             obj.areaSelected = `Mkoa - ${responseData.region.name}`;
-                            //             obj.areaToSend = {
-                            //                 'area': 'mkoa',
-                            //                 'id': responseData.region.id
-                            //             };
-                            //         } else {
-                            //             alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
-                            //         }
-                            //     } else {
-                            //         alert(responseData.message)
-                            //     }
-                            // }
+                            let responseData = Array;
+                            if (response.data) {
+                                responseData = response.data;
+                                console.log( responseData );
+                                console.log( obj.areaSelected );
+                                console.log( obj.postSelected );
+                                if (responseData.status === 'success') {
+                                    if (Array.isArray(responseData.response)) {
+                                        obj.postsList = responseData.response;
+                                    } else {
+                                        alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
+                                        location.reload();
+                                        }
+                                } else {
+                                    alert(responseData.message)
+                                }
+                            }
+                        })
+                        .catch(function(error) {
+                            alert(error);
+                        });
+                    console.log('area is selected');
+                },
+                postSelectedChange() {
+                    console.log('change');
+                    let obj = this;
+                    this.leadersList = [];
+                    axios.post(`/api/area/leaders/search`, {'postId': obj.postSelected})
+                        .then(function(response) {
+                            let responseData = Array;
+                            if (response.data) {
+                                responseData = response.data;
+                                console.log( responseData );
+                                console.log( obj.postSelected );
+                                if (responseData.status === 'success') {
+                                    if (Array.isArray(responseData.response)) {
+                                        obj.leadersList = responseData.response;
+                                    } else {
+                                        alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
+                                        location.reload();
+                                        }
+                                } else {
+                                    alert(responseData.message)
+                                }
+                            }
                         })
                         .catch(function(error) {
                             alert(error);
@@ -162,8 +189,9 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
             mounted() {
                 const obj = this;
                 $('.postToSend').on('change', () => {
-                    console.log('selected');
                     this.postSelected = $('.postToSend').val();
+                    console.log(obj.postSelected);
+                    obj.postSelectedChange();
                 });
 
             }

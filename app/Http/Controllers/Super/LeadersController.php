@@ -3,10 +3,19 @@
 namespace App\Http\Controllers\Super;
 
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
+use App\Models\Council;
+use App\Models\District;
+use App\Models\Division;
 use App\Models\Leader;
+use App\Models\Region;
+use App\Models\Trunk;
+use App\Models\Ward;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -347,25 +356,39 @@ class LeadersController extends Controller
         return view('interface.super.viongozi.tafuta');
     }
 
-    public function areaChangeApi(Request $request)
+    public function leaderChangeApi(Request $request)
     {
-        $area = $request->area;
-        if ($area == 'shina'){
-            $finalArea = Trunk::all();
-        }elseif($area == 'tawi'){
-            $finalArea = Branch::all();
-        }elseif($area == 'kata'){
+        $postId = $request->postId;
+        $post_leaders = DB::table('leader_post')->where('post_id', $postId)
+            ->where('isActive', true)
+            ->pluck('leader_id');
+        $leaders = Leader::whereIn('id', $post_leaders)->get();
+        return \Illuminate\Support\Facades\Response::json(['status' => 'success', 'response' => $leaders]);
+    }
 
-        }elseif($area == 'tarafa'){
-
-        }elseif($area == 'halmashauri'){
-
-        }elseif($area == 'wilaya'){
-
-        }elseif($area == 'mkoa'){
-
+    public static function postWithLeaders(Collection $leaders, $side, $area)
+    {
+        $postsWithLeaderCollection = [];
+        $uniqueLeaders = [];
+        $uniqueIds = [];
+        foreach ( $leaders as $leader ){
+            if (!(in_array($leader->id, $uniqueIds))){
+                $uniqueLeaders[] = $leader;
+                $uniqueIds[] = $leader->id;
+            }
         }
-        dd( $request->all() );
-        return json_encode(['man', 'to', 'manAtLeast']);
+        foreach ($uniqueLeaders as $leader){
+            $wardPostsId = Post::where('area', $area)
+                ->where('side', $side)
+                ->pluck('id');
+            $leaderWithPosts = $leader->posts()
+                ->whereIn('post_id', $wardPostsId)
+                ->where('isActive', true )
+                ->get();
+            foreach ($leaderWithPosts as $post) {
+                $postsWithLeaderCollection[$post->id][] = $leader;
+            }
+        }
+        return $postsWithLeaderCollection;
     }
 }
