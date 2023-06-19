@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Post;
 use function Webmozart\Assert\Tests\StaticAnalysis\false;
 
 class LeadersController extends Controller
@@ -40,6 +41,43 @@ class LeadersController extends Controller
     public function create()
     {
         //
+    }
+
+    public function viewleader($id)
+    {
+        $leader = Leader::where('id', $id)
+        ->has('posts')
+        ->with('posts', function($query){
+            $query->where('isActive', true)
+                ->with('groups', function($query){
+                $query->select('name')->where('prev', 1);
+            });
+        })
+        ->first();
+
+        // $leader_posts = DB::table('leader_post')
+        // ->where('leader_id', $leader->id)
+        // ->where('isActive', true)
+        // ->pluck('id');
+        // $posts = Post::whereIn('id', $leader_posts)
+        // ->with('groups', function($query){
+        //     $query->where('prev', 1);
+        // }
+        // )->get();
+
+        // $leaders = Leader::where("id", ">",  0)
+        // ->has('posts')
+        // ->with('posts', function($query){
+        //     $query->where('isActive', true)
+        //         ->with('groups', function($query){
+        //         $query->select('name')->where('prev', 1);
+        //     });
+        // })
+        // ->get();
+
+
+        return view('interface.super.viongozi.singleLeader')
+        ->with('leader', $leader);
     }
 
     public function assignPowerToPresentLeader($leader_id, $table, $post_id, $side_id, $side_column)
@@ -302,5 +340,32 @@ class LeadersController extends Controller
     public function destroy(Leader $leader)
     {
         //
+    }
+
+    public function searchLeaders()
+    {
+        return view('interface.super.viongozi.tafuta');
+    }
+
+    public function areaChangeApi(Request $request)
+    {
+        $area = $request->area;
+        if ($area == 'shina'){
+            $finalArea = Trunk::all();
+        }elseif($area == 'tawi'){
+            $finalArea = Branch::all();
+        }elseif($area == 'kata'){
+
+        }elseif($area == 'tarafa'){
+
+        }elseif($area == 'halmashauri'){
+
+        }elseif($area == 'wilaya'){
+
+        }elseif($area == 'mkoa'){
+
+        }
+        dd( $request->all() );
+        return json_encode(['man', 'to', 'manAtLeast']);
     }
 }

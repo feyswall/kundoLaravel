@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class State extends Model
 {
     use HasFactory;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
+    use \Znck\Eloquent\Traits\BelongsToThrough;
+
 
     protected $fillable = ['name', 'district_id'];
 
@@ -20,7 +23,7 @@ class State extends Model
      */
     public function region()
     {
-        return $this->belongsTo(Region::class );
+        return $this->belongsToThrough(Region::class, District::class );
     }
 
 

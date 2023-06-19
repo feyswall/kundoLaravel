@@ -24,6 +24,10 @@
                     <a href="{{ route('dashboard') }}"> <span>Nyumbani</span> </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('super.leader.searchLeader') }}">Tafuta Viongozi</a>
+                </li>
+
                 <li> <a href="javascript: void(0);" class="has-arrow">Maeneo</a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li> <a href="{{ route('super.areas.wilaya.orodha') }}">Orodha</a></li>
