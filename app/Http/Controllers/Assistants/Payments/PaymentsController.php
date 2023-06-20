@@ -85,7 +85,7 @@ class PaymentsController extends Controller
             $payment->start_month = $date;
             $payment->end_month = $endDate;
             $payment->month_count = $monthCount;
-            $payment->tenant_id = $tenant_id;
+            // $payment->tenant_id = $tenant_id;
             $payment->sendable_type = $authUser::class;
             $payment->sendable_id = $authUser->id;
         return  $object->payments()->save( $payment );

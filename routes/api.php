@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\GaragesController;
 use App\Http\Controllers\SmsServicesControlller;
+use App\Http\Controllers\Super\LeadersController;
+use App\Http\Controllers\Super\PostsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Super\Area\DistrictsController;
@@ -108,10 +111,25 @@ Route::controller(\App\Http\Controllers\Super\MotorsController::class)
     });
 
 
-Route::controller(\App\Http\Controllers\GaragesController::class)
+Route::controller(GaragesController::class)
     ->prefix('/garage')
     ->as('garage')
     ->group(function () {
         Route::get('/orodha/{id}', 'garageChangedApi')->name('.orodha');
     });
 
+
+Route::controller(PostsController::class)
+    ->prefix('/area')
+    ->as('area.')
+    ->group(function () {
+        Route::post('/posts/search', 'areaChangeApi')->name('posts.orodha');
+    });
+
+
+Route::controller(LeadersController::class)
+->prefix('/area')
+->as('area.')
+->group(function () {
+    Route::post('/leaders/search', 'leaderChangeApi')->name('leaders.orodha');
+});

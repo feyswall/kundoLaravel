@@ -115,16 +115,14 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="m-5">
-                            {!! $leaders->links()!!}
+
                         </div>
                         <h4 class="card-title">Orodha ya Viongozi Wote</h4>
                         <table id="viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                             <tr>
                                 <th><input type="checkbox" name="select_all" value="1" id="viongoziWilayaTable-select-all"></th>
-                                <th>Jina/kwnza</th>
-                                <th>Jina/kati</th>
-                                <th>Jina/mwisho</th>
+                                <th>Majina Kamili</th>
                                 <th>Simu</th>
                                 <th>Wadhifa</th>
                                 <td></td>
@@ -136,21 +134,34 @@
                                     <td>
                                         <input type="checkbox" class="checker" name="leader_id" value="{{ $leader->id }}">
                                     </td>
-                                    <td>{{ $leader->firstName }}</td>
-                                    <td>{{ $leader->middleName == 'null' ? "" : $leader->middleName }}</td>
-                                    <td>{{ $leader->lastName }}</td>
+                                    <td>{{ $leader->firstName }} {{ $leader->middleName == 'null' ? "" : $leader->mddleName }} {{ $leader->lastName  }} </td>
                                     <td>{{ $leader->phone }}</td>
                                     <td>
                                         <ul>
                                             @foreach ($leader->posts as $post)
                                                 @if ( $post->pivot->isActive )
-                                                    <li>{{ $post->name }}</li>
+                                                    <li>
+                                                        {{ $post->name }}
+                                                    </li>
+                                                    <ul>
+                                                        @foreach ($post->groups as $group)
+                                                            <li>{{ $group->name }}</li>
+                                                        @endforeach
+                                                    </ul>
                                                 @endif
                                             @endforeach
                                         </ul>
                                     </td>
                                      <td>
-                                         <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                        <a class="float-left btn btn-sm btn-success"
+                                         href="{{ route('super.leader.fungua', $leader->id)}}">
+                                            fungua
+                                        </a>
+                                         <a class="float-left btn btn-sm btn-warning"  data-bs-toggle="modal"
+                                          data-bs-target="#badiriTaarifaKiongoziModal_{{ $leader->id }}"
+                                           data-bs-placement="top" title="Badilisha" href="#">
+                                           badiri
+                                        </a>
                                      </td>
                                 </tr>
                             @endforeach

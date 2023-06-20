@@ -35,4 +35,11 @@ class PostsController extends Controller
         }
         return $postsWithLeaderCollection;
    }
+
+   public function areaChangeApi(Request $request)
+   {
+       $area = $request->area;
+       $finalPosts = Post::where('area', $area)->get();
+       return \Illuminate\Support\Facades\Response::json(['status' => 'success', 'response' => $finalPosts]);
+   }
 }

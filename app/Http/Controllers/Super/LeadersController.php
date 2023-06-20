@@ -3,13 +3,23 @@
 namespace App\Http\Controllers\Super;
 
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
+use App\Models\Council;
+use App\Models\District;
+use App\Models\Division;
 use App\Models\Leader;
+use App\Models\Region;
+use App\Models\Trunk;
+use App\Models\Ward;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Post;
 use function Webmozart\Assert\Tests\StaticAnalysis\false;
 
 class LeadersController extends Controller
@@ -45,6 +55,43 @@ class LeadersController extends Controller
     public function sendingSms()
     {
 
+    }
+
+    public function viewleader($id)
+    {
+        $leader = Leader::where('id', $id)
+        ->has('posts')
+        ->with('posts', function($query){
+            $query->where('isActive', true)
+                ->with('groups', function($query){
+                $query->select('name')->where('prev', 1);
+            });
+        })
+        ->first();
+
+        // $leader_posts = DB::table('leader_post')
+        // ->where('leader_id', $leader->id)
+        // ->where('isActive', true)
+        // ->pluck('id');
+        // $posts = Post::whereIn('id', $leader_posts)
+        // ->with('groups', function($query){
+        //     $query->where('prev', 1);
+        // }
+        // )->get();
+
+        // $leaders = Leader::where("id", ">",  0)
+        // ->has('posts')
+        // ->with('posts', function($query){
+        //     $query->where('isActive', true)
+        //         ->with('groups', function($query){
+        //         $query->select('name')->where('prev', 1);
+        //     });
+        // })
+        // ->get();
+
+
+        return view('interface.super.viongozi.singleLeader')
+        ->with('leader', $leader);
     }
 
     public function assignPowerToPresentLeader($leader_id, $table, $post_id, $side_id, $side_column)
@@ -307,5 +354,46 @@ class LeadersController extends Controller
     public function destroy(Leader $leader)
     {
         //
+    }
+
+    public function searchLeaders()
+    {
+        return view('interface.super.viongozi.tafuta');
+    }
+
+    public function leaderChangeApi(Request $request)
+    {
+        $postId = $request->postId;
+        $post_leaders = DB::table('leader_post')->where('post_id', $postId)
+            ->where('isActive', true)
+            ->pluck('leader_id');
+        $leaders = Leader::whereIn('id', $post_leaders)->get();
+        return \Illuminate\Support\Facades\Response::json(['status' => 'success', 'response' => $leaders]);
+    }
+
+    public static function postWithLeaders(Collection $leaders, $side, $area)
+    {
+        $postsWithLeaderCollection = [];
+        $uniqueLeaders = [];
+        $uniqueIds = [];
+        foreach ( $leaders as $leader ){
+            if (!(in_array($leader->id, $uniqueIds))){
+                $uniqueLeaders[] = $leader;
+                $uniqueIds[] = $leader->id;
+            }
+        }
+        foreach ($uniqueLeaders as $leader){
+            $wardPostsId = Post::where('area', $area)
+                ->where('side', $side)
+                ->pluck('id');
+            $leaderWithPosts = $leader->posts()
+                ->whereIn('post_id', $wardPostsId)
+                ->where('isActive', true )
+                ->get();
+            foreach ($leaderWithPosts as $post) {
+                $postsWithLeaderCollection[$post->id][] = $leader;
+            }
+        }
+        return $postsWithLeaderCollection;
     }
 }

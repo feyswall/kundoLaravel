@@ -364,6 +364,8 @@ Route::controller(\App\Http\Controllers\Super\LeadersController::class)
     ->as('super.leader.')
     ->group(function () {
         Route::put('/remove/from/power', 'removeFromPower')->name('unpower');
+        Route::get('/ona/kiongozi/{id}', 'viewLeader')->name('fungua');
+        Route::get('/tafuta/kiongozi/kwa/eneo', 'searchLeaders')->name('searchLeader');
     });
 
 

@@ -38,14 +38,19 @@ use \Illuminate\Support\Facades\DB;
                                     <div>
                                         <div class="px-md-3">
                                             <div class="d-flex justify-content-md-start justify-content-center flex-wrap my-2">
-                                                <h3 class="fs-5 me-3">Wilaya ya: <span class="fw-bold text-uppercase"> {{ $district->name }}</span></h3>
-                                                <h3 class="fs-5 me-3">Mkoa wa: <span class="fw-bold text-uppercase"> {{ $district->region->name }}</span></h3>
+                                                <h3 class="fs-5 me-3">Wilaya ya: <span class="fw-bold text-uppercase">
+                                                     {{ $district->name }}</span></h3>
+                                                <h3 class="fs-5 me-3">Mkoa wa: <span class="fw-bold text-uppercase">
+                                                     {{ $district->region->name }}</span></h3>
                                             </div>
-                                            <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
-                                                <div class="d-flex justify-content-md-between justify-content-center items-center mb-3 flex-wrap-reverse">
+                                            <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;"
+                                            class="py-3">
+                                                <div class="d-flex justify-content-md-between justify-content-center
+                                                 items-center mb-3 flex-wrap-reverse">
                                                     <h3 class="fs-4 me-3">Viongozi Wa Chama Wilaya</h3>
                                                     <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziChamaModal"
-                                                            class="btn btn-info btn-md mb-4 text-capitalize"><i class="fas fa-plus"> </i>
+                                                            class="btn btn-info btn-md mb-4 text-capitalize">
+                                                            <i class="fas fa-plus"> </i>
                                                         Sajiri kiongozi Wa Chama wilaya
                                                     </button>
                                                 </div>
@@ -55,8 +60,7 @@ use \Illuminate\Support\Facades\DB;
                                                             $districtLeaders = $district->leaders()->where('isActive', true)
                                                             ->get();
                                                             $chamaPostsWithLeaderCollection =
-                                                            \App\Http\Controllers\Super\PostsController::postWithLeaders(
-                                                            $districtLeaders, 'chama', 'wilaya');
+                                                             
                                                         @endphp
 
                                                         @foreach($chamaPostsWithLeaderCollection as $key => $leaderColl)
