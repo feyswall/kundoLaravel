@@ -367,7 +367,7 @@ class LeadersController extends Controller
         $post_leaders = DB::table('leader_post')->where('post_id', $postId)
             ->where('isActive', true)
             ->pluck('leader_id');
-        $leaders = Leader::whereIn('id', $post_leaders)->get();
+        $leaders = Leader::whereIn('id', $post_leaders)->orderBy('firstName')->get();
         return \Illuminate\Support\Facades\Response::json(['status' => 'success', 'response' => $leaders]);
     }
 

@@ -118,7 +118,8 @@
 
                         </div>
                         <h4 class="card-title">Orodha ya Viongozi Wote</h4>
-                        <table id="viongoziWilayaTable" class="table table-striped table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <table id="viongoziWilayaTable"
+                         class="table table-sm table-striped table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                             <tr>
                                 <th><input type="checkbox" name="select_all" value="1" id="viongoziWilayaTable-select-all"></th>
@@ -141,7 +142,7 @@
                                             @foreach ($leader->posts as $post)
                                                 @if ( $post->pivot->isActive )
                                                     <li>
-                                                        {{ $post->name }}
+                                                        {{ $post->name }} {{ $post->id  }}
                                                     </li>
                                                     <ul>
                                                         @foreach ($post->groups as $group)

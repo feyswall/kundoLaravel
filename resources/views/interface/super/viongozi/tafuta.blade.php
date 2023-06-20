@@ -33,9 +33,11 @@
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <form method="post" action="{{ route('super.sial.jaza') }}"
-                                                  target="_blank" id="ziaraForm"
-                                             enctype="multipart/form-data">
+                                           <div class="row justify-content-start">
+                                            <div class="col-sm-12 col-md-6">
+                                                <form method="post" action="{{ route('super.sial.jaza') }}"
+                                                    target="_blank" id="ziaraForm"
+                                            enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="row">
                                                     <div class="col-lg-5">
@@ -59,7 +61,7 @@
                                                         <label class="form-label">chagua wadhifa</label>
                                                         <select name="wadhifa"
                                                             :class="{'form-control': true, 'postToSend': true, 'select2': true}">
-                                                         <option selected>chagua wadhifa...</option>
+                                                        <option selected>chagua wadhifa...</option>
                                                             <option v-for="(post, index) in postsList"
                                                                 :key="index"
                                                                 v-bind:value="post.id">
@@ -79,36 +81,33 @@
                                                     </div>
                                                 </div>
                                             </form>
-
-
-                                    <div :class="{'col-lg-12': true, 'd-none': leadersList.length < 1}">
-                                        <table id="leadersTable"
-                                        class="table table-striped table-bordered dt-responsive nowrap"
-                                         style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Jina kamili</th>
-                                                <th>Simu:</th>
-                                                <th></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="(leader, index) in leadersList" :key="index">
-                                                    <td>@{{ ++index }}</td>
-                                                    <td>@{{ leader.firstName }} @{{ leader.lastName}}</td>
-                                                    <td>@{{ leader.phone }}</td>
-                                                    <td>
-                                                        <a :href="'/super/leader/ona/kiongozi/'+leader.id"
-                                                            class="btn btn-sm btn-success">
-                                                            fungua
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
+                                           </div>
+                                            <div :class="{'col-sm-12': true,'col-lg-12': true, 'd-none': leadersList.length < 1}">
+                                                <table id="leadersTable"
+                                                    class="table table-sm table-striped table-bordered table-responsive nowrap">                                            <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Jina kamili</th>
+                                                        <th>Simu:</th>
+                                                        <th></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(leader, index) in leadersList" :key="index">
+                                                            <td>@{{ ++index }}</td>
+                                                            <td>@{{ leader.firstName }} @{{ leader.lastName}}</td>
+                                                            <td>@{{ leader.phone }}</td>
+                                                            <td>
+                                                                <a :href="'/super/leader/ona/kiongozi/'+leader.id"
+                                                                    class="btn btn-sm btn-success">
+                                                                    fungua
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                           </div>
                                     </div>
                                     <!-- end select2 -->
                                 </div>
