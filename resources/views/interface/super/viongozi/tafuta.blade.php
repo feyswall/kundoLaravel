@@ -23,80 +23,92 @@
         </div>
         <!-- end page title -->
 
-        {{-- <div v-bind:class="{ 'row': true, 'justify-content-between' : true, 'd-none': hideDom }">
-            <div class="col-xl-12 col-md-12 col-sm-12">
-                <div class="custom-accordion">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="p-5">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
-
-
         <div v-bind:class="{ 'row': true, 'justify-content-between' : true }">
             <div class="col-xl-12 col-md-12 col-sm-12">
                 <div class="custom-accordion">
                     <div class="card">
-
                         <div class="card-body">
                             <!-- create a receiver selection section -->
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <form method="post" action="{{ route('super.sial.jaza') }}"
-                                              target="_blank" id="ziaraForm"
-                                         enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="row">
-                                                <div class="col-lg-3">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Sehemu</label>
-                                                        <div class="d-flex">
-                                                            <select name="areaSelected" v-on:change="areaSelectedChange()"
-                                                                id="areaSelected" v-model="areaSelected" class="form-control">
-                                                                <option v-for="area in areasList"
-                                                                    v-bind:value="area">@{{ area }}
-                                                                </option>
-                                                            </select>
-                                                        </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <form method="post" action="{{ route('super.sial.jaza') }}"
+                                                  target="_blank" id="ziaraForm"
+                                             enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Sehemu</label>
+                                                            <div class="d-flex">
+                                                                <select name="areaSelected" v-on:change="areaSelectedChange()"
+                                                                    id="areaSelected" v-model="areaSelected" class="form-control">
+                                                                    <option selected>chagua sehemu...</option>
+                                                                    <option v-for="area in areasList"
+                                                                        v-bind:value="area">@{{ area }}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
 
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-12" v-if="typeof(postsList) == 'object'">
+                                                        <label class="form-label">chagua wadhifa</label>
+                                                        <select name="wadhifa"
+                                                         class="form-control postToSend select2">
+                                                         <option selected>chagua wadhifa...</option>
+                                                            <option v-for="(post, index) in postsList"
+                                                                :key="index"
+                                                                v-bind:value="post.id">
+                                                                @{{ post.name }}
+                                                            </option>
+                                                        </select>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-lg-12 mt-5" v-if="typeof(postsList) == 'object'">
-                                                    <label class="form-label">chagua wadhifa</label>
-                                                    <select name="wadhifa"
-                                                     class="form-control postToSend select2">
-                                                        <option v-for="(post, index) in postsList"
-                                                            :key="index"
-                                                            selected
-                                                            v-bind:value="post.id">
-                                                            @{{ post.name }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div id="checkout-billinginfo-collapse" class="collapse show">
-                                                <div class="p-4 border-top">
-                                                    <div>
+                                                <div id="checkout-billinginfo-collapse" class="collapse show">
+                                                    <div class="p-4 border-top">
                                                         <div>
-                                                            <input type="hidden" v-model="areaSelected" name="area">
+                                                            <div>
+                                                                <input type="hidden" v-model="areaSelected" name="area">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </form>
+                                            </form>
+                                    </div>
+                                    <!-- end select2 -->
                                 </div>
-                                <!-- end select2 -->
+
+                                <div class="{'col-lg-12': true}">
+                                    <table id="leadersTable"
+                                    class="table table-striped table-bordered dt-responsive nowrap"
+                                     style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Jina kamili</th>
+                                            <th>Simu:</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(leader, index) in leadersList" :key="index">
+                                                <td>@{{ ++index }}</td>
+                                                <td>@{{ leader.firstName }} @{{ leader.lastName}}</td>
+                                                <td>@{{ leader.phone }}</td>
+                                                <td>
+                                                    <a :href="'/super/leader/ona/kiongozi/'+leader.id"
+                                                        class="btn btn-sm btn-success">
+                                                        fungua
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <!-- create a  copy multiselector -->
                         </div>
@@ -183,9 +195,7 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                     console.log('area is selected');
                 },
             },
-            computed: {
 
-            },
             mounted() {
                 const obj = this;
                 $('.postToSend').on('change', () => {
@@ -198,5 +208,8 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
         });
     </script>
 
+@endsection
 
+@section("extra_script")
+    <x-system.table-script id="leadersTable" />
 @endsection

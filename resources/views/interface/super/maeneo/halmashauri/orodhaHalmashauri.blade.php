@@ -60,8 +60,7 @@ use \Illuminate\Support\Facades\DB;
                                                             $districtLeaders = $district->leaders()->where('isActive', true)
                                                             ->get();
                                                             $chamaPostsWithLeaderCollection =
-                                                            \App\Http\Controllers\Super\PostsController::postWithLeaders(
-                                                            $districtLeaders, 'chama', 'wilaya');
+                                                             
                                                         @endphp
 
                                                         @foreach($chamaPostsWithLeaderCollection as $key => $leaderColl)
