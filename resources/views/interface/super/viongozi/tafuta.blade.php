@@ -58,7 +58,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div :class="{'col-lg-5': true, 'col-sm-12': true}"
+                                                    <div :class="{'col-lg-5': true, 'col-sm-12': true, 'd-none': hideArea }"
                                                         v-if="typeof(postsList) == 'object'">
                                                         <label class="form-label">chagua wadhifa</label>
                                                         <select name="wadhifa"
@@ -109,7 +109,7 @@
                                                     <tbody>
                                                         <tr v-for="(leader, index) in trackLeadersList" :key="index">
                                                             <td>@{{ ++index }}</td>
-                                                            <td>@{{ leader.firstName }} @{{ leader.lastName}}</td>
+                                                            <td>@{{ leader.firstName.toLowerCase() }} @{{ leader.lastName.toLowerCase( )}}</td>
                                                             <td>@{{ leader.phone }}</td>
                                                             <td>
                                                                 <a :href="'/super/leader/ona/kiongozi/'+leader.id"
@@ -147,6 +147,7 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
             data: {
                 inButton: false,
                 hideDom: false,
+                hideArea: false,
                 postSelected: '',
                 postsList: [],
                 areaSelected: '',
@@ -159,6 +160,7 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                 areaSelectedChange() {
                     let obj = this;
                     this.postsList = [];
+                    this.hideArea = true;
                     axios.post(`/api/area/posts/search`, {'area': obj.areaSelected})
                         .then(function(response) {
                             let responseData = Array;
@@ -167,6 +169,7 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                                 if (responseData.status === 'success') {
                                     if (Array.isArray(responseData.response)) {
                                         obj.postsList = responseData.response;
+                                        obj.hideArea = false;
                                     } else {
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                         location.reload();
