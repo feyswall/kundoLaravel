@@ -15,6 +15,7 @@
 
 
 use App\Http\Controllers\Super\Apartment\ApartmentsController;
+use App\Http\Controllers\Super\Area\GeneralAreasController;
 use App\Http\Controllers\Super\CharitiesController;
 use App\Http\Controllers\Super\House\HousesController;
 use App\Http\Controllers\Super\HouseTypesController;
@@ -39,7 +40,7 @@ use App\Http\Controllers\Super\Posts\PostsController;
 
 
 
-Route::controller(\App\Http\Controllers\Super\Area\GeneralAreasController::class)
+Route::controller(GeneralAreasController::class)
     ->middleware(['auth', 'role:super'])
     ->prefix('/super/areas/general')
     ->as('super.areas.general')

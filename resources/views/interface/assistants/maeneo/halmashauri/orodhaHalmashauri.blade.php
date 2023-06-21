@@ -10,7 +10,7 @@
 use \Illuminate\Support\Facades\DB;
 ?>
 
-@extends("layouts.super_system")
+@extends("layouts.assistants_system")
 
 @section("content")
     <div  id="app">
@@ -60,7 +60,7 @@ use \Illuminate\Support\Facades\DB;
                                                             $districtLeaders = $district->leaders()->where('isActive', true)
                                                             ->get();
                                                             $chamaPostsWithLeaderCollection =
-                                                            \App\Http\Controllers\Super\PostsController::postWithLeaders(
+                                                                \App\Http\Controllers\assistants\PostsController::postWithLeaders(
                                                                 $districtLeaders, 'chama', 'halmashauri');
                                                         @endphp
 
@@ -76,10 +76,10 @@ use \Illuminate\Support\Facades\DB;
                                                                        data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $ldr->id }}"
                                                                        data-bs-placement="top" title="Badilisha" href="#">
                                                                     </a>
-                                                                    <x-system.modal id="futaTaarifaKiongoziChamaModal_{{ $ldr->id }}" aria="futaKiongoziKataLabel"
+                                                                    <x-system.assistant.modal id="futaTaarifaKiongoziChamaModal_{{ $ldr->id }}" aria="futaKiongoziKataLabel"
                                                                                     size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
                                                                         <x-slot:content>
-                                                                            <form action="{{ route('super.leader.unpower')}}" method="POST">
+                                                                            <form action="{{ route('assistants.leader.unpower')}}" method="POST">
                                                                                 @csrf
                                                                                 @method('put')
                                                                                 <input type="hidden" name="table" value="districts">
@@ -91,7 +91,7 @@ use \Illuminate\Support\Facades\DB;
                                                                                 <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
                                                                             </form>
                                                                         </x-slot:content>
-                                                                    </x-system.modal>
+                                                                    </x-system.assistant.modal>
                                                                     <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
                                                                     <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">
                                                                         {{ $ps->name }}</small><br>
@@ -106,17 +106,17 @@ use \Illuminate\Support\Facades\DB;
                                                 </div>
                                                 @foreach ($chamaPostsWithLeaderCollection as $leaderColl)
                                                     @foreach( $leaderColl as $ldr )
-                                                        <x-system.modal id="badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}"
+                                                        <x-system.assistant.modal id="badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}"
                                                                         aria="ongezaKiongoziKataLabel" size="modal-fullscreen"
                                                                         title="Ongeza Kiongozi Wa Wilaya Hapa">
                                                             <x-slot:content>
-                                                                <x-system.edit-leader :leader="$ldr" :route="route('super.leader.wilaya.sasisha', $ldr->id )" />
+                                                                <x-system.assistant.edit-leader :leader="$ldr" :route="route('assistants.leader.wilaya.sasisha', $ldr->id )" />
                                                             </x-slot:content>
-                                                        </x-system.modal>
+                                                        </x-system.assistant.modal>
                                                     @endforeach
                                                 @endforeach
                                                 <!-- model location here -->
-                                                <x-system.modal id="ongezaKiongoziChamaModal" aria="ongezaKiongoziWilayaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama  Hapa">
+                                                <x-system.assistant.modal id="ongezaKiongoziChamaModal" aria="ongezaKiongoziWilayaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama  Hapa">
                                                     <x-slot:content>
                                                         <button v-on:click="changeSides()"
                                                                 class="btn btn-success btn-sm mb-lg-4" type="button" id="readyRegistered">
@@ -124,10 +124,10 @@ use \Illuminate\Support\Facades\DB;
                                                         </button>
                                                         <form method="post"
                                                               :class="{'d-none': formToggler}"
-                                                              action="{{ route('super.leader.wilaya.ongeza') }}">
+                                                              action="{{ route('assistants.leader.wilaya.ongeza') }}">
                                                             @csrf
                                                             <div class="row">
-                                                                <x-system.leader-basic-inputs>?</x-system.leader-basic-inputs>
+                                                                <x-system.assistant.leader-basic-inputs></x-system.assistant.leader-basic-inputs>
                                                                 <div>
                                                                     <!-- data to simplify the validation process -->
                                                                     <input type="hidden" value="{{ $district->id }}" class="form-control" name="side_id">
@@ -138,7 +138,7 @@ use \Illuminate\Support\Facades\DB;
                                                                 <div class="col-sm-12 col-md-4 col-lg-3">
                                                                     <div class="mb-3 mb-4">
                                                                         <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
-                                                                        <select class="form-control" name="post_id">
+                                                                        <select class="form-control" name="post_id" required>
                                                                             @php $posts = \App\Models\Post::where('area', 'wilaya')->where('side', 'chama')->get(); @endphp
                                                                             @foreach( $posts as $post )
                                                                                 <option value="{{ $post->id }}">{{ $post->name }}</option>
@@ -154,7 +154,7 @@ use \Illuminate\Support\Facades\DB;
                                                             </div>
                                                         </form>
                                                         <form  method="post"
-                                                               action="{{ route('super.leader.wilaya.ongeza') }}"
+                                                               action="{{ route('assistants.leader.wilaya.ongeza') }}"
                                                                :class="{'d-none': !formToggler}">
                                                             @csrf
                                                             <h4>Endapo Kiongozi Ameshasajiriwa Muongeze Wadhifa Hapa</h4>
@@ -180,7 +180,7 @@ use \Illuminate\Support\Facades\DB;
                                                                 <div class="col-sm-12 col-md-4 col-lg-3">
                                                                     <div class="mb-3 mb-4">
                                                                         <label class="form-label" for="wadhifa">Chagua Wadhifa</label>
-                                                                        <select class="form-control" name="post_id">
+                                                                        <select class="form-control" name="post_id" required>
                                                                             @foreach( \App\Models\Post::where('area', 'wilaya')->where('side', 'chama')->get() as $post )
                                                                                 <option value="{{ $post->id }}">{{ $post->name }}</option>
                                                                             @endforeach
@@ -195,7 +195,7 @@ use \Illuminate\Support\Facades\DB;
                                                             </div>
                                                         </form>
                                                     </x-slot:content>
-                                                </x-system.modal>
+                                                </x-system.assistant.modal>
                                             </div>
                                         </div>
                                     </div>
@@ -221,7 +221,7 @@ use \Illuminate\Support\Facades\DB;
                                                     <div class="d-flex justify-start gap-4 flex-wrap">
                                                         @php
                                                             $districtLeaders = $district->leaders()->where('isActive', true)->get();
-                                                            $serikaliPostsWithLeaderCollection = \App\Http\Controllers\Super\PostsController::postWithLeaders(
+                                                            $serikaliPostsWithLeaderCollection = \App\Http\Controllers\assistants\PostsController::postWithLeaders(
                                                             $districtLeaders, 'serikali', 'wilaya');
                                                         @endphp
                                                         @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)
@@ -229,16 +229,16 @@ use \Illuminate\Support\Facades\DB;
                                                             @foreach($leaderColl as $id => $ldr)
                                                                 <div class="text-center">
                                                                     <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                       title="Badilisha" href="{{ route("super.leader.wilaya.badili", $leader->id ) }}">
+                                                                       title="Badilisha" href="{{ route("assistants.leader.wilaya.badili", $leader->id ) }}">
                                                                     </a>
                                                                     <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
                                                                        data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
                                                                        data-bs-placement="top" title="Badilisha" href="#">
                                                                     </a>
-                                                                    <x-system.modal id="futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}" aria="futaKiongoziKataLabel"
+                                                                    <x-system.assistant.modal id="futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}" aria="futaKiongoziKataLabel"
                                                                                     size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
                                                                         <x-slot:content>
-                                                                            <form action="{{ route('super.leader.unpower')}}" method="POST">
+                                                                            <form action="{{ route('assistants.leader.unpower')}}" method="POST">
                                                                                 @csrf
                                                                                 @method('put')
                                                                                 <input type="hidden" name="table" value="districts">
@@ -250,7 +250,7 @@ use \Illuminate\Support\Facades\DB;
                                                                                 <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
                                                                             </form>
                                                                         </x-slot:content>
-                                                                    </x-system.modal>
+                                                                    </x-system.assistant.modal>
                                                                     <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
                                                                     <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ps->name  }}</small>
                                                                 </div>
@@ -261,7 +261,7 @@ use \Illuminate\Support\Facades\DB;
                                                     </div>
                                                 </div>
                                                 <!-- model location here -->
-                                                <x-system.modal id="ongezaKiongoziSerikaliModal" aria="ongezaKiongoziWilayaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Serikali Hapa">
+                                                <x-system.assistant.modal id="ongezaKiongoziSerikaliModal" aria="ongezaKiongoziWilayaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Serikali Hapa">
                                                     <x-slot:content>
                                                         <button v-on:click="changeSides()"
                                                                 class="btn btn-success btn-sm mb-lg-4" type="button" id="readyRegistered">
@@ -269,11 +269,11 @@ use \Illuminate\Support\Facades\DB;
                                                         </button>
                                                         <form method="post"
                                                               :class="{'d-none': formToggler}"
-                                                            action="{{ route('super.leader.wilaya.ongeza') }}">
+                                                            action="{{ route('assistants.leader.wilaya.ongeza') }}">
                                                             @csrf
                                                             <input type="hidden" name="side" value="serikali">
                                                             <div class="row">
-                                                                <x-system.leader-basic-inputs>?</x-system.leader-basic-inputs>
+                                                                <x-system.assistant.leader-basic-inputs>?</x-system.assistant.leader-basic-inputs>
                                                                 <div>
                                                                     <!-- data to simplify the validation process -->
                                                                     <input type="hidden" value="{{ $district->id }}" class="form-control" name="side_id">
@@ -303,7 +303,7 @@ use \Illuminate\Support\Facades\DB;
                                                             </div>
                                                         </form>
                                                         <form  method="post"
-                                                               action="{{ route('super.leader.wilaya.ongeza') }}"
+                                                               action="{{ route('assistants.leader.wilaya.ongeza') }}"
                                                                :class="{'d-none': !formToggler}">
                                                             @csrf
                                                             <h4>Endapo Kiongozi Ameshasajiriwa Muongeze Wadhifa Hapa</h4>
@@ -345,7 +345,7 @@ use \Illuminate\Support\Facades\DB;
                                                         </form>
 
                                                     </x-slot:content>
-                                                </x-system.modal>
+                                                </x-system.assistant.modal>
                                             </div>
                                         </div>
                                     </div>
@@ -358,29 +358,29 @@ use \Illuminate\Support\Facades\DB;
             </div>
         </div>
 
-        <x-system.collapse id="kamatiZaChamaWilaya" title="kamati Za Chama wilaya">
+        <x-system.assistant.collapse id="kamatiZaChamaWilaya" title="kamati Za Chama wilaya">
             <x-slot:content>
                 @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "wilaya")->where('side', 'chama')->get() as $group)
-                    <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+                    <x-system.assistant.collapse :id="$group->deep" :title="strtoupper($group->name)">
                         <x-slot:content>
-                            <x-system.groups-info :group="$group" :table="$district" />
+                            <x-system.assistant.groups-info :group="$group" :table="$district" />
                         </x-slot:content>
-                    </x-system.collapse>
+                    </x-system.assistant.collapse>
                 @endforeach
             </x-slot:content>
-        </x-system.collapse>
+        </x-system.assistant.collapse>
 
-        <x-system.collapse id="kamatiZaWilaya" title="kamati Za Serikali wilaya">
+        <x-system.assistant.collapse id="kamatiZaWilaya" title="kamati Za Serikali wilaya">
             <x-slot:content>
                 @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "wilaya")->where('side', 'serikali')->get() as $group)
-                    <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+                    <x-system.assistant.collapse :id="$group->deep" :title="strtoupper($group->name)">
                         <x-slot:content>
-                            <x-system.groups-info :group="$group" :table="$district" />
+                            <x-system.assistant.groups-info :group="$group" :table="$district" />
                         </x-slot:content>
-                    </x-system.collapse>
+                    </x-system.assistant.collapse>
                 @endforeach
             </x-slot:content>
-        </x-system.collapse>
+        </x-system.assistant.collapse>
 
         <div class="container-fluid">
             <!-- start page title -->
@@ -405,12 +405,12 @@ use \Illuminate\Support\Facades\DB;
                     <div class="card">
                         <div class="card-body">
                             <button data-bs-toggle="modal" data-bs-target="#orodhaHalmashauriModal" class="btn btn-info btn-sm mb-4"><i class="fas fa-plus"> </i> Ongeza Halmashauri</button>
-                            <a href="{{ route('super.areas.wilaya.orodha') }}" class="btn btn-primary btn-sm mb-4">Rudi Mkoani</a>
-                            <x-system.halmashauri-table :district="$district" :areas="$areas" :headers="['Jina la Halmashauri','Idadi ya Tarafa','Idadi Ya Kata', 'Idadi ya Matawi', '']" />
+                            <a href="{{ route('assistants.areas.wilaya.orodha') }}" class="btn btn-primary btn-sm mb-4">Rudi Mkoani</a>
+                            <x-system.assistant.halmashauri-table :district="$district" :areas="$areas" :headers="['Jina la Halmashauri','Idadi ya Tarafa','Idadi Ya Kata', 'Idadi ya Matawi', '']" />
                             <!-- model location here -->
-                            <x-system.modal id="orodhaHalmashauriModal" aria="orodhaHalmashauriLabel" size="modal-lg" title="Ongeza Halmashauri Hapa">
+                            <x-system.assistant.modal id="orodhaHalmashauriModal" aria="orodhaHalmashauriLabel" size="modal-lg" title="Ongeza Halmashauri Hapa">
                                 <x-slot:content>
-                                    <form method="post" action="{{ route('super.areas.halmashauri.ongeza') }}">
+                                    <form method="post" action="{{ route('assistants.areas.halmashauri.ongeza') }}">
                                         @csrf
                                         <div>
                                             <div class="row">
@@ -444,7 +444,7 @@ use \Illuminate\Support\Facades\DB;
                                             </div>
                                     </form>
                                 </x-slot:content>
-                            </x-system.modal>
+                            </x-system.assistant.modal>
                         </div>
                     </div>
                 </div> <!-- end col -->
@@ -460,13 +460,13 @@ use \Illuminate\Support\Facades\DB;
                             <h2>Orodha ya Majimbo</h2>
                             <button data-bs-toggle="modal" data-bs-target="#orodhaJimboModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Ongeza Majimbo</button>
 
-                            <x-system.jimbo-table :states="$states" :district="$district"></x-system.jimbo-table>
+                            <x-system.assistant.jimbo-table :states="$states" :district="$district"></x-system.assistant.jimbo-table>
 
                         </div>
                         <!-- model location states here -->
-                        <x-system.modal id="orodhaJimboModal" aria="orodhaJimboLabel" size="modal-lg" title="Ongeza Jimbo Hapa">
+                        <x-system.assistant.modal id="orodhaJimboModal" aria="orodhaJimboLabel" size="modal-lg" title="Ongeza Jimbo Hapa">
                             <x-slot:content>
-                                <form method="post" action="{{ route('super.areas.jimbo.ongeza') }}">
+                                <form method="post" action="{{ route('assistants.areas.jimbo.ongeza') }}">
                                     @csrf
                                     <div>
                                         <div class="row">
@@ -500,7 +500,7 @@ use \Illuminate\Support\Facades\DB;
                                         </div>
                                 </form>
                             </x-slot:content>
-                        </x-system.modal>
+                        </x-system.assistant.modal>
                     </div>
                 </div>
             </div>
@@ -509,8 +509,8 @@ use \Illuminate\Support\Facades\DB;
 @endsection
 
 @section("extra_script")
-<x-system.table-script id="superOrodhaHalmashauriTable" />
-<x-system.table-script id="superOrodhaJimboTable" />
+<x-system.assistant.table-script id="assistantsOrodhaHalmashauriTable" />
+<x-system.assistant.table-script id="assistantsOrodhaJimboTable" />
 <script>
         let app =  new Vue({
             el: '#app',
