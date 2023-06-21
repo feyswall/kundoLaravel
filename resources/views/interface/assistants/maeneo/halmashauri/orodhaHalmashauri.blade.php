@@ -60,7 +60,7 @@ use \Illuminate\Support\Facades\DB;
                                                             $districtLeaders = $district->leaders()->where('isActive', true)
                                                             ->get();
                                                             $chamaPostsWithLeaderCollection =
-                                                                \App\Http\Controllers\assistants\PostsController::postWithLeaders(
+                                                                \App\Http\Controllers\Assistants\PostsController::postWithLeaders(
                                                                 $districtLeaders, 'chama', 'halmashauri');
                                                         @endphp
 
@@ -221,7 +221,7 @@ use \Illuminate\Support\Facades\DB;
                                                     <div class="d-flex justify-start gap-4 flex-wrap">
                                                         @php
                                                             $districtLeaders = $district->leaders()->where('isActive', true)->get();
-                                                            $serikaliPostsWithLeaderCollection = \App\Http\Controllers\assistants\PostsController::postWithLeaders(
+                                                            $serikaliPostsWithLeaderCollection = \App\Http\Controllers\Assistants\PostsController::postWithLeaders(
                                                             $districtLeaders, 'serikali', 'wilaya');
                                                         @endphp
                                                         @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)

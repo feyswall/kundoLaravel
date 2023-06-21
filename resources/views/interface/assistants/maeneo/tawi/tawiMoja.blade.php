@@ -81,7 +81,7 @@
                             <div class="d-flex justify-start gap-4 flex-wrap">
                                 @php
                                     $serBranchLeaders = $branch->leaders()->where('isActive', true)->get();
-                                    $serikaliPostsWithLeaderCollection = \App\Http\Controllers\assistants\PostsController::postWithLeaders(
+                                    $serikaliPostsWithLeaderCollection = \App\Http\Controllers\Assistants\PostsController::postWithLeaders(
                                     $serBranchLeaders, 'chama', 'tawi');
                                 @endphp
 
@@ -236,7 +236,7 @@
                             <div class="d-flex justify-start gap-4 flex-wrap">
                                 @php
                                     $serBranchLeaders = $branch->leaders()->where('isActive', true)->get();
-                                    $serikaliPostsWithLeaderCollection = \App\Http\Controllers\assistants\PostsController::postWithLeaders(
+                                    $serikaliPostsWithLeaderCollection = \App\Http\Controllers\Assistants\PostsController::postWithLeaders(
                                     $serBranchLeaders, 'serikali', 'tawi');
                                 @endphp
 

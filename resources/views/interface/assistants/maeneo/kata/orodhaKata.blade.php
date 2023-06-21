@@ -51,7 +51,7 @@
                                                 @php
                                                 $districtLeaders = $division->leaders()->where('isActive', true)->get();
                                                 $chamaPostsWithLeaderCollection =
-                                                \App\Http\Controllers\assistants\PostsController::postWithLeaders(
+                                                \App\Http\Controllers\Assistants\PostsController::postWithLeaders(
                                                 $districtLeaders, 'chama', 'tarafa');
                                             @endphp
 
@@ -197,7 +197,7 @@
                                                 @php
                                                     $divisionLeaders = $division->leaders()->where('isActive', true)->get();
                                                     $serikaliPostsWithLeaderCollection =
-                                                    \App\Http\Controllers\assistants\PostsController::postWithLeaders(
+                                                    \App\Http\Controllers\Assistants\PostsController::postWithLeaders(
                                                     $divisionLeaders, 'serikali', 'tarafa');
                                                 @endphp
 

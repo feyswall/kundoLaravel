@@ -51,7 +51,7 @@
                                             <div class="d-flex justify-start gap-4 flex-wrap">
                                                 @php
                                                     $wardLeaders = $ward->leaders()->where('isActive', true)->get();
-                                                    $chamaPostsWithLeaderCollection = \App\Http\Controllers\assistants\PostsController::postWithLeaders($wardLeaders, 'chama', 'kata');
+                                                    $chamaPostsWithLeaderCollection = \App\Http\Controllers\Assistants\PostsController::postWithLeaders($wardLeaders, 'chama', 'kata');
                                                 @endphp
 
                                                 @foreach($chamaPostsWithLeaderCollection as $key => $leaderColl)
@@ -207,7 +207,7 @@
                                             <div class="d-flex justify-start gap-4 flex-wrap">
                                                 @php
                                                     $serWardLeaders = $ward->leaders()->where('isActive', true)->get();
-                                                    $serikaliPostsWithLeaderCollection = \App\Http\Controllers\assistants\PostsController::postWithLeaders($serWardLeaders, 'serikali', 'kata');
+                                                    $serikaliPostsWithLeaderCollection = \App\Http\Controllers\Assistants\PostsController::postWithLeaders($serWardLeaders, 'serikali', 'kata');
                                                 @endphp
 
                                                 @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)
