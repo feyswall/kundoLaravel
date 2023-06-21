@@ -4,6 +4,8 @@
     <!-- include summernote css/js -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css"
     integrity="sha256-IKhQVXDfwbVELwiR0ke6dX+pJt0RSmWky3WB2pNx9Hg=" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
 @endsection
 
 @section('content')
@@ -34,7 +36,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                            <div class="row justify-content-start">
-                                            <div class="col-sm-12 col-md-6">
+                                            <div class="col-sm-12 col-md-12">
                                                 <form method="post" action="{{ route('super.sial.jaza') }}"
                                                     target="_blank" id="ziaraForm"
                                             enctype="multipart/form-data">
@@ -84,16 +86,28 @@
                                            </div>
                                             <div :class="{'col-sm-12': true,'col-lg-12': true, 'd-none': leadersList.length < 1}">
                                                 <table id="leadersTable"
-                                                    class="table table-sm table-striped table-bordered table-responsive nowrap">                                            <thead>
+                                                    class="table table-sm table-striped table-bordered
+                                                     table-responsive nowrap">
+                                                    {{-- <tr>
+                                                        <td colspan="2"></td>
+                                                        <td colspan="2">
+                                                            <label for="search">search</label>
+                                                            <input id="search" type="text"
+                                                                v-model="searchString"
+                                                                v-change="searchChangeIn()"
+                                                                class="form-control p-1" name="search">
+                                                        </td>
+                                                    </tr> --}}
+
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Jina kamili</th>
                                                         <th>Simu:</th>
                                                         <th></th>
                                                     </tr>
-                                                    </thead>
+
                                                     <tbody>
-                                                        <tr v-for="(leader, index) in leadersList" :key="index">
+                                                        <tr v-for="(leader, index) in trackLeadersList" :key="index">
                                                             <td>@{{ ++index }}</td>
                                                             <td>@{{ leader.firstName }} @{{ leader.lastName}}</td>
                                                             <td>@{{ leader.phone }}</td>
@@ -137,7 +151,9 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                 postsList: [],
                 areaSelected: '',
                 areasList: ['mkoa', 'wilaya', 'halmashauri', 'tarafa', 'kata', 'tawi', 'shina', 'jimbo'],
-                leadersList: []
+                leadersList: [],
+                trackLeadersList: [],
+                searchString: '',
             },
             methods: {
                 areaSelectedChange() {
@@ -148,9 +164,6 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                             let responseData = Array;
                             if (response.data) {
                                 responseData = response.data;
-                                console.log( responseData );
-                                console.log( obj.areaSelected );
-                                console.log( obj.postSelected );
                                 if (responseData.status === 'success') {
                                     if (Array.isArray(responseData.response)) {
                                         obj.postsList = responseData.response;
@@ -166,10 +179,8 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                         .catch(function(error) {
                             alert(error);
                         });
-                    console.log('area is selected');
                 },
                 postSelectedChange() {
-                    console.log('change');
                     let obj = this;
                     this.leadersList = [];
                     axios.post(`/api/area/leaders/search`, {'postId': obj.postSelected})
@@ -177,11 +188,10 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                             let responseData = Array;
                             if (response.data) {
                                 responseData = response.data;
-                                console.log( responseData );
-                                console.log( obj.postSelected );
                                 if (responseData.status === 'success') {
                                     if (Array.isArray(responseData.response)) {
                                         obj.leadersList = responseData.response;
+                                        obj.trackLeadersList = obj.leadersList;
                                     } else {
                                         alert("Kuna tatizo kwenye taarifa, Tafadhali jaribu Tena.")
                                         location.reload();
@@ -194,7 +204,23 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                         .catch(function(error) {
                             alert(error);
                         });
-                    console.log('area is selected');
+                },
+                searchChangeIn(){
+                    if( this.searchString != null ){
+                        let ldrs = this.leadersList.filter((leader) => {
+                        let searchToLower = obj.searchString.toLowerCase();
+                        let firstName = leader.firstName.toLowerCase();
+                        let lastName = leader.lastName.toLowerCase();
+                            var c1 = firstName.includes(searchToLower);
+                            var c2 = lastName.includes(searchToLower);
+                            var firstAndLastName = leader.firstName.toLowerCase() + leader.lastName.toLowerCase();
+                            var c3 = firstAndLastName.includes(searchToLower);
+                            return ( c1 || c2 || c3);
+                            return true;
+                        });
+                        let currentLeadersList = [];
+                        currentLeadersList = _.cloneDeep(ldrs);
+                    }
                 },
             },
 
@@ -202,7 +228,6 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                 const obj = this;
                 $('.postToSend').on('change', () => {
                     this.postSelected = $('.postToSend').val();
-                    console.log(obj.postSelected);
                     obj.postSelectedChange();
                 });
 

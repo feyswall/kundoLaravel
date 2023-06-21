@@ -155,7 +155,7 @@
                                     </td>
                                      <td>
                                         <a class="float-left btn btn-sm btn-success"
-                                         href="{{ route('super.leader.fungua', $leader->id)}}">
+                                            href="{{ route('super.leader.fungua', $leader->id)}}">
                                             fungua
                                         </a>
                                          <a class="float-left btn btn-sm btn-warning"  data-bs-toggle="modal"
