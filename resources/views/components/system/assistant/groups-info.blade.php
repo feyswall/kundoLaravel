@@ -15,7 +15,7 @@
                     @php
                         $bool_contains = $table;
                          $leaders_id = $bool_contains->leaders->pluck('id');
-                        $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders($leaders_id, $post);
+                        $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders($leaders_id, $post);
                     @endphp
                 @elseif( $group->deep == "Wajumbe_wa_Mkutano_Mkuu_wa_CCM_Wilaya_Wapiga_Kura_gp")
                     @if( $mjumbe < 1 )
@@ -36,7 +36,7 @@
                                           })->get();
                                  foreach( $bool_contains as $obj ){
                                         $leaders_id = $obj->leaders->pluck('id');
-                                        $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders($leaders_id, $post);
+                                        $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders($leaders_id, $post);
                                     }
                             }else{
                                 $bool_contains = $table->region;
@@ -54,12 +54,12 @@
                                           })->get();
                                    foreach( $bool_contains as $obj ){
                                             $leaders_id = $obj->leaders->pluck('id');
-                                            $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders($leaders_id, $post);
+                                            $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders($leaders_id, $post);
                                         }
                                }else{
                                    $bool_contains = $table->district;
                                    $leaders_id = $bool_contains->leaders->pluck('id');
-                                   $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders($leaders_id, $post);
+                                   $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders($leaders_id, $post);
                               }
                         @endphp
                     @endif
@@ -72,12 +72,12 @@
                                           })->get();
                                        foreach( $bool_contains as $obj ){
                                             $leaders_id = $obj->leaders->pluck('id');
-                                            $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders($leaders_id, $post);
+                                            $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders($leaders_id, $post);
                                         }
                                   }else{
                                       $bool_contains = $table->council;
                                        $leaders_id = $bool_contains->leaders->pluck('id');
-                                       $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders($leaders_id, $post);
+                                       $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders($leaders_id, $post);
                                 }
                         @endphp
                     @endif
@@ -90,12 +90,12 @@
                                           })->get();
                                           foreach( $bool_contains as $obj ){
                                             $leaders_id = $obj->leaders->pluck('id');
-                                            $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders($leaders_id, $post);
+                                            $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders($leaders_id, $post);
                                             }
                                       }else{
                                           $bool_contains = $table->division;
                                            $leaders_id = $bool_contains->leaders->pluck('id');
-                                           $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders($leaders_id, $post);
+                                           $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders($leaders_id, $post);
                                     }
                         @endphp
                     @endif
@@ -108,13 +108,13 @@
                                           })->get();
                                 foreach( $bool_contains as $obj ){
                                     $leaders_id = $obj->leaders->pluck('id');
-                                    $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders(
+                                    $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders(
                                         $leaders_id, $post);
                                 }
                             }else{
                                     $bool_contains = $table->ward;
                                         $leaders_id = $bool_contains->leaders->pluck('id');
-                                    $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders(
+                                    $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders(
                                         $leaders_id, $post);
                             }
                         @endphp
@@ -129,13 +129,13 @@
                                 })->get();
                                 foreach( $bool_contains as $obj ){
                                     $leaders_id = $obj->leaders->pluck('id');
-                                    $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders(
+                                    $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders(
                                         $leaders_id, $post);
                                 }
                             }else{
                                 $bool_contains = $table->branch;
                                 $leaders_id = $bool_contains->leaders->pluck('id');
-                                $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders(
+                                $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders(
                                 $leaders_id, $post);
                             }
                         @endphp
@@ -149,13 +149,13 @@
                                 })->get();
                                 foreach( $bool_contains as $obj ){
                                     $leaders_id = $obj->leaders->pluck('id');
-                                    $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders($leaders_id, $post);
+                                    $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders($leaders_id, $post);
                                 }
                             }
                             else{
                                 $bool_contains = $table->trunk;
                                 $leaders_id = $bool_contains->leaders->pluck('id');
-                                $all_leaders[] = \App\Http\Controllers\assistants\LeadersController::filterLeaders($leaders_id, $post);
+                                $all_leaders[] = \App\Http\Controllers\Assistants\LeadersController::filterLeaders($leaders_id, $post);
                             }
                         @endphp
                     @endif
