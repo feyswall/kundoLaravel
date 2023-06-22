@@ -63,17 +63,30 @@ use \Illuminate\Support\Facades\DB;
                                             @php
                                                 $area = $post->area;
                                                 if ( $area == 'tawi'){
-                                                    echo $leader->branches()->where('isActive', true)->first()->name;
+                                                    if ($leader->branches()->where('isActive', true)->first()) {
+                                                        echo $leader->branches()->where('isActive', true)->first()->name;
+                                                    }
                                                 }elseif ( $area == 'kata'){
-                                                    echo $leader->wards()->where('isActive', true)->first()->name;
+                                                    if ($leader->wards()->where('isActive', true)->first()) {
+                                                        echo $leader->wards()->where('isActive', true)->first()->name;
+                                                    }
                                                 }elseif ( $area == 'tarafa'){
-                                                    echo $leader->divisions()->where('isActive', true)->first()->name;
+                                                    if ($leader->divisions()->where('isActive', true)->first()) {
+                                                        echo $leader->divisions()->where('isActive', true)->first()->name;
+                                                    }
                                                 }elseif ( $area == 'halmashauri'){
-                                                    echo $leader->councils()->where('isActive', true)->first()->name;
+                                                    if ($leader->councils()->where('isActive', true)->first()) {
+                                                        echo $leader->councils()->where('isActive', true)->first()->name;
+                                                    }
                                                 }elseif ( $area == 'wilaya'){
-                                                    echo $leader->districts()->where('isActive', true)->first()->name;
+                                                    if ($leader->districts()->where('isActive', true)->first()) {
+                                                        echo $leader->districts()->where('isActive', true)->first()->name;
+                                                    }
                                                 }elseif ( $area == 'mkoa'){
-                                                    echo $leader->regions()->where('isActive', true)->first()->name;
+                                                    if ($leader->regions()->where('isActive', true)->first()) {
+                                                        echo $leader->regions()->where('isActive', true)->first()->name;
+
+                                                    }
                                                 }
                                             @endphp
                                         </small>
