@@ -93,10 +93,10 @@
                                                data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}"
                                                data-bs-placement="top" title="Badilisha" href="#">
                                             </a>
-                                            <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                            {{-- <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
                                                data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $ldr->id }}"
                                                data-bs-placement="top" title="Badilisha" href="#">
-                                            </a>
+                                            </a> --}}
                                             <x-system.assistant.modal id="futaTaarifaKiongoziChamaModal_{{ $ldr->id }}"
                                                             aria="futaKiongoziKataLabel" size="modal-sm"
                                                             title="Je Unahitaji Kumvua Madarakani Kiongozi?">
@@ -248,10 +248,10 @@
                                                 data-bs-target="#badiriTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
                                                 data-bs-placement="top" title="Badilisha" href="#">
                                             </a>
-                                            <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                            {{-- <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
                                                data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
                                                data-bs-placement="top" title="Badilisha" href="#">
-                                            </a>
+                                            </a> --}}
                                             <x-system.assistant.modal id="futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
                                                 aria="futaKiongoziKataLabel" size="modal-sm"
                                                 title="Je Unahitaji Kumvua Madarakani Kiongozi?">

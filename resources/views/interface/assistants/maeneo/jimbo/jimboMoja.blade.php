@@ -54,13 +54,14 @@
                                 @foreach( $state->leaders()->where('isActive', true)->get() as $leader )
                                 @if( true )
                                 <div class="text-center">
-                                    <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Badilisha" href=""
-                                    ></a>
-                                    <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                    <a class="fas fa-edit" data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="Badilisha" href="">
+                                    </a>
+                                    {{-- <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
                                     data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
                                     data-bs-placement="top" title="Badilisha" href="#">
-                                    </a>
+                                    </a> --}}
                                 <x-system.assistant.modal id="futaTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="futaKiongoziKataLabel"
                                      size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
                                     <x-slot:content>

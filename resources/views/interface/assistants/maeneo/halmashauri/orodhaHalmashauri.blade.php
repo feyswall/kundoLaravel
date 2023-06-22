@@ -72,10 +72,11 @@ use \Illuminate\Support\Facades\DB;
                                                                        data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}"
                                                                        data-bs-placement="top" title="Badilisha" href="#">
                                                                     </a>
-                                                                    <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+
+                                                                    {{-- <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
                                                                        data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $ldr->id }}"
                                                                        data-bs-placement="top" title="Badilisha" href="#">
-                                                                    </a>
+                                                                    </a> --}}
                                                                     <x-system.assistant.modal id="futaTaarifaKiongoziChamaModal_{{ $ldr->id }}" aria="futaKiongoziKataLabel"
                                                                                     size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
                                                                         <x-slot:content>
@@ -232,10 +233,10 @@ use \Illuminate\Support\Facades\DB;
                                                                     <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top"
                                                                        title="Badilisha" href="{{ route("assistants.leader.wilaya.badili", $ldr->id ) }}">
                                                                     </a>
-                                                                    <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
+                                                                    {{-- <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
                                                                        data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
                                                                        data-bs-placement="top" title="Badilisha" href="#">
-                                                                    </a>
+                                                                    </a> --}}
                                                                     <x-system.assistant.modal id="futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}" aria="futaKiongoziKataLabel"
                                                                                     size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
                                                                         <x-slot:content>
