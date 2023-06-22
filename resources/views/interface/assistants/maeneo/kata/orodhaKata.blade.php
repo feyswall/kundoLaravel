@@ -49,11 +49,11 @@
                                         <div>
                                             <div class="d-flex justify-start gap-4 flex-wrap">
                                                 @php
-                                                $districtLeaders = $division->leaders()->where('isActive', true)->get();
-                                                $chamaPostsWithLeaderCollection =
-                                                \App\Http\Controllers\Assistants\PostsController::postWithLeaders(
-                                                $districtLeaders, 'chama', 'tarafa');
-                                            @endphp
+                                                    $districtLeaders = $division->leaders()->where('isActive', true)->get();
+                                                    $chamaPostsWithLeaderCollection =
+                                                    \App\Http\Controllers\Assistants\PostsController::postWithLeaders(
+                                                    $districtLeaders, 'chama', 'tarafa');
+                                                @endphp
 
                                                 @foreach($chamaPostsWithLeaderCollection as $key => $leaderColl)
                                                     @php $ps = \App\Models\Post::find($key); @endphp
@@ -230,8 +230,9 @@
                                                             </x-system.assistant.modal>
                                                             <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
                                                             <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">
-                                                                {{  $ps->name }}
-                                                            </small>
+                                                                {{ $ps->name }}</small><br>
+                                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">
+                                                                {{  $ps->name }}</small>
                                                         </div>
                                                     @endforeach
                                                     <div class="row w-100"></div>

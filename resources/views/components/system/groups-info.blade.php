@@ -280,7 +280,7 @@
         @endphp
         <x-system.collapse id="form_{{ $deepWithNoSpace }}" title="TUMA SMS HAPA">
             <x-slot:content>
-                <form action="#" method="POST">
+                <form action="#" method="GET">
                     <div>
                         <input type="hidden" name='leaders_ids'
                         value="{{ $leaders_ids_for_smses_json }}">

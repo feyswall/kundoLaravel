@@ -142,7 +142,7 @@
                                             @foreach ($leader->posts as $post)
                                                 @if ( $post->pivot->isActive )
                                                     <li>
-                                                        {{ $post->name }} {{ $post->id  }}
+                                                        {{ $post->name }}
                                                     </li>
                                                     <ul>
                                                         @foreach ($post->groups as $group)

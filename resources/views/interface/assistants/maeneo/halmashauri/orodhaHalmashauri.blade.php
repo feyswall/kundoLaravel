@@ -59,10 +59,9 @@ use \Illuminate\Support\Facades\DB;
                                                         @php
                                                             $districtLeaders = $district->leaders()->where('isActive', true)
                                                             ->get();
-                                                            
                                                             $chamaPostsWithLeaderCollection =
                                                                 \App\Http\Controllers\Assistants\PostsController::postWithLeaders(
-                                                                $districtLeaders, 'chama', 'halmashauri');
+                                                                $districtLeaders, 'chama', 'wilaya');
                                                         @endphp
 
                                                         @foreach($chamaPostsWithLeaderCollection as $key => $leaderColl)
@@ -225,12 +224,13 @@ use \Illuminate\Support\Facades\DB;
                                                             $serikaliPostsWithLeaderCollection = \App\Http\Controllers\assistants\PostsController::postWithLeaders(
                                                             $districtLeaders, 'serikali', 'wilaya');
                                                         @endphp
+
                                                         @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)
                                                             @php $ps = \App\Models\Post::find($key); @endphp
                                                             @foreach($leaderColl as $id => $ldr)
                                                                 <div class="text-center">
                                                                     <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                       title="Badilisha" href="{{ route("assistants.leader.wilaya.badili", $leader->id ) }}">
+                                                                       title="Badilisha" href="{{ route("assistants.leader.wilaya.badili", $ldr->id ) }}">
                                                                     </a>
                                                                     <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
                                                                        data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"

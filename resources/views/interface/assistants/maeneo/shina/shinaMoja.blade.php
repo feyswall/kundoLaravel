@@ -80,18 +80,23 @@
                         <div>
 
                             <div class="d-flex justify-start gap-4 flex-wrap">
-                                @foreach( $trunk->leaders->where('side', 'chama') as $leader )
-                                    @if( $leader->pivot->isActive == true )
-                                        @php
-                                            $postName = \App\Models\Post::find( $leader->pivot->post_id )->name;
-                                        @endphp
-                                    <div class="text-center">
-                                        <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                @php
+                                    $trunkLeaders = $trunk->leaders()->where('isActive', true)->get();
+                                    $chamaPostsWithLeaderCollection =
+                                    \App\Http\Controllers\Assistants\PostsController::postWithLeaders(
+                                    $trunkLeaders, 'chama', 'shina');
+                                @endphp
+
+                                @foreach($chamaPostsWithLeaderCollection as $key => $leaderColl)
+                                    @php $ps = \App\Models\Post::find($key); @endphp
+                                    @foreach($leaderColl as $id => $ldr)
+                                        <div class="text-center">
+                             da           <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
                                         <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
-                                        data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $leader->id }}"
+                                        data-bs-target="#futaTaarifaKiongoziChamaModal_{{ $ldr->id }}"
                                         data-bs-placement="top" title="Badilisha" href="#">
                                         </a>
-                                    <x-system.assistant.modal id="futaTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="futaKiongoziKataLabel" size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                    <x-system.assistant.modal id="futaTaarifaKiongoziChamaModal_{{ $ldr->id }}" aria="futaKiongoziKataLabel" size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
                                         <x-slot:content>
                                             <form action="{{ route('assistants.leader.unpower')}}" method="POST">
                                                 @csrf
@@ -100,31 +105,34 @@
                                                 <input type="hidden" name="column_id" value="trunk_id">
                                                 <input type="hidden" name="column_value" value="{{ $trunk->id }}">
 
-                                                <input name='leader_id' value="{{ $leader->id }}" type="hidden">
-                                                <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
+                                                <input name='leader_id' value="{{ $ldr->id }}" type="hidden">
+                                                <input name="post_id" value="{{ $ps->id }}" type="hidden">
                                                 <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
                                             </form>
                                         </x-slot:content>
                                     </x-system.assistant.modal>
-                                        <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $postName }}</small><br>
-                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
+                                        <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
+                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ps->name }}</small><br>
+                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ldr->phone }}</small>
                                     </div>
-
-                                    @endif
+                                    @endforeach
+                                    <div class="row w-100"></div>
                                 @endforeach
                             </div>
                         </div>
 
 
-                         @foreach ($trunk->leaders as $leader)
-                            @if( $leader->pivot->isActive == true )
-                                <x-system.assistant.modal id="badiriTaarifaKiongoziChamaModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama Ngazi Ya Kata Hapa">
+                        @foreach ($chamaPostsWithLeaderCollection as $leaderColl)
+                            @foreach( $leaderColl as $ldr )
+                                <x-system.assistant.modal id="badiriTaarifaKiongoziChamaModal_{{ $ldr->id }}"
+                                                          aria="ongezaKiongoziKataLabel" size="modal-fullscreen"
+                                                          title="Ongeza Kiongozi Wa Chama Ngazi Ya Kata Hapa">
                                 <x-slot:content>
-                                        <x-system.assistant.edit-leader :leader="$leader" :route="route('assistants.leader.tawi.sasisha', $leader->id)" />
+                                        <x-system.assistant.edit-leader :leader="$ldr"
+                                                                        :route="route('assistants.leader.tawi.sasisha', $ldr->id)" />
                                 </x-slot:content>
                                 </x-system.assistant.modal>
-                            @endif
+                            @endforeach
                         @endforeach
                     </div>
 
@@ -140,15 +148,26 @@
                     <div>
 
                             <div class="d-flex justify-start gap-4 flex-wrap">
-                                @foreach( $trunk->leaders->where('side', 'serikali') as $leader )
-                                    @if( $leader->pivot->isActive == true )
+                                @php
+                                    $trunkLeaders = $trunk->leaders()->where('isActive', true)->get();
+                                    $serikaliPostsWithLeaderCollection =
+                                    \App\Http\Controllers\Assistants\PostsController::postWithLeaders(
+                                    $trunkLeaders, 'serikali', 'shina');
+                                @endphp
+
+                                @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)
+                                    @php $ps = \App\Models\Post::find($key); @endphp
+                                    @foreach($leaderColl as $id => $ldr)
                                         <div class="text-center">
-                                            <a class="fas fa-edit"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}"  data-bs-placement="top" title="Badilisha" href="#"></a>
+                                            <a class="fas fa-edit"  data-bs-toggle="modal"
+                                               data-bs-target="#badiriTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
+                                               data-bs-placement="top" title="Badilisha" href="#"></a>
+
                                             <a class="fas fa-trash text-danger"  data-bs-toggle="modal"
-                                            data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}"
+                                            data-bs-target="#futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
                                             data-bs-placement="top" title="Badilisha" href="#">
                                             </a>
-                                        <x-system.assistant.modal id="futaTaarifaKiongoziSerikaliModal_{{ $leader->id }}" aria="futaKiongoziKataLabel" size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
+                                        <x-system.assistant.modal id="futaTaarifaKiongoziSerikaliModal_{{ $ldr->id }}" aria="futaKiongoziKataLabel" size="modal-sm" title="Je Unahitaji Kumvua Madarakani Kiongozi?">
                                             <x-slot:content>
                                                 <form action="{{ route('assistants.leader.unpower')}}" method="POST">
                                                     @csrf
@@ -157,32 +176,36 @@
                                                     <input type="hidden" name="column_id" value="trunk_id">
                                                     <input type="hidden" name="column_value" value="{{ $trunk->id }}">
 
-                                                    <input name='leader_id' value="{{ $leader->id }}" type="hidden">
-                                                    <input name="post_id" value="{{ $leader->pivot->post_id }}" type="hidden">
+                                                    <input name='leader_id' value="{{ $ldr->id }}" type="hidden">
+                                                    <input name="post_id" value="{{ $ps->id }}" type="hidden">
                                                     <button class="btn btn-danger btn-lg" type="submit">NDIO</button>
                                                 </form>
                                             </x-slot:content>
                                         </x-system.assistant.modal>
-                                            <h4 class="fs-5 text-capitalize">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ \App\Models\Post::find( $leader->pivot->post_id )->name }}</small><br>
-                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $leader->phone }}</small>
+                                            <h4 class="fs-5 text-capitalize">{{ $ldr->firstName }} {{ $ldr->lastName }}</h4>
+                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ps->name }}</small><br>
+                                            <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2">{{ $ldr->phone }}</small>
                                         </div>
-                                    @endif
+                                    @endforeach
+                                    <div class="row w-100"></div>
                                 @endforeach
+                                <hr>
                             </div>
                         </div>
 
 
-                        @foreach ($trunk->leaders->where('side', 'serikali') as $leader)
-                            @if( $leader->pivot->isActive == true )
-                            <x-system.assistant.modal id="badiriTaarifaKiongoziSerikaliModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Serikali Kata Hapa">
+                        @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)
+                            @foreach($leaderColl as $id => $ldr)
+                            <x-system.assistant.modal id="badiriTaarifaKiongoziSerikaliModal_{{ $ldr->id }}"
+                                                      aria="ongezaKiongoziKataLabel" size="modal-fullscreen"
+                                                      title="Ongeza Kiongozi Wa Serikali Kata Hapa">
                                 <x-slot:content>
-                                    <x-system.assistant.edit-leader :leader="$leader" :route="route('assistants.leader.shina.sasisha', $leader->id)" />
+                                    <x-system.assistant.edit-leader :leader="$ldr"
+                                                                    :route="route('assistants.leader.shina.sasisha', $ldr->id)" />
                                 </x-slot:content>
                             </x-system.assistant.modal>
-                            @endif
+                            @endforeach
                         @endforeach
-
 
                     <!-- model location here -->
                         <x-system.assistant.modal id="ongezaKiongoziChamaModal" aria="orodhaTawiLabel" size="modal-fullscreen" title="Ongeza Kiongozi wa chama Hapa">
@@ -240,7 +263,6 @@
                                 </form>
                             </x-slot:content>
                         </x-system.assistant.modal>
-
                         <x-system.assistant.modal id="ongezaKiongoziSerikaliModal" aria="orodhaTawiLabel" size="modal-fullscreen" title="Ongeza Kiongozi wa Serikali Hapa">
                             <x-slot:content>
                                 <form method="post" action="{{ route('assistants.leader.shina.ongeza') }}">
