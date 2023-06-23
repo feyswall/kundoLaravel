@@ -371,6 +371,16 @@ class LeadersController extends Controller
         return \Illuminate\Support\Facades\Response::json(['status' => 'success', 'response' => $leaders]);
     }
 
+    public function postChangeApi(Request $request)
+    {
+        $allPosts = Post::where('for_selection', 'like', '%'.$request->postName.'%')->pluck('id');
+        $post_leaders = DB::table('leader_post')->whereIn('post_id', $allPosts)
+            ->where('isActive', true)
+            ->pluck('leader_id');
+        $leaders = Leader::whereIn('id', $post_leaders)->orderBy('firstName')->get();
+        return \Illuminate\Support\Facades\Response::json(['status' => 'success', 'response' => $leaders]);
+    }
+
     public static function postWithLeaders(Collection $leaders, $side, $area)
     {
         $postsWithLeaderCollection = [];
@@ -396,4 +406,10 @@ class LeadersController extends Controller
         }
         return $postsWithLeaderCollection;
     }
+    public function sialSearchLeader()
+    {
+        return view('interface.super.viongozi.tafutaKwaWadhifa');
+    }
 }
+
+

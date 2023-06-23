@@ -1,12 +1,10 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: developer
  * Date: 10/30/2022
  * Time: 10:49 AM
  */
-
 ?>
 
 <div class="vertical-menu">
@@ -24,8 +22,11 @@
                     <a href="{{ route('dashboard') }}"> <span>Nyumbani</span> </a>
                 </li>
 
-                <li>
-                    <a href="{{ route('super.leader.searchLeader') }}">Tafuta Viongozi</a>
+                <li> <a href="javascript: void(0);" class="has-arrow">Tafuta Viongozi</a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{ route('super.leader.searchLeader') }}">eneo & wadhifa</a></li>
+                        <li><a href="{{ route('super.leader.sial.searchLeader') }}"><span>wadhifa</span></a></li>
+                    </ul>
                 </li>
 
                 <li> <a href="javascript: void(0);" class="has-arrow">Maeneo</a>
