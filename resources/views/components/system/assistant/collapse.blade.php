@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-12">
-        <div class="card">
+        <div class="card" style="border: 1px solid mediumaquamarine;">
             <a href="#{{ $id }}" class="text-dark" data-bs-toggle="collapse">
                 <div class="p-4">
                     <div class="d-flex align-items-center">
