@@ -272,11 +272,6 @@
                                                     @endphp
                                                 @endif
 
-                                                @php
-
-                                                @endphp
-
-
                                                 <ul class="mb-2">
                                                     @foreach ($post->groups as $group)
                                                         <li>{{ $group->name }}</li>
