@@ -30,7 +30,6 @@
                                     $side_column = 'trunk_id';
                                     $area_type = 'App\Models\Trunk';
                                     $area_string = 'Shina la ';
-
                                     $area =  App\Http\Controllers\Super\AreasController::search_for_area(
                                         $relation_table,
                                         $side_column,
@@ -94,7 +93,6 @@
                                     $side_column = 'ward_id';
                                     $area_type = 'App\Models\Ward';
                                     $area_string = 'kata ya ';
-
                                     $area =  App\Http\Controllers\Super\AreasController::search_for_area(
                                         $relation_table,
                                         $side_column,
@@ -217,7 +215,6 @@
                                     }
                                 @endphp
                             @endif
-
 
                             @if ($post->area == 'mkoa')
                                 @php

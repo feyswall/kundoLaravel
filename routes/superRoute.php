@@ -368,6 +368,7 @@ Route::controller(\App\Http\Controllers\Super\LeadersController::class)
         Route::get('/ona/kiongozi/{id}', 'viewLeader')->name('fungua');
         Route::get('/tafuta/kiongozi/kwa/eneo', 'searchLeaders')->name('searchLeader');
         Route::get('/tafuta/kiongozi/kwa/wadhifa',  'sialSearchLeader')->name('sial.searchLeader');
+        Route::get("/by/posts/group/{postId}", "leadersByGroup")->name('by.group');
     });
 
 

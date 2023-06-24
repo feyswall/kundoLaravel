@@ -40,49 +40,47 @@
                 <div class="card">
                     <div class="card-body">
                         <a href="{{ route('sms.orodha.group') }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Orodha</a>
-
-                            <div>
-                                <table v-if="!loader" id="allSmsTable" class="table table-striped table-bordered dt-responsive nowrap"
-                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th>Status</th>
-                                            <th>Group No_</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>phone</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="smsLeader in smsWithLeaders">
-                                            <td v-if="smsLeader.status == 'DELIVERED'" class="text-success"><b>@{{ smsLeader.status }}</b></td>
-                                            <td v-else-if="smsLeader.status == 'PENDING'" class="text-primary"><b>@{{ smsLeader.status }}</b></td>
-                                            <td v-else-if="smsLeader.status == 'FAILED'" class="text-danger"><b>@{{ smsLeader.status }}</b></td>
-                                            <td v-else class="text-danger">Error</td>
-                                            <td>@{{ request_id }}</td>
-                                            <td>@{{ smsLeader.leader.firstName }}</td>
-                                            <td>@{{ smsLeader.leader.lastName }}</td>
-                                            <td>@{{ smsLeader.leader.phone }}</td>
-                                            <td>
-                                                <a href="" class="btn btn-danger btn-sm">delete</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="row justify-content-center" v-if="loader">
-                                    <div class="col-sm-4 col-md-3">
-                                         <div id="formLoader"  class="spinner-border" role="status">
-                                                <span class="visually-hidden">Loading...</span>
-                                        </div>
+                        <div>
+                            <table v-if="!loader" id="allSmsTable"
+                                   class="table table-striped table-bordered dt-responsive nowrap"
+                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>Group No_</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>phone</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="smsLeader in smsWithLeaders">
+                                        <td v-if="smsLeader.status == 'DELIVERED'" class="text-success"><b>@{{ smsLeader.status }}</b></td>
+                                        <td v-else-if="smsLeader.status == 'PENDING'" class="text-primary"><b>@{{ smsLeader.status }}</b></td>
+                                        <td v-else-if="smsLeader.status == 'FAILED'" class="text-danger"><b>@{{ smsLeader.status }}</b></td>
+                                        <td v-else class="text-danger">Error</td>
+                                        <td>@{{ request_id }}</td>
+                                        <td>@{{ smsLeader.leader.firstName }}</td>
+                                        <td>@{{ smsLeader.leader.lastName }}</td>
+                                        <td>@{{ smsLeader.leader.phone }}</td>
+                                        <td>
+                                            <a href="" class="btn btn-danger btn-sm">delete</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row justify-content-center" v-if="loader">
+                                <div class="col-sm-4 col-md-3">
+                                     <div id="formLoader"  class="spinner-border" role="status">
+                                            <span class="visually-hidden">Loading...</span>
                                     </div>
                                 </div>
                             </div>
-
+                        </div>
                     </div>
                 </div>
             </div> <!-- end col -->
-
         </div> <!-- end row -->
 
     </div> <!-- container-fluid -->
@@ -91,6 +89,9 @@
 @endsection
 
 @section("extra_script")
+    <x-system.table-script id="allSmsTable">
+    </x-system.table-script>
+
     <script>
         const app = new  Vue({
         el: "#app",

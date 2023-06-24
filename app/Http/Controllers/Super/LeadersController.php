@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Post;
+use function Symfony\Component\Console\Input\isArray;
 use function Webmozart\Assert\Tests\StaticAnalysis\false;
 
 class LeadersController extends Controller
@@ -68,28 +69,6 @@ class LeadersController extends Controller
             });
         })
         ->first();
-
-        // $leader_posts = DB::table('leader_post')
-        // ->where('leader_id', $leader->id)
-        // ->where('isActive', true)
-        // ->pluck('id');
-        // $posts = Post::whereIn('id', $leader_posts)
-        // ->with('groups', function($query){
-        //     $query->where('prev', 1);
-        // }
-        // )->get();
-
-        // $leaders = Leader::where("id", ">",  0)
-        // ->has('posts')
-        // ->with('posts', function($query){
-        //     $query->where('isActive', true)
-        //         ->with('groups', function($query){
-        //         $query->select('name')->where('prev', 1);
-        //     });
-        // })
-        // ->get();
-
-
         return view('interface.super.viongozi.singleLeader')
         ->with('leader', $leader);
     }
@@ -319,13 +298,6 @@ class LeadersController extends Controller
                 $data = \App\Models\Leader::whereIn('id', $collected)->get();
                 $onQueue[] = $data;
             }
-
-//            foreach (  $onQueue as $key => $qualified){
-//                foreach ( $qualified as $leader ){
-//                    $data = [$leader];
-//                    $all_leaders[] = $data;
-//                }
-//            }
         return $onQueue;
     }
 
@@ -409,6 +381,33 @@ class LeadersController extends Controller
     public function sialSearchLeader()
     {
         return view('interface.super.viongozi.tafutaKwaWadhifa');
+    }
+
+    public function leadersByGroup($postId)
+    {
+        $leaders = [];
+        $post = Post::find( $postId );
+        $leaders = Leader::where("id", ">",  0);
+        if (!$post){
+            $postsIds = Post::where('for_selection', 'like', '%'.$postId.'%')->pluck('id');
+            $leaders->whereHas('posts', function($query) use ($postsIds){
+                $query->whereIn('post_id', $postsIds);
+            });
+        }else{
+            $leaders->whereHas('posts', function($query) use ($postId){
+                    $query->where('post_id', $postId);
+                });
+        }
+            $leaders = $leaders->with('posts', function($query){
+                $query->where('isActive', true)
+                    ->with('groups', function($query){
+                        $query->select('name')->where('prev', 1);
+                    });
+            })->get();
+        $backRoute = back()->getTargetUrl();
+        return view('interface.super.viongozi.groupOfLeaders')
+            ->with('backRoute', $backRoute)
+            ->with('leaders', $leaders);
     }
 }
 

@@ -14,7 +14,7 @@
         <div v-bind:class="{ 'd-none': false }">
             <div class="col-12">
                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                    <h4 class="mb-0">Tuma Barua Hapa</h4>
+                    <h4 class="mb-0">Tafuta Kiongozi</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Changamoto</a></li>
@@ -57,7 +57,10 @@
                                                 </form>
                                            </div>
                                             <div :class="{'p-4': true, 'col-sm-12': true,'col-lg-12': true, 'd-none': leadersList.length < 1}">
-                                                <a :href='' class="btn btn-sm btn-primary">fungua</a>
+                                                <a  :href="'/super/leader/by/posts/group/'+postSelected"
+                                                    class="btn btn-sm btn-primary  mb-4">
+                                                    fungua
+                                                </a>
                                                 <table id="leadersTable"
                                                     class="table table-sm table-striped table-bordered
                                                      table-responsive nowrap">
