@@ -65,7 +65,7 @@ class LeadersController extends Controller
         ->with('posts', function($query){
             $query->where('isActive', true)
                 ->with('groups', function($query){
-                $query->select('name')->where('prev', 1);
+                $query->select('name');
             });
         })
         ->first();

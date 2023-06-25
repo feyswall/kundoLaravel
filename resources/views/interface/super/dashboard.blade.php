@@ -54,24 +54,24 @@
                 </div>
             </div>
             <!-- end col-->
-                <div class="col-md-6 col-xl-3">
-                    <a href="{{ route('super.challenge.orodha') }}">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="float-end mt-2">
-                                <div id="orders-chart"> </div>
-                            </div>
-                            <div>
-                                @php $challengeCount = \App\Models\Challenge::where('status', 'new')->count(); @endphp
-                                <h4 class="mb-1 mt-1 @if( $challengeCount > 0)  text-danger @endif">
-                                     {{ $challengeCount  }}</h4>
-                                <p class="text-muted mb-0">Changamoto</p>
-                            </div>
-                            <p class="text-muted mt-3 mb-0"><span class="text-danger me-1">{{ \App\Models\Challenge::count()  }}</span> Idadi ya Zilizohifadhiwa</p>
+            <div class="col-md-6 col-xl-3">
+                <a href="{{ route('super.challenge.orodha') }}">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="float-end mt-2">
+                            <div id="orders-chart"> </div>
                         </div>
+                        <div>
+                            @php $challengeCount = \App\Models\Challenge::where('status', 'new')->count(); @endphp
+                            <h4 class="mb-1 mt-1 @if( $challengeCount > 0)  text-danger @endif">
+                                 {{ $challengeCount  }}</h4>
+                            <p class="text-muted mb-0">Changamoto</p>
+                        </div>
+                        <p class="text-muted mt-3 mb-0"><span class="text-danger me-1">{{ \App\Models\Challenge::count()  }}</span> Idadi ya Zilizohifadhiwa</p>
                     </div>
-                    </a>
                 </div>
+                </a>
+            </div>
             <!-- end col-->
             @php
                 $allApartments = \App\Models\Apartment::all();
@@ -83,7 +83,7 @@
                 <div class="card">
                         <div class="card-body">
                             <div class="float-end mt-2">
-                                <div id="customers-chart"> </div>
+                                <div id="customers-chart"></div>
                             </div>
                             <div>
                                 <h4 class="mb-1 mt-1"><span >
@@ -100,22 +100,14 @@
                 </a>
             </div>
             <!-- end col-->
-
             <!-- end col-->
         </div>
-        <!-- end row-->
-        <div class="row">
-            <div class="col-xl-6">
 
-                <!--end card-->
-            </div>
-        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="m-5">
-
                         </div>
                         <h4 class="card-title">Orodha ya Viongozi Wote</h4>
                         <table id="viongoziWilayaTable"
@@ -173,15 +165,241 @@
             </div>
             <!-- end col -->
         </div>
-                @foreach ($leaders as $leader)
-                    <x-system.modal id="badiriTaarifaKiongoziModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
-                        <x-slot:content>
-                            <x-system.edit-leader :leader="$leader" :route="route('super.leader.kata.sasisha', $leader->id)" />
-                        </x-slot:content>
-                    </x-system.modal>
-                @endforeach
-                    <!-- end row -->
-                    <x-system.modal id="sendTextSms" aria="sendSms" size="modal-lg" title="Tuma Sms Hapa">
+
+        <!-- end row-->
+        <div class="row">
+            <div class="col-xl-12">
+                <x-system.collapse id="orodhaMaeneoWilaya" title="Orodha Wilaya">
+                    <x-slot:content>
+                        <table id="wTable" class="table table-striped table-sm table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Jina</th>
+                                <th>Idadi Halmashauri</th>
+                                <th>Idadi Tarafa</th>
+                                <th>Idadi Kata</th>
+                                <th>Idadi Matawi</th>
+                                <th>Idadi Mashina</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach(  \App\Models\District::select('id', 'name')->withCount('councils')
+                            ->withCount('divisions')
+                            ->withCount('wards')
+                            ->withCount('branches')
+                            ->withCount('trunks')
+                            ->get()
+                             as $area )
+                                <tr>
+                                    <td>{{ $area->name }}</td>
+                                    <td>{{ $area->councils_count }}</td>
+                                    <td>{{ $area->divisions_count }}</td>
+                                    <td>{{ $area->wards_count }}</td>
+                                    <td>{{ $area->branches_count }}</td>
+                                    <td>{{ $area->trunks_count }}</td>
+                                    <td>
+                                        <a href="{{ route('super.areas.halmashauri.orodha', $area->id) }}"
+                                            class="btn btn-sm btn-success">
+                                            fungua</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </x-slot:content>
+                </x-system.collapse>
+            </div>
+        </div>
+
+        <!-- end row-->
+        <div class="row">
+            <div class="col-xl-12">
+                <x-system.collapse id="orodhaMaeneoHalmashauri" title="Orodha Halmashauri">
+                    <x-slot:content>
+                        <table id="hTable" class="table table-striped table-sm table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Halmashauri</th>
+                                <th>Idadi Tarafa</th>
+                                <th>Idadi Kata</th>
+                                <th>Idadi Matawi</th>
+                                <th>Idadi Mashina</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach(  \App\Models\Council::select('id', 'name')->withCount('divisions')
+                            ->withCount('wards')
+                            ->withCount('branches')
+                            ->withCount('trunks')
+                            ->get() as $area )
+                                <tr>
+                                    <td>{{ $area->name }}</td>
+                                    <td>{{ $area->divisions_count }}</td>
+                                    <td>{{ $area->wards_count }}</td>
+                                    <td>{{ $area->branches_count }}</td>
+                                    <td>{{ $area->trunks_count }}</td>
+                                    <td>
+                                        <a href="{{ route('super.areas.tarafa.orodha', $area->id) }}"
+                                        class="btn btn-sm btn-success"
+                                        >fungua</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </x-slot:content>
+                </x-system.collapse>
+            </div>
+        </div>
+
+        <!-- end row-->
+        <div class="row">
+            <div class="col-xl-12">
+                <x-system.collapse id="orodhaMaeneoTarafa" title="Orodha Tarafa">
+                    <x-slot:content>
+                        <table id="tTable" class="table table-striped table-sm table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Jina</th>
+                                <th>Idadi Kata</th>
+                                <th>Idadi Matawi</th>
+                                <th>Idadi Mashina</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach(  \App\Models\Division::select('id', 'name')->withCount('wards')
+                            ->withCount('branches')
+                            ->withCount('trunks')
+                            ->get() as $area )
+                                <tr>
+                                    <td>{{ $area->name }}</td>
+                                    <td>{{ $area->wards_count }}</td>
+                                    <td>{{ $area->branches_count }}</td>
+                                    <td>{{ $area->trunks_count }}</td>
+                                    <td>
+                                        <a href="{{ route('super.areas.kata.orodha', $area->id) }}"
+                                        class="btn btn-sm btn-success"
+                                        >fungua</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </x-slot:content>
+                </x-system.collapse>
+            </div>
+        </div>
+
+        <!-- end row-->
+        <div class="row">
+            <div class="col-xl-12">
+                <x-system.collapse id="orodhaMaeneoKata" title="Orodha Kata">
+                    <x-slot:content>
+                        <table id="kTable" class="table table-striped table-sm table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Jina</th>
+                                <th>Idadi Matawi</th>
+                                <th>Idadi Mashina</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach(  \App\Models\Ward::select('id','name')->withCount('branches')
+                            ->withCount('trunks')
+                            ->get() as $area )
+                                <tr>
+                                    <td>{{ $area->name }}</td>
+                                    <td>{{ $area->branches_count }}</td>
+                                    <td>{{ $area->trunks_count }}</td>
+                                    <td>
+                                        <a href="{{ route('super.areas.tawi.orodha', $area->id) }}" class="btn btn-sm btn-success">
+                                            fungua
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </x-slot:content>
+                </x-system.collapse>
+            </div>
+        </div>
+
+        <!-- end row-->
+        <div class="row">
+            <div class="col-xl-12">
+                <x-system.collapse id="orodhaMaeneoMatawi" title="Orodha Matawi">
+                    <x-slot:content>
+                        <table id="bTable" class="table table-striped table-sm table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Jina</th>
+                                <th>Idadi Mashina</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach(  \App\Models\Branch::select('id', 'name')->withCount('trunks')
+                            ->get() as $area )
+                                <tr>
+                                    <td>{{ $area->name }}</td>
+                                    <td>{{ $area->trunks_count }}</td>
+                                    <td><a href="{{ route('super.areas.tawi.fungua', $area->id) }}"
+                                           class="btn btn-sm btn-success">
+                                            fungua
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </x-slot:content>
+                </x-system.collapse>
+            </div>
+        </div>
+
+        <!-- end row-->
+        <div class="row">
+            <div class="col-xl-12">
+                <x-system.collapse id="orodhaMaeneoMashina" title="Orodha Mashina">
+                    <x-slot:content>
+                        <table id="bTable" class="table table-striped table-sm
+                            table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th>Jina</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach(  \App\Models\Trunk::select('id', 'name')->get() as $area )
+                                <tr>
+                                    <td>{{ $area->name }}</td>
+                                    <td>
+                                        <a href="{{ route('super.areas.shina.fungua', $area->id) }}" class="btn btn-success btn sm">fungua</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </x-slot:content>
+                </x-system.collapse>
+            </div>
+        </div>
+
+    @foreach ($leaders as $leader)
+            <x-system.modal id="badiriTaarifaKiongoziModal_{{ $leader->id }}" aria="ongezaKiongoziKataLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Kata Hapa">
+                <x-slot:content>
+                    <x-system.edit-leader :leader="$leader" :route="route('super.leader.kata.sasisha', $leader->id)" />
+                </x-slot:content>
+            </x-system.modal>
+        @endforeach
+            <!-- end row -->
+        <x-system.modal id="sendTextSms" aria="sendSms" size="modal-lg" title="Tuma Sms Hapa">
                 <x-slot:content>
                     <form id="sendTextSmsFormId" name="sendTextSmsForm" method="post">
                         <div class="mb-3">
@@ -359,5 +577,13 @@
                     });
             }
 </script>
+
+
+<x-system.table-script id="wTable"></x-system.table-script>
+<x-system.table-script id="hTable"></x-system.table-script>
+<x-system.table-script id="tTable"></x-system.table-script>
+<x-system.table-script id="kTable"></x-system.table-script>
+<x-system.table-script id="bTable"></x-system.table-script>
+
 
 @endsection

@@ -203,7 +203,7 @@
 
                                                 @foreach($serikaliPostsWithLeaderCollection as $key => $leaderColl)
                                                     @php $ps = \App\Models\Post::find($key); @endphp
-                                                    @foreach($leaderColl as $id => $ldr) 
+                                                    @foreach($leaderColl as $id => $ldr)
                                                         <div class="text-start">
                                                             <a class="fas fa-edit" data-bs-toggle="tooltip" data-bs-placement="top"
                                                              title="Badilisha" href="{{ route("super.leader.kata.badili", $ldr->id ) }}">
@@ -446,8 +446,8 @@
 @endsection
 
 @section("extra_script")
-<x-system.table-script id="superOrodhaKataTable">
-</x-system.table-script>
+<x-system.table-script id="superOrodhaKataTable"></x-system.table-script>
+<x-system.class-table id="classTableUni"></x-system.class-table>
 
 <script>
     let app =  new Vue({
