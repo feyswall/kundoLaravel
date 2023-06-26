@@ -28,7 +28,7 @@
 <!-- App Css-->
 <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
 
-<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
 {{--<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>--}}
 

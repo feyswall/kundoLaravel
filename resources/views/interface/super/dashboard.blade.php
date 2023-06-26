@@ -130,7 +130,7 @@
                                     <td>{{ $leader->firstName }} {{ $leader->middleName == 'null' ? "" : $leader->mddleName }} {{ $leader->lastName  }} </td>
                                     <td>{{ $leader->phone }}</td>
                                     <td>
-                                        <ul>
+                                        <ul class="p-0 m-0">
                                             @foreach ($leader->posts as $post)
                                                 @if ( $post->pivot->isActive )
                                                     <li>
@@ -146,15 +146,14 @@
                                         </ul>
                                     </td>
                                      <td>
-                                        <a class="float-left btn btn-sm btn-success"
+                                        <a class="float-left fas fa-folder-open"
                                             href="{{ route('super.leader.fungua', $leader->id)}}">
-                                            fungua
                                         </a>
-                                         <a class="float-left btn btn-sm btn-warning"  data-bs-toggle="modal"
-                                          data-bs-target="#badiriTaarifaKiongoziModal_{{ $leader->id }}"
-                                           data-bs-placement="top" title="Badilisha" href="#">
-                                           badiri
-                                        </a>
+                                        <a class="float-left"  data-bs-toggle="modal"
+                                        data-bs-target="#badiriTaarifaKiongoziModal_{{ $leader->id }}"
+                                         data-bs-placement="top" title="Badilisha" href="#">
+                                         <iconify-icon icon="bi:vector-pen"></iconify-icon>
+                                       </a>
                                      </td>
                                 </tr>
                             @endforeach
@@ -380,7 +379,8 @@
                                 <tr>
                                     <td>{{ $area->name }}</td>
                                     <td>
-                                        <a href="{{ route('super.areas.shina.fungua', $area->id) }}" class="btn btn-success btn sm">fungua</a>
+                                        <a href="{{ route('super.areas.shina.fungua', $area->id) }}"
+                                             class="btn btn-success btn sm">fungua</a>
                                     </td>
                                 </tr>
                             @endforeach
