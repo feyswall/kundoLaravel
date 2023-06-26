@@ -134,7 +134,16 @@
                                             @foreach ($leader->posts as $post)
                                                 @if ( $post->pivot->isActive )
                                                     <li>
-                                                        {{ $post->name }}
+                                                        @php
+                                                            $areaArray = \App\Http\Controllers\AreasLogicsController::findArea(
+                                                                $leader, $post);
+                                                            $areaStack = '';
+                                                            $areaName = '';
+                                                            if ( $areaArray ){
+                                                                $areaName = $areaArray['area'];
+                                                            }
+                                                        @endphp
+                                                        {{ $post->name }} - {{ $areaName }}
                                                     </li>
                                                     <ul>
                                                         @foreach ($post->groups as $group)
@@ -146,14 +155,8 @@
                                         </ul>
                                     </td>
                                      <td>
-                                        <a class="float-left fas fa-folder-open"
-                                            href="{{ route('super.leader.fungua', $leader->id)}}">
-                                        </a>
-                                        <a class="float-left"  data-bs-toggle="modal"
-                                        data-bs-target="#badiriTaarifaKiongoziModal_{{ $leader->id }}"
-                                         data-bs-placement="top" title="Badilisha" href="#">
-                                         <iconify-icon icon="bi:vector-pen"></iconify-icon>
-                                       </a>
+                                        <a class="float-left fas fa-folder-open" href="{{ route('super.leader.fungua', $leader->id)}}"> </a>
+                                        <a class="float-left"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziModal_{{ $leader->id }}" data-bs-placement="top" title="Badilisha" href="#"> <iconify-icon icon="bi:vector-pen"></iconify-icon></a>
                                      </td>
                                 </tr>
                             @endforeach

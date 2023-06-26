@@ -85,13 +85,13 @@ Route::get('/reverse_account', function () {
 
 Route::get('/dashboard', function () {
     /** selecting all leaders from our database */
-    $leaders = Leader::where("id", ">",  0)
+    $leaders = Leader::select("id", "firstName", "middleName", "lastName", "phone")
         ->has('posts')
         ->with('posts', function($query){
             $query->where('isActive', true)
                 ->with('groups', function($query){
                 $query->select('name')->where('prev', 1);
-            });
+            })->select('name', 'area', 'posts.name', 'posts.id');
         })
         ->get();
         $leaders = $leaders->makeHidden(['created_at', 'updated_at', 'post.created_at', 'post.update_at']);

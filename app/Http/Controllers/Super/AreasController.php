@@ -46,18 +46,15 @@ class AreasController extends Controller
         $area_type
         ){
             $area = null;
-
-            $ward_single_leader = DB::table($relation_table)
+            $area_single_leader = DB::table($relation_table)
             ->where('leader_id', $leader_id)
             ->where('isActive', true)
             ->where('post_id', $side_value)
             ->first();
-
-            if( $ward_single_leader ){
-                $area_id = $ward_single_leader->$side_column;
+            if( $area_single_leader ){
+                $area_id = $area_single_leader->$side_column;
                 $area = $area_type::find( $area_id );
             }
-
             return $area;
         }
 }
