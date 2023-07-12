@@ -60,6 +60,7 @@ use \Illuminate\Support\Facades\DB;
                         <th></th>
                     </thead>
                     <tbody>
+                        
                     @foreach( $leaders as $key => $allLeader)
                         @php
                             $post = \App\Models\Post::find($key);
