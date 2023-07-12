@@ -93,6 +93,9 @@
         #main-section ul, ol{
             margin-top: 2px;
         }
+        #main-section p{
+            margin: 0;
+        }
     </style>
 </head>
 

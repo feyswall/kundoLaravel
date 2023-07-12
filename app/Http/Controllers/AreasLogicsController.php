@@ -211,7 +211,7 @@ class AreasLogicsController extends Controller
             if($area){
                 $region = $area->region;
                 $area_stack = array();
-                $area_stack[] = ['key' => 'mkoa', 'value' => $region->name];
+                $area_stack[] = ['key' => 'mkoa', 'value' => 'simiyu'];
                 return ['stack' => $area_stack, 'area' => $area_string.''.$area->name ];
             }
         }
