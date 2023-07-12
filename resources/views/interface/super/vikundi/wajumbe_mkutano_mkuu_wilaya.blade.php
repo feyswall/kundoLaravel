@@ -48,56 +48,68 @@ use \Illuminate\Support\Facades\DB;
         <div class="col-12">
            <div class="card">
                <div class="card-body">
+
+
+                <table id="superLeadersGroupTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                        <th>Wadhifa</th>
+                        <td>Jina</td>
+                        <th>Simu</th>
+                        <th>eneo</th>
+                        <th>#</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
                     @foreach( $leaders as $key => $allLeader)
                         @php
                             $post = \App\Models\Post::find($key);
                         @endphp
-                        <h3>{{ $post->name  }}</h3>
-                        <div class="row mb-4">
-                            @foreach( $allLeader as $keyl => $leader )
-                                <div class="col-md-3 col-sm-12 col-12 p-3">
-                                    <div class="text-center">
-                                        <h4 class="fs-5 text-capitalize mb-1">{{ $leader->firstName }} {{ $leader->lastName }}</h4>
-                                        <span class="d-block mb-2">{{ $leader->phone }}</span>
-                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >
-                                            @php
-                                                $area = $post->area;
-                                                if ( $area == 'tawi'){
-                                                    if ($leader->branches()->where('isActive', true)->first()) {
-                                                        echo $leader->branches()->where('isActive', true)->first()->name;
-                                                    }
-                                                }elseif ( $area == 'kata'){
-                                                    if ($leader->wards()->where('isActive', true)->first()) {
-                                                        echo $leader->wards()->where('isActive', true)->first()->name;
-                                                    }
-                                                }elseif ( $area == 'tarafa'){
-                                                    if ($leader->divisions()->where('isActive', true)->first()) {
-                                                        echo $leader->divisions()->where('isActive', true)->first()->name;
-                                                    }
-                                                }elseif ( $area == 'halmashauri'){
-                                                    if ($leader->councils()->where('isActive', true)->first()) {
-                                                        echo $leader->councils()->where('isActive', true)->first()->name;
-                                                    }
-                                                }elseif ( $area == 'wilaya'){
-                                                    if ($leader->districts()->where('isActive', true)->first()) {
-                                                        echo $leader->districts()->where('isActive', true)->first()->name;
-                                                    }
-                                                }elseif ( $area == 'mkoa'){
-                                                    if ($leader->regions()->where('isActive', true)->first()) {
-                                                        echo $leader->regions()->where('isActive', true)->first()->name;
+                        @foreach( $allLeader as $keyl => $leader )
+                        <tr>
+                            <td>{{ $post->name  }}</td>
+                            <td class="fs-5 text-capitalize mb-1">{{ $leader->firstName }} {{ $leader->lastName }}</td>
+                            <td class="d-block mb-2">{{ $leader->phone }}</td>
+                            <td style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >
+                                @php
+                                    $area = $post->area;
+                                    if ( $area == 'tawi'){
+                                        if ($leader->branches()->where('isActive', true)->first()) {
+                                            echo $leader->branches()->where('isActive', true)->first()->name;
+                                        }
+                                    }elseif ( $area == 'kata'){
+                                        if ($leader->wards()->where('isActive', true)->first()) {
+                                            echo $leader->wards()->where('isActive', true)->first()->name;
+                                        }
+                                    }elseif ( $area == 'tarafa'){
+                                        if ($leader->divisions()->where('isActive', true)->first()) {
+                                            echo $leader->divisions()->where('isActive', true)->first()->name;
+                                        }
+                                    }elseif ( $area == 'halmashauri'){
+                                        if ($leader->councils()->where('isActive', true)->first()) {
+                                            echo $leader->councils()->where('isActive', true)->first()->name;
+                                        }
+                                    }elseif ( $area == 'wilaya'){
+                                        if ($leader->districts()->where('isActive', true)->first()) {
+                                            echo $leader->districts()->where('isActive', true)->first()->name;
+                                        }
+                                    }elseif ( $area == 'mkoa'){
+                                        if ($leader->regions()->where('isActive', true)->first()) {
+                                            echo $leader->regions()->where('isActive', true)->first()->name;
 
-                                                    }
-                                                }
-                                            @endphp
-                                        </small>
-                                        <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $keyl + 1 }}</small>
-
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                        }
+                                    }
+                                @endphp
+                            </td>
+                            <td style="background: #f5f6f8;"
+                                class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $keyl + 1 }}
+                            </td>
+                            <td><a href="" class="btn btn-sm btn-primary"><span class="fas fa-folder-open""></span></a></td>
+                        </tr>
                         @endforeach
-               </div>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
            </div>
         </div>
     </div>
@@ -108,4 +120,7 @@ use \Illuminate\Support\Facades\DB;
 @section("extra_script")
     <x-system.table-script id="superOrodhaHalmashauriTable" />
     <x-system.table-script id="superOrodhaJimboTable" />
+
+    <x-system.table-script id="superLeadersGroupTable" />
 @endsection
+
