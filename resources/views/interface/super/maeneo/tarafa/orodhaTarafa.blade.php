@@ -334,17 +334,33 @@
         </div>
     </div>
 </div>
-<x-system.collapse id="kamatiZaHalmashauri" title="kamati Ngazi ya Halmashauri">
-    <x-slot:content>
-        @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "halmashauri")->get() as $group)
-        <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
-            <x-slot:content>
-                <x-system.groups-info :group="$group" :table="$council" />
-            </x-slot:content>
-        </x-system.collapse>
-        @endforeach
-    </x-slot:content>
-</x-system.collapse>
+@if( \App\Models\Group::with("posts.leaders")->where("basedOn", "halmashauri")->where('side', 'chama')->get() )
+    <x-system.collapse id="kamatiZaChamaHalmashauri" title="Chama Halmashauri">
+        <x-slot:content>
+            @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "halmashauri")->where('side', 'chama')->get() as $group)
+            <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+                <x-slot:content>
+                    <x-system.groups-info :group="$group" :table="$council" />
+                </x-slot:content>
+            </x-system.collapse>
+            @endforeach
+        </x-slot:content>
+    </x-system.collapse>
+@endif
+
+@if( \App\Models\Group::with("posts.leaders")->where("basedOn", "halmashauri")->where('side', 'serikali')->get() )
+    <x-system.collapse id="kamatiZaSerikaliHalmashauri" title="Serikali Halmashauri">
+        <x-slot:content>
+            @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "halmashauri")->where('side', 'serikali')->get() as $group)
+            <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
+                <x-slot:content>
+                    <x-system.groups-info :group="$group" :table="$council" />
+                </x-slot:content>
+            </x-system.collapse>
+            @endforeach
+        </x-slot:content>
+    </x-system.collapse>
+@endif
 
 <div class="container-fluid">
     <!-- start page title -->

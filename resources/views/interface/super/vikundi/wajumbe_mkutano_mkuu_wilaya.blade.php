@@ -1,23 +1,22 @@
 <?php
-/**
-  * Created by feyswal on 1/31/2023.
-  * Time 5:24 PM.
-  * EastCoders & G3NET.
-  * contacts: +255 628 960 877
- */
+    /**
+     * Created by feyswal on 1/31/2023.
+    * Time 5:24 PM.
+    * EastCoders & G3NET.
+    * contacts: +255 628 960 877
+    */
 ?>
 
 
 <?php
+    /**
+     * Created by feyswal on 1/12/2023.
+     * Time 11:58 AM.
+     * EastCoders & G3NET.
+     * contacts: +255 628 960 877
+     */
 
-/**
- * Created by feyswal on 1/12/2023.
- * Time 11:58 AM.
- * EastCoders & G3NET.
- * contacts: +255 628 960 877
- */
-
-use \Illuminate\Support\Facades\DB;
+    use \Illuminate\Support\Facades\DB;
 ?>
 
 @extends("layouts.super_system")
@@ -25,7 +24,7 @@ use \Illuminate\Support\Facades\DB;
 @section("content")
     <!-- Start right Content here -->
     <!-- ============================================================== -->
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-12">
             <div class="card">
                 <a href="#checkout-orodhaKata-collapse" class="text-dark" data-bs-toggle="collapse">
@@ -33,7 +32,7 @@ use \Illuminate\Support\Facades\DB;
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0 me-3"> <i class="uil uil-receipt text-primary h2"></i> </div>
                             <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="font-size-16 mb-1">Taarifa Kuhusiana Na Wilaya</h5>
+                                <h5 class="font-size-16 mb-1"></h5>Orodha ya viongozi
                             </div>
                             <div class="flex-shrink-0"> <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>
                         </div>
@@ -42,25 +41,34 @@ use \Illuminate\Support\Facades\DB;
 
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="row">
         <div class="col-12">
            <div class="card">
                <div class="card-body">
-
-
-                <table id="superLeadersGroupTable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                <div class="mb-3">
+                    <h4 class="text-lead">{{  $group->name  }}</h4>
+                </div>
+                <div>
+                    <a
+                        class="btn btn-sm btn-primary mb-2"
+                        href="{{ url()->previous() }}">
+                        <iconify-icon icon="material-symbols:settings-backup-restore"></iconify-icon>
+                             Nyuma
+                    </a>
+                </div>
+                <table id="superLeadersGroupTable" class="table table-sm table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
                         <th>Wadhifa</th>
-                        <td>Jina</td>
+                        <th>Jina</th>
                         <th>Simu</th>
                         <th>eneo</th>
                         <th>#</th>
                         <th></th>
                     </thead>
                     <tbody>
-                        
+
                     @foreach( $leaders as $key => $allLeader)
                         @php
                             $post = \App\Models\Post::find($key);
@@ -68,9 +76,10 @@ use \Illuminate\Support\Facades\DB;
                         @foreach( $allLeader as $keyl => $leader )
                         <tr>
                             <td>{{ $post->name  }}</td>
-                            <td class="fs-5 text-capitalize mb-1">{{ $leader->firstName }} {{ $leader->lastName }}</td>
+                            <td>{{ $leader->firstName }} {{ $leader->lastName }}</td>
                             <td class="d-block mb-2">{{ $leader->phone }}</td>
-                            <td style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >
+                            <td style="" class="" >
+                                <p>
                                 @php
                                     $area = $post->area;
                                     if ( $area == 'tawi'){
@@ -96,15 +105,15 @@ use \Illuminate\Support\Facades\DB;
                                     }elseif ( $area == 'mkoa'){
                                         if ($leader->regions()->where('isActive', true)->first()) {
                                             echo $leader->regions()->where('isActive', true)->first()->name;
-
                                         }
                                     }
                                 @endphp
+                                </p>
                             </td>
                             <td style="background: #f5f6f8;"
                                 class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $keyl + 1 }}
                             </td>
-                            <td><a href="" class="btn btn-sm btn-primary"><span class="fas fa-folder-open""></span></a></td>
+                            <td><a href="{{ route('super.leader.fungua', $leader->id) }}" class="btn btn-sm btn-primary"><span class="fas fa-folder-open""></span></a></td>
                         </tr>
                         @endforeach
                         @endforeach
@@ -119,9 +128,43 @@ use \Illuminate\Support\Facades\DB;
 @endsection
 
 @section("extra_script")
-    <x-system.table-script id="superOrodhaHalmashauriTable" />
-    <x-system.table-script id="superOrodhaJimboTable" />
 
-    <x-system.table-script id="superLeadersGroupTable" />
+    <script>
+        var tableTitle = "{{ strtoupper($group->name) }}";
+        $ (document).ready (function () {
+            $ (
+                '#datatable'
+            ).DataTable (), $ ('#superLeadersGroupTable')
+                .DataTable ({
+                    "iDisplayLength": 30,
+                    lengthChange: !1,
+                    buttons: [{
+                        extend: 'pdfHtml5',
+                        title: tableTitle,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        title: tableTitle
+                    }
+                ],
+
+                      "order": [[ 0, "asc" ]],
+                       columnDefs: [{
+                        orderable: false,
+                        className: 'select-checkbox',
+                        targets:   0
+                        }],
+                    select: {
+                    style:    'os',
+                    selector: 'td:first-child'
+                        },
+                    order: [[ 0, 'asc' ]]
+                })
+                .buttons ()
+                .container ().appendTo ('#superLeadersGroupTable_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')
+                .addClass ('form-select form-select-sm');
+        });
+    </script>
+
 @endsection
 

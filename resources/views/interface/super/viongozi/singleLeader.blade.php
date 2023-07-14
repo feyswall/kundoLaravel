@@ -6,6 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    
                     <h4 class="">Jina Kamili: {{ $leader->firstName }} {{ $leader->middleName == 'null' ? '' : $leader->middleName }}
                         {{ $leader->lastName }}</h4>
                         <h4>namba ya simu: <b>+{{  $leader->phone }}</b></h4>

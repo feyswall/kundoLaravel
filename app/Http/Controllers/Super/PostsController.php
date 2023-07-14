@@ -42,4 +42,12 @@ class PostsController extends Controller
        $finalPosts = Post::where('area', $area)->get();
        return \Illuminate\Support\Facades\Response::json(['status' => 'success', 'response' => $finalPosts]);
    }
+
+   public function areaLocationsApi(Request $request)
+   {
+        $apiData = json_decode(  $request->areaObj );
+        $model = "\\App\\Models\\".$apiData->model;
+        $areas = $model::all();
+        return ['status' => 'success', 'response' => $areas];
+   }
 }

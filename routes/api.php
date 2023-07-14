@@ -124,6 +124,7 @@ Route::controller(PostsController::class)
     ->as('area.')
     ->group(function () {
         Route::post('/posts/search', 'areaChangeApi')->name('posts.orodha');
+        Route::post('/locations/search', 'areaLocationsApi')->name('locations.orodha');
     });
 
 
@@ -132,5 +133,6 @@ Route::controller(LeadersController::class)
 ->as('area.')
 ->group(function () {
     Route::post('/leaders/search', 'leaderChangeApi')->name('leaders.orodha');
+    Route::post('/all/leaders/search', 'allLeadersApi')->name('all.leaders.orodha');
     Route::post('/leaders/sial/based/search', 'postChangeApi')->name('leaders.sial.based.orodha');
 });

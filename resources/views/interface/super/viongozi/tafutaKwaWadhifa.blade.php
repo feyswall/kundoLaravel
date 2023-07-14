@@ -1,3 +1,6 @@
+<?php
+    use App\Models\Group;
+?>
 @extends('layouts.super_system')
 
 @section('extra_style')
@@ -37,6 +40,26 @@
                                         <div class="card-body">
                                            <div class="row justify-content-start">
                                             <div class="col-sm-12 col-md-12 p-4">
+
+                                                <x-system.collapse id="kamatiZaChama" title="nyinginezo">
+                                                    <x-slot:content>
+                                                        <div>
+                                                            @foreach (Group::select('id', 'name', 'basedOn')->orderBy('name')->get()
+                                                            as $group )
+                                                                <div>
+                                                                    <form method="post" action="{{ route('super.group.showGroup', $group->id) }}">
+                                                                        @csrf
+                                                                        @method('put')
+                                                                        <button
+                                                                        type="submit"
+                                                                            class="btn btn-sm btn-outline-primary w-100 mt-2">{{ $group->name }}
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            @endforeach
+                                                    </div>
+                                                    </x-slot:content>
+                                                </x-system.collapse>
                                                 <form
                                                     target="_blank" id="ziaraForm">
                                                     @csrf
@@ -56,6 +79,7 @@
                                                     </div>
                                                 </form>
                                            </div>
+
                                             <div :class="{'p-4': true, 'col-sm-12': true,'col-lg-12': true, 'd-none': leadersList.length < 1}">
                                                 <a  :href="'/super/leader/by/posts/group/'+postSelected"
                                                     class="btn btn-sm btn-primary  mb-4">

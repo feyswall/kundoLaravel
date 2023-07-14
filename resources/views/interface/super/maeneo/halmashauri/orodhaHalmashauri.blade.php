@@ -61,7 +61,7 @@ use \Illuminate\Support\Facades\DB;
                                                             ->get();
                                                             $chamaPostsWithLeaderCollection =
                                                             \App\Http\Controllers\Super\PostsController::postWithLeaders(
-                                                                $districtLeaders, 'chama', 'halmashauri');
+                                                                $districtLeaders, 'chama', 'wilaya');
                                                         @endphp
 
                                                         @foreach($chamaPostsWithLeaderCollection as $key => $leaderColl)
@@ -116,7 +116,8 @@ use \Illuminate\Support\Facades\DB;
                                                     @endforeach
                                                 @endforeach
                                                 <!-- model location here -->
-                                                <x-system.modal id="ongezaKiongoziChamaModal" aria="ongezaKiongoziWilayaLabel" size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama  Hapa">
+                                                <x-system.modal id="ongezaKiongoziChamaModal" aria="ongezaKiongoziWilayaLabel"
+                                                 size="modal-fullscreen" title="Ongeza Kiongozi Wa Chama  Hapa">
                                                     <x-slot:content>
                                                         <button v-on:click="changeSides()"
                                                                 class="btn btn-success btn-sm mb-lg-4" type="button" id="readyRegistered">
@@ -358,7 +359,7 @@ use \Illuminate\Support\Facades\DB;
             </div>
         </div>
 
-        <x-system.collapse id="kamatiZaChamaWilaya" title="kamati Za Chama wilaya">
+        <x-system.collapse id="kamatiZaChamaWilaya" title="Chama wilaya">
             <x-slot:content>
                 @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "wilaya")->where('side', 'chama')->get() as $group)
                     <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
@@ -370,7 +371,7 @@ use \Illuminate\Support\Facades\DB;
             </x-slot:content>
         </x-system.collapse>
 
-        <x-system.collapse id="kamatiZaWilaya" title="kamati Za Serikali wilaya">
+        <x-system.collapse id="kamatiZaWilaya" title="Serikali wilaya">
             <x-slot:content>
                 @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "wilaya")->where('side', 'serikali')->get() as $group)
                     <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">

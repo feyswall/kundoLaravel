@@ -367,8 +367,10 @@ Route::controller(\App\Http\Controllers\Super\LeadersController::class)
         Route::put('/remove/from/power', 'removeFromPower')->name('unpower');
         Route::get('/ona/kiongozi/{id}', 'viewLeader')->name('fungua');
         Route::get('/tafuta/kiongozi/kwa/eneo', 'searchLeaders')->name('searchLeader');
+        Route::get('/tafuta/viongozi/kwa/eneo',  'areaSearchLeader')->name('area.searchLeader');
         Route::get('/tafuta/kiongozi/kwa/wadhifa',  'sialSearchLeader')->name('sial.searchLeader');
         Route::get("/by/posts/group/{postId}", "leadersByGroup")->name('by.group');
+        Route::post("/by/location/group", "leadersByLocationGroup")->name('by.location.group');
     });
 
 

@@ -343,6 +343,19 @@ class LeadersController extends Controller
         return \Illuminate\Support\Facades\Response::json(['status' => 'success', 'response' => $leaders]);
     }
 
+    public function allLeadersApi(Request $request)
+    {
+        $locId = $request->areaId;
+        $myObj = json_decode($request->areaObj);
+        $colId = $myObj->column_id;
+        $table = $myObj->table;
+        $location_leaders = DB::table($table)->where($colId, $locId)
+            ->where('isActive', true)
+            ->pluck('leader_id');
+        $leaders = Leader::whereIn('id', $location_leaders)->orderBy('firstName')->get();
+        return \Illuminate\Support\Facades\Response::json(['status' => 'success', 'response' => $leaders]);
+    }
+
     public function postChangeApi(Request $request)
     {
         $allPosts = Post::where('for_selection', 'like', '%'.$request->postName.'%')->pluck('id');
@@ -383,6 +396,11 @@ class LeadersController extends Controller
         return view('interface.super.viongozi.tafutaKwaWadhifa');
     }
 
+    public function areaSearchLeader()
+    {
+        return view('interface.super.viongozi.tafutaWoteKwaEneo');
+    }
+
     public function leadersByGroup($postId)
     {
         $leaders = [];
@@ -408,6 +426,19 @@ class LeadersController extends Controller
         return view('interface.super.viongozi.groupOfLeaders')
             ->with('backRoute', $backRoute)
             ->with('leaders', $leaders);
+    }
+
+    public function leadersByLocationGroup(Request $request)
+    {
+        $locId = $request->locId;
+        $myObj = json_decode($request->area);
+        $colId = $myObj->column_id;
+        $table = $myObj->table;
+        $location_leaders = DB::table($table)->where($colId, $locId)
+            ->where('isActive', true)
+            ->pluck('leader_id');
+        $leaders = Leader::whereIn('id', $location_leaders)->orderBy('firstName')->get();
+        dd( $leaders );
     }
 }
 

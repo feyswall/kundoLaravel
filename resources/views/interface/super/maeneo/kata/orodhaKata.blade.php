@@ -335,7 +335,7 @@
     </div>
 </div>
 
-<x-system.collapse id="kamatiZaChamaTarafa" title="kamati Za Chama Ngazi ya Tarafa">
+<x-system.collapse id="kamatiZaChamaTarafa" title="Chama Ngazi ya Tarafa">
     <x-slot:content>
         @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tarafa")->where('side', 'chama')->get() as $group)
         <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">
@@ -347,7 +347,7 @@
     </x-slot:content>
 </x-system.collapse>
 
-<x-system.collapse id="kamatiZaSerikaliTarafa" title="kamati Za Serikali Ngazi ya Tarafa">
+<x-system.collapse id="kamatiZaSerikaliTarafa" title="Serikali Ngazi ya Tarafa">
     <x-slot:content>
         @foreach( \App\Models\Group::with("posts.leaders")->where("basedOn", "tarafa")->where('side', 'serikali')->get() as $group)
             <x-system.collapse :id="$group->deep" :title="strtoupper($group->name)">

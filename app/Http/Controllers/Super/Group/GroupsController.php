@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Validator;
 class GroupsController extends Controller
 {
     /**
-     * this function displas all the grops that are 
+     * this function displas all the grops that are
      * found in our system
-     * @return 
+     * @return
      */
     public function index($side) {
 //        dd("here is the place we met before");
@@ -84,7 +84,7 @@ class GroupsController extends Controller
 
 
     public function showSingleGroup(Group $group, Request $request){
-        $district = District::find( $request->district );
+        // $district = District::find( $request->district );
         $posts_ids = $group->posts->pluck('id');
         $onQueue = [];
         $qualified = DB::table('leader_post')
@@ -92,15 +92,14 @@ class GroupsController extends Controller
             ->where('isActive', true)
             ->get();
         $collectedDatas = $qualified->groupBy('post_id');
-
         foreach ( $collectedDatas as $key => $collected ){
-            $data = \App\Models\Leader::whereIn('id', $collected->pluck('id'))->get();
+            $data = \App\Models\Leader::whereIn('id', $collected->pluck('leader_id'))->get();
             $onQueue[$key] = $data;
         }
-
+        // dd( $collected->pluck('leader_id') );
         return view('interface.super.vikundi.wajumbe_mkutano_mkuu_wilaya')
             ->with('leaders', $onQueue )
-            ->with('district', $district)
+            // ->with('district', $district)
             ->with('group', $group);
     }
 

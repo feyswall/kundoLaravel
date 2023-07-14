@@ -24,8 +24,9 @@
 
                 <li> <a href="javascript: void(0);" class="has-arrow">Tafuta Viongozi</a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('super.leader.searchLeader') }}">eneo & wadhifa</a></li>
+                        <li><a href="{{ route('super.leader.area.searchLeader') }}">eneo</a></li>
                         <li><a href="{{ route('super.leader.sial.searchLeader') }}"><span>wadhifa</span></a></li>
+                        <li><a href="{{ route('super.leader.searchLeader') }}">eneo & wadhifa</a></li>
                     </ul>
                 </li>
 

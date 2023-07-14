@@ -33,10 +33,15 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="m-5">
+                        {{-- <div class="m-5">
+                            <a
+                                class="btn btn-sm btn-primary mb-2"
+                                href="{{ url()->previous() }}">
+                                <span> <iconify-icon icon="material-symbols:settings-backup-restore"></iconify-icon> Nyuma</span>
+                            </a>
+                        </div> --}}
 
-                        </div>
-                        <a href="{{ $backRoute }}" class="btn btn-sm btn-success mb-4">rudi nyuma</a>
+                        <a href="{{ $backRoute }}" class="btn btn-sm btn-primary mb-4"><<< nyuma</a>
                         <table id="viongoziWilayaTable"
                          class="table table-sm table-striped table-bordered dt-responsive nowrap display" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
@@ -282,9 +287,10 @@
                                     </td>
                                      <td>
                                        <div style="display: inline-block">
-                                        <a class="float-left btn btn-sm btn-success"
+                                        <a class="float-left fas fa-folder-open"
+                                            title="fungua"
                                             href="{{ route('super.leader.fungua', $leader->id)}}">
-                                            fungua
+
                                         </a>
                                         {{-- <a class="float-left btn btn-sm btn-warning"  data-bs-toggle="modal"
                                             data-bs-target="#badiriTaarifaKiongoziModal_{{ $leader->id }}"
