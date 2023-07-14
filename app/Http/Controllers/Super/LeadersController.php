@@ -438,7 +438,10 @@ class LeadersController extends Controller
             ->where('isActive', true)
             ->pluck('leader_id');
         $leaders = Leader::whereIn('id', $location_leaders)->orderBy('firstName')->get();
-        dd( $leaders );
+        $backRoute = back()->getTargetUrl();
+        return view('interface.super.viongozi.groupOfLeaders')
+            ->with('backRoute', $backRoute)
+            ->with('leaders', $leaders);
     }
 }
 

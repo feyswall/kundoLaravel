@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    
+                    <x-system.back-button></x-system.back-button>
                     <h4 class="">Jina Kamili: {{ $leader->firstName }} {{ $leader->middleName == 'null' ? '' : $leader->middleName }}
                         {{ $leader->lastName }}</h4>
                         <h4>namba ya simu: <b>+{{  $leader->phone }}</b></h4>

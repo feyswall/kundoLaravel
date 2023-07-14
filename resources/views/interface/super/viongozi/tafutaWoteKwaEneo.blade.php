@@ -64,7 +64,7 @@
                                                         <label class="form-label">chagua eneo</label>
                                                         <select name="eneo"
                                                             :class="{'form-control': true, 'locToSend': true, 'select2': true}">
-                                                        <option selected>chagua wadhifa...</option>
+                                                        <option selected>chagua eneo...</option>
                                                             <option v-for="(loc, index) in locationsList"
                                                                 :key="index"
                                                                 v-bind:value="loc.id">
@@ -88,8 +88,8 @@
                                             <div :class="{'col-sm-12': true,'col-lg-12': true, 'd-none': leadersList.length < 1}">
                                                 <form action="/super/leader/by/location/group" method="post">
                                                     @csrf
-                                                    <input type="text" :value="locSelected" name="locId">
-                                                    <input type="text" :value="JSON.stringify(areaSelected)" name="area">
+                                                    <input type="hidden" :value="locSelected" name="locId">
+                                                    <input type="hidden" :value="JSON.stringify(areaSelected)" name="area">
                                                     <button
                                                             type="submit"
                                                             class="btn btn-sm btn-primary  mb-4">
@@ -153,7 +153,7 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                 areaSelected: '',
                 areasList: [
                     {name: 'mkoa', table: 'leader_region', column_id: 'region_id', model: 'Region'},
-                    {name: 'wilaya', table: 'district_leader', column_id: '_district_id', model: 'District'},
+                    {name: 'wilaya', table: 'district_leader', column_id: 'district_id', model: 'District'},
                     {name: 'halmashauri', table: 'council_leader', column_id: 'council_id', model: 'Council'},
                     {name: 'tarafa', table: 'division_leader', column_id: 'division_id', model: 'Division'},
                     {name: 'kata', table: 'leader_ward', column_id: 'ward_id', model: 'Ward'},
