@@ -115,6 +115,7 @@ Route::controller(SmsServicesControlller::class)
     ->group(function () {
         Route::post('/send', 'send')->name('tuma');
         Route::post('/group/send', 'sendToGroup')->name('tuma.group');
+        Route::post('from/group/send', 'sendFromGroup')->name('group.send');
         Route::get('/delivery', 'deriveryReport')->name('delivery');
         Route::get('/balance', 'checkBalance')->name('balance');
         Route::get('/orodha/sms', 'orodhaGroups')->name('orodha.group');

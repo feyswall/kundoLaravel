@@ -66,18 +66,13 @@ class SmsConfigController extends Controller
     {
         $username = self::$api_key;
         $password = self::$secret_key;
-
         $URL = 'https://dlrapi.beem.africa/public/v1/delivery-reports';
-
         $body = array('request_id' => $request_id,'dest_addr' => $dest_addr);
-
         // Setup cURL
         $ch = curl_init();
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
-
         $URL = $URL . '?' . http_build_query($body);
-
         curl_setopt($ch, CURLOPT_URL, $URL);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -89,10 +84,8 @@ class SmsConfigController extends Controller
                 'Content-Type: application/json',
             ),
         ));
-
         // Send the request
         $response = curl_exec($ch);
-
         // Check for errors
         if ($response === false) {
             return ['status' => 'fail'];

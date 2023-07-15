@@ -1,4 +1,5 @@
 <script>
+    var tableTitle = "KIMS WEB SYSTEM";
     $ (document).ready (function () {
         $ (
             '#datatable'
@@ -6,8 +7,16 @@
             .DataTable ({
                 "iDisplayLength": 20,
                 lengthChange: !1,
-                buttons: ['excel', 'pdf'],
-
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        title: tableTitle,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        title: tableTitle
+                    },
+                ],
                   "order": [[ 0, "asc" ]],
                    columnDefs: [{
                     orderable: false,

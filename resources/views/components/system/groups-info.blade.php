@@ -216,19 +216,19 @@
                                                         <!-- Force next columns to break to new line -->
                                                             <div class="w-100"></div>
                                                             <hr>
-                                                            <h5><b>{{ $post->name }}</b></h5>
+                                                            <h6><b>{{ $post->name }}</b></h6>
                                                             @php
                                                                 $tracker = $post->name;
                                                                 $counter = 1;
                                                             @endphp
-                                                            <div class="col-md-3 col-sm-12 col-12 p-3">
+                                                            <div class="col-md-3 col-sm-12 col-12 p-1">
                                                                 <div class="text-center">
                                                                     <h5 class="fs-5 text-capitalize mb-1">
                                                                         {{ $leader->firstName }} {{ $leader->lastName }}
                                                                     </h5>
                                                                     <span class="d-block mb-2">{{ $leader->phone }}</span>
                                                                     {{-- <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $post->name }}</small> --}}
-                                                                    <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $counter }}</small>
+                                                                    {{-- <small style="background: #f5f6f8;" class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $counter }}</small> --}}
                                                                     <span class="d-block mb-2">
                                                                     @php
                                                                         $area = $post->area;
@@ -280,7 +280,9 @@
         @endphp
         <x-system.collapse id="form_{{ $deepWithNoSpace }}" title="TUMA SMS HAPA">
             <x-slot:content>
-                <form action="#" method="GET">
+                <form action="{{ route("sms.group.send") }}" method="post">
+                    @csrf
+                    @method('post')
                     <div>
                         <input type="hidden" name='leaders_ids'
                         value="{{ $leaders_ids_for_smses_json }}">

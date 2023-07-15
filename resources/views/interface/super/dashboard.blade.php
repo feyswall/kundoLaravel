@@ -449,20 +449,31 @@
 @section('extra_script')
 <script>
     let table = "begin";
-        $(document).ready (function () {
+    var tableTitle = "KIMS WEB SYSTEM";
 
+        $(document).ready (function () {
         table = $('#viongoziWilayaTable')
             .DataTable ({
                 "fnDrawCallback": function (oSettings) {
                         //   console.log(this.api().page.info())
                         },
+                "iDisplayLength": 30,
                 lengthChange: !1,
-                buttons: ['excel', 'pdf', {
-                text: 'send sms',
-                action: function ( e, dt, node, config ) {
-                    $("#sendTextSms").modal('show');
-                }
-            }],
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        title: tableTitle,
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        title: tableTitle
+                    },
+                    {
+                        text: 'send sms',
+                        action: function ( e, dt, node, config ) {
+                            $("#sendTextSms").modal('show');
+                        }
+                    }],
         });
 
             table.buttons ()

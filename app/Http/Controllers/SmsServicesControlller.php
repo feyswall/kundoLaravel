@@ -64,10 +64,50 @@ class SmsServicesControlller extends Controller
             $rec_key = $phone."_".$key;
             $receptionist_array[] = array('recipient_id' => "$key", 'dest_addr' => $smsPhone );
         }
-//        return $savedLeaders[0];
-//        return [$request->message['value']];
         $response = $this->sendingProtocol( $request->message['value'], $receptionist_array, $savedLeaders );
         return $response;
+    }
+
+
+    public function sendFromGroup(Request $request)
+    {
+        $ids = json_decode($request->leaders_ids);
+        $leaders = Leader::whereIn('id', $ids)->get();
+        $phone_array = array();
+        $savedLeaders = array();
+        foreach ($leaders as $leader) {
+            $phone_array[] = $leader->phone;
+            $savedLeaders[] = $leader->id;
+        }
+
+        /**  remove redundancy in phone array */
+        $trueArr = array_unique($phone_array);
+
+        $supportedText = self::supportedSms();
+        if ( $supportedText < 0 ){
+            return  redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Makadirio ya SMS yameshindikana Tafadhali jaribu Tena.'
+            ]);
+        }else{
+            if ( intval($supportedText) < count($trueArr) ){
+                return redirect()->back()->with([
+                    'status' => 'error',
+                    'message' => "Salio la SMS halitoshi, Tafadhali Ongeza salio na ujaribu Tena, Salio Liwe Angalua La Sms_: ".count($trueArr)
+                ]);
+            }
+        }
+        /** create receptionist array for sms sending */
+        foreach ($trueArr as $key => $phone) {
+            $smsPhone = $phone;
+            $rec_key = $phone."_".$key;
+            $receptionist_array[] = array('recipient_id' => "$key", 'dest_addr' => $smsPhone );
+        }
+        $response = $this->sendingProtocol( $request->message, $receptionist_array, $savedLeaders );
+        if( $response['status'] == 'success'){
+            return redirect()->back()->with(['status' => 'success', 'message' => "Umefanikisha kutuma takribani SMS ". count($receptionist_array)]);
+        }
+        return redirect()->back()->with($response);
     }
 
     /**
@@ -163,7 +203,8 @@ class SmsServicesControlller extends Controller
                         $smsRequestId->leaders()->attach($leader, ['phone' => $leaderObj->phone]);
                     }
                 }
-                return (['status' => 'success' ,'response' => $response_obj['response'], 'obj' => $smsRequestId]);
+                return (['status' => 'success' ,'response' => $response_obj['response'],
+                 'obj' => $smsRequestId]);
             }
             return ['status' => 'fail', 'message' => $response_obj['response']->message];
         } else {
