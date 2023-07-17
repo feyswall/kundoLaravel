@@ -15,7 +15,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="">Taarifa Ya Changamoto pdf Zilizowahi Kuchapishwa</h2>
+                    <h2 class="">Orodha ya Changamoto</h2>
                     <a href="{{ route('pdf.door.create') }}" class="btn btn-primary btn-md mt-3 mb-4">+ tengeneza pdf</a>
                     <label class="form-label  font-size-24" id="machagulio-mkoa"></label>
                     <label class="form-label font-size-24" id="machagulio-wilaya"></label>

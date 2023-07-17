@@ -117,7 +117,7 @@
                                 <th><input type="checkbox" name="select_all" value="1" id="viongoziWilayaTable-select-all"></th>
                                 <th>Majina Kamili</th>
                                 <th>Simu</th>
-                                <th>Wadhifa</th>
+                                {{-- <th>Wadhifa</th> --}}
                                 <td></td>
                             </tr>
                             </thead>
@@ -129,7 +129,7 @@
                                     </td>
                                     <td>{{ $leader->firstName }} {{ $leader->middleName == 'null' ? "" : $leader->mddleName }} {{ $leader->lastName  }} </td>
                                     <td>{{ $leader->phone }}</td>
-                                    <td>
+                                    {{-- <td>
                                         <ul class="p-0 m-0">
                                             @foreach ($leader->posts as $post)
                                                 @if ( $post->pivot->isActive )
@@ -153,7 +153,7 @@
                                                 @endif
                                             @endforeach
                                         </ul>
-                                    </td>
+                                    </td> --}}
                                      <td>
                                         <a class="float-left fas fa-folder-open" href="{{ route('super.leader.fungua', $leader->id)}}"> </a>
                                         <a class="float-left"  data-bs-toggle="modal" data-bs-target="#badiriTaarifaKiongoziModal_{{ $leader->id }}" data-bs-placement="top" title="Badilisha" href="#"> <iconify-icon icon="bi:vector-pen"></iconify-icon></a>

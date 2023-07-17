@@ -34,7 +34,7 @@
                                     <h3 class="fs-5 mb-3">Jina la Mkoa: <span class="fw-bold text-uppercase"> {{ $region->name }}</span></h3>
                                     <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                                         <div class="d-flex justify-content-between mb-3">
-                                            <h3 class="fs-4">Viongozi wa Chama Mkoa</h3>
+                                            <h3 class="fs-4">Viongozi wa Kichama Mkoa</h3>
                                             <button  data-bs-toggle="modal" data-bs-target="#ongezaKiongoziChamaModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajili kiongozi Wa Chama Mkoa</button>
                                         </div>
                                         <div>
@@ -163,7 +163,7 @@
                                     <div class="p-2">
                                         <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                                             <div class="d-flex justify-content-between mb-3">
-                                                <h3 class="fs-4">Viongozi wa Serikali Mkoa</h3>
+                                                <h3 class="fs-4">Viongozi wa Kiserikali Mkoa</h3>
                                                 <button  data-bs-toggle="modal" data-bs-target="#ongezaKiongoziSerikaliModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajili kiongozi Wa Serikali Mkoa</button>
                                             </div>
                                             <div>

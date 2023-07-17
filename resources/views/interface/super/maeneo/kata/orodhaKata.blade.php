@@ -43,7 +43,7 @@
                                     </div>
                                     <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                                         <div class="d-flex justify-content-md-between justify-content-center items-center flex-wrap-reverse mb-3">
-                                            <h3 class="fs-4 me-3">Viongozi wa chama Tarafa</h3>
+                                            <h3 class="fs-4 me-3">Viongozi wa Kichama Tarafa</h3>
                                             <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziChamaModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajili Kiongozi Wa Chama </button>
                                         </div>
                                         <div>
@@ -188,7 +188,7 @@
                                     <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                                         <div class="d-flex justify-content-md-between justify-content-center items-center
                                          flex-wrap-reverse mb-3">
-                                            <h3 class="fs-4 me-3">Viongozi Wa Serikali Tarafa</h3>
+                                            <h3 class="fs-4 me-3">Viongozi Wa Kiserikali Tarafa</h3>
                                             <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziSerikaliModal"
                                              class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajili Kiongozi Wa Serikali </button>
                                         </div>

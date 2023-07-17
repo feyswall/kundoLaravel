@@ -63,7 +63,7 @@
                         <th>Wadhifa</th>
                         <th>Jina</th>
                         <th>Simu</th>
-                        <th>eneo</th>
+                        {{-- <th>eneo</th> --}}
                         <th>#</th>
                         <th></th>
                     </thead>
@@ -76,9 +76,9 @@
                         @foreach( $allLeader as $keyl => $leader )
                         <tr>
                             <td>{{ $post->name  }}</td>
-                            <td>{{ $leader->firstName }} {{ $leader->lastName }}</td>
+                            <td>{{ strtolower($leader->firstName) }} {{ strtolower($leader->lastName) }}</td>
                             <td class="d-block mb-2">{{ $leader->phone }}</td>
-                            <td style="" class="" >
+                            {{-- <td style="" class="" >
                                 <p>
                                 @php
                                     $area = $post->area;
@@ -109,7 +109,7 @@
                                     }
                                 @endphp
                                 </p>
-                            </td>
+                            </td> --}}
                             <td style="background: #f5f6f8;"
                                 class="rounded text-black text-capitalize fw-bold px-2 py-2" >{{ $keyl + 1 }}
                             </td>
@@ -148,21 +148,21 @@
                     }
                 ],
 
-                      "order": [[ 0, "asc" ]],
-                       columnDefs: [{
-                        orderable: false,
-                        className: 'select-checkbox',
-                        targets:   0
-                        }],
-                    select: {
-                    style:    'os',
-                    selector: 'td:first-child'
-                        },
-                    order: [[ 0, 'asc' ]]
-                })
-                .buttons ()
-                .container ().appendTo ('#superLeadersGroupTable_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')
-                .addClass ('form-select form-select-sm');
+                    "order": [[ 0, "asc" ]],
+                    columnDefs: [{
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets:   0
+                    }],
+                select: {
+                style:    'os',
+                selector: 'td:first-child'
+                    },
+                order: [[ 0, 'asc' ]]
+            })
+            .buttons ()
+            .container ().appendTo ('#superLeadersGroupTable_wrapper .col-md-6:eq(0)'), $ ('.dataTables_length select')
+            .addClass ('form-select form-select-sm');
         });
     </script>
 

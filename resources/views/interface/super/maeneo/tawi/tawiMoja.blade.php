@@ -71,7 +71,7 @@
                     </div>
                     <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                         <div class="d-flex justify-content-md-between justify-content-center items-center flex-wrap-reverse mb-3">
-                            <h3 class="fs-4 me-3">Viongozi Wa Chama Ngazi Ya Tawi</h3>
+                            <h3 class="fs-4 me-3">Viongozi Wa Kichama Ngazi Ya Tawi</h3>
                             <div class="d-flex items-center justify-content-center gap-2">
                                 <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziChamaModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri </button>
                                 <a href="{{ route("super.areas.tawi.orodha", $branch->ward->id) }}" class="btn btn-primary btn-md mb-4">Rudi Kwenye Kata</a>
@@ -225,7 +225,7 @@
 
                     <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                         <div class="d-flex justify-content-md-between justify-content-center items-center flex-wrap-reverse">
-                            <h3 class="fs-4 me-3">Viongozi Wa Serikali Ngazi Ya Tawi</h3>
+                            <h3 class="fs-4 me-3">Viongozi Wa Kiserikali Ngazi Ya Tawi</h3>
                             <div class="d-flex items-center justify-content-center gap-2">
                                 <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziSerikaliModal" class="btn btn-info btn-md mb-4"><i class="fas fa-plus"> </i> Sajiri </button>
                                 <a href="{{ route("super.areas.tawi.orodha", $branch->ward->id) }}"

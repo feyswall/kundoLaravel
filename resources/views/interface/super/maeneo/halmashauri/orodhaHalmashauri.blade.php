@@ -47,7 +47,7 @@ use \Illuminate\Support\Facades\DB;
                                             class="py-3">
                                                 <div class="d-flex justify-content-md-between justify-content-center
                                                  items-center mb-3 flex-wrap-reverse">
-                                                    <h3 class="fs-4 me-3">Viongozi Wa Chama Wilaya</h3>
+                                                    <h3 class="fs-4 me-3">Viongozi Wa Kichama Wilaya</h3>
                                                     <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziChamaModal"
                                                             class="btn btn-info btn-md mb-4 text-capitalize">
                                                             <i class="fas fa-plus"> </i>
@@ -215,7 +215,7 @@ use \Illuminate\Support\Facades\DB;
                                         <div class="px-md-3">
                                             <div style="border-top: #9393; border-top-style: dashed; border-width: 2px;" class="py-3">
                                                 <div class="d-flex justify-content-md-between justify-content-center items-center mb-3 flex-wrap-reverse">
-                                                    <h3 class="fs-4 me-3">Viongozi Wa Serikali Wilaya</h3>
+                                                    <h3 class="fs-4 me-3">Viongozi Wa Kiserikali Wilaya</h3>
                                                     <button data-bs-toggle="modal" data-bs-target="#ongezaKiongoziSerikaliModal" class="btn btn-info btn-md mb-4 text-capitalize"><i class="fas fa-plus"> </i> Sajiri kiongozi Wa Serikali wilaya </button>
                                                 </div>
                                                 <div>

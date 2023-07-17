@@ -9,7 +9,7 @@
 
 <meta charset="utf-8" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<title>web system</title>
+<title>Kundo Information Management System</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta content="Kundo Information Management System" name="description" />
 <meta content="informations" name="g3net" />
