@@ -34,8 +34,8 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Aina ya service</th>
-                                    <th scope="col">cost(Asili) Tsh</th>
                                     <th scope="col">cost(jazwa) Tsh</th>
+                                    <th scope="col">cost(Asili) Tsh</th>
                                     <th>tofauti Tsh</th>
                                     <th>Idadi</th>
                                     <th>Tar</th>

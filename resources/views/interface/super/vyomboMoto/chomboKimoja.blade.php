@@ -31,8 +31,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Aina ya service</th>
-                                    <th>cost(Asili) Tsh</th>
                                     <th>cost(jazwa) Tsh</th>
+                                    <th>cost(Asili) Tsh</th>
                                     <th>tofauti Tsh</th>
                                     <th>Idadi</th>
                                     <th>Tar</th>

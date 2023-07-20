@@ -12,7 +12,9 @@
     <div class="navbar-brand-box">
 
     </div>
-    <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn"> <i class="fa fa-fw fa-bars"></i> </button>
+    <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn">
+        <i class="fa fa-fw fa-bars"></i>
+    </button>
     <div data-simplebar class="sidebar-menu-scroll">
         <!--- Sidemenu -->
         <div id="sidebar-menu">

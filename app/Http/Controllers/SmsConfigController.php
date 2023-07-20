@@ -184,7 +184,10 @@ class SmsConfigController extends Controller
             }
             }else {
                 if ($response_obj['status'] == 'fail') {
-                            return ['status' => 'fail', 'message' => $response_obj['response']->data->message];
+                    if($response_obj['response'] == null){
+                        return ['status' => 'fail', 'message' => "Angalia Kama Umeunganishwa na Internet na ujaribu tena"];
+                    }
+                    return ['status' => 'fail', 'message' => $response_obj['response']->data->message];
                 }else{
                     return ['status' => 'fail', 'message' => 'Unknown Error please Try again later!'];
                 }
