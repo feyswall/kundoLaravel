@@ -13,8 +13,6 @@
 
 <head>
     <title></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         * {
             font-size: 0.98em;
@@ -49,6 +47,9 @@
         }
         h6 {
             font-size: 1em;
+        }
+        h1,h2,h3,h4,h5,h6{
+            margin-bottom: 8px;
         }
 
         @page {
@@ -94,8 +95,9 @@
             margin-top: 2px;
         }
         #main-section p{
-            margin: 0;
+            margin: 0 0 0px 0;
         }
+
     </style>
 </head>
 
