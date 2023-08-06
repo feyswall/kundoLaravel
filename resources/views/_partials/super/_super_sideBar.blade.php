@@ -58,11 +58,11 @@
 
                 <li><a href="{{ route('super.challenge.orodha') }}"><span>Changamoto za Wabunge</span> </a></li>
 
-                <li> <a href="javascript: void(0);" class="has-arrow">Barua</a>
+                {{-- <li> <a href="javascript: void(0);" class="has-arrow">Barua</a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li> <a href="{{ route('super.sial.allList') }}">Orodha</a></li>
                     </ul>
-                </li>
+                </li> --}}
 
                 <li> <a href="{{ route('pdf.door.index') }}" class="">Tengeneza PDF</a></li>
 
