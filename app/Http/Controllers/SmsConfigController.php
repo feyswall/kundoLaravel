@@ -61,7 +61,6 @@ class SmsConfigController extends Controller
     }
 
 
-
     public static function deriveryReport($dest_addr, $request_id)
     {
         $username = self::$api_key;

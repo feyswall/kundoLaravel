@@ -139,10 +139,18 @@ integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="ano
                 hideArea: false,
                 postSelected: '',
                 postsList: [
+                    {name: 'M|kiti CCM'},
+                    {name: 'Katibu CCM'},
+                    {name: 'Mwenezi CCM'},
+
                     {name: 'M|Kiti UVCCM'},
+                    {name: 'Katibu UVCCM'},
+
                     {name: 'M|Kiti UWT'},
+                    {name: 'Katibu UWT'},
+
                     {name: 'M|Kiti Wazazi'},
-                    {name: 'Mwenezi'}
+                    {name: 'Katibu Wazazi'},
                 ],
                 leadersList: [],
                 trackLeadersList: [],

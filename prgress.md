@@ -16,3 +16,6 @@ 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
 all the messages shou
 ld be saved
  to receivers at the because it's safer and easier to retrieve
+
+Katika kusearch pale mbona umeweka mkiti pekeake we unaakili gani?, yabidi uwende kwenye
+search pale uweke 
