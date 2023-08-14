@@ -51,7 +51,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer">
 </script>
 <!-- JAVASCRIPT -->
-<script src="{{ asset('https://code.iconify.design/1/1.0.7/iconify.min.js') }}"></script>
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 
 <script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
