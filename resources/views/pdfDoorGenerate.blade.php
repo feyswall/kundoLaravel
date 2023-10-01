@@ -85,7 +85,7 @@
             font-size: 1em;
         }
         #copyDiv p{
-            margin: 0;
+            margin: 0px;
             font-size: 1em;
         }
         td p {
@@ -95,7 +95,8 @@
             margin-top: 2px;
         }
         #main-section p{
-            margin: 0 0 0px 0;
+            margin: 0 0 -2px 0;
+            line-height: 19px;
         }
 
     </style>

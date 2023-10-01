@@ -47,6 +47,7 @@
                                 <th>Jina</th>
                                 <th>Maelezo</th>
                                 <th>Kiasi</th>
+                                <th>Aina</th>
                                 <th>Date:</th>
                                 <th></th>
                             </tr>
@@ -56,7 +57,8 @@
                                 <tr>
                                     <td>{{ $charity->name }}</td>
                                     <td>{{ $charity->description }}</td>
-                                    <td>{{ $charity->cost }}</td>
+                                    <td>Tsh <?php echo number_format($charity->cost, 0, ",", ","). "/=" ; ?></td>
+                                    <td>{{ $charity->charity_category->name }}</td>
                                     <td>{{ \Carbon\Carbon::parse($charity->created_at)->format("M-d-Y") }}</td>
                                     <td>
                                         <a href="{{ route('super.charity.showCharity', $charity->id) }}" class="btn btn-success btn-sm">open</a>

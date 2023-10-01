@@ -41,6 +41,7 @@
 @section('extra_script')
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"
     integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/js/summernote-grid.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('.summernoteOne').summernote({
@@ -72,10 +73,11 @@
                 focus: true,
                 toolbar: [
                     ['style', ['style']],
-                    ['font', ['bold']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
                     ['para', ['ul', 'ol', 'paragraph']],
+                    ["table", ["table"]],
                     ['insert', ['hr']],
-                    ['view', ['fullscreen']],
+                    ['view', ['fullscreen', "codeview"]],
                 ],
             });
 

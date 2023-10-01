@@ -113,7 +113,7 @@
                                 </div>
                                 <div class="col-lg-8 col-sm-12">
                                     <div class="mb-3 mb-4">
-                                    <p>Hukupa Aina ya hii nyumba?
+                                    <p>Hukupata Aina ya hii nyumba?
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#createNewHouseType" class="mb-4"> <b>Bonyeza Hapa</b> </a>
                                         kusajiri Aina Mpya ya nyumba</p>
                                     </div>

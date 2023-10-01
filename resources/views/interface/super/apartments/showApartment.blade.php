@@ -21,7 +21,7 @@
                         <h5 class="mt-2">Maelezo Kuhusu Apartment:</h5>
                         <p> {{ $apartment->desc }}</p>
                         <h5>Gharama ya Apartment Hii: <b>{{ number_format( floatval($apartment->cost), 0, '.', ',')}}/= </b>Tsh</h5>
-                        <span>Mpanga Wa Apartment: <b>{{ $apartment->tenant->name ?? "Hakuna Mpangaji" }}  </b>
+                        <span>Mpangaji Wa Apartment: <b>{{ $apartment->tenant->name ?? "Hakuna Mpangaji" }}  </b>
                             @if( $apartment->tenant == null )
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#assignTenant">
                                     <i class="fas fa-plus"> </i>Weka Mpangaji</a>
