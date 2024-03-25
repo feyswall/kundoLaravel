@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Post;
 use function Symfony\Component\Console\Input\isArray;
 use function Webmozart\Assert\Tests\StaticAnalysis\false;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class LeadersController extends Controller
 {
@@ -56,6 +57,29 @@ class LeadersController extends Controller
     public function sendingSms()
     {
 
+    }
+
+    public function dashboardSearch() {
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $perPage = 11;
+        $range = $currentPage * $perPage;
+        /** selecting all leaders from our database */
+        $leaders = Leader::select("id", "firstName", "middleName", "lastName", "phone")
+            ->has('posts')
+            ->with('posts', function($query){
+                $query->where('isActive', true)
+                    ->with('groups', function($query){
+                        $query->select('name')->where('prev', 1);
+                    })->select('name', 'area', 'posts.name', 'posts.id');
+            })
+            ->get();
+        $leaders = $leaders->makeHidden(['created_at', 'updated_at', 'post.created_at', 'post.update_at']);
+        $currentItems = array_slice($leaders->toArray(), $perPage * ($currentPage - 1), $perPage);
+        $baseURL = "/api/leaders/search/in/dashboard";
+        $paginator = new LengthAwarePaginator($currentItems, count($leaders), $perPage, $currentPage);
+        $collectedOutputArray = $paginator->appends('filter', request('filter'));
+        $collectedOutputArray->setPath($baseURL);
+        return \response()->json(['status' => 'success', 'collect' => $collectedOutputArray], 200);
     }
 
     public function viewleader($id)

@@ -135,4 +135,10 @@ Route::controller(LeadersController::class)
     Route::post('/leaders/search', 'leaderChangeApi')->name('leaders.orodha');
     Route::post('/all/leaders/search', 'allLeadersApi')->name('all.leaders.orodha');
     Route::post('/leaders/sial/based/search', 'postChangeApi')->name('leaders.sial.based.orodha');
+    Route::post('/leaders');
 });
+
+Route::controller(LeadersController::class)
+    ->group(function() {
+        Route::post("/leaders/search/in/dashboard", 'dashboardSearch')->name('dashboard.search');
+    });
